@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tara PrivacyOS — Sign In</title>
+    <meta name="description" content="Sign in to Tara PrivacyOS — AI-powered privacy compliance and document auditing.">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #FAFAF8;
+            --bg-card: #FFFFFF;
+            --border: #E8E5DE;
+            --border-hover: #D4CFC5;
+            --text-primary: #1A1A2E;
+            --text-secondary: #5A5A72;
+            --text-muted: #8E8E9F;
+            --accent: #2D5BFF;
+            --accent-hover: #1A45E0;
+            --accent-light: #EEF2FF;
+            --accent-glow: rgba(45, 91, 255, 0.12);
+            --radius: 16px;
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.06), 0 2px 6px rgba(0,0,0,0.03);
+            --shadow-lg: 0 12px 40px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04);
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 420px;
+        }
+
+        /* Logo & Brand */
+        .brand {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .brand-logo {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #2D5BFF, #7C3AED);
+            border-radius: 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            box-shadow: 0 6px 20px rgba(45, 91, 255, 0.25);
+        }
+
+        .brand h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 28px;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .brand p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Card */
+        .login-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 32px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Form */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 15px;
+            color: var(--text-primary);
+            background: #F8F7F4;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .form-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+            background: white;
+        }
+
+        .form-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .form-hint {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 6px;
+        }
+
+        /* Button */
+        .btn-login {
+            width: 100%;
+            padding: 14px 24px;
+            background: linear-gradient(135deg, #2D5BFF, #5B3AE0);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 16px rgba(45, 91, 255, 0.25);
+            margin-top: 24px;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(45, 91, 255, 0.35);
+        }
+
+        .btn-login:active {
+            transform: translateY(0);
+        }
+
+        .btn-login:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-login .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        .btn-login.loading .spinner { display: block; }
+        .btn-login.loading .btn-label { display: none; }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 20px 0;
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* Quick Access */
+        .btn-quick {
+            width: 100%;
+            padding: 12px 20px;
+            background: var(--accent-light);
+            color: var(--accent);
+            border: 1px solid rgba(45, 91, 255, 0.15);
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-quick:hover {
+            background: #DDE5FF;
+            border-color: var(--accent);
+        }
+
+        /* Footer */
+        .login-footer {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .login-footer span {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-lg);
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition);
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <!-- Brand -->
+        <div class="brand">
+            <div class="brand-logo">T</div>
+            <h1>Welcome to Tara</h1>
+            <p>AI-powered privacy compliance for your documents and code.</p>
+        </div>
+
+        <!-- Login Card -->
+        <div class="login-card">
+            <form id="login-form" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label class="form-label" for="login-email">Email</label>
+                    <input id="login-email" type="email" class="form-input" placeholder="you@company.com" value="admin@tarainfotech.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="login-password">Password</label>
+                    <input id="login-password" type="password" class="form-input" placeholder="Enter your password" value="Demo2026!" required>
+                    <p class="form-hint">Demo mode — any credentials work</p>
+                </div>
+
+                <button type="submit" class="btn-login" id="btn-login">
+                    <span class="spinner"></span>
+                    <span class="btn-label">Sign In</span>
+                </button>
+            </form>
+
+            <div class="divider">or</div>
+
+            <button type="button" class="btn-quick" onclick="quickAccess()">
+                ⚡ Quick Access (Skip Login)
+            </button>
+        </div>
+
+        <!-- Footer -->
+        <div class="login-footer">
+            <span>🔒 Secure · UK GDPR & India DPDP Ready</span>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast">
+        <span id="toast-icon">✅</span>
+        <span id="toast-msg">Welcome!</span>
+    </div>
+
+    <script>
+        function showToast(msg, icon = '✅') {
+            const t = document.getElementById('toast');
+            document.getElementById('toast-icon').textContent = icon;
+            document.getElementById('toast-msg').textContent = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 3000);
+        }
+
+        function getDestination() {
+            const isFile = window.location.protocol === 'file:';
+            const params = new URLSearchParams(window.location.search);
+            const redirect = params.get('redirect');
+            if (redirect) return redirect;
+            return isFile ? 'AI-PrivacyOS-Production-Demo.html' : '/dashboard';
+        }
+
+        function doLogin(email) {
+            const btn = document.getElementById('btn-login');
+            btn.classList.add('loading');
+            btn.disabled = true;
+
+            const name = email.split('@')[0].replace(/[._-]/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+
+            setTimeout(() => {
+                localStorage.setItem('tara_auth', JSON.stringify({
+                    isLoggedIn: true,
+                    name: name || 'User',
+                    email: email,
+                    loginTime: new Date().toISOString()
+                }));
+
+                showToast(`Welcome, ${name}!`, '👋');
+
+                setTimeout(() => {
+                    window.location.href = getDestination();
+                }, 600);
+            }, 500);
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value.trim();
+            doLogin(email);
+        }
+
+        function quickAccess() {
+            doLogin('guest@tarainfotech.com');
+        }
+    </script>
+</body>
+</html>

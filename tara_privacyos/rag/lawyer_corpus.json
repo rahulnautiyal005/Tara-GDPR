@@ -1,0 +1,154 @@
+[
+  {
+    "id": "UK-DPA-2018-SEC-10-SCH-1",
+    "jurisdiction": "UK_GDPR",
+    "statute": "Data Protection Act 2018",
+    "citation": "DPA 2018 Section 10 & Schedule 1",
+    "category": "Special Category Data",
+    "title": "Special Categories of Personal Data & Explicit Safeguards",
+    "summary": "Official provisions under DPA 2018 Section 10 & Schedule 1 governing statutory compliance, safeguards, and regulatory enforcement.",
+    "key_requirements": [
+      "Strict adherence to UK statutory adaptations of GDPR principles",
+      "Maintenance of verifiable documentation and Appropriate Policy Documents",
+      "Compliance with statutory transfer mechanisms (IDTA) under Sec 119A",
+      "Subjection to ICO statutory penalty notices under Sec 155"
+    ],
+    "penalties": "Statutory fine up to \u00a317,500,000 or 4% of annual turnover.",
+    "statutory_text": "Statutory mandate codified under DPA 2018 Section 10 & Schedule 1 of the Data Protection Act 2018.",
+    "practical_application": "Requires an Appropriate Policy Document (APD) and Article 9 explicit consent when processing religious, health, or philosophical consultation details.",
+    "keywords": [
+      "dpa 2018",
+      "dpa 2018 section 10 & schedule 1",
+      "statute",
+      "ico enforcement",
+      "section 119a",
+      "schedule 1"
+    ]
+  },
+  {
+    "id": "UK-DPA-2018-SEC-119A",
+    "jurisdiction": "UK_GDPR",
+    "statute": "Data Protection Act 2018",
+    "citation": "DPA 2018 Section 119A",
+    "category": "International Data Transfers",
+    "title": "Standard Clauses for International Data Transfers (UK IDTA)",
+    "summary": "Official provisions under DPA 2018 Section 119A governing statutory compliance, safeguards, and regulatory enforcement.",
+    "key_requirements": [
+      "Strict adherence to UK statutory adaptations of GDPR principles",
+      "Maintenance of verifiable documentation and Appropriate Policy Documents",
+      "Compliance with statutory transfer mechanisms (IDTA) under Sec 119A",
+      "Subjection to ICO statutory penalty notices under Sec 155"
+    ],
+    "penalties": "Statutory injunction stopping overseas data transfers + fine up to \u00a317.5M.",
+    "statutory_text": "Statutory mandate codified under DPA 2018 Section 119A of the Data Protection Act 2018.",
+    "practical_application": "Empowers the Information Commissioner to issue the official UK International Data Transfer Agreement (IDTA) governing transfers from UK controllers to Indian subcontractors.",
+    "keywords": [
+      "dpa 2018",
+      "dpa 2018 section 119a",
+      "statute",
+      "ico enforcement",
+      "section 119a",
+      "schedule 1"
+    ]
+  },
+  {
+    "id": "UK-DPA-2018-SEC-155-157",
+    "jurisdiction": "UK_GDPR",
+    "statute": "Data Protection Act 2018",
+    "citation": "DPA 2018 Section 155 & Schedule 16",
+    "category": "Enforcement & Penalties",
+    "title": "ICO Regulatory Powers, Enforcement Notices & Financial Penalties",
+    "summary": "Official provisions under DPA 2018 Section 155 & Schedule 16 governing statutory compliance, safeguards, and regulatory enforcement.",
+    "key_requirements": [
+      "Strict adherence to UK statutory adaptations of GDPR principles",
+      "Maintenance of verifiable documentation and Appropriate Policy Documents",
+      "Compliance with statutory transfer mechanisms (IDTA) under Sec 119A",
+      "Subjection to ICO statutory penalty notices under Sec 155"
+    ],
+    "penalties": "Maximum penalty tier: \u00a317.5M or 4% worldwide turnover. Standard tier: \u00a38.7M or 2% turnover.",
+    "statutory_text": "Statutory mandate codified under DPA 2018 Section 155 & Schedule 16 of the Data Protection Act 2018.",
+    "practical_application": "The Commissioner may issue an information notice, assessment notice, enforcement notice, or penalty notice for failure to comply with GDPR principles.",
+    "keywords": [
+      "dpa 2018",
+      "dpa 2018 section 155 & schedule 16",
+      "statute",
+      "ico enforcement",
+      "section 119a",
+      "schedule 1"
+    ]
+  },
+  {
+    "id": "UK-DUAA-2025-SEC-01",
+    "jurisdiction": "UK_GDPR",
+    "statute": "Data (Use and Access) Act 2025",
+    "citation": "DUAA 2025 Chapter 18 & Smart Data Regulations",
+    "category": "Data Innovation & Telemetry",
+    "title": "Smart Data Access, Customer Telemetry & Interoperability",
+    "summary": "Brand new statutory provisions under the UK DUAA 2025 Chapter 18 & Smart Data Regulations updating digital access and AI data governance.",
+    "key_requirements": [
+      "Standardized secure API interfaces for customer data access",
+      "Explicit transparency on algorithmic and AI data utilization",
+      "Alignment with updated Information Commission standards"
+    ],
+    "penalties": "Statutory compliance orders and regulatory financial penalties under DUAA 2025.",
+    "statutory_text": "Status: This version of this Act contains provisions that are prospective. Changes to legislation: There are currently no known outstanding effects for the Data (Use and Access) Act 2025. (See end of Document for details) Data (Use and Access) Act 2025 2025 CHAPTER 18 An Act to make provision about access to customer data and business data; to make provision about services consisting of the use of information to ascertain and verify facts about individuals; to make provision about the recording and sharing, and keeping of registers, of information relating to apparatus in streets; to make provision about the keeping and maintenance of registers of births and deaths; to make provision for the regulation of the processing of information relating to identified or identifiable living individuals; to make provision about privacy and electronic communications; to establish the Information Commission; to make provision about information standards for health and social care; to make p",
+    "practical_application": "Requires secure, standardized API interoperability for customer profile data portability while preserving strict data protection guardrails.",
+    "keywords": [
+      "duaa 2025",
+      "smart data",
+      "ai reforms",
+      "automated processing",
+      "customer data access",
+      "act 2025"
+    ]
+  },
+  {
+    "id": "UK-DUAA-2025-AI-REFORMS",
+    "jurisdiction": "UK_GDPR",
+    "statute": "Data (Use and Access) Act 2025",
+    "citation": "DUAA 2025 Automated Processing & AI Safeguards",
+    "category": "AI Governance",
+    "title": "Automated Decision-Making & AI Transparency Guardrails",
+    "summary": "Brand new statutory provisions under the UK DUAA 2025 Automated Processing & AI Safeguards updating digital access and AI data governance.",
+    "key_requirements": [
+      "Standardized secure API interfaces for customer data access",
+      "Explicit transparency on algorithmic and AI data utilization",
+      "Alignment with updated Information Commission standards"
+    ],
+    "penalties": "Statutory enforcement under revised UK GDPR Article 22 frameworks.",
+    "statutory_text": "94 Data (Use and Access) Act 2025 (c. 18) Chapter 1 \u2013 Data protection Document Generated: 2026-09-30 Status: This version of this Act contains provisions that are prospective. Changes to legislation: There are currently no known outstanding effects for the Data (Use and Access) Act 2025. (See end of Document for details) (e) the data subject\u2019s right to apply to a court under section 167. (3) Subsection (2)(a) and (b) do not apply to the extent that complying with them would\u2014 (a) undermine a claim described in subsection (1)(a), or (b) conflict with a duty described in subsection (1)(b). (4) The controller must\u2014 (a) record the reason for a decision to rely on the exemption in subsection (1), and (b) if requested to do so by the Commissioner, make the record available to the Commissioner. (5) The reference in subsection (1) to sections 44(2) and 45(1) includes sections 35 to 40 so far as their provisions correspond to the rights and obligations provided for in sections 44(2) and 45(",
+    "practical_application": "Clarifies rules for automated AI decisions; deployers must provide clear notices explaining algorithmic logic and maintain human review escalation workflows.",
+    "keywords": [
+      "duaa 2025",
+      "smart data",
+      "ai reforms",
+      "automated processing",
+      "customer data access",
+      "act 2025"
+    ]
+  },
+  {
+    "id": "EPSU-GDPR-BRIEFING-01",
+    "jurisdiction": "UK_GDPR",
+    "statute": "GDPR Statutory Briefing (EPSU)",
+    "citation": "GDPR Framework Briefing: Subcontractor & Processor Duties",
+    "category": "Vendor & Processor Governance",
+    "title": "Subcontractor Data Protection & Worker Personal Data Protections",
+    "summary": "Establishes strict boundaries for third-party subcontractors, remote workers, and practitioners accessing client data.",
+    "key_requirements": [
+      "Mandatory confidentiality undertakings for all remote practitioners",
+      "Prohibition of processing customer contact info for secondary marketing",
+      "Clear technical boundary between platform data and personal devices"
+    ],
+    "penalties": "Severe breach liability under Article 28 and 83 of the GDPR.",
+    "statutory_text": "3 Foreword The new General Data Protection Regulation (GDPR) came into force on 25 May 2018. For EPSU, data protection, privacy and cybersecurity in our public services and in trade unions are among the biggest regulatory issues we face. Public service workers and trade unionists can use the introduction of the GDPR as a way to improve how we deal with personal data and workers\u2019 privacy. Public services providers are using more and more data to perform their duties. Workers from the health care sector process and analyse sensitive data and have access to medical records. Public administrations also process large sets of personal data. For this reason it is essential that trade unions use the new GDPR rules to the fullest extent for a more effective protection of workers\u2019 and citizens\u2019 data. Compliance with the GDPR entails administrative and technical challenges. Since the entry into force of the new regulation, EPSU has been advocating full involvement of workers organizati",
+    "practical_application": "Practitioners and remote astrologers must be prohibited from downloading customer personal contact data onto private phones.",
+    "keywords": [
+      "epsu",
+      "subcontractor",
+      "worker data",
+      "processor obligations",
+      "practitioner data protection"
+    ]
+  }
+]

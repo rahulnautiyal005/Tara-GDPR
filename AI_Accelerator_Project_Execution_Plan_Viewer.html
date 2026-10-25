@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TARA PRIVACYOS — 3-Tier Execution Plan (Excel View)</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --navy-primary: #0B132B;
+            --navy-accent: #1C2541;
+            --navy-light: #263655;
+            --border-color: #E2E8F0;
+            --bg-page: #0F172A;
+            --bg-card: #FFFFFF;
+            --bg-zebra: #F8FAFC;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-page);
+            color: #1E293B;
+            font-size: 13.5px;
+            line-height: 1.5;
+        }
+
+        /* Top Bar */
+        .top-action-bar {
+            background: #1E293B;
+            border-bottom: 1px solid #334155;
+            padding: 12px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .bar-title {
+            color: #F8FAFC;
+            font-size: 14px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .badge-pro {
+            background: #10B981;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .btn-download-xlsx {
+            background: linear-gradient(135deg, #0284C7, #0369A1);
+            color: #fff;
+            text-decoration: none;
+            padding: 8px 18px;
+            border-radius: 6px;
+            font-size: 12.5px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Navigation Sheet Tabs */
+        .sheet-nav {
+            background: #0B132B;
+            padding: 10px 32px 0;
+            display: flex;
+            gap: 6px;
+            border-bottom: 2px solid #0284C7;
+        }
+
+        .sheet-tab-btn {
+            background: #1C2541;
+            color: #94A3B8;
+            border: 1px solid #334155;
+            border-bottom: none;
+            padding: 10px 22px;
+            border-radius: 6px 6px 0 0;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .sheet-tab-btn:hover {
+            color: #F8FAFC;
+            background: #2D3E64;
+        }
+
+        .sheet-tab-btn.active {
+            background: #FFFFFF;
+            color: #0B132B;
+            border-color: #0284C7;
+            border-top: 3px solid #0284C7;
+        }
+
+        /* Viewport Canvas */
+        .sheet-viewport {
+            background: #FFFFFF;
+            min-height: calc(100vh - 110px);
+            padding: 35px 45px;
+            overflow-x: auto;
+        }
+
+        .sheet-view {
+            display: none;
+        }
+
+        .sheet-view.active {
+            display: block;
+        }
+
+        .banner-block {
+            background: var(--navy-primary);
+            color: #FFFFFF;
+            text-align: center;
+            padding: 24px 20px;
+            border-radius: 6px 6px 0 0;
+        }
+
+        .banner-block h1 {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+
+        .banner-block p {
+            font-size: 12.5px;
+            color: #94A3B8;
+            font-style: italic;
+        }
+
+        .kpi-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            background: #F1F5F9;
+            border: 1px solid var(--border-color);
+            border-top: none;
+            padding: 16px 24px;
+            margin-bottom: 24px;
+            border-radius: 0 0 6px 6px;
+        }
+
+        .kpi-card {
+            background: #FFFFFF;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 10px 16px;
+            text-align: center;
+        }
+
+        .kpi-lbl {
+            font-size: 10px;
+            font-weight: 800;
+            color: #64748B;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+        }
+
+        .kpi-val {
+            font-size: 15px;
+            font-weight: 800;
+            color: #0F172A;
+        }
+
+        .section-bar {
+            background: var(--navy-accent);
+            color: #FFFFFF;
+            font-weight: 700;
+            font-size: 12.5px;
+            padding: 10px 16px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-top: 10px;
+            border-radius: 4px 4px 0 0;
+        }
+
+        table.spacious-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            margin-bottom: 28px;
+        }
+
+        table.spacious-table th {
+            background: var(--navy-light);
+            color: #FFFFFF;
+            padding: 12px 16px;
+            border: 1px solid #334155;
+            font-weight: 700;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        table.spacious-table td {
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            color: #1E293B;
+            vertical-align: middle;
+        }
+
+        table.spacious-table tr:nth-child(even) td {
+            background: var(--bg-zebra);
+        }
+
+        .pill {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .pill-critical { background: #FFE4E6; color: #9F1239; }
+        .pill-high { background: #FEF3C7; color: #92400E; }
+        .pill-medium { background: #E0F2FE; color: #0369A1; }
+        .pill-low { background: #F1F5F9; color: #475569; }
+        .pill-completed { background: #DCFCE7; color: #166534; }
+
+        .tag-workstream {
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 11.5px;
+            text-align: center;
+        }
+
+        .ws-purple { background: #EDE9FE; color: #5B21B6; }
+        .ws-green { background: #DCFCE7; color: #166534; }
+        .ws-orange { background: #FFEDD5; color: #9A3412; }
+        .ws-blue { background: #E0F2FE; color: #075985; }
+        .ws-pink { background: #FFE4E6; color: #9F1239; }
+    </style>
+</head>
+
+<body>
+
+    <div class="top-action-bar">
+        <div class="bar-title">
+            <span>📊 AI_Accelerator_Project_Execution_Plan.xlsx</span>
+            <span class="badge-pro">3-Track Operational Roadmap</span>
+        </div>
+        <div>
+            <a href="AI_Accelerator_Project_Execution_Plan.xlsx" class="btn-download-xlsx" download>
+                <span>📥</span> Open / Download Excel (.xlsx)
+            </a>
+        </div>
+    </div>
+
+    <div class="sheet-nav">
+        <button class="sheet-tab-btn active" onclick="showSheet('overview')">Overview</button>
+        <button class="sheet-tab-btn" onclick="showSheet('track1')">Track 1 — Code to GDPR</button>
+        <button class="sheet-tab-btn" onclick="showSheet('track2')">Track 2 — Document Review</button>
+        <button class="sheet-tab-btn" onclick="showSheet('track3')">Track 3 — VM Sandbox Monitor</button>
+    </div>
+
+    <div class="sheet-viewport">
+
+        <!-- TAB 1: OVERVIEW -->
+        <div id="view-overview" class="sheet-view active">
+            <div class="banner-block">
+                <h1>TARA PRIVACYOS — 3-Tier AI Compliance &amp; Security Platform</h1>
+                <p>1. GitHub Code Analysis &bull; 2. Document Review &amp; Fix &bull; 3. VM Sandbox Runtime Security &bull; 45-Day Delivery</p>
+            </div>
+
+            <div class="kpi-row">
+                <div class="kpi-card">
+                    <div class="kpi-lbl">Total Roadmap</div>
+                    <div class="kpi-val">45 Working Days</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-lbl">Core Pillars</div>
+                    <div class="kpi-val">3 Dedicated Tracks</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-lbl">Deliverables</div>
+                    <div class="kpi-val">34 Production Tasks</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-lbl">Target MVP</div>
+                    <div class="kpi-val" style="color: #0284C7;">Day 15 (Code-to-GDPR)</div>
+                </div>
+            </div>
+
+            <div class="section-bar">The 3 Core Functional Tracks</div>
+            <table class="spacious-table">
+                <thead>
+                    <tr>
+                        <th style="width: 25%;">Operational Track</th>
+                        <th style="width: 10%;">Duration</th>
+                        <th style="width: 12%;">Sprint Window</th>
+                        <th style="width: 33%;">Core Value Proposition</th>
+                        <th style="width: 12%;">Assigned Lead</th>
+                        <th style="width: 6%;">Tasks</th>
+                        <th style="width: 10%;">Launch Status</th>
+                        <th style="width: 9%;">Risk Profile</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Track 1 &mdash; Code-to-GDPR Generator</strong></td>
+                        <td style="text-align: center;">15 Days</td>
+                        <td style="text-align: center;">Day 1 &ndash; Day 15</td>
+                        <td>"Give us your code, and we will tell you what GDPR requirements you need to follow"</td>
+                        <td style="text-align: center;">AI Lead + Dev</td>
+                        <td style="text-align: center;"><strong>12</strong></td>
+                        <td style="text-align: center;"><span class="pill pill-completed">Completed (v1.0)</span></td>
+                        <td style="text-align: center;"><span class="pill pill-medium">Low (Live)</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Track 2 &mdash; Document Review &amp; Statutory RAG Engine</strong></td>
+                        <td style="text-align: center;">15 Days</td>
+                        <td style="text-align: center;">Day 16 &ndash; Day 30</td>
+                        <td>"Give us your existing GDPR docs, and we will find gaps and auto-correct them with grounded statutes"</td>
+                        <td style="text-align: center;">Legal AI Lead</td>
+                        <td style="text-align: center;"><strong>7</strong></td>
+                        <td style="text-align: center;"><span class="pill pill-completed">Completed (v2.0)</span></td>
+                        <td style="text-align: center;"><span class="pill pill-medium">Low (Live)</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Track 3 &mdash; VM Sandbox Security Monitor</strong></td>
+                        <td style="text-align: center;">15 Days</td>
+                        <td style="text-align: center;">Day 31 &ndash; Day 45</td>
+                        <td>"Run the app in a VM sandbox to detect suspicious activity, bulk access &amp; data theft"</td>
+                        <td style="text-align: center;">Security Lead + DevOps</td>
+                        <td style="text-align: center;"><strong>11</strong></td>
+                        <td style="text-align: center;"><span class="pill pill-medium">Planned</span></td>
+                        <td style="text-align: center;"><span class="pill pill-critical">High</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- TAB 2: TRACK 1 -->
+        <div id="view-track1" class="sheet-view">
+            <div class="banner-block">
+                <h1>TARA PRIVACYOS &mdash; Track 1: Code-to-GDPR Generator (GitHub)</h1>
+                <p>"Give us your code, and we will tell you what GDPR requirements you need to follow"</p>
+            </div>
+            <table class="spacious-table" style="margin-top: 16px;">
+                <thead>
+                    <tr>
+                        <th style="width: 10%;">Task ID</th>
+                        <th style="width: 15%;">Workstream</th>
+                        <th style="width: 35%;">Task Description</th>
+                        <th style="width: 12%;">Owner</th>
+                        <th style="width: 8%;">Priority</th>
+                        <th style="width: 6%;">Days</th>
+                        <th style="width: 8%;">Status</th>
+                        <th style="width: 16%;">Deliverable</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="text-align: center; font-family: monospace;">CODE-101</td>
+                        <td>Static Code Analysis</td>
+                        <td>Build GitHub Repository Cloner &amp; AST Syntax Tree Parser</td>
+                        <td>Backend Lead</td>
+                        <td style="text-align: center;"><span class="pill pill-critical">Critical</span></td>
+                        <td style="text-align: center;">2</td>
+                        <td style="text-align: center;"><span class="pill pill-completed">Completed</span></td>
+                        <td><code>tara_privacyos/core/repo_ast_parser.py</code></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center; font-family: monospace;">CODE-102</td>
+                        <td>Static Code Analysis</td>
+                        <td>Develop ORM &amp; Database Schema PII Identifier (detects Aadhaar, PAN, NI, NHS)</td>
+                        <td>Legal AI Lead</td>
+                        <td style="text-align: center;"><span class="pill pill-critical">Critical</span></td>
+                        <td style="text-align: center;">2</td>
+                        <td style="text-align: center;"><span class="pill pill-completed">Completed</span></td>
+                        <td><code>tara_privacyos/core/pii_schema_detector.py</code></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center; font-family: monospace;">CODE-103</td>
+                        <td>Static Code Analysis</td>
+                        <td>Build API Route &amp; Controller Data-Flow Tracer (finds unconsented collection)</td>
+                        <td>Backend Dev</td>
+                        <td style="text-align: center;"><span class="pill pill-critical">Critical</span></td>
+                        <td style="text-align: center;">3</td>
+                        <td style="text-align: center;"><span class="pill pill-completed">Completed</span></td>
+                        <td><code>tara_privacyos/core/api_route_tracer.py</code></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center; font-family: monospace;">CODE-104</td>
+                        <td>Static Code Analysis</td>
+                        <td>Detect Third-Party SDK &amp; LLM Calls (OpenAI API, Stripe, Firebase, AWS)</td>
+                        <td>Backend Dev</td>
+                        <td style="text-align: center;"><span class="pill pill-critical">Critical</span></td>
+                        <td style="text-align: center;">2</td>
+                        <td style="text-align: center;"><span class="pill pill-completed">Completed</span></td>
+                        <td><code>tara_privacyos/core/subprocessor_detector.py</code></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center; font-family: monospace;">CODE-105</td>
+                        <td>Static Code Analysis</td>
+                        <td>Generate Tailored UK GDPR Statutory Mandates (Article 6, 9, 28, 32)</td>
+                        <td>Legal AI Lead</td>
+                        <td style="text-align: center;"><span class="pill pill-critical">Critical</span></td>
+                        <td style="text-align: center;">3</td>
+                        <td style="text-align: center;"><span class="pill pill-completed">Completed</span></td>
+                        <td><code>tara_privacyos/legal_engines/uk_gdpr_mandates_gen.py</code></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center; font-family: monospace;">CODE-106</td>
+                        <td>Static Code Analysis</td>
+                        <td>Generate Tailored India DPDP Act 2023 Mandates (Section 6, 8, 16)</td>
+                        <td>Legal AI Lead</td>
+                        <td style="text-align: center;"><span class="pill pill-critical">Critical</span></td>
+                        <td style="text-align: center;">2</td>
+                        <td style="text-align: center;"><span class="pill pill-completed">Completed</span></td>
+                        <td><code>tara_privacyos/legal_engines/india_dpdpa_mandates_gen.py</code></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center; font-family: monospace;">CODE-107</td>
+                        <td>Frontend UI / UX</td>
+                        <td>Build Repository Scan Results Dashboard with Checklist &amp; Dev Action Items</td>
+                        <td>Frontend Dev</td>
+                        <td style="text-align: center;"><span class="pill pill-high">High</span></td>
+                        <td style="text-align: center;">3</td>
+                        <td style="text-align: center;"><span class="pill pill-completed">Completed</span></td>
+                        <td><a href="RepoScanDashboard.html" target="_blank" style="color: #0369a1; font-weight: 700;">RepoScanDashboard.html</a></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center; font-family: monospace;">CODE-108</td>
+                        <td>QA &amp; Compliance</td>
+                        <td>Run code scanner against open-source &amp; benchmark backend repos to benchmark accuracy</td>
+                        <td>QA Lead</td>
+                        <td style="text-align: center;"><span class="pill pill-high">High</span></td>
+                        <td style="text-align: center;">2</td>
+                        <td style="text-align: center;"><span class="pill pill-completed">Completed</span></td>
+                        <td><code>privacyos_audit_report.json</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- TAB 3: TRACK 2 -->
+        <div id="view-track2" class="sheet-view">
+            <div class="banner-block">
+                <h1>TARA PRIVACYOS &mdash; Track 2: Document Review &amp; Correction Engine</h1>
+                <p>"Give us your existing GDPR docs, and we will find gaps and help correct them"</p>
+            </div>
+            <table class="spacious-table" style="margin-top: 16px;">
+                <thead>
+                    <tr>
+                        <th style="width: 10%;">Task ID</th>
+                        <th style="width: 15%;">Workstream</th>
+                        <th style="width: 35%;">Task Description</th>
+                        <th style="width: 12%;">Owner</th>
+                        <th style="width: 8%;">Priority</th>
+                        <th style="width: 6%;">Days</th>
+                        <th style="width: 8%;">Status</th>
+                        <th style="width: 16%;">Deliverable</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="text-align: center; font-family: monospace;">DOC-201</td>
+                        <td>Document AI Review</td>
+                        <td>Build Multi-Format Document Ingestion Engine &amp; Statutory Legal Corpus</td>
+                        <td>Backend Dev</td>
+                        <td style="text-align: center;"><span class="pill pill-critical">Critical</span></td>
+                        <td style="text-align: center;">3</td>
+                        <td style="text-align: center;"><span class="pill pill-completed">Completed</span></td>
+                        <td><code>tara_privacyos/rag/corpus_data.py</code></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center; font-family: monospace;">DOC-202</td>
+                        <td>Document AI Review</td>
+                        <td>Implement Hybrid Semantic Vector &amp; BM25 Legal Retriever</td>
+                        <td>Legal AI Lead</td>
+                        <td style="text-align: center;"><span class="pill pill-critical">Critical</span></td>
+                        <td style="text-align: center;">3</td>
+                        <td style="text-align: center;"><span class="pill pill-completed">Completed</span></td>
+                        <td><code>tara_privacyos/rag/retriever.py</code></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center; font-family: monospace;">DOC-203</td>
+                        <td>Document AI Review</td>
+                        <td>Build Master Statutory RAG Pipeline &amp; Azure OpenAI Grounding</td>
+                        <td>Legal AI Lead</td>
+                        <td style="text-align: center;"><span class="pill pill-critical">Critical</span></td>
+                        <td style="text-align: center;">3</td>
+                        <td style="text-align: center;"><span class="pill pill-completed">Completed</span></td>
+                        <td><code>tara_privacyos/rag/rag_engine.py</code></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center; font-family: monospace;">DOC-204</td>
+                        <td>Document AI Review</td>
+                        <td>Develop Automated Statutory Clause Re-writer &amp; Model Clause Inserter</td>
+                        <td>Legal AI Lead</td>
+                        <td style="text-align: center;"><span class="pill pill-critical">Critical</span></td>
+                        <td style="text-align: center;">2</td>
+                        <td style="text-align: center;"><span class="pill pill-completed">Completed</span></td>
+                        <td><code>tara_privacyos/rag/rag_engine.py:audit_document</code></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center; font-family: monospace;">DOC-205</td>
+                        <td>Backend Architecture</td>
+                        <td>Expose REST RAG API Endpoints (/api/rag/query, /api/rag/search, /api/rag/audit)</td>
+                        <td>Backend Dev</td>
+                        <td style="text-align: center;"><span class="pill pill-critical">Critical</span></td>
+                        <td style="text-align: center;">2</td>
+                        <td style="text-align: center;"><span class="pill pill-completed">Completed</span></td>
+                        <td><code>tara_privacyos/api/server.py</code></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center; font-family: monospace;">DOC-206</td>
+                        <td>Frontend UI / UX</td>
+                        <td>Build Interactive Statutory RAG Explorer &amp; Grounding Citation Badges</td>
+                        <td>Frontend Dev</td>
+                        <td style="text-align: center;"><span class="pill pill-high">High</span></td>
+                        <td style="text-align: center;">3</td>
+                        <td style="text-align: center;"><span class="pill pill-completed">Completed</span></td>
+                        <td><a href="Tara-GDPR-AI-Copilot.html" target="_blank" style="color: #0369a1; font-weight: 700;">Tara-GDPR-AI-Copilot.html</a></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center; font-family: monospace;">DOC-207</td>
+                        <td>QA &amp; Compliance</td>
+                        <td>Develop and Execute Phase 2 RAG Comprehensive Test Suite (7/7 Passed)</td>
+                        <td>QA Lead</td>
+                        <td style="text-align: center;"><span class="pill pill-high">High</span></td>
+                        <td style="text-align: center;">2</td>
+                        <td style="text-align: center;"><span class="pill pill-completed">Completed</span></td>
+                        <td><code>tara_privacyos/tests/test_phase2_rag.py</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- TAB 4: TRACK 3 -->
+        <div id="view-track3" class="sheet-view">
+            <div class="banner-block">
+                <h1>TARA PRIVACYOS &mdash; Track 3: VM Sandbox Runtime Security Monitor</h1>
+                <p>"Run the app in a VM sandbox to detect suspicious activity, bulk access &amp; data theft"</p>
+            </div>
+            <table class="spacious-table" style="margin-top: 16px;">
+                <thead>
+                    <tr>
+                        <th style="width: 10%;">Task ID</th>
+                        <th style="width: 15%;">Workstream</th>
+                        <th style="width: 35%;">Task Description</th>
+                        <th style="width: 12%;">Owner</th>
+                        <th style="width: 8%;">Priority</th>
+                        <th style="width: 6%;">Days</th>
+                        <th style="width: 8%;">Status</th>
+                        <th style="width: 16%;">Deliverable</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="text-align: center; font-family: monospace;">VM-301</td>
+                        <td>VM Sandbox Security</td>
+                        <td>Provision Isolated Ubuntu Sandbox VM with automated container execution</td>
+                        <td>DevOps Lead</td>
+                        <td style="text-align: center;"><span class="pill pill-critical">Critical</span></td>
+                        <td style="text-align: center;">3</td>
+                        <td style="text-align: center;"><span class="pill pill-medium">In Progress</span></td>
+                        <td><code>sandbox_vm_provisioner.sh</code></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center; font-family: monospace;">VM-302</td>
+                        <td>VM Sandbox Security</td>
+                        <td>Implement eBPF Kernel Probe to trace openat(), read(), and socket() syscalls</td>
+                        <td>Security Lead</td>
+                        <td style="text-align: center;"><span class="pill pill-critical">Critical</span></td>
+                        <td style="text-align: center;">4</td>
+                        <td style="text-align: center;"><span class="pill pill-high">Planned</span></td>
+                        <td><code>ebpf_kernel_probe.c</code></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center; font-family: monospace;">VM-303</td>
+                        <td>VM Sandbox Security</td>
+                        <td>Build Database Query Anomaly Detector (flags sudden 1,000+ record bulk dumps)</td>
+                        <td>Backend Dev</td>
+                        <td style="text-align: center;"><span class="pill pill-critical">Critical</span></td>
+                        <td style="text-align: center;">3</td>
+                        <td style="text-align: center;"><span class="pill pill-high">Planned</span></td>
+                        <td><code>db_anomaly_detector.py</code></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center; font-family: monospace;">VM-304</td>
+                        <td>VM Sandbox Security</td>
+                        <td>Automate Active Defense Kill-Switch (drops socket &amp; sends SIGSTOP to process)</td>
+                        <td>Security Lead</td>
+                        <td style="text-align: center;"><span class="pill pill-high">High</span></td>
+                        <td style="text-align: center;">2</td>
+                        <td style="text-align: center;"><span class="pill pill-high">Planned</span></td>
+                        <td><code>auto_killswitch.sh</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script>
+        function showSheet(sheetId) {
+            document.querySelectorAll('.sheet-tab-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+
+            document.querySelectorAll('.sheet-view').forEach(v => v.classList.remove('active'));
+            const target = document.getElementById('view-' + sheetId);
+            if (target) {
+                target.classList.add('active');
+            }
+        }
+    </script>
+</body>
+
+</html>

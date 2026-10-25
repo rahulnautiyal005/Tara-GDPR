@@ -1,0 +1,662 @@
+{
+  "scan_metadata": {
+    "source": "./tara_privacyos/benchmarks/sample_consultation_app",
+    "scan_timestamp": "2026-10-10T20:42:50.783663",
+    "duration_ms": 12,
+    "total_files_scanned": 3,
+    "privacyos_version": "1.0.0-phase1",
+    "overall_risk_score": 15,
+    "health_grade": "F (Critical Regulatory Vulnerability)"
+  },
+  "ast_overview": {
+    "models_count": 4,
+    "routes_count": 5,
+    "dependencies_count": 11
+  },
+  "pii_and_special_category": {
+    "total_models_analyzed": 4,
+    "models_with_pii": 4,
+    "special_category_fields_detected": 4,
+    "standard_pii_fields_detected": 11,
+    "high_risk_art9_models": [
+      "KundliConsultationModel"
+    ],
+    "compliance_alert": "CRITICAL: Special Category Data (UK GDPR Article 9) detected. Explicit consent and Data Protection Impact Assessment (DPIA) are legally mandated before launch!",
+    "detailed_findings": [
+      {
+        "model_name": "UserModel",
+        "source_file": "models.py",
+        "total_pii_fields": 7,
+        "contains_art9_special_category": false,
+        "fields": [
+          {
+            "field_name": "full_name",
+            "line_number": 11,
+            "classification_key": "DIRECT_IDENTIFIERS",
+            "category": "Direct Personal Identifiers (UK GDPR Art 6(1))",
+            "statutory_basis": "UK GDPR Article 6(1)(b) Contract / 6(1)(a) Consent",
+            "dpdp_section": "DPDPA 2023 Sec 4 & Sec 6 (Notice & Lawful Consent)",
+            "severity": "HIGH",
+            "requires_explicit_consent": false,
+            "recommended_encryption": "TLS 1.3 in transit, AES-256 at rest",
+            "default_retention": "Account lifetime + 30 days grace period",
+            "is_art9": false
+          },
+          {
+            "field_name": "email",
+            "line_number": 12,
+            "classification_key": "DIRECT_IDENTIFIERS",
+            "category": "Direct Personal Identifiers (UK GDPR Art 6(1))",
+            "statutory_basis": "UK GDPR Article 6(1)(b) Contract / 6(1)(a) Consent",
+            "dpdp_section": "DPDPA 2023 Sec 4 & Sec 6 (Notice & Lawful Consent)",
+            "severity": "HIGH",
+            "requires_explicit_consent": false,
+            "recommended_encryption": "TLS 1.3 in transit, AES-256 at rest",
+            "default_retention": "Account lifetime + 30 days grace period",
+            "is_art9": false
+          },
+          {
+            "field_name": "phone_number",
+            "line_number": 13,
+            "classification_key": "DIRECT_IDENTIFIERS",
+            "category": "Direct Personal Identifiers (UK GDPR Art 6(1))",
+            "statutory_basis": "UK GDPR Article 6(1)(b) Contract / 6(1)(a) Consent",
+            "dpdp_section": "DPDPA 2023 Sec 4 & Sec 6 (Notice & Lawful Consent)",
+            "severity": "HIGH",
+            "requires_explicit_consent": false,
+            "recommended_encryption": "TLS 1.3 in transit, AES-256 at rest",
+            "default_retention": "Account lifetime + 30 days grace period",
+            "is_art9": false
+          },
+          {
+            "field_name": "date_of_birth",
+            "line_number": 15,
+            "classification_key": "BIRTH_DEMOGRAPHICS",
+            "category": "Demographic & Birth Data (Consultation Prerequisite)",
+            "statutory_basis": "UK GDPR Article 6(1)(b) Contract Performance",
+            "dpdp_section": "DPDPA 2023 Sec 6 & Sec 9 (Children's data guardrails if age < 18)",
+            "severity": "MEDIUM",
+            "requires_explicit_consent": false,
+            "recommended_encryption": "Restricted Access to Assigned Practitioner Only",
+            "default_retention": "Account lifetime or user deletion request",
+            "is_art9": false
+          },
+          {
+            "field_name": "birth_time",
+            "line_number": 16,
+            "classification_key": "BIRTH_DEMOGRAPHICS",
+            "category": "Demographic & Birth Data (Consultation Prerequisite)",
+            "statutory_basis": "UK GDPR Article 6(1)(b) Contract Performance",
+            "dpdp_section": "DPDPA 2023 Sec 6 & Sec 9 (Children's data guardrails if age < 18)",
+            "severity": "MEDIUM",
+            "requires_explicit_consent": false,
+            "recommended_encryption": "Restricted Access to Assigned Practitioner Only",
+            "default_retention": "Account lifetime or user deletion request",
+            "is_art9": false
+          },
+          {
+            "field_name": "birth_place",
+            "line_number": 17,
+            "classification_key": "BIRTH_DEMOGRAPHICS",
+            "category": "Demographic & Birth Data (Consultation Prerequisite)",
+            "statutory_basis": "UK GDPR Article 6(1)(b) Contract Performance",
+            "dpdp_section": "DPDPA 2023 Sec 6 & Sec 9 (Children's data guardrails if age < 18)",
+            "severity": "MEDIUM",
+            "requires_explicit_consent": false,
+            "recommended_encryption": "Restricted Access to Assigned Practitioner Only",
+            "default_retention": "Account lifetime or user deletion request",
+            "is_art9": false
+          },
+          {
+            "field_name": "ip_address",
+            "line_number": 18,
+            "classification_key": "LOCATION_TELEMETRY",
+            "category": "Online Identifiers & Telemetry (PECR / UK GDPR)",
+            "statutory_basis": "PECR Reg 6 / UK GDPR Art 6(1)(f) Legitimate Interests",
+            "dpdp_section": "DPDPA 2023 Sec 6",
+            "severity": "MEDIUM",
+            "requires_explicit_consent": false,
+            "recommended_encryption": "Pseudonymised / Hashed IP strings",
+            "default_retention": "Rolling 14-30 day access log rotation",
+            "is_art9": false
+          }
+        ]
+      },
+      {
+        "model_name": "KundliConsultationModel",
+        "source_file": "models.py",
+        "total_pii_fields": 4,
+        "contains_art9_special_category": true,
+        "fields": [
+          {
+            "field_name": "health_symptoms",
+            "line_number": 25,
+            "classification_key": "HEALTH_MEDICAL",
+            "category": "Health & Medical Data (UK GDPR Art 9(1))",
+            "statutory_basis": "UK GDPR Article 9(2)(a) Explicit Consent / DPA 2018 Sch 1",
+            "dpdp_section": "DPDPA 2023 Sec 4 & Sec 8 (Enhanced Data Protection)",
+            "severity": "CRITICAL",
+            "requires_explicit_consent": true,
+            "recommended_encryption": "Field-Level AES-256 + KMS Envelope",
+            "default_retention": "30-90 Days after consultation, then cryptographic erasure",
+            "is_art9": true
+          },
+          {
+            "field_name": "relationship_problem",
+            "line_number": 26,
+            "classification_key": "SEXUAL_RELATIONSHIP",
+            "category": "Sex Life / Sexual Orientation (UK GDPR Art 9(1))",
+            "statutory_basis": "UK GDPR Article 9(2)(a) Explicit Consent",
+            "dpdp_section": "DPDPA 2023 Sec 4 (Sensitive Personal Data)",
+            "severity": "CRITICAL",
+            "requires_explicit_consent": true,
+            "recommended_encryption": "Field-Level AES-256",
+            "default_retention": "Immediate pseudonymisation upon resolution",
+            "is_art9": true
+          },
+          {
+            "field_name": "spiritual_goals",
+            "line_number": 27,
+            "classification_key": "RELIGIOUS_PHILOSOPHICAL",
+            "category": "Religious / Philosophical Beliefs (UK GDPR Art 9(1))",
+            "statutory_basis": "UK GDPR Article 9(2)(a) Explicit Consent",
+            "dpdp_section": "DPDPA 2023 Sec 4 (Personal Data Processing)",
+            "severity": "CRITICAL",
+            "requires_explicit_consent": true,
+            "recommended_encryption": "Encrypted at rest + Practitioner Masking",
+            "default_retention": "Purge raw questions 30 days post-session",
+            "is_art9": true
+          },
+          {
+            "field_name": "horoscope_chart_data",
+            "line_number": 28,
+            "classification_key": "RELIGIOUS_PHILOSOPHICAL",
+            "category": "Religious / Philosophical Beliefs (UK GDPR Art 9(1))",
+            "statutory_basis": "UK GDPR Article 9(2)(a) Explicit Consent",
+            "dpdp_section": "DPDPA 2023 Sec 4 (Personal Data Processing)",
+            "severity": "CRITICAL",
+            "requires_explicit_consent": true,
+            "recommended_encryption": "Encrypted at rest + Practitioner Masking",
+            "default_retention": "Purge raw questions 30 days post-session",
+            "is_art9": true
+          }
+        ]
+      },
+      {
+        "model_name": "PractitionerModel",
+        "source_file": "models.py",
+        "total_pii_fields": 2,
+        "contains_art9_special_category": false,
+        "fields": [
+          {
+            "field_name": "pan_number",
+            "line_number": 37,
+            "classification_key": "STATUTORY_GOV_IDENTIFIERS",
+            "category": "Government National Identifiers (UK/India Statutory IDs)",
+            "statutory_basis": "UK GDPR Article 6(1)(c) Legal Obligation / DPDPA 2023 Sec 6",
+            "dpdp_section": "Aadhaar Act 2016 & DPDPA Sec 8 (Strict Redaction/Masking)",
+            "severity": "HIGH",
+            "requires_explicit_consent": false,
+            "recommended_encryption": "Masked (display only last 4 digits) + AES-256",
+            "default_retention": "Statutory audit requirement (typically 6-7 years)",
+            "is_art9": true
+          },
+          {
+            "field_name": "bank_account",
+            "line_number": 38,
+            "classification_key": "FINANCIAL_PAYMENT",
+            "category": "Financial & Payment Credentials",
+            "statutory_basis": "UK GDPR Art 6(1)(b) Contract Performance & PCI-DSS",
+            "dpdp_section": "DPDPA 2023 Sec 4 & RBI Tokenisation Guidelines",
+            "severity": "HIGH",
+            "requires_explicit_consent": false,
+            "recommended_encryption": "Tokenized via Stripe/Razorpay (Do NOT store raw CVV)",
+            "default_retention": "Financial accounting 6 years",
+            "is_art9": true
+          }
+        ]
+      },
+      {
+        "model_name": "PaymentTransactionModel",
+        "source_file": "models.py",
+        "total_pii_fields": 2,
+        "contains_art9_special_category": false,
+        "fields": [
+          {
+            "field_name": "stripe_customer_id",
+            "line_number": 44,
+            "classification_key": "FINANCIAL_PAYMENT",
+            "category": "Financial & Payment Credentials",
+            "statutory_basis": "UK GDPR Art 6(1)(b) Contract Performance & PCI-DSS",
+            "dpdp_section": "DPDPA 2023 Sec 4 & RBI Tokenisation Guidelines",
+            "severity": "HIGH",
+            "requires_explicit_consent": false,
+            "recommended_encryption": "Tokenized via Stripe/Razorpay (Do NOT store raw CVV)",
+            "default_retention": "Financial accounting 6 years",
+            "is_art9": true
+          },
+          {
+            "field_name": "billing_postal_code",
+            "line_number": 46,
+            "classification_key": "LOCATION_TELEMETRY",
+            "category": "Online Identifiers & Telemetry (PECR / UK GDPR)",
+            "statutory_basis": "PECR Reg 6 / UK GDPR Art 6(1)(f) Legitimate Interests",
+            "dpdp_section": "DPDPA 2023 Sec 6",
+            "severity": "MEDIUM",
+            "requires_explicit_consent": false,
+            "recommended_encryption": "Pseudonymised / Hashed IP strings",
+            "default_retention": "Rolling 14-30 day access log rotation",
+            "is_art9": false
+          }
+        ]
+      }
+    ]
+  },
+  "api_data_flows": {
+    "total_routes_traced": 5,
+    "sensitive_routes_count": 1,
+    "ai_routes_count": 0,
+    "practitioner_routes_count": 2,
+    "dsar_erasure_implemented": false,
+    "dsar_portability_implemented": false,
+    "consent_endpoint_implemented": false,
+    "compliance_gaps": [
+      {
+        "statute": "UK GDPR Article 17 (Right to Erasure) & DPDPA 2023 Section 12(3)",
+        "severity": "CRITICAL",
+        "finding": "Missing automated Account & Data Deletion endpoint (e.g. DELETE /api/user/account).",
+        "remediation": "Add statutory deletion API that soft-deletes user profile and cryptographically scrubs PII within 30 days."
+      },
+      {
+        "statute": "UK GDPR Article 20 (Right to Data Portability)",
+        "severity": "HIGH",
+        "finding": "Missing automated Personal Data Export endpoint (e.g. GET /api/user/export-data).",
+        "remediation": "Provide structured JSON/CSV data export bundle for users upon request."
+      },
+      {
+        "statute": "UK GDPR Article 7 & Article 9(2)(a) Conditions for Consent",
+        "severity": "CRITICAL",
+        "finding": "No dedicated Consent Recording / Audit Logging API detected in routes.",
+        "remediation": "Implement POST /api/consent endpoint storing immutable timestamped consent records (timestamp, user_id, purpose, IP, notice_version)."
+      }
+    ],
+    "traced_routes": [
+      {
+        "endpoint": "register_user",
+        "path": "register_user",
+        "source_file": "api_routes.py",
+        "line_number": 11,
+        "is_sensitive": false,
+        "is_ai": false,
+        "is_practitioner": false,
+        "risk_flags": []
+      },
+      {
+        "endpoint": "book_consultation",
+        "path": "book_consultation",
+        "source_file": "api_routes.py",
+        "line_number": 15,
+        "is_sensitive": true,
+        "is_ai": false,
+        "is_practitioner": true,
+        "risk_flags": [
+          {
+            "rule": "UK GDPR Art 5(1)(c) Data Minimisation & Commercial Protection",
+            "severity": "HIGH",
+            "description": "Practitioner route detected. Ensure customer direct contact details (phone, email) are strictly masked to prevent off-platform poaching and unauthorized data copying."
+          },
+          {
+            "rule": "UK GDPR Art 9(2)(a) Explicit Consent",
+            "severity": "CRITICAL",
+            "description": "Sensitive consultation endpoint does not verify explicit Article 9 consent payload or token before processing sensitive consultation data."
+          }
+        ]
+      },
+      {
+        "endpoint": "generate_ai_insight",
+        "path": "generate_ai_insight",
+        "source_file": "api_routes.py",
+        "line_number": 20,
+        "is_sensitive": false,
+        "is_ai": false,
+        "is_practitioner": false,
+        "risk_flags": []
+      },
+      {
+        "endpoint": "get_client_details",
+        "path": "get_client_details",
+        "source_file": "api_routes.py",
+        "line_number": 25,
+        "is_sensitive": false,
+        "is_ai": false,
+        "is_practitioner": true,
+        "risk_flags": [
+          {
+            "rule": "UK GDPR Art 5(1)(c) Data Minimisation & Commercial Protection",
+            "severity": "HIGH",
+            "description": "Practitioner route detected. Ensure customer direct contact details (phone, email) are strictly masked to prevent off-platform poaching and unauthorized data copying."
+          }
+        ]
+      },
+      {
+        "endpoint": "create_payment_intent",
+        "path": "create_payment_intent",
+        "source_file": "api_routes.py",
+        "line_number": 35,
+        "is_sensitive": false,
+        "is_ai": false,
+        "is_practitioner": false,
+        "risk_flags": []
+      }
+    ]
+  },
+  "subprocessors_and_transfers": {
+    "total_subprocessors_detected": 5,
+    "critical_risk_subprocessors": 1,
+    "international_transfers_count": 4,
+    "us_transfers_detected": [
+      "OpenAI LLC",
+      "Stripe Payments UK, Ltd.",
+      "Amazon Web Services (AWS)",
+      "Twilio Inc."
+    ],
+    "subprocessor_register": [
+      {
+        "name": "OpenAI LLC",
+        "category": "AI / Large Language Model API",
+        "jurisdiction": "United States (Third Country)",
+        "data_types_processed": [
+          "User Consultation Prompts",
+          "Question Transcripts",
+          "Context Summaries"
+        ],
+        "transfer_mechanism_required": "UK IDTA / EU SCCs + Enterprise Zero-Data Retention Agreement",
+        "article_28_dpa_status": "Mandatory DPA (Ensure API opt-out of model training is active)",
+        "risk_level": "CRITICAL",
+        "recommendation": "Verify OpenAI API Data Processing Addendum is executed. Ensure organization account disables training on API inputs.",
+        "detected_packages": [
+          "openai"
+        ],
+        "referencing_files": [
+          "requirements.txt"
+        ]
+      },
+      {
+        "name": "Stripe Payments UK, Ltd.",
+        "category": "Payment Processing (PCI-DSS)",
+        "jurisdiction": "United Kingdom / United States",
+        "data_types_processed": [
+          "Payment Card Tokens",
+          "Customer Billing Address",
+          "Transaction History"
+        ],
+        "transfer_mechanism_required": "Stripe Data Processing Agreement",
+        "article_28_dpa_status": "Independent Controller / Joint Controller in card data handling",
+        "risk_level": "HIGH",
+        "recommendation": "Use Stripe Elements to prevent raw payment card numbers from touching Tara backend servers.",
+        "detected_packages": [
+          "stripe"
+        ],
+        "referencing_files": [
+          "requirements.txt"
+        ]
+      },
+      {
+        "name": "Amazon Web Services (AWS)",
+        "category": "Cloud Infrastructure & Database",
+        "jurisdiction": "United States / Ireland / UK",
+        "data_types_processed": [
+          "Primary Database",
+          "User Files",
+          "App Compute"
+        ],
+        "transfer_mechanism_required": "AWS GDPR Data Processing Addendum",
+        "article_28_dpa_status": "Mandatory Cloud DPA",
+        "risk_level": "HIGH",
+        "recommendation": "Pin primary S3 and RDS storage to AWS London (eu-west-2) to ensure UK local residency.",
+        "detected_packages": [
+          "boto3"
+        ],
+        "referencing_files": [
+          "requirements.txt"
+        ]
+      },
+      {
+        "name": "Twilio Inc.",
+        "category": "SMS & Video Communication Gateway",
+        "jurisdiction": "United States",
+        "data_types_processed": [
+          "Customer Phone Numbers",
+          "SMS Logs",
+          "Call Audio"
+        ],
+        "transfer_mechanism_required": "Twilio Binding Corporate Rules (BCR) / DPA",
+        "article_28_dpa_status": "Mandatory DPA",
+        "risk_level": "HIGH",
+        "recommendation": "Sign Twilio Data Protection Addendum utilizing Twilio's approved BCRs for UK transfers.",
+        "detected_packages": [
+          "twilio"
+        ],
+        "referencing_files": [
+          "requirements.txt"
+        ]
+      },
+      {
+        "name": "PostHog Inc.",
+        "category": "Product Analytics & Session Recording",
+        "jurisdiction": "EU Cloud / US Cloud",
+        "data_types_processed": [
+          "User Clickstreams",
+          "Session Replays",
+          "IP Addresses"
+        ],
+        "transfer_mechanism_required": "PostHog DPA + PECR Cookie Banner Consent",
+        "article_28_dpa_status": "Mandatory Processor DPA",
+        "risk_level": "HIGH",
+        "recommendation": "Configure PostHog EU cloud instance; enable strict input masking on session recording to mask client consultation queries.",
+        "detected_packages": [
+          "posthog"
+        ],
+        "referencing_files": [
+          "requirements.txt"
+        ]
+      }
+    ]
+  },
+  "uk_gdpr_compliance_package": {
+    "regulator": "Information Commissioner's Office (ICO) \u2014 United Kingdom",
+    "regulations": "UK General Data Protection Regulation (UK GDPR) & Data Protection Act 2018",
+    "dpia_required": true,
+    "dpia_justification": "A formal Data Protection Impact Assessment (DPIA) is statutory mandatory because the application involves large-scale processing of special category data (Article 9) and automated AI/LLM consultation workflows.",
+    "mandates": [
+      {
+        "article": "UK GDPR Article 6(1)(b) & 6(1)(a)",
+        "title": "Lawful Basis for Standard Processing",
+        "statutory_requirement": "Personal data (Name, Email, Phone, Billing) must be processed under Article 6(1)(b) (Performance of Contract) for delivering services, or Article 6(1)(a) (Consent) for optional marketing and cookies.",
+        "status": "APPLICABLE",
+        "risk_if_unaddressed": "Unlawful processing under ICO regulations. Statutory fine up to \u00a317.5M or 4% of annual turnover."
+      },
+      {
+        "article": "UK GDPR Article 9(1) & Article 9(2)(a)",
+        "title": "Explicit Consent for Special Category Consultation Data",
+        "statutory_requirement": "Codebase stores sensitive data (health/religious/spiritual/astrological context) in models: KundliConsultationModel. Processing is strictly prohibited under Article 9(1) unless an Article 9(2) exception applies. Action Required: Implement separate, unbundled EXPLICIT CONSENT checkbox at booking: 'I explicitly consent to the processing of my personal health/spiritual consultation data in accordance with the Privacy Notice.'",
+        "status": "CRITICAL_VIOLATION_IF_MISSING",
+        "risk_if_unaddressed": "Severe enforcement priority for UK ICO. Fines up to \u00a317.5M and mandatory processing suspension orders."
+      },
+      {
+        "article": "UK GDPR Article 28(3)",
+        "title": "Mandatory Data Processing Agreements (DPAs)",
+        "statutory_requirement": "Third-party subprocessors detected in code (OpenAI LLC, Stripe Payments UK, Ltd., Amazon Web Services (AWS), Twilio Inc., PostHog Inc.). Under Article 28, Tara must maintain written, legally binding DPAs binding each processor to process data only on documented instructions, ensure confidentiality, and delete data on termination.",
+        "status": "MANDATORY_CONTRACTUAL_AUDIT",
+        "risk_if_unaddressed": "Direct violation of Article 28. Fines up to \u00a38.7M."
+      },
+      {
+        "article": "UK GDPR Chapter V (Articles 44\u201346)",
+        "title": "UK International Data Transfer Agreement (IDTA) / SCCs",
+        "statutory_requirement": "UK customer consultation and profile data accessed by development, support, or practitioner teams in India, or US cloud subprocessors (OpenAI, AWS, Twilio), constitutes a restricted international transfer. Statutory Mandate: Execute the UK ICO International Data Transfer Agreement (IDTA) or the UK Addendum to EU SCCs along with a Transfer Risk Assessment (TRA).",
+        "status": "CRITICAL_GOVERNANCE_REQUIREMENT",
+        "risk_if_unaddressed": "Unlawful international data export. Immediate ICO regulatory stop order on overseas data access."
+      },
+      {
+        "article": "UK GDPR Article 32 & Article 5(1)(c)",
+        "title": "Practitioner Data Minimisation & At-Rest Encryption",
+        "statutory_requirement": "Ensure database fields storing special category and consultation transcripts use AES-256 encryption. Furthermore, practitioners must NEVER have access to customer personal contact phone numbers or raw email addresses. Implement in-app calling / masked messaging to prevent practitioner client poaching and off-platform data leakage.",
+        "status": "TECHNICAL_CONTROL_MANDATE",
+        "risk_if_unaddressed": "Major data breach vulnerability; unauthorized external data leak requiring 72-hour ICO notification."
+      }
+    ],
+    "article_30_ropa": [
+      {
+        "activity_id": "ROPA-01",
+        "processing_purpose": "User Account Registration & Identity Authentication",
+        "data_subjects": "Platform Customers & Consultation Seekers",
+        "data_categories": "Full Name, Email Address, Password Hash, IP Address",
+        "lawful_basis": "UK GDPR Article 6(1)(b) (Performance of Contract)",
+        "recipients_processors": "AWS (Hosting), Twilio (SMS Auth)",
+        "transfer_safeguards": "UK IDTA / UK Addendum to EU SCCs",
+        "retention_period": "Duration of user account + 30 days after deletion request",
+        "security_measures": "TLS 1.3 in transit, Bcrypt/Argon2 password hashing, RBAC"
+      },
+      {
+        "activity_id": "ROPA-02",
+        "processing_purpose": "Consultation Booking, Horoscope/Kundli & Spiritual Sessions",
+        "data_subjects": "Consultation Clients",
+        "data_categories": "Date of Birth, Birth Time, Birth Location, Consultation Queries, Relationship/Health Context",
+        "lawful_basis": "UK GDPR Art 6(1)(b) (Contract) + Art 9(2)(a) (Explicit Consent)",
+        "recipients_processors": "Assigned Vetted Practitioner (India/UK), AWS RDS",
+        "transfer_safeguards": "UK IDTA Agreement between Tara UK and Tara India / Practitioners",
+        "retention_period": "Consultation query purged after 60 days; birth demographics kept until account closed",
+        "security_measures": "Field-level AES-256 encryption, Practitioner phone/email masking"
+      },
+      {
+        "activity_id": "ROPA-03",
+        "processing_purpose": "AI/LLM Consultation Insights & Summarization",
+        "data_subjects": "Consultation Clients",
+        "data_categories": "De-identified Consultation Transcripts & Question Prompts",
+        "lawful_basis": "UK GDPR Article 6(1)(b) + Explicit Consent Art 9(2)(a)",
+        "recipients_processors": "OpenAI LLC (API Processor)",
+        "transfer_safeguards": "Standard Contractual Clauses + Zero-Data Retention Commercial Agreement",
+        "retention_period": "Zero retention on processor side; local ephemeral cache for session duration",
+        "security_measures": "PII scrubbing before API egress, TLS 1.3"
+      },
+      {
+        "activity_id": "ROPA-04",
+        "processing_purpose": "Payment Processing & Financial Invoicing",
+        "data_subjects": "Paying Customers & Practitioners",
+        "data_categories": "Billing Address, Payment Token, Transaction Amount, Payout Account",
+        "lawful_basis": "UK GDPR Article 6(1)(b) & Article 6(1)(c) (Statutory Tax Accounting)",
+        "recipients_processors": "Stripe Payments UK Ltd. / Razorpay",
+        "transfer_safeguards": "Stripe Global DPA",
+        "retention_period": "Statutory 6 years for UK HMRC and financial compliance",
+        "security_measures": "PCI-DSS Level 1 tokenisation (No card CVVs on Tara servers)"
+      }
+    ],
+    "developer_remediation_checklist": [
+      {
+        "task_id": "DEV-UK-01",
+        "priority": "CRITICAL",
+        "component": "Frontend Registration & Booking UI",
+        "requirement": "Add unbundled explicit consent checkbox for Article 9 consultation data before booking.",
+        "code_action": "Ensure consent checkbox is unticked by default and logs consent_timestamp, policy_version, user_id."
+      },
+      {
+        "task_id": "DEV-UK-02",
+        "priority": "CRITICAL",
+        "component": "Practitioner Portal / API Layer",
+        "requirement": "Implement data masking on practitioner API views to prevent customer contact theft.",
+        "code_action": "Strip customer phone number and email from practitioner response payloads. Route communications via in-app relay."
+      },
+      {
+        "task_id": "DEV-UK-03",
+        "priority": "CRITICAL",
+        "component": "User Account API",
+        "requirement": "Implement DELETE /api/user/account statutory right to erasure (Article 17).",
+        "code_action": "Create soft-delete workflow that scrubs PII across database tables and informs subprocessors within 30 days."
+      },
+      {
+        "task_id": "DEV-UK-04",
+        "priority": "HIGH",
+        "component": "AI / OpenAI API Integration",
+        "requirement": "Configure OpenAI zero-data retention headers and sanitize prompt payloads.",
+        "code_action": "Scrub direct names, phone numbers, and addresses from prompt text before dispatching to external LLMs."
+      },
+      {
+        "task_id": "DEV-UK-05",
+        "priority": "HIGH",
+        "component": "Database / ORM Models",
+        "requirement": "Implement field-level encryption for sensitive consultation notes.",
+        "code_action": "Use SQLAlchemy TypeDecorator or database pgcrypto / KMS envelope for sensitive columns."
+      }
+    ]
+  },
+  "india_dpdpa_compliance_package": {
+    "regulator": "Data Protection Board of India (DPBI)",
+    "act": "Digital Personal Data Protection Act, 2023 (DPDPA 2023)",
+    "jurisdiction": "Republic of India",
+    "max_statutory_penalty": "\u20b9250 Crore (~\u00a325 Million) per violation",
+    "mandates": [
+      {
+        "section": "DPDP Act 2023 Section 6(1) & 6(2)",
+        "title": "Itemised Bilingual Notice & Unconditional Consent",
+        "statutory_requirement": "Before or at the time of collecting personal data, Tara (Data Fiduciary) must present an itemised notice specifying the personal data to be collected, purpose of processing, how to exercise rights, and grievance officer contacts. Notice must be accessible in clear language with option for English and 22 Indian scheduled languages.",
+        "status": "MANDATORY_STATUTORY_NOTICE",
+        "statutory_penalty": "Penalties up to \u20b950 Crore for failure to issue compliant statutory notice."
+      },
+      {
+        "section": "DPDP Act 2023 Section 8(5) & 8(6)",
+        "title": "Reasonable Security Safeguards & Immediate Breach Reporting",
+        "statutory_requirement": "The Data Fiduciary must implement reasonable security safeguards (encryption, role-based access, access logging) to prevent personal data breaches. In case of ANY breach, immediate notification to the Data Protection Board of India (DPBI) and affected individuals is mandatory.",
+        "status": "CRITICAL_DEFENSE_OBLIGATION",
+        "statutory_penalty": "Maximum statutory fine of \u20b9250 CRORE (~\u00a325 Million) for failure to implement reasonable security safeguards!"
+      },
+      {
+        "section": "DPDP Act 2023 Section 8(7)",
+        "title": "Mandatory Erasure upon Purpose Fulfillment or Consent Withdrawal",
+        "statutory_requirement": "Personal data must be erased as soon as the user withdraws consent or as soon as the purpose for which it was collected is no longer being served. The codebase must not retain consultation transcripts indefinitely.",
+        "status": "AUTOMATED_RETENTION_MANDATE",
+        "statutory_penalty": "Penalties up to \u20b9100 Crore for non-compliance with data erasure duties."
+      },
+      {
+        "section": "DPDP Act 2023 Section 9",
+        "title": "Children's Data Verification & Prohibition of Behavioural Tracking",
+        "statutory_requirement": "If the platform serves individuals under 18 years, Tara must obtain verifiable parental consent. Strict statutory prohibition against behavioural monitoring, tracking, or targeted advertising directed at children.",
+        "status": "AGE_GATING_CHECK",
+        "statutory_penalty": "Penalties up to \u20b9200 Crore for breach of obligations in relation to children."
+      },
+      {
+        "section": "DPDP Act 2023 Section 10",
+        "title": "Significant Data Fiduciary (SDF) Readiness Check",
+        "statutory_requirement": "Given the sensitive nature of consultation & astrological profiling data, the Central Government may notify Tara as a Significant Data Fiduciary (SDF). SDF obligations require: (1) Appointing a resident India Data Protection Officer (DPO), (2) Appointing an Independent Data Auditor, and (3) Conducting periodic DPIAs.",
+        "status": "ASSESSMENT_RECOMMENDED",
+        "statutory_penalty": "Penalties up to \u20b9150 Crore for SDF non-compliance."
+      },
+      {
+        "section": "DPDP Act 2023 Section 16 & RBI Guidelines",
+        "title": "Cross-Border Data Transfer & Payment Localisation",
+        "statutory_requirement": "Personal data can be transferred outside India unless sent to blacklisted jurisdictions notified by the Indian Government. Payment transaction data processed via Razorpay or UPI must adhere to RBI mandate ensuring full end-to-end transaction data remains stored exclusively in servers located in India.",
+        "status": "INFRASTRUCTURE_CONFIGURATION_MANDATE",
+        "statutory_penalty": "Penalties up to \u20b9100 Crore."
+      }
+    ],
+    "developer_action_points": [
+      {
+        "task_id": "DEV-IN-01",
+        "priority": "CRITICAL",
+        "area": "Grievance Redressal Mechanism",
+        "action": "Expose an in-app Grievance Redressal Officer contact and ticket submission workflow (Section 13)."
+      },
+      {
+        "task_id": "DEV-IN-02",
+        "priority": "HIGH",
+        "area": "Consent Withdrawal Hook",
+        "action": "Ensure withdrawing consent (e.g. user toggles off data use in settings) triggers background job to cease processing."
+      },
+      {
+        "task_id": "DEV-IN-03",
+        "priority": "HIGH",
+        "area": "Data Localisation for Indian Financials",
+        "action": "Verify Indian banking/UPI payment logs are maintained within AWS India (ap-south-1) or Razorpay native storage."
+      }
+    ]
+  }
+}
