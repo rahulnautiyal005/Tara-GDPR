@@ -8,60 +8,214 @@
     <meta name="description" content="Beginner-friendly AI legal intelligence: Document Auto-Fixer, GitHub Repo Privacy Generator, and Legal AI Chatbot.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #FAFAF8;
-            --bg-warm: #F5F3EF;
-            --bg-card: #FFFFFF;
-            --bg-elevated: #FFFFFF;
-            --border: #E8E5DE;
-            --border-hover: #D4CFC5;
-            --text-primary: #1A1A2E;
-            --text-secondary: #5A5A72;
-            --text-muted: #8E8E9F;
-            --accent: #2D5BFF;
-            --accent-hover: #1A45E0;
-            --accent-light: #EEF2FF;
-            --accent-glow: rgba(45, 91, 255, 0.12);
-            --success: #16A34A;
-            --success-light: #F0FDF4;
-            --success-border: #BBF7D0;
-            --warning: #D97706;
-            --warning-light: #FFFBEB;
-            --warning-border: #FDE68A;
-            --danger: #DC2626;
-            --danger-light: #FEF2F2;
-            --danger-border: #FECACA;
-            --gold: #B8860B;
-            --gold-light: #FFF8E7;
-            --radius-sm: 8px;
-            --radius: 14px;
-            --radius-lg: 18px;
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
-            --shadow-md: 0 4px 16px rgba(0,0,0,0.06), 0 2px 6px rgba(0,0,0,0.03);
-            --shadow-lg: 0 12px 40px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04);
-            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --bg-deep: #06060F;
+            --bg-surface: #0C0C1D;
+            --bg-card: rgba(15, 15, 35, 0.65);
+            --bg-elevated: rgba(20, 20, 45, 0.7);
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.07);
+            --glass-hover: rgba(255, 255, 255, 0.1);
+            --text-primary: #F0F0F8;
+            --text-secondary: #9B9BC0;
+            --text-muted: #5E5E80;
+            --accent-1: #6C5CE7;
+            --accent-2: #00CEFF;
+            --accent-3: #A855F7;
+            --accent-gradient: linear-gradient(135deg, #6C5CE7, #00CEFF);
+            --accent-gradient-subtle: linear-gradient(135deg, rgba(108,92,231,0.15), rgba(0,206,255,0.1));
+            --glow-accent: rgba(108, 92, 231, 0.35);
+            --glow-cyan: rgba(0, 206, 255, 0.25);
+            --success: #51CF66;
+            --success-bg: rgba(81, 207, 102, 0.08);
+            --success-border: rgba(81, 207, 102, 0.15);
+            --warning: #FFD43B;
+            --warning-bg: rgba(255, 212, 59, 0.08);
+            --warning-border: rgba(255, 212, 59, 0.15);
+            --danger: #FF6B6B;
+            --danger-bg: rgba(255, 107, 107, 0.08);
+            --danger-border: rgba(255, 107, 107, 0.15);
+            --radius-sm: 10px;
+            --radius: 16px;
+            --radius-lg: 22px;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+            --shadow-md: 0 8px 32px rgba(0,0,0,0.4);
+            --shadow-lg: 0 16px 64px rgba(0,0,0,0.5);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-fast: all 0.15s ease;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-deep);
             color: var(--text-primary);
-            font-size: 14.5px;
+            font-size: 14px;
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             min-height: 100vh;
+            position: relative;
+        }
+
+        /* ─── Ambient Background ─── */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -20%;
+            width: 140%;
+            height: 140%;
+            background:
+                radial-gradient(ellipse 700px 500px at 15% 15%, rgba(0, 242, 254, 0.12), transparent),
+                radial-gradient(ellipse 600px 600px at 85% 85%, rgba(121, 40, 202, 0.14), transparent),
+                radial-gradient(ellipse 500px 400px at 50% 40%, rgba(99, 102, 241, 0.08), transparent);
+            z-index: 0;
+            pointer-events: none;
+            animation: ambientShift 18s ease-in-out infinite alternate;
+        }
+
+        @keyframes ambientShift {
+            0% { transform: scale(1) translate(0, 0); }
+            50% { transform: scale(1.08) translate(30px, -20px); }
+            100% { transform: scale(0.95) translate(-20px, 30px); }
+        }
+
+        /* ─── Cyber Grid Overlay ─── */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+            mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, #000 70%, transparent 100%);
+            -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, #000 70%, transparent 100%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ─── METRIC STATS BENTO ROW ─── */
+        .metrics-bento-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        @media (max-width: 1024px) {
+            .metrics-bento-row { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 600px) {
+            .metrics-bento-row { grid-template-columns: 1fr; }
+        }
+
+        .metric-bento-card {
+            background: rgba(14, 15, 34, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 18px 20px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .metric-bento-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-1), var(--accent-2), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .metric-bento-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(0, 242, 254, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 242, 254, 0.1);
+        }
+
+        .metric-bento-card:hover::before {
+            opacity: 1;
+        }
+
+        .metric-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .metric-icon-wrap {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .metric-tag {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .tag-green { background: rgba(16, 185, 129, 0.15); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.3); }
+        .tag-cyan { background: rgba(0, 242, 254, 0.12); color: #00F2FE; border: 1px solid rgba(0, 242, 254, 0.25); }
+        .tag-purple { background: rgba(121, 40, 202, 0.18); color: #C084FC; border: 1px solid rgba(121, 40, 202, 0.35); }
+        .tag-amber { background: rgba(245, 158, 11, 0.15); color: #FBBF24; border: 1px solid rgba(245, 158, 11, 0.3); }
+
+        .metric-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 26px;
+            font-weight: 800;
+            color: #FFFFFF;
+            letter-spacing: -0.02em;
+        }
+
+        .metric-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .metric-bar-bg {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 4px;
+        }
+
+        .metric-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            background: var(--accent-gradient);
+            box-shadow: 0 0 10px var(--glow-accent);
         }
 
         /* ─── TOPBAR NAVIGATION ─── */
         .topbar {
-            background: rgba(255, 255, 255, 0.94);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--border);
+            background: rgba(6, 6, 15, 0.75);
+            backdrop-filter: blur(24px) saturate(1.3);
+            -webkit-backdrop-filter: blur(24px) saturate(1.3);
+            border-bottom: 1px solid var(--glass-border);
             height: 72px;
             position: sticky;
             top: 0;
@@ -81,75 +235,90 @@
         }
 
         .brand-logo {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #2D5BFF, #7C3AED);
+            width: 42px;
+            height: 42px;
+            background: var(--accent-gradient);
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
+            font-family: 'Space Grotesk', sans-serif;
             font-size: 22px;
             font-weight: 700;
-            box-shadow: 0 4px 12px rgba(45, 91, 255, 0.25);
+            box-shadow: 0 4px 20px var(--glow-accent);
+            position: relative;
+        }
+
+        .brand-logo::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 14px;
+            background: var(--accent-gradient);
+            z-index: -1;
+            opacity: 0.3;
+            filter: blur(8px);
         }
 
         .brand-text h1 {
-            font-family: 'DM Serif Display', serif;
-            font-size: 20px;
-            line-height: 1.15;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 19px;
+            line-height: 1.2;
             color: var(--text-primary);
             letter-spacing: -0.3px;
+            font-weight: 700;
         }
 
         .brand-text p {
-            font-size: 11.5px;
+            font-size: 11px;
             color: var(--text-muted);
             font-weight: 500;
         }
 
-        /* 4 Phases Main Navigation Tabs */
+        /* Phase Navigation Tabs */
         .phase-tabs {
             display: flex;
             align-items: center;
-            background: var(--bg-warm);
+            background: rgba(255, 255, 255, 0.03);
             padding: 4px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
+            border-radius: 14px;
+            border: 1px solid var(--glass-border);
             gap: 4px;
         }
 
         .phase-tab-btn {
             border: none;
             background: transparent;
-            padding: 9px 18px;
-            border-radius: 9px;
-            font-family: inherit;
-            font-size: 13.5px;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
             font-weight: 600;
-            color: var(--text-secondary);
+            color: var(--text-muted);
             cursor: pointer;
             transition: var(--transition);
             display: flex;
             align-items: center;
             gap: 8px;
             white-space: nowrap;
+            position: relative;
         }
 
         .phase-tab-btn:hover {
-            color: var(--text-primary);
-            background: rgba(255, 255, 255, 0.6);
+            color: var(--text-secondary);
+            background: rgba(255, 255, 255, 0.04);
         }
 
         .phase-tab-btn.active {
-            background: #FFFFFF;
-            color: var(--accent);
-            box-shadow: var(--shadow-sm);
+            background: var(--accent-gradient-subtle);
+            color: var(--accent-2);
+            box-shadow: inset 0 0 0 1px rgba(0, 206, 255, 0.15);
         }
 
         .pill-badge {
             font-size: 10px;
-            padding: 2px 7px;
+            padding: 2px 8px;
             border-radius: 100px;
             font-weight: 700;
             text-transform: uppercase;
@@ -157,7 +326,7 @@
         }
 
         .pill-progress {
-            background: var(--warning-light);
+            background: var(--warning-bg);
             color: var(--warning);
             border: 1px solid var(--warning-border);
         }
@@ -172,10 +341,10 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            background: var(--bg-warm);
-            padding: 6px 12px;
+            background: rgba(255, 255, 255, 0.04);
+            padding: 7px 14px;
             border-radius: 100px;
-            border: 1px solid var(--border);
+            border: 1px solid var(--glass-border);
             font-size: 12.5px;
             font-weight: 500;
             color: var(--text-secondary);
@@ -186,14 +355,20 @@
             height: 8px;
             border-radius: 50%;
             background: var(--success);
-            box-shadow: 0 0 6px rgba(22, 163, 74, 0.6);
+            box-shadow: 0 0 8px rgba(81, 207, 102, 0.6);
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(81, 207, 102, 0.6); }
+            50% { opacity: 0.6; box-shadow: 0 0 16px rgba(81, 207, 102, 0.4); }
         }
 
         .btn-logout {
             background: transparent;
-            border: 1px solid var(--border);
+            border: 1px solid var(--glass-border);
             padding: 7px 14px;
-            border-radius: 8px;
+            border-radius: 10px;
             font-family: inherit;
             font-size: 12.5px;
             font-weight: 600;
@@ -205,19 +380,21 @@
         .btn-logout:hover {
             border-color: var(--danger);
             color: var(--danger);
-            background: var(--danger-light);
+            background: var(--danger-bg);
         }
 
         /* ─── APP CONTAINER ─── */
         .app-container {
-            max-width: 1240px;
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 30px 24px 80px;
+            padding: 32px 24px 80px;
+            position: relative;
+            z-index: 1;
         }
 
         /* Phase Section Header */
         .phase-header {
-            margin-bottom: 24px;
+            margin-bottom: 28px;
             text-align: center;
         }
 
@@ -225,23 +402,26 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            background: var(--accent-light);
-            color: var(--accent);
-            padding: 4px 14px;
+            background: var(--accent-gradient-subtle);
+            color: var(--accent-2);
+            padding: 5px 16px;
             border-radius: 100px;
             font-size: 12px;
             font-weight: 700;
-            margin-bottom: 12px;
-            border: 1px solid rgba(45, 91, 255, 0.15);
+            margin-bottom: 14px;
+            border: 1px solid rgba(0, 206, 255, 0.12);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
 
         .phase-header h2 {
-            font-family: 'DM Serif Display', serif;
-            font-size: 32px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 34px;
             color: var(--text-primary);
-            line-height: 1.25;
+            line-height: 1.2;
             letter-spacing: -0.5px;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
+            font-weight: 700;
         }
 
         .phase-header p {
@@ -249,32 +429,54 @@
             font-size: 15px;
             max-width: 680px;
             margin: 0 auto;
+            line-height: 1.6;
         }
 
-        /* General Card */
+        /* General Glass Card */
         .card {
             background: var(--bg-card);
-            border: 1px solid var(--border);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
             border-radius: var(--radius);
             box-shadow: var(--shadow-sm);
             transition: var(--transition);
             overflow: hidden;
+            position: relative;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(108, 92, 231, 0.3), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
         }
 
         .card:hover {
             box-shadow: var(--shadow-md);
-            border-color: var(--border-hover);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .card:hover::before {
+            opacity: 1;
         }
 
         .card-header {
-            padding: 16px 20px;
-            border-bottom: 1px solid var(--border);
+            padding: 18px 22px;
+            border-bottom: 1px solid var(--glass-border);
             display: flex;
             align-items: center;
             justify-content: space-between;
+            background: rgba(255, 255, 255, 0.015);
         }
 
         .card-header h3 {
+            font-family: 'Space Grotesk', sans-serif;
             font-size: 15px;
             font-weight: 700;
             color: var(--text-primary);
@@ -284,7 +486,7 @@
         }
 
         .card-body {
-            padding: 20px;
+            padding: 22px;
         }
 
         /* ==============================================================
@@ -295,7 +497,7 @@
             justify-content: center;
             align-items: center;
             gap: 12px;
-            margin: 0 auto 30px;
+            margin: 0 auto 32px;
             max-width: 720px;
         }
 
@@ -303,10 +505,10 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 8px 18px;
+            padding: 10px 20px;
             border-radius: 100px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
             font-size: 13px;
             font-weight: 600;
             color: var(--text-muted);
@@ -314,22 +516,22 @@
         }
 
         .step-item.active {
-            background: var(--accent-light);
-            border-color: var(--accent);
-            color: var(--accent);
+            background: var(--accent-gradient-subtle);
+            border-color: rgba(108, 92, 231, 0.3);
+            color: var(--accent-2);
         }
 
         .step-item.done {
-            background: var(--success-light);
-            border-color: var(--success);
+            background: var(--success-bg);
+            border-color: var(--success-border);
             color: var(--success);
         }
 
         .step-num {
-            width: 22px;
-            height: 22px;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
-            background: var(--bg-warm);
+            background: rgba(255,255,255,0.06);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -338,8 +540,9 @@
         }
 
         .step-item.active .step-num {
-            background: var(--accent);
+            background: var(--accent-1);
             color: white;
+            box-shadow: 0 0 12px var(--glow-accent);
         }
 
         .step-item.done .step-num {
@@ -350,24 +553,24 @@
         .step-line {
             flex: 1;
             height: 2px;
-            background: var(--border);
+            background: linear-gradient(90deg, var(--glass-border), rgba(108, 92, 231, 0.15));
             max-width: 40px;
         }
 
         /* Sample Presets */
         .samples-box {
-            background: var(--bg-warm);
-            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
             border-radius: var(--radius);
-            padding: 16px 20px;
+            padding: 18px 22px;
             margin-bottom: 24px;
         }
 
         .samples-box-title {
             font-size: 13px;
             font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 10px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
             gap: 6px;
@@ -380,10 +583,10 @@
         }
 
         .sample-chip {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 7px 12px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            padding: 8px 14px;
             font-size: 12.5px;
             font-weight: 600;
             color: var(--text-secondary);
@@ -395,15 +598,16 @@
         }
 
         .sample-chip:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-            background: var(--accent-light);
+            border-color: rgba(0, 206, 255, 0.3);
+            color: var(--accent-2);
+            background: rgba(0, 206, 255, 0.06);
         }
 
         .sample-chip.active {
-            border-color: var(--accent);
-            background: var(--accent-light);
-            color: var(--accent);
+            border-color: rgba(108, 92, 231, 0.4);
+            background: var(--accent-gradient-subtle);
+            color: var(--accent-2);
+            box-shadow: 0 0 16px rgba(108, 92, 231, 0.1);
         }
 
         /* Input Grid */
@@ -411,7 +615,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
-            margin-bottom: 20px;
+            margin-bottom: 22px;
         }
 
         @media (max-width: 860px) {
@@ -421,11 +625,11 @@
         }
 
         .upload-dropzone {
-            border: 2px dashed var(--border);
+            border: 2px dashed rgba(108, 92, 231, 0.25);
             border-radius: var(--radius);
-            padding: 36px 20px;
+            padding: 40px 20px;
             text-align: center;
-            background: #FAFAFB;
+            background: rgba(108, 92, 231, 0.03);
             cursor: pointer;
             transition: var(--transition);
             display: flex;
@@ -436,16 +640,19 @@
         }
 
         .upload-dropzone:hover {
-            border-color: var(--accent);
-            background: var(--accent-light);
+            border-color: var(--accent-1);
+            background: rgba(108, 92, 231, 0.06);
+            box-shadow: inset 0 0 40px rgba(108, 92, 231, 0.05);
         }
 
         .upload-dropzone .icon-big {
-            font-size: 36px;
-            margin-bottom: 12px;
+            font-size: 40px;
+            margin-bottom: 14px;
+            filter: drop-shadow(0 4px 12px rgba(108, 92, 231, 0.3));
         }
 
         .upload-dropzone h4 {
+            font-family: 'Space Grotesk', sans-serif;
             font-size: 15px;
             font-weight: 700;
             color: var(--text-primary);
@@ -460,21 +667,21 @@
         .paste-textarea {
             width: 100%;
             height: 200px;
-            padding: 14px;
-            border: 1px solid var(--border);
+            padding: 16px;
+            border: 1px solid var(--glass-border);
             border-radius: var(--radius);
-            font-family: inherit;
-            font-size: 13.5px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
             color: var(--text-primary);
-            background: #FFFFFF;
+            background: rgba(255, 255, 255, 0.02);
             outline: none;
             resize: vertical;
             transition: var(--transition);
         }
 
         .paste-textarea:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px var(--accent-glow);
+            border-color: var(--accent-1);
+            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.15), 0 0 24px rgba(108, 92, 231, 0.08);
         }
 
         /* Doc Type Selector */
@@ -483,21 +690,23 @@
             align-items: center;
             gap: 8px;
             flex-wrap: wrap;
-            margin-bottom: 24px;
+            margin-bottom: 26px;
         }
 
         .doc-type-label {
             font-size: 13px;
             font-weight: 700;
-            color: var(--text-secondary);
+            color: var(--text-muted);
             margin-right: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .doc-type-btn {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            padding: 6px 12px;
-            border-radius: 8px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 7px 14px;
+            border-radius: 10px;
             font-family: inherit;
             font-size: 12.5px;
             font-weight: 500;
@@ -507,25 +716,25 @@
         }
 
         .doc-type-btn:hover {
-            border-color: var(--border-hover);
+            border-color: rgba(255, 255, 255, 0.12);
             color: var(--text-primary);
         }
 
         .doc-type-btn.active {
-            border-color: var(--accent);
-            background: var(--accent-light);
-            color: var(--accent);
+            border-color: rgba(108, 92, 231, 0.4);
+            background: var(--accent-gradient-subtle);
+            color: var(--accent-2);
             font-weight: 600;
         }
 
         /* Action Button */
         .btn-primary-action {
-            background: linear-gradient(135deg, #2D5BFF, #5B3AE0);
+            background: var(--accent-gradient);
             color: white;
             border: none;
-            padding: 14px 32px;
-            border-radius: 12px;
-            font-family: inherit;
+            padding: 16px 36px;
+            border-radius: 14px;
+            font-family: 'Space Grotesk', sans-serif;
             font-size: 15px;
             font-weight: 700;
             cursor: pointer;
@@ -534,16 +743,32 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            box-shadow: 0 4px 16px rgba(45, 91, 255, 0.25);
+            box-shadow: 0 4px 24px var(--glow-accent);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.3px;
+        }
+
+        .btn-primary-action::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s;
         }
 
         .btn-primary-action:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(45, 91, 255, 0.35);
+            box-shadow: 0 8px 40px var(--glow-accent), 0 0 60px rgba(108, 92, 231, 0.15);
+        }
+
+        .btn-primary-action:hover::before {
+            opacity: 1;
         }
 
         .btn-primary-action:disabled {
-            opacity: 0.6;
+            opacity: 0.5;
             cursor: not-allowed;
             transform: none;
         }
@@ -551,6 +776,12 @@
         /* Audit Results */
         .results-box {
             margin-top: 36px;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .summary-banner {
@@ -566,31 +797,41 @@
 
         .stat-card {
             background: var(--bg-card);
-            border: 1px solid var(--border);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
             border-radius: var(--radius);
-            padding: 16px 20px;
+            padding: 20px 22px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            border-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
         }
 
         .stat-card-val {
-            font-size: 28px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 32px;
             font-weight: 800;
             line-height: 1.1;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
 
         .stat-card-lbl {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-muted);
-            font-weight: 600;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.4px;
+            letter-spacing: 0.6px;
         }
 
-        .val-danger { color: var(--danger); }
-        .val-warning { color: var(--warning); }
-        .val-success { color: var(--success); }
-        .val-accent { color: var(--accent); }
+        .val-danger { color: var(--danger); text-shadow: 0 0 20px rgba(255, 107, 107, 0.3); }
+        .val-warning { color: var(--warning); text-shadow: 0 0 20px rgba(255, 212, 59, 0.3); }
+        .val-success { color: var(--success); text-shadow: 0 0 20px rgba(81, 207, 102, 0.3); }
+        .val-accent { color: var(--accent-2); text-shadow: 0 0 20px var(--glow-cyan); }
 
         .audit-split {
             display: grid;
@@ -612,12 +853,38 @@
             padding-right: 6px;
         }
 
+        /* Scrollbar Styling */
+        .issues-list::-webkit-scrollbar,
+        .chat-messages::-webkit-scrollbar,
+        .doc-fixed-viewer::-webkit-scrollbar,
+        .policy-rendered-view::-webkit-scrollbar {
+            width: 6px;
+        }
+        .issues-list::-webkit-scrollbar-track,
+        .chat-messages::-webkit-scrollbar-track,
+        .doc-fixed-viewer::-webkit-scrollbar-track,
+        .policy-rendered-view::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .issues-list::-webkit-scrollbar-thumb,
+        .chat-messages::-webkit-scrollbar-thumb,
+        .doc-fixed-viewer::-webkit-scrollbar-thumb,
+        .policy-rendered-view::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.08);
+            border-radius: 3px;
+        }
+
         .issue-item {
-            background: #FFFFFF;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 16px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            padding: 18px;
             border-left: 4px solid var(--danger);
+            transition: var(--transition);
+        }
+
+        .issue-item:hover {
+            background: rgba(255, 255, 255, 0.04);
         }
 
         .issue-item.warning {
@@ -628,7 +895,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
         .issue-title {
@@ -640,98 +907,101 @@
         .issue-badge {
             font-size: 11px;
             font-weight: 700;
-            padding: 2px 8px;
+            padding: 3px 10px;
             border-radius: 100px;
         }
 
         .badge-danger {
-            background: var(--danger-light);
+            background: var(--danger-bg);
             color: var(--danger);
+            border: 1px solid var(--danger-border);
         }
 
         .badge-warning {
-            background: var(--warning-light);
+            background: var(--warning-bg);
             color: var(--warning);
+            border: 1px solid var(--warning-border);
         }
 
         .issue-desc {
             font-size: 13px;
             color: var(--text-secondary);
             margin-bottom: 10px;
-            line-height: 1.5;
+            line-height: 1.55;
         }
 
         .issue-statute {
             display: inline-block;
             font-size: 11.5px;
             color: var(--text-muted);
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             font-weight: 500;
         }
 
         .issue-fix-box {
-            background: var(--success-light);
+            background: var(--success-bg);
             border: 1px solid var(--success-border);
-            border-radius: 8px;
-            padding: 10px 12px;
+            border-radius: 10px;
+            padding: 12px 14px;
             font-size: 12.5px;
-            color: #14532D;
+            color: var(--success);
             line-height: 1.5;
         }
 
         .doc-fixed-viewer {
-            background: #FFFFFF;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 24px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            padding: 26px;
             max-height: 650px;
             overflow-y: auto;
             font-size: 13.5px;
             line-height: 1.7;
-            color: #334155;
+            color: var(--text-secondary);
         }
 
         .doc-fixed-viewer h3 {
+            font-family: 'Space Grotesk', sans-serif;
             font-size: 16px;
             color: var(--text-primary);
-            margin-bottom: 12px;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 8px;
+            margin-bottom: 14px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
         }
 
         .clause-added {
-            background: #F0FDF4;
-            border: 1px solid #86EFAC;
-            border-radius: 8px;
-            padding: 12px 14px;
-            margin: 12px 0;
+            background: var(--success-bg);
+            border: 1px solid var(--success-border);
+            border-radius: 10px;
+            padding: 14px 16px;
+            margin: 14px 0;
             position: relative;
         }
 
         .clause-label {
             font-size: 11px;
             font-weight: 700;
-            color: #15803D;
+            color: var(--success);
             text-transform: uppercase;
             letter-spacing: 0.5px;
             display: block;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
 
         .export-bar {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             flex-wrap: wrap;
-            padding-top: 16px;
-            border-top: 1px solid var(--border);
+            padding-top: 18px;
+            border-top: 1px solid var(--glass-border);
         }
 
         .btn-export {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            padding: 8px 16px;
-            border-radius: 9px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 9px 18px;
+            border-radius: 10px;
             font-family: inherit;
             font-size: 13px;
             font-weight: 600;
@@ -744,19 +1014,21 @@
         }
 
         .btn-export:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-            background: var(--accent-light);
+            border-color: rgba(0, 206, 255, 0.3);
+            color: var(--accent-2);
+            background: rgba(0, 206, 255, 0.06);
         }
 
         .btn-export.primary {
-            background: var(--accent);
+            background: var(--accent-gradient);
             color: white;
-            border-color: var(--accent);
+            border-color: transparent;
+            box-shadow: 0 2px 12px var(--glow-accent);
         }
 
         .btn-export.primary:hover {
-            background: var(--accent-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px var(--glow-accent);
         }
 
         /* ==============================================================
@@ -765,8 +1037,8 @@
         .preset-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            margin-bottom: 20px;
+            gap: 14px;
+            margin-bottom: 22px;
         }
 
         @media (max-width: 960px) {
@@ -774,49 +1046,74 @@
         }
 
         .preset-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 14px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            padding: 18px;
             cursor: pointer;
             transition: var(--transition);
             text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .preset-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--accent-gradient);
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 0;
         }
 
         .preset-card:hover {
-            border-color: var(--accent);
-            box-shadow: var(--shadow-sm);
-            transform: translateY(-1px);
+            border-color: rgba(108, 92, 231, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 32px rgba(108, 92, 231, 0.15);
+        }
+
+        .preset-card:hover::after {
+            opacity: 0.04;
         }
 
         .preset-card.active {
-            border-color: var(--accent);
-            background: var(--accent-light);
+            border-color: rgba(108, 92, 231, 0.4);
+            background: var(--accent-gradient-subtle);
+            box-shadow: 0 0 24px rgba(108, 92, 231, 0.1);
         }
 
         .preset-card .preset-icon {
-            font-size: 22px;
-            margin-bottom: 8px;
+            font-size: 26px;
+            margin-bottom: 10px;
             display: block;
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
         }
 
         .preset-card h4 {
-            font-size: 13.5px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 14px;
             font-weight: 700;
             color: var(--text-primary);
-            margin-bottom: 4px;
+            margin-bottom: 6px;
+            position: relative;
+            z-index: 1;
         }
 
         .preset-card p {
-            font-size: 11.5px;
+            font-size: 12px;
             color: var(--text-muted);
-            line-height: 1.4;
+            line-height: 1.45;
+            position: relative;
+            z-index: 1;
         }
 
         .repo-form-row {
             display: flex;
-            gap: 12px;
-            margin-bottom: 16px;
+            gap: 14px;
+            margin-bottom: 18px;
             flex-wrap: wrap;
         }
 
@@ -827,52 +1124,57 @@
 
         .form-control label {
             display: block;
-            font-size: 12.5px;
+            font-size: 12px;
             font-weight: 700;
-            color: var(--text-secondary);
-            margin-bottom: 6px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
         }
 
         .input-text {
             width: 100%;
-            padding: 11px 14px;
-            border: 1px solid var(--border);
-            border-radius: 9px;
+            padding: 12px 16px;
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
             font-family: inherit;
             font-size: 13.5px;
             color: var(--text-primary);
-            background: #FFFFFF;
+            background: rgba(255, 255, 255, 0.03);
             outline: none;
             transition: var(--transition);
         }
 
         .input-text:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px var(--accent-glow);
+            border-color: var(--accent-1);
+            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.15);
         }
 
         /* Repo Results Container */
         .repo-results-card {
             margin-top: 24px;
-            background: #FFFFFF;
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-sm);
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
             overflow: hidden;
+            animation: fadeIn 0.5s ease-out;
         }
 
         .repo-results-header {
-            padding: 20px 24px;
-            background: #F8F9FA;
-            border-bottom: 1px solid var(--border);
+            padding: 22px 26px;
+            background: rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid var(--glass-border);
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 14px;
         }
 
         .repo-domain-info h3 {
+            font-family: 'Space Grotesk', sans-serif;
             font-size: 18px;
             color: var(--text-primary);
             margin-bottom: 4px;
@@ -885,9 +1187,9 @@
 
         .repo-subtabs {
             display: flex;
-            background: #F1F3F5;
-            padding: 4px 16px;
-            border-bottom: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.02);
+            padding: 6px 18px;
+            border-bottom: 1px solid var(--glass-border);
             gap: 6px;
             overflow-x: auto;
         }
@@ -895,62 +1197,79 @@
         .repo-subtab-btn {
             background: transparent;
             border: none;
-            padding: 9px 16px;
-            border-radius: 8px;
+            padding: 10px 18px;
+            border-radius: 10px;
             font-family: inherit;
             font-size: 13px;
             font-weight: 600;
-            color: var(--text-secondary);
+            color: var(--text-muted);
             cursor: pointer;
             transition: var(--transition);
             white-space: nowrap;
         }
 
         .repo-subtab-btn:hover {
-            color: var(--text-primary);
+            color: var(--text-secondary);
         }
 
         .repo-subtab-btn.active {
-            background: #FFFFFF;
-            color: var(--accent);
-            box-shadow: var(--shadow-sm);
+            background: var(--accent-gradient-subtle);
+            color: var(--accent-2);
+            box-shadow: inset 0 0 0 1px rgba(0, 206, 255, 0.12);
         }
 
         .repo-tab-content {
-            padding: 24px;
+            padding: 26px;
             min-height: 400px;
         }
 
         /* Policy Document Renderer */
         .policy-rendered-view {
-            background: #FAFBFD;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 32px 36px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 34px 38px;
             font-size: 14px;
             line-height: 1.75;
-            color: #1E293B;
+            color: var(--text-secondary);
             max-height: 600px;
             overflow-y: auto;
         }
 
-        .policy-rendered-view h1 { font-size: 22px; color: #0F172A; margin-bottom: 16px; border-bottom: 2px solid var(--accent); padding-bottom: 8px; }
-        .policy-rendered-view h2 { font-size: 17px; color: #1E293B; margin: 24px 0 10px; }
-        .policy-rendered-view h3 { font-size: 15px; color: #334155; margin: 18px 0 8px; }
+        .policy-rendered-view h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 22px;
+            color: var(--text-primary);
+            margin-bottom: 18px;
+            border-bottom: 2px solid var(--accent-1);
+            padding-bottom: 10px;
+        }
+        .policy-rendered-view h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 17px;
+            color: var(--text-primary);
+            margin: 26px 0 12px;
+        }
+        .policy-rendered-view h3 { font-size: 15px; color: var(--text-secondary); margin: 20px 0 8px; }
         .policy-rendered-view p { margin-bottom: 14px; }
         .policy-rendered-view ul { margin: 0 0 16px 24px; }
         .policy-rendered-view table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
-        .policy-rendered-view th, .policy-rendered-view td { padding: 9px 12px; border: 1px solid #CBD5E1; text-align: left; }
-        .policy-rendered-view th { background: #F1F5F9; color: #0F172A; font-weight: 600; }
+        .policy-rendered-view th, .policy-rendered-view td { padding: 10px 14px; border: 1px solid var(--glass-border); text-align: left; }
+        .policy-rendered-view th { background: rgba(108, 92, 231, 0.08); color: var(--text-primary); font-weight: 700; }
 
         /* Plain English Cards */
         .plain-card {
-            background: #F8FAFC;
-            border: 1px solid var(--border);
-            border-left: 4px solid var(--accent);
-            border-radius: 10px;
-            padding: 16px 18px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-left: 4px solid var(--accent-1);
+            border-radius: 12px;
+            padding: 18px 20px;
             margin-bottom: 14px;
+            transition: var(--transition);
+        }
+
+        .plain-card:hover {
+            background: rgba(255, 255, 255, 0.04);
         }
 
         .plain-card.danger { border-left-color: var(--danger); }
@@ -958,62 +1277,77 @@
         .plain-card.success { border-left-color: var(--success); }
 
         .plain-card h4 {
-            font-size: 14.5px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 15px;
             font-weight: 700;
             color: var(--text-primary);
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
 
         .plain-card p {
             font-size: 13px;
             color: var(--text-secondary);
-            line-height: 1.55;
+            line-height: 1.6;
         }
 
         /* ==============================================================
-           PHASE 3: CHATBOT APNA WALA (LEGAL AI COPILOT)
+           PHASE 3: CHATBOT (LEGAL AI COPILOT)
            ============================================================== */
         .chat-container {
-            max-width: 920px;
+            max-width: 940px;
             margin: 0 auto;
-            background: #FFFFFF;
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
             box-shadow: var(--shadow-md);
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            height: 680px;
+            height: 700px;
+            position: relative;
+        }
+
+        .chat-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(108, 92, 231, 0.5), rgba(0, 206, 255, 0.5), transparent);
         }
 
         .chat-header {
-            padding: 16px 24px;
-            border-bottom: 1px solid var(--border);
+            padding: 18px 26px;
+            border-bottom: 1px solid var(--glass-border);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #FBFBFA;
+            background: rgba(255, 255, 255, 0.015);
         }
 
         .chat-agent-info {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
         }
 
         .chat-agent-avatar {
-            width: 38px;
-            height: 38px;
-            border-radius: 10px;
-            background: linear-gradient(135deg, #2D5BFF, #7C3AED);
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: var(--accent-gradient);
             color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            font-size: 20px;
+            box-shadow: 0 4px 16px var(--glow-accent);
         }
 
         .chat-agent-info h3 {
+            font-family: 'Space Grotesk', sans-serif;
             font-size: 15px;
             color: var(--text-primary);
             font-weight: 700;
@@ -1025,9 +1359,9 @@
         }
 
         .chat-chips-scroll {
-            padding: 12px 20px;
-            background: #FAFAF8;
-            border-bottom: 1px solid var(--border);
+            padding: 14px 22px;
+            background: rgba(255, 255, 255, 0.01);
+            border-bottom: 1px solid var(--glass-border);
             display: flex;
             gap: 8px;
             overflow-x: auto;
@@ -1035,9 +1369,9 @@
         }
 
         .chat-chip {
-            background: #FFFFFF;
-            border: 1px solid var(--border);
-            padding: 6px 12px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 7px 14px;
             border-radius: 100px;
             font-size: 12px;
             font-weight: 500;
@@ -1050,25 +1384,31 @@
         }
 
         .chat-chip:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-            background: var(--accent-light);
+            border-color: rgba(0, 206, 255, 0.3);
+            color: var(--accent-2);
+            background: rgba(0, 206, 255, 0.06);
         }
 
         .chat-messages {
             flex: 1;
-            padding: 24px;
+            padding: 26px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 18px;
-            background: #FAFAF8;
+            gap: 20px;
+            background: rgba(6, 6, 15, 0.3);
         }
 
         .chat-bubble {
             display: flex;
             gap: 12px;
             max-width: 82%;
+            animation: bubbleIn 0.3s ease-out;
+        }
+
+        @keyframes bubbleIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .chat-bubble.bot {
@@ -1081,144 +1421,169 @@
         }
 
         .bubble-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 700;
             flex-shrink: 0;
         }
 
         .chat-bubble.bot .bubble-avatar {
-            background: linear-gradient(135deg, #2D5BFF, #7C3AED);
+            background: var(--accent-gradient);
             color: white;
+            box-shadow: 0 2px 10px var(--glow-accent);
         }
 
         .chat-bubble.user .bubble-avatar {
-            background: #E2E8F0;
-            color: #334155;
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-secondary);
         }
 
         .bubble-content {
-            padding: 14px 18px;
-            border-radius: 14px;
+            padding: 16px 20px;
+            border-radius: 16px;
             font-size: 13.5px;
-            line-height: 1.6;
+            line-height: 1.65;
         }
 
         .chat-bubble.bot .bubble-content {
-            background: #FFFFFF;
-            border: 1px solid var(--border);
-            color: var(--text-primary);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.2);
         }
 
         .chat-bubble.user .bubble-content {
-            background: var(--accent);
+            background: var(--accent-gradient);
             color: white;
-            border-radius: 14px 14px 2px 14px;
+            border-radius: 16px 16px 4px 16px;
+            box-shadow: 0 4px 20px var(--glow-accent);
         }
 
         .bubble-citation {
             display: inline-block;
-            margin-top: 8px;
+            margin-top: 10px;
             font-size: 11px;
-            color: var(--accent);
-            background: var(--accent-light);
-            padding: 2px 8px;
-            border-radius: 6px;
+            color: var(--accent-2);
+            background: rgba(0, 206, 255, 0.08);
+            padding: 3px 10px;
+            border-radius: 8px;
             font-weight: 600;
+            border: 1px solid rgba(0, 206, 255, 0.15);
         }
 
         .chat-input-bar {
-            padding: 16px 20px;
-            background: #FFFFFF;
-            border-top: 1px solid var(--border);
+            padding: 18px 22px;
+            background: rgba(255, 255, 255, 0.02);
+            border-top: 1px solid var(--glass-border);
             display: flex;
-            gap: 10px;
+            gap: 12px;
             align-items: center;
         }
 
         .chat-textarea {
             flex: 1;
-            padding: 12px 16px;
-            border: 1px solid var(--border);
-            border-radius: 10px;
+            padding: 14px 18px;
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
             font-family: inherit;
             font-size: 14px;
             outline: none;
             resize: none;
-            height: 48px;
+            height: 50px;
             line-height: 22px;
             transition: var(--transition);
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-primary);
+        }
+
+        .chat-textarea::placeholder {
+            color: var(--text-muted);
         }
 
         .chat-textarea:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px var(--accent-glow);
+            border-color: var(--accent-1);
+            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.15);
         }
 
         .btn-send {
-            height: 48px;
-            padding: 0 22px;
-            background: var(--accent);
+            height: 50px;
+            padding: 0 24px;
+            background: var(--accent-gradient);
             color: white;
             border: none;
-            border-radius: 10px;
-            font-family: inherit;
+            border-radius: 12px;
+            font-family: 'Space Grotesk', sans-serif;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             transition: var(--transition);
             display: flex;
             align-items: center;
             gap: 6px;
+            box-shadow: 0 4px 16px var(--glow-accent);
         }
 
         .btn-send:hover {
-            background: var(--accent-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 24px var(--glow-accent);
         }
 
         /* ==============================================================
            PHASE 4: VM SANDBOX (UNDER PROGRESS) STYLES
            ============================================================== */
         .sandbox-hero {
-            background: #FFFFFF;
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 40px;
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: 48px;
             text-align: center;
-            box-shadow: var(--shadow-sm);
-            margin-bottom: 30px;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sandbox-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(108, 92, 231, 0.5), rgba(0, 206, 255, 0.5), transparent);
         }
 
         .sandbox-progress-bar {
             width: 100%;
             max-width: 500px;
             height: 10px;
-            background: var(--bg-warm);
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 100px;
-            margin: 20px auto 12px;
+            margin: 22px auto 14px;
             overflow: hidden;
-            border: 1px solid var(--border);
+            border: 1px solid var(--glass-border);
         }
 
         .sandbox-progress-fill {
             height: 100%;
             width: 65%;
-            background: linear-gradient(90deg, #F59E0B, #10B981);
+            background: var(--accent-gradient);
             border-radius: 100px;
             transition: width 1s ease-in-out;
+            box-shadow: 0 0 12px var(--glow-accent);
         }
 
         .sandbox-timeline {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 16px;
-            margin-top: 32px;
+            margin-top: 34px;
             text-align: left;
         }
 
@@ -1227,23 +1592,25 @@
         }
 
         .timeline-step {
-            background: #FAFAF8;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 14px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 16px;
+            transition: var(--transition);
         }
 
         .timeline-step.done {
-            border-color: var(--success);
-            background: var(--success-light);
+            border-color: var(--success-border);
+            background: var(--success-bg);
         }
 
         .timeline-step.active {
-            border-color: var(--warning);
-            background: var(--warning-light);
+            border-color: var(--warning-border);
+            background: var(--warning-bg);
         }
 
         .timeline-step-title {
+            font-family: 'Space Grotesk', sans-serif;
             font-size: 13px;
             font-weight: 700;
             color: var(--text-primary);
@@ -1270,20 +1637,28 @@
         }
 
         .sandbox-feature-card {
-            background: #FFFFFF;
-            border: 1px solid var(--border);
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
             border-radius: var(--radius);
-            padding: 24px;
+            padding: 28px;
             box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .sandbox-feature-card:hover {
+            border-color: rgba(108, 92, 231, 0.2);
+            transform: translateY(-3px);
         }
 
         .sandbox-feature-icon {
-            font-size: 28px;
-            margin-bottom: 12px;
+            font-size: 30px;
+            margin-bottom: 14px;
             display: inline-block;
         }
 
         .sandbox-feature-card h4 {
+            font-family: 'Space Grotesk', sans-serif;
             font-size: 15px;
             font-weight: 700;
             color: var(--text-primary);
@@ -1301,11 +1676,12 @@
             position: fixed;
             bottom: 24px;
             right: 24px;
-            background: #FFFFFF;
-            border: 1px solid var(--border);
+            background: rgba(15, 15, 35, 0.92);
+            backdrop-filter: blur(24px);
+            border: 1px solid var(--glass-border);
             box-shadow: var(--shadow-lg);
-            padding: 12px 20px;
-            border-radius: 12px;
+            padding: 14px 24px;
+            border-radius: 14px;
             font-size: 13.5px;
             font-weight: 600;
             color: var(--text-primary);
@@ -1318,6 +1694,16 @@
             z-index: 2000;
         }
 
+        .toast::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(108, 92, 231, 0.5), transparent);
+        }
+
         .toast.show {
             transform: translateY(0);
             opacity: 1;
@@ -1325,12 +1711,12 @@
 
         /* Spinner */
         .spinner {
-            width: 18px;
-            height: 18px;
-            border: 2px solid rgba(255,255,255,0.3);
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,0.15);
             border-top-color: white;
             border-radius: 50%;
-            animation: spin 0.8s linear infinite;
+            animation: spin 0.7s linear infinite;
             display: none;
         }
 
@@ -1338,6 +1724,362 @@
         .loading .btn-text { display: none; }
 
         @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ─── Selection Highlight ─── */
+        ::selection {
+            background: rgba(108, 92, 231, 0.3);
+            color: var(--text-primary);
+        }
+
+        /* ==============================================================
+           PHASE 4: AI & LLM GOVERNANCE COPILOT STYLES
+           ============================================================== */
+        .aigov-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .aitool-card {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius);
+            padding: 18px;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .aitool-card:hover {
+            border-color: rgba(0, 206, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .aitool-card.selected {
+            border-color: var(--accent-2);
+            background: rgba(0, 206, 255, 0.05);
+            box-shadow: 0 0 20px rgba(0, 206, 255, 0.15);
+        }
+
+        .aitool-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .aitool-icon-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .aitool-icon {
+            font-size: 24px;
+        }
+
+        .aitool-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .aitool-vendor {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .aitool-checkbox {
+            width: 20px;
+            height: 20px;
+            border-radius: 6px;
+            border: 2px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            transition: var(--transition);
+        }
+
+        .aitool-card.selected .aitool-checkbox {
+            background: var(--accent-2);
+            border-color: var(--accent-2);
+            box-shadow: 0 0 8px var(--glow-cyan);
+        }
+
+        .aitool-meta-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 4px;
+        }
+
+        .aitool-tag {
+            font-size: 10.5px;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        .aitool-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.45;
+        }
+
+        .tag-danger {
+            background: var(--danger-bg);
+            color: var(--danger);
+            border: 1px solid var(--danger-border);
+        }
+
+        .tag-success {
+            background: var(--success-bg);
+            color: var(--success);
+            border: 1px solid var(--success-border);
+        }
+
+        .tag-warning {
+            background: var(--warning-bg);
+            color: var(--warning);
+            border: 1px solid var(--warning-border);
+        }
+
+        .tag-neutral {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+            border: 1px solid var(--glass-border);
+        }
+
+        .data-chips-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 16px 0 24px;
+        }
+
+        .data-chip {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            padding: 10px 16px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .data-chip:hover {
+            border-color: rgba(168, 85, 247, 0.4);
+            color: var(--text-primary);
+        }
+
+        .data-chip.selected {
+            background: rgba(168, 85, 247, 0.12);
+            border-color: var(--accent-3);
+            color: #C084FC;
+            box-shadow: 0 0 16px rgba(168, 85, 247, 0.2);
+        }
+
+        .aigov-matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            margin-top: 14px;
+        }
+
+        .aigov-matrix-table th {
+            text-align: left;
+            padding: 12px 14px;
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--glass-border);
+            font-weight: 600;
+            font-size: 11.5px;
+            text-transform: uppercase;
+        }
+
+        .aigov-matrix-table td {
+            padding: 12px 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: var(--text-primary);
+        }
+
+        /* ==============================================================
+           PHASE 5: VISUAL DATA-FLOW & TOPOLOGY STYLES
+           ============================================================== */
+        .topology-wrapper {
+            background: rgba(10, 11, 26, 0.85);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+        }
+
+        .topology-toolbar {
+            padding: 16px 22px;
+            background: rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .topology-filter-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .topo-filter-btn {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .topo-filter-btn:hover {
+            color: var(--text-primary);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .topo-filter-btn.active {
+            background: var(--accent-gradient-subtle);
+            border-color: rgba(0, 206, 255, 0.4);
+            color: var(--accent-2);
+        }
+
+        .topology-canvas-container {
+            position: relative;
+            width: 100%;
+            height: 520px;
+            background: 
+                radial-gradient(circle at 50% 50%, rgba(108, 92, 231, 0.06), transparent 70%),
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 32px 32px, 32px 32px;
+            overflow: hidden;
+        }
+
+        .flow-cable {
+            stroke-dasharray: 8, 8;
+            animation: flowDash 1.4s linear infinite;
+            cursor: pointer;
+            transition: stroke-width 0.2s, stroke 0.2s;
+        }
+
+        @keyframes flowDash {
+            from { stroke-dashoffset: 32; }
+            to { stroke-dashoffset: 0; }
+        }
+
+        .flow-cable:hover {
+            stroke-width: 5px !important;
+            filter: drop-shadow(0 0 8px currentColor);
+        }
+
+        .topo-node {
+            cursor: pointer;
+            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), filter 0.2s;
+        }
+
+        .topo-node:hover {
+            transform: translateY(-3px) scale(1.02);
+            filter: brightness(1.2);
+        }
+
+        .inspector-slide-panel {
+            background: rgba(14, 15, 36, 0.95);
+            backdrop-filter: blur(20px);
+            border-left: 1px solid var(--glass-border);
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 420px;
+            height: 100%;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+            transform: translateX(100%);
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .inspector-slide-panel.open {
+            transform: translateX(0);
+        }
+
+        .inspector-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .inspector-body {
+            padding: 24px;
+            overflow-y: auto;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .inspector-stat-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .idta-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(4, 4, 12, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .idta-modal-overlay.open {
+            display: flex;
+        }
+
+        .idta-modal {
+            background: #0E0F24;
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            width: 100%;
+            max-width: 820px;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+        }
     </style>
 </head>
 
@@ -1366,6 +2108,16 @@
             <button class="phase-tab-btn" id="tab-btn-chatbot" onclick="switchPhase('chatbot')">
                 <span>💬</span>
                 <span class="tab-title">3. Legal AI Chatbot</span>
+            </button>
+            <button class="phase-tab-btn" id="tab-btn-aigovernance" onclick="switchPhase('aigovernance')">
+                <span>🤖</span>
+                <span class="tab-title">4. AI Governance</span>
+                <span class="pill-badge" style="background: rgba(168, 85, 247, 0.2); color: #C084FC; border: 1px solid rgba(168, 85, 247, 0.4); font-size: 9px; padding: 1px 6px;">NEW</span>
+            </button>
+            <button class="phase-tab-btn" id="tab-btn-dataflow" onclick="switchPhase('dataflow')">
+                <span>🗺️</span>
+                <span class="tab-title">5. Data-Flow Map</span>
+                <span class="pill-badge" style="background: rgba(0, 206, 255, 0.2); color: #00CEFF; border: 1px solid rgba(0, 206, 255, 0.4); font-size: 9px; padding: 1px 6px;">LIVE</span>
             </button>
         </nav>
 
@@ -1444,7 +2196,7 @@
                     <h4>Upload a File (.pdf, .docx, .txt)</h4>
                     <p>Click here or drag and drop your document file</p>
                     <input type="file" id="file-upload-input" style="display:none" accept=".pdf,.docx,.doc,.txt" onchange="handleDocFileUpload(event)">
-                    <div id="file-name-display" style="margin-top:10px; font-weight:700; color:var(--accent); font-size:12.5px;"></div>
+                    <div id="file-name-display" style="margin-top:10px; font-weight:700; color:var(--accent-2); font-size:12.5px;"></div>
                 </div>
 
                 <!-- Text Area -->
@@ -1642,7 +2394,7 @@
         </section>
 
         <!-- ==============================================================
-             PHASE 3: CHATBOT APNA WALA SECTION
+             PHASE 3: CHATBOT SECTION
              ============================================================== -->
         <section id="phase-chatbot" class="phase-section" style="display:none;">
             <div class="phase-header">
@@ -1661,7 +2413,7 @@
                             <p>Direct statutory guidance for UK &amp; India privacy compliance</p>
                         </div>
                     </div>
-                    <button class="btn-export" onclick="clearChatMessages()" style="font-size: 12px; padding: 5px 10px;">
+                    <button class="btn-export" onclick="clearChatMessages()" style="font-size: 12px; padding: 6px 12px;">
                         <span>🗑️</span> Clear Chat
                     </button>
                 </div>
@@ -1709,7 +2461,401 @@
             </div>
         </section>
 
+        <!-- ==============================================================
+             PHASE 4: AI & LLM GOVERNANCE COPILOT SECTION
+             ============================================================== -->
+        <section id="phase-aigovernance" class="phase-section" style="display:none;">
+            <div class="phase-header">
+                <span class="phase-header-badge">Phase 4 &bull; GenAI Governance &amp; DPIA</span>
+                <h2>AI &amp; LLM Governance Copilot</h2>
+                <p>Audit employee usage of Generative AI tools (ChatGPT, Claude, Copilot, Cursor). Detect model training leaks, Article 9 sensitive data egress, and automatically generate statutory Article 35 DPIA reports &amp; Employee Policies.</p>
+            </div>
+
+            <!-- Step 1: Select AI Tools in Use -->
+            <div class="card" style="margin-bottom: 24px;">
+                <div class="card-header">
+                    <h3><span>🤖</span> 1. Select AI Tools Used by Your Team</h3>
+                    <span style="font-size: 12px; color: var(--text-muted);">Click to toggle tools in use</span>
+                </div>
+                <div class="card-body">
+                    <div class="aigov-grid" id="aigov-tools-selector">
+                        <!-- AI Tools dynamically populated / rendered -->
+                        <div class="aitool-card selected" data-tool="chatgpt_consumer" onclick="toggleAITool('chatgpt_consumer', this)">
+                            <div class="aitool-header">
+                                <div class="aitool-icon-title">
+                                    <span class="aitool-icon">🤖</span>
+                                    <div>
+                                        <div class="aitool-title">ChatGPT (Consumer Free/Plus)</div>
+                                        <div class="aitool-vendor">OpenAI LLC &bull; Web App</div>
+                                    </div>
+                                </div>
+                                <div class="aitool-checkbox">✓</div>
+                            </div>
+                            <div class="aitool-meta-tags">
+                                <span class="aitool-tag tag-danger">🔴 Trains Model on Data</span>
+                                <span class="aitool-tag tag-neutral">🇺🇸 US Cloud</span>
+                            </div>
+                            <p class="aitool-desc">Consumer web tier. Conversations used for public model training unless specifically opted out.</p>
+                        </div>
+
+                        <div class="aitool-card selected" data-tool="openai_api" onclick="toggleAITool('openai_api', this)">
+                            <div class="aitool-header">
+                                <div class="aitool-icon-title">
+                                    <span class="aitool-icon">⚡</span>
+                                    <div>
+                                        <div class="aitool-title">OpenAI API (Developer)</div>
+                                        <div class="aitool-vendor">OpenAI LLC &bull; API/SDK</div>
+                                    </div>
+                                </div>
+                                <div class="aitool-checkbox">✓</div>
+                            </div>
+                            <div class="aitool-meta-tags">
+                                <span class="aitool-tag tag-success">🟢 Zero Model Training</span>
+                                <span class="aitool-tag tag-warning">🟡 30-Day Prompt Log</span>
+                            </div>
+                            <p class="aitool-desc">Developer API with zero training default. Data retained 30 days unless Zero Data Retention (ZDR) approved.</p>
+                        </div>
+
+                        <div class="aitool-card" data-tool="azure_openai" onclick="toggleAITool('azure_openai', this)">
+                            <div class="aitool-header">
+                                <div class="aitool-icon-title">
+                                    <span class="aitool-icon">🛡️</span>
+                                    <div>
+                                        <div class="aitool-title">Azure OpenAI Service</div>
+                                        <div class="aitool-vendor">Microsoft &bull; Cloud Enterprise</div>
+                                    </div>
+                                </div>
+                                <div class="aitool-checkbox">✓</div>
+                            </div>
+                            <div class="aitool-meta-tags">
+                                <span class="aitool-tag tag-success">🟢 Enterprise DPA</span>
+                                <span class="aitool-tag tag-success">🇬🇧 UK Data Boundary</span>
+                            </div>
+                            <p class="aitool-desc">Data stored within UK South region. Zero retention, HIPAA &amp; ISO 27001 compliant enterprise boundary.</p>
+                        </div>
+
+                        <div class="aitool-card" data-tool="claude_anthropic" onclick="toggleAITool('claude_anthropic', this)">
+                            <div class="aitool-header">
+                                <div class="aitool-icon-title">
+                                    <span class="aitool-icon">🧠</span>
+                                    <div>
+                                        <div class="aitool-title">Claude (Anthropic Web)</div>
+                                        <div class="aitool-vendor">Anthropic PBC &bull; Web App</div>
+                                    </div>
+                                </div>
+                                <div class="aitool-checkbox">✓</div>
+                            </div>
+                            <div class="aitool-meta-tags">
+                                <span class="aitool-tag tag-success">🟢 No Commercial Training</span>
+                                <span class="aitool-tag tag-neutral">🇺🇸 US Cloud</span>
+                            </div>
+                            <p class="aitool-desc">Commercial terms protect data, but consumer web retains prompts for 90 days for trust and safety review.</p>
+                        </div>
+
+                        <div class="aitool-card" data-tool="ms_copilot" onclick="toggleAITool('ms_copilot', this)">
+                            <div class="aitool-header">
+                                <div class="aitool-icon-title">
+                                    <span class="aitool-icon">💼</span>
+                                    <div>
+                                        <div class="aitool-title">Microsoft 365 Copilot</div>
+                                        <div class="aitool-vendor">Microsoft Corp &bull; Workplace AI</div>
+                                    </div>
+                                </div>
+                                <div class="aitool-checkbox">✓</div>
+                            </div>
+                            <div class="aitool-meta-tags">
+                                <span class="aitool-tag tag-success">🟢 M365 Tenant Boundary</span>
+                                <span class="aitool-tag tag-success">🟢 ISO 27701</span>
+                            </div>
+                            <p class="aitool-desc">Inherits company's existing Microsoft 365 enterprise security, compliance, and privacy commitments.</p>
+                        </div>
+
+                        <div class="aitool-card" data-tool="google_gemini" onclick="toggleAITool('google_gemini', this)">
+                            <div class="aitool-header">
+                                <div class="aitool-icon-title">
+                                    <span class="aitool-icon">🌐</span>
+                                    <div>
+                                        <div class="aitool-title">Google Gemini (Consumer)</div>
+                                        <div class="aitool-vendor">Google LLC &bull; Web App</div>
+                                    </div>
+                                </div>
+                                <div class="aitool-checkbox">✓</div>
+                            </div>
+                            <div class="aitool-meta-tags">
+                                <span class="aitool-tag tag-danger">🔴 Human Reviewers</span>
+                                <span class="aitool-tag tag-danger">🔴 Trains Models</span>
+                            </div>
+                            <p class="aitool-desc">Human reviewers can annotate conversations. High compliance breach risk if personal data is pasted.</p>
+                        </div>
+
+                        <div class="aitool-card selected" data-tool="cursor_copilot" onclick="toggleAITool('cursor_copilot', this)">
+                            <div class="aitool-header">
+                                <div class="aitool-icon-title">
+                                    <span class="aitool-icon">💻</span>
+                                    <div>
+                                        <div class="aitool-title">Cursor / GitHub Copilot</div>
+                                        <div class="aitool-vendor">Anysphere / GitHub &bull; IDE AI</div>
+                                    </div>
+                                </div>
+                                <div class="aitool-checkbox">✓</div>
+                            </div>
+                            <div class="aitool-meta-tags">
+                                <span class="aitool-tag tag-warning">🟡 Code Telemetry</span>
+                                <span class="aitool-tag tag-neutral">🇺🇸 US Inference</span>
+                            </div>
+                            <p class="aitool-desc">Transmits file contents and code context. Privacy Mode must be enabled to prevent snippet logging.</p>
+                        </div>
+
+                        <div class="aitool-card" data-tool="midjourney_canva" onclick="toggleAITool('midjourney_canva', this)">
+                            <div class="aitool-header">
+                                <div class="aitool-icon-title">
+                                    <span class="aitool-icon">🎨</span>
+                                    <div>
+                                        <div class="aitool-title">Midjourney &amp; Canva AI</div>
+                                        <div class="aitool-vendor">Various &bull; Generative Media</div>
+                                    </div>
+                                </div>
+                                <div class="aitool-checkbox">✓</div>
+                            </div>
+                            <div class="aitool-meta-tags">
+                                <span class="aitool-tag tag-warning">🟡 Public Gallery</span>
+                                <span class="aitool-tag tag-neutral">🇺🇸 US Hosted</span>
+                            </div>
+                            <p class="aitool-desc">Media prompts and uploaded portrait images are publicly indexed on Discord channels by default.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: What Data Do Employees Put Into AI? -->
+            <div class="card" style="margin-bottom: 24px;">
+                <div class="card-header">
+                    <h3><span>🧬</span> 2. What Information Do Employees &amp; Apps Enter into AI?</h3>
+                    <span style="font-size: 12px; color: var(--text-muted);">Select all that apply</span>
+                </div>
+                <div class="card-body">
+                    <div class="data-chips-grid" id="aigov-data-selector">
+                        <div class="data-chip" data-type="customer_pii" onclick="toggleAIDataType('customer_pii', this)">
+                            <span>👤</span> Customer Names &amp; Email Addresses
+                        </div>
+                        <div class="data-chip selected" data-type="consultation_health" onclick="toggleAIDataType('consultation_health', this)">
+                            <span>🧬</span> Consultation Notes &amp; Health/Beliefs (Art 9)
+                        </div>
+                        <div class="data-chip" data-type="financial_data" onclick="toggleAIDataType('financial_data', this)">
+                            <span>💳</span> Financial Transactions &amp; Billing Records
+                        </div>
+                        <div class="data-chip selected" data-type="source_code" onclick="toggleAIDataType('source_code', this)">
+                            <span>💻</span> Proprietary Source Code &amp; DB Schemas
+                        </div>
+                        <div class="data-chip" data-type="employee_cvs" onclick="toggleAIDataType('employee_cvs', this)">
+                            <span>📄</span> Employee CVs, Resumes &amp; HR Records
+                        </div>
+                        <div class="data-chip" data-type="api_secrets" onclick="toggleAIDataType('api_secrets', this)">
+                            <span>🔑</span> API Keys, Passwords &amp; JWT Tokens
+                        </div>
+                    </div>
+
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--glass-border);">
+                        <div style="color: var(--text-secondary); font-size: 13px;">
+                            Evaluating against: <strong style="color:var(--text-primary);">UK GDPR Article 35, Article 9 &bull; India DPDPA 2023</strong>
+                        </div>
+                        <button class="btn-primary-action" id="btn-run-aigov" onclick="executeAIGovernanceAudit()">
+                            <span class="spinner"></span>
+                            <span class="btn-text">🚀 Run Statutory AI Privacy Audit</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dynamic Results Container -->
+            <div id="aigov-results-container" style="display:none;">
+                <!-- Bento Metrics Row -->
+                <div class="metrics-bento-row">
+                    <div class="metric-bento-card">
+                        <div class="stat-card-val val-danger" id="aigov-score-val">35/100</div>
+                        <div class="stat-card-lbl">AI Compliance Grade</div>
+                        <div style="font-size: 11.5px; color: var(--danger); font-weight: 600; margin-top: 4px;" id="aigov-grade-val">Grade D &bull; Severe Exposure</div>
+                    </div>
+                    <div class="metric-bento-card">
+                        <div class="stat-card-val val-danger" id="aigov-exposure-val">£17.5M</div>
+                        <div class="stat-card-lbl">Statutory Fine Exposure</div>
+                        <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 4px;">ICO Art 83 / DPDP Board ₹250Cr</div>
+                    </div>
+                    <div class="metric-bento-card">
+                        <div class="stat-card-val val-warning" id="aigov-training-threat">ACTIVE</div>
+                        <div class="stat-card-lbl">Model Retraining Threat</div>
+                        <div style="font-size: 11.5px; color: var(--warning); margin-top: 4px;">Consumer AI harvests PII</div>
+                    </div>
+                    <div class="metric-bento-card">
+                        <div class="stat-card-val val-accent" id="aigov-dpia-mandated">MANDATED</div>
+                        <div class="stat-card-lbl">Article 35 DPIA Status</div>
+                        <div style="font-size: 11.5px; color: var(--accent-2); margin-top: 4px;">High-risk AI processing</div>
+                    </div>
+                </div>
+
+                <!-- Red-Flag Statutory Violations -->
+                <div class="card" style="margin-bottom: 24px;">
+                    <div class="card-header">
+                        <h3><span>🚨</span> Statutory Compliance Red Flags Identified</h3>
+                        <span class="pill-badge badge-danger" id="aigov-redflag-count">3 Violations Found</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="issues-list" id="aigov-redflags-list">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Risk Matrix Table -->
+                <div class="card" style="margin-bottom: 24px;">
+                    <div class="card-header">
+                        <h3><span>🗺️</span> AI Processing Risk Matrix (Tool &times; Ingested Data)</h3>
+                    </div>
+                    <div class="card-body" style="overflow-x: auto;">
+                        <table class="aigov-matrix-table">
+                            <thead>
+                                <tr>
+                                    <th>AI Tool</th>
+                                    <th>Data Category</th>
+                                    <th>Model Training Risk</th>
+                                    <th>Compliance Status</th>
+                                    <th>Mandatory Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="aigov-matrix-tbody">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Generated Documents Viewer (DPIA & AUP) -->
+                <div class="card">
+                    <div class="card-header" style="flex-wrap: wrap; gap: 12px;">
+                        <div style="display:flex; align-items:center; gap: 8px;">
+                            <button class="repo-subtab-btn active" id="aigov-subtab-dpia" onclick="switchAIGovDocSubtab('dpia')">
+                                🛡️ Statutory AI DPIA (Article 35 Report)
+                            </button>
+                            <button class="repo-subtab-btn" id="aigov-subtab-aup" onclick="switchAIGovDocSubtab('aup')">
+                                📜 Employee AI Acceptable Use Policy (AUP)
+                            </button>
+                        </div>
+                        <div style="display: flex; gap: 8px;">
+                            <button class="btn-export" onclick="copyCurrentAIGovDoc()">
+                                <span>📋</span> Copy Text
+                            </button>
+                            <button class="btn-export" onclick="downloadCurrentAIGovDoc('md')">
+                                <span>📥</span> Download .md
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="doc-fixed-viewer" id="aigov-doc-viewer" style="max-height: 520px; font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.7; white-space: pre-wrap; color: #E2E8F0;">
+                            <!-- Markdown rendered here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==============================================================
+             PHASE 5: INTERACTIVE VISUAL DATA-FLOW & CROSS-BORDER MAP
+             ============================================================== -->
+        <section id="phase-dataflow" class="phase-section" style="display:none;">
+            <div class="phase-header">
+                <span class="phase-header-badge">Phase 5 &bull; Architecture Lineage &amp; Cross-Border</span>
+                <h2>Interactive Visual Data-Flow &amp; Cross-Border Map</h2>
+                <p>Trace the live statutory journey of personal data across your architecture. Identify cross-border transfers (UK &harr; India), verify Article 6/9 lawful bases, and generate legally binding UK International Data Transfer Agreements (IDTA).</p>
+            </div>
+
+            <!-- Toolbar & Presets -->
+            <div class="topology-wrapper">
+                <div class="topology-toolbar">
+                    <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                        <span style="font-size: 13px; font-weight: 700; color: var(--text-primary);">Preset Architecture:</span>
+                        <select id="topo-preset-select" class="input-text" style="padding: 6px 12px; font-size: 12.5px; width: 280px;" onchange="loadTopologyPreset(this.value)">
+                            <option value="tara-consultation" selected>🔮 Tara Spiritual Consultation App (UK &harr; India)</option>
+                            <option value="medconnect-telehealth">🏥 MedConnect Telemedicine EHR (NHS Patients)</option>
+                        </select>
+                    </div>
+
+                    <!-- Flow Filter Controls -->
+                    <div class="topology-filter-group">
+                        <button class="topo-filter-btn active" id="filter-all" onclick="filterTopologyFlows('ALL', this)">All Data Flows (5)</button>
+                        <button class="topo-filter-btn" id="filter-crossborder" onclick="filterTopologyFlows('CROSS_BORDER', this)">🌍 Cross-Border Only (2)</button>
+                        <button class="topo-filter-btn" id="filter-risk" onclick="filterTopologyFlows('VIOLATION', this)">🚨 Red Flags Only (1)</button>
+                    </div>
+                </div>
+
+                <!-- Canvas / SVG Viewport -->
+                <div class="topology-canvas-container" id="topo-canvas-container">
+                    <svg id="topo-svg-map" width="100%" height="100%" viewBox="0 0 940 480" style="width: 100%; height: 100%;">
+                        <!-- SVG Elements populated dynamically -->
+                    </svg>
+
+                    <!-- Slide-in Statutory Inspector Drawer -->
+                    <div class="inspector-slide-panel" id="topo-inspector-panel">
+                        <div class="inspector-header">
+                            <div>
+                                <h3 id="insp-title" style="font-size: 15px; font-weight: 700; color: var(--text-primary);">Flow Inspector</h3>
+                                <p id="insp-subtitle" style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Statutory Analysis</p>
+                            </div>
+                            <button onclick="closeTopologyInspector()" style="background:transparent; border:none; color:var(--text-muted); font-size:18px; cursor:pointer;">&times;</button>
+                        </div>
+                        <div class="inspector-body" id="insp-body-content">
+                            <!-- Populated on node or link click -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Architecture Summary Footer -->
+                <div style="padding: 16px 22px; background: rgba(255, 255, 255, 0.015); border-top: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+                    <div style="display: flex; gap: 18px; font-size: 12.5px; color: var(--text-secondary);">
+                        <div><span>Nodes:</span> <strong style="color:var(--text-primary);" id="topo-stat-nodes">6 Services</strong></div>
+                        <div><span>Flows:</span> <strong style="color:var(--text-primary);" id="topo-stat-flows">5 Data Routes</strong></div>
+                        <div><span>Cross-Border:</span> <strong style="color:var(--warning);" id="topo-stat-cb">2 Overseas Transfers</strong></div>
+                        <div><span>Violations:</span> <strong style="color:var(--danger);" id="topo-stat-violations">1 Missing IDTA</strong></div>
+                    </div>
+                    <div>
+                        <button class="btn-primary-action" onclick="openIDTAModal()" style="padding: 7px 16px; font-size: 12px;">
+                            <span>📄 Generate UK-India IDTA Schedule</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
+
+    <!-- ─── STATUTORY UK-INDIA IDTA CONTRACT MODAL ─── -->
+    <div id="idta-modal-overlay" class="idta-modal-overlay">
+        <div class="idta-modal">
+            <div class="card-header" style="justify-content: space-between;">
+                <div>
+                    <h3 style="display:flex; align-items:center; gap:8px;">
+                        <span>📜</span> UK International Data Transfer Agreement (IDTA)
+                    </h3>
+                    <p style="font-size: 11.5px; color: var(--text-muted); margin-top: 3px;">
+                        Statutory Schedule under UK GDPR Section 119A DPA 2018 (UK Exporter &harr; India Importer)
+                    </p>
+                </div>
+                <button onclick="closeIDTAModal()" style="background:transparent; border:none; color:var(--text-muted); font-size:22px; cursor:pointer;">&times;</button>
+            </div>
+            <div class="card-body" style="overflow-y: auto; flex: 1;">
+                <div class="doc-fixed-viewer" id="idta-document-viewer" style="font-family: 'JetBrains Mono', monospace; font-size: 12.5px; line-height: 1.7; white-space: pre-wrap; color: #E2E8F0;">
+                    <!-- IDTA markdown injected here -->
+                </div>
+            </div>
+            <div class="card-header" style="border-top: 1px solid var(--glass-border); border-bottom: none; justify-content: flex-end; gap: 10px;">
+                <button class="btn-export" onclick="copyIDTAContract()">
+                    <span>📋</span> Copy Text
+                </button>
+                <button class="btn-primary-action" onclick="downloadIDTAContract('md')" style="padding: 8px 18px; font-size: 12px;">
+                    <span>📥 Download Executable IDTA (.md)</span>
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- ─── TOAST NOTIFICATION ─── -->
     <div id="toast" class="toast">
@@ -1767,6 +2913,14 @@
             const targetSec = document.getElementById(`phase-${phaseName}`);
             if (targetSec) targetSec.style.display = 'block';
 
+            // Special phase inits
+            if (phaseName === 'dataflow') {
+                renderTopologyCanvas();
+            } else if (phaseName === 'aigovernance' && !window.__aigovInitialized) {
+                executeAIGovernanceAudit();
+                window.__aigovInitialized = true;
+            }
+
             // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
@@ -1783,6 +2937,8 @@
             if (p) {
                 if (p === 'github' || p === 'repo') switchPhase('github');
                 else if (p === 'chat' || p === 'chatbot' || p === 'copilot') switchPhase('chatbot');
+                else if (p === 'aigov' || p === 'aigovernance' || p === 'ai') switchPhase('aigovernance');
+                else if (p === 'dataflow' || p === 'flow' || p === 'topology') switchPhase('dataflow');
                 else if (p === 'sandbox') switchPhase('sandbox');
                 else switchPhase('docfixer');
             } else {
@@ -2026,7 +3182,7 @@ ZenAuraa uses cookies and mobile SDKs to provide and enhance our services.
 
             fixedDocHtml += `
 <div style="margin-top:20px; font-weight:700; color:var(--text-primary);">Original Document Text (Retained):</div>
-<div style="background:#F8F9FA; padding:14px; border-radius:8px; margin-top:8px; font-size:12.5px; white-space:pre-wrap; color:#475569;">${escapeHtml(originalText)}</div>`;
+<div style="background:rgba(255,255,255,0.02); padding:14px; border-radius:10px; margin-top:8px; font-size:12.5px; white-space:pre-wrap; color:var(--text-muted); border:1px solid var(--glass-border);">${escapeHtml(originalText)}</div>`;
 
             viewer.innerHTML = fixedDocHtml;
 
@@ -2121,7 +3277,7 @@ ZenAuraa uses cookies and mobile SDKs to provide and enhance our services.
             document.getElementById('repo-tab-content').innerHTML = `
                 <div style="text-align: center; padding: 60px 20px;">
                     <div style="font-size: 32px; animation: spin 1.2s infinite linear; display: inline-block;">⚙️</div>
-                    <h3 style="color: var(--accent); margin-top: 16px;">Scanning Codebase &amp; Crafting GDPR Protection...</h3>
+                    <h3 style="color: var(--accent-2); margin-top: 16px; font-family: 'Space Grotesk', sans-serif;">Scanning Codebase &amp; Crafting GDPR Protection...</h3>
                     <p style="color: var(--text-muted); font-size: 13px; max-width: 500px; margin: 8px auto 0;">
                         Extracting AST data models &bull; Mapping endpoints to UK GDPR Article 30 &bull; Generating customized privacy policy
                     </p>
@@ -2243,7 +3399,7 @@ You have the right to access, rectify, or erase your personal information. Conta
                 container.innerHTML = `
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
                         <div>
-                            <strong style="color:var(--text-primary); font-size:15px;">Official Statutory Privacy Policy</strong>
+                            <strong style="color:var(--text-primary); font-size:15px; font-family:'Space Grotesk',sans-serif;">Official Statutory Privacy Policy</strong>
                             <p style="color:var(--text-muted); font-size:12px;">Generated specifically for ${summary.organization_name}</p>
                         </div>
                         <div style="display:flex; gap:8px;">
@@ -2259,7 +3415,7 @@ You have the right to access, rectify, or erase your personal information. Conta
             } else if (activeRepoSubtab === 'summary') {
                 container.innerHTML = `
                     <div style="margin-bottom:16px;">
-                        <h3 style="color:var(--text-primary); font-size:16px;">💡 Plain-English Summary for ${summary.organization_name}</h3>
+                        <h3 style="color:var(--text-primary); font-size:16px; font-family:'Space Grotesk',sans-serif;">💡 Plain-English Summary for ${summary.organization_name}</h3>
                         <p style="color:var(--text-secondary); font-size:13px;">Here is what the legal audit means in non-technical terms:</p>
                     </div>
 
@@ -2287,9 +3443,9 @@ You have the right to access, rectify, or erase your personal information. Conta
                 const ropaList = currentCompliancePackage.article_30_ropa || [];
                 const rows = ropaList.map(r => `
                     <tr>
-                        <td style="font-weight:700; color:var(--accent);">${r.activity_id}</td>
+                        <td style="font-weight:700; color:var(--accent-2);">${r.activity_id}</td>
                         <td style="font-weight:600;">${r.purpose}</td>
-                        <td style="color:#7C3AED;">${r.lawful_basis}</td>
+                        <td style="color:var(--accent-3);">${r.lawful_basis}</td>
                         <td style="font-size:12px;">${r.categories_of_data}</td>
                         <td style="color:var(--warning); font-size:12px;">${r.retention_period}</td>
                     </tr>
@@ -2297,21 +3453,23 @@ You have the right to access, rectify, or erase your personal information. Conta
 
                 container.innerHTML = `
                     <div style="margin-bottom:14px;">
-                        <h4 style="color:var(--text-primary); font-size:15px;">Article 30 RoPA Ledger (Record of Processing Activities)</h4>
+                        <h4 style="color:var(--text-primary); font-size:15px; font-family:'Space Grotesk',sans-serif;">Article 30 RoPA Ledger (Record of Processing Activities)</h4>
                         <p style="color:var(--text-muted); font-size:12.5px;">By statutory law, your company must maintain this exact register for data protection authorities.</p>
                     </div>
+                    <div style="overflow-x:auto;">
                     <table style="width:100%; border-collapse:collapse; font-size:13px;">
                         <thead>
-                            <tr style="background:#F1F5F9; border-bottom:2px solid var(--border);">
-                                <th style="padding:10px;">ID</th>
-                                <th style="padding:10px;">Purpose</th>
-                                <th style="padding:10px;">Lawful Basis</th>
-                                <th style="padding:10px;">Data Collected</th>
-                                <th style="padding:10px;">Retention Rule</th>
+                            <tr style="background:rgba(108,92,231,0.08); border-bottom:2px solid var(--glass-border);">
+                                <th style="padding:12px; text-align:left; color:var(--text-primary);">ID</th>
+                                <th style="padding:12px; text-align:left; color:var(--text-primary);">Purpose</th>
+                                <th style="padding:12px; text-align:left; color:var(--text-primary);">Lawful Basis</th>
+                                <th style="padding:12px; text-align:left; color:var(--text-primary);">Data Collected</th>
+                                <th style="padding:12px; text-align:left; color:var(--text-primary);">Retention Rule</th>
                             </tr>
                         </thead>
-                        <tbody>${rows}</tbody>
+                        <tbody style="color:var(--text-secondary);">${rows}</tbody>
                     </table>
+                    </div>
                 `;
             } else if (activeRepoSubtab === 'dpia') {
                 const dpia = currentCompliancePackage.dpia_assessment;
@@ -2319,7 +3477,7 @@ You have the right to access, rectify, or erase your personal information. Conta
                     <div class="plain-card ${r.severity === 'Critical' ? 'danger' : 'warning'}" style="margin-bottom:10px;">
                         <div style="display:flex; justify-content:space-between; align-items:center;">
                             <strong>${r.risk_title}</strong>
-                            <span class="pill-badge ${r.severity === 'Critical' ? 'pill-progress' : ''}" style="background:#FEF2F2; color:#DC2626;">${r.severity}</span>
+                            <span class="pill-badge ${r.severity === 'Critical' ? 'pill-progress' : ''}" style="background:var(--danger-bg); color:var(--danger); border:1px solid var(--danger-border);">${r.severity}</span>
                         </div>
                         <p style="margin-top:6px;"><strong>Required Mitigation:</strong> ${r.mitigation}</p>
                     </div>
@@ -2327,44 +3485,44 @@ You have the right to access, rectify, or erase your personal information. Conta
 
                 container.innerHTML = `
                     <div style="margin-bottom:14px;">
-                        <h4 style="color:var(--text-primary); font-size:15px;">Data Protection Impact Assessment (DPIA)</h4>
+                        <h4 style="color:var(--text-primary); font-size:15px; font-family:'Space Grotesk',sans-serif;">Data Protection Impact Assessment (DPIA)</h4>
                         <p style="color:var(--text-muted); font-size:12.5px;">${dpia.justification}</p>
                     </div>
-                    <div style="background:var(--accent-light); padding:12px; border-radius:8px; margin-bottom:16px; font-size:13px; color:var(--accent);">
+                    <div style="background:var(--accent-gradient-subtle); padding:14px; border-radius:10px; margin-bottom:18px; font-size:13px; color:var(--accent-2); border:1px solid rgba(0,206,255,0.12);">
                         <strong>Proportionality Check:</strong> ${dpia.necessity_assessment}
                     </div>
                     ${risksHtml}
-                    <div style="padding:12px; background:#F0FDF4; border:1px solid #BBF7D0; border-radius:8px; font-size:12.5px; color:#15803D; margin-top:16px;">
+                    <div style="padding:14px; background:var(--success-bg); border:1px solid var(--success-border); border-radius:10px; font-size:12.5px; color:var(--success); margin-top:16px;">
                         <strong>Data Protection Officer Status:</strong> ${dpia.dpo_signoff_status}
                     </div>
                 `;
             } else if (activeRepoSubtab === 'dev') {
                 const dev = currentCompliancePackage.developer_remediation_blueprint;
                 const checklistHtml = (dev.action_checklist || []).map(c => `
-                    <div style="display:flex; justify-content:space-between; padding:12px; border-bottom:1px solid var(--border);">
+                    <div style="display:flex; justify-content:space-between; padding:14px; border-bottom:1px solid var(--glass-border); align-items:center;">
                         <div>
                             <span class="pill-badge ${c.priority === 'CRITICAL' ? 'pill-progress' : ''}" style="margin-right:6px;">${c.priority}</span>
-                            <strong>${c.task}</strong>
+                            <strong style="color:var(--text-primary);">${c.task}</strong>
                             <div style="font-size:12px; color:var(--text-muted); margin-top:2px;">${c.action} (${c.statute})</div>
                         </div>
-                        <span style="font-size:11.5px; font-weight:700; color:var(--accent);">${c.component}</span>
+                        <span style="font-size:11.5px; font-weight:700; color:var(--accent-2);">${c.component}</span>
                     </div>
                 `).join('');
 
                 const patches = dev.ready_to_use_code_patches || {};
                 const patchesHtml = Object.keys(patches).map(k => `
-                    <div style="margin-top:16px;">
-                        <strong style="color:var(--text-primary); font-size:13px;">💻 Code Patch: ${k}</strong>
-                        <pre style="background:#0F172A; color:#38BDF8; padding:14px; border-radius:8px; font-size:12px; margin-top:6px; overflow-x:auto;">${escapeHtml(patches[k])}</pre>
+                    <div style="margin-top:18px;">
+                        <strong style="color:var(--text-primary); font-size:13px; font-family:'Space Grotesk',sans-serif;">💻 Code Patch: ${k}</strong>
+                        <pre style="background:rgba(0,0,0,0.4); color:var(--accent-2); padding:16px; border-radius:10px; font-family:'JetBrains Mono',monospace; font-size:12px; margin-top:8px; overflow-x:auto; border:1px solid var(--glass-border);">${escapeHtml(patches[k])}</pre>
                     </div>
                 `).join('');
 
                 container.innerHTML = `
                     <div style="margin-bottom:14px;">
-                        <h4 style="color:var(--text-primary); font-size:15px;">Developer Remediation Blueprint</h4>
+                        <h4 style="color:var(--text-primary); font-size:15px; font-family:'Space Grotesk',sans-serif;">Developer Remediation Blueprint</h4>
                         <p style="color:var(--text-muted); font-size:12.5px;">Action items and copy-paste code patches for your software engineering team.</p>
                     </div>
-                    <div style="background:#FFFFFF; border:1px solid var(--border); border-radius:8px;">
+                    <div style="background:var(--glass); border:1px solid var(--glass-border); border-radius:12px;">
                         ${checklistHtml}
                     </div>
                     ${patchesHtml}
@@ -2556,6 +3714,624 @@ Under both UK GDPR and India's Digital Personal Data Protection Act 2023, data p
             html = html.replace(/(<li>.*<\/li>)/gms, '<ul>$1</ul>');
             html = html.replace(/\n\n+/g, '</p><p>');
             return '<p>' + html + '</p>';
+        }
+
+        // ==============================================================
+        // PHASE 4: AI & LLM GOVERNANCE COPILOT CONTROLLER
+        // ==============================================================
+        let selectedAITools = ['chatgpt_consumer', 'openai_api', 'cursor_copilot'];
+        let selectedAIDataTypes = ['consultation_health', 'source_code'];
+        let currentAIGovResult = null;
+        let currentAIGovDoc = 'dpia';
+        let generatedDPIAText = '';
+        let generatedAUPText = '';
+
+        function toggleAITool(toolId, el) {
+            if (selectedAITools.includes(toolId)) {
+                if (selectedAITools.length === 1) {
+                    showToast('At least one AI tool must remain selected.', '⚠️');
+                    return;
+                }
+                selectedAITools = selectedAITools.filter(t => t !== toolId);
+                el.classList.remove('selected');
+                el.querySelector('.aitool-checkbox').textContent = '';
+            } else {
+                selectedAITools.push(toolId);
+                el.classList.add('selected');
+                el.querySelector('.aitool-checkbox').textContent = '✓';
+            }
+        }
+
+        function toggleAIDataType(dataId, el) {
+            if (selectedAIDataTypes.includes(dataId)) {
+                if (selectedAIDataTypes.length === 1) {
+                    showToast('At least one data category must remain selected.', '⚠️');
+                    return;
+                }
+                selectedAIDataTypes = selectedAIDataTypes.filter(d => d !== dataId);
+                el.classList.remove('selected');
+            } else {
+                selectedAIDataTypes.push(dataId);
+                el.classList.add('selected');
+            }
+        }
+
+        async function executeAIGovernanceAudit() {
+            const btn = document.getElementById('btn-run-aigov');
+            if (btn) {
+                btn.classList.add('loading');
+                btn.disabled = true;
+            }
+
+            try {
+                const response = await fetch('/api/ai-governance/audit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        selected_tools: selectedAITools,
+                        selected_data_types: selectedAIDataTypes,
+                        company_name: 'Tara Infotech Ltd'
+                    })
+                });
+
+                if (response.ok) {
+                    currentAIGovResult = await response.json();
+                } else {
+                    currentAIGovResult = simulateAIGovAudit();
+                }
+            } catch (e) {
+                currentAIGovResult = simulateAIGovAudit();
+            } finally {
+                if (btn) {
+                    btn.classList.remove('loading');
+                    btn.disabled = false;
+                }
+            }
+
+            renderAIGovernanceDashboard(currentAIGovResult);
+            showToast('AI Governance statutory audit completed!', '⚡');
+        }
+
+        function simulateAIGovAudit() {
+            const hasSpecial = selectedAIDataTypes.includes('consultation_health') || selectedAIDataTypes.includes('financial_data') || selectedAIDataTypes.includes('api_secrets');
+            const hasConsumer = selectedAITools.includes('chatgpt_consumer') || selectedAITools.includes('google_gemini');
+            let score = 90;
+            if (hasSpecial && hasConsumer) score -= 45;
+            if (selectedAIDataTypes.includes('api_secrets')) score -= 25;
+            if (selectedAITools.includes('cursor_copilot') || selectedAITools.includes('openai_api')) score -= 10;
+            score = Math.max(20, Math.min(95, score));
+
+            const redFlags = [];
+            if (hasSpecial && hasConsumer) {
+                redFlags.push({
+                    severity: 'CRITICAL',
+                    title: 'Article 9 Breach: Special Category Consultation Notes in Public Consumer AI',
+                    statute: 'UK GDPR Article 9 & Section 4 India DPDP Act 2023',
+                    risk: 'Employees uploading consultation transcripts or psychological/health details into consumer ChatGPT/Gemini where model training is enabled by default.',
+                    remediation: 'Immediately enforce Azure OpenAI UK South with certified Zero Data Retention (ZDR) and block consumer web interfaces.',
+                    fine_exposure: 'Up to £17,500,000 (ICO) or ₹250 Crore (DPDP Board)'
+                });
+            }
+            if (selectedAITools.includes('chatgpt_consumer') || selectedAITools.includes('claude_anthropic')) {
+                redFlags.push({
+                    severity: 'HIGH',
+                    title: 'Unapproved Cross-Border Prompt Transfer to US Cloud Inference',
+                    statute: 'UK GDPR Chapter V (Articles 44–49) & ICO International Transfer Guidelines',
+                    risk: 'Customer prompts egress outside the UK/EU to US cloud clusters without execution of an International Data Transfer Agreement (IDTA).',
+                    remediation: 'Execute standard contractual addendum with OpenAI or route prompts exclusively via Azure UK South tenant.',
+                    fine_exposure: 'Up to £8,700,000 under ICO Enforcement Powers'
+                });
+            }
+            if (selectedAIDataTypes.includes('api_secrets')) {
+                redFlags.push({
+                    severity: 'CRITICAL',
+                    title: 'Security Inadequacy: System Credentials & Passwords Exposed to Third-Party AI',
+                    statute: 'UK GDPR Article 32 & India DPDPA Section 8(5)',
+                    risk: 'Hardcoded secrets, API tokens, or database connection strings entered into AI prompts violate mandatory technical safeguards.',
+                    remediation: 'Deploy pre-commit git secret scanners and enforce strict prompt sanitization filter.',
+                    fine_exposure: 'Mandatory 72-hour ICO security breach notification required'
+                });
+            }
+            redFlags.push({
+                severity: 'HIGH',
+                title: 'Mandatory Article 35 AI DPIA Missing from Corporate Records',
+                statute: 'UK GDPR Article 35(3) & ICO Guidance on Generative AI',
+                risk: 'Conducting systematic automated processing of client records via artificial intelligence without prior formal DPIA documentation.',
+                remediation: 'Publish and archive formal AI DPIA with the designated Data Protection Officer (DPO).',
+                fine_exposure: 'Statutory compliance audit order and public regulatory reprimand'
+            });
+
+            const matrix = [];
+            const toolNames = {
+                chatgpt_consumer: 'ChatGPT (Consumer)',
+                openai_api: 'OpenAI API (Developer)',
+                azure_openai: 'Azure OpenAI Enterprise',
+                claude_anthropic: 'Claude (Anthropic Web)',
+                ms_copilot: 'Microsoft 365 Copilot',
+                google_gemini: 'Google Gemini',
+                cursor_copilot: 'Cursor / Copilot IDE',
+                midjourney_canva: 'Midjourney / Canva'
+            };
+            const dataNames = {
+                customer_pii: 'Customer Names & Emails',
+                consultation_health: 'Consultation Transcripts (Art 9)',
+                financial_data: 'Financial Records',
+                source_code: 'Source Code & Schemas',
+                employee_cvs: 'Employee CVs & HR',
+                api_secrets: 'API Keys & Secrets'
+            };
+
+            selectedAITools.forEach(t => {
+                selectedAIDataTypes.forEach(d => {
+                    const isCrit = (t === 'chatgpt_consumer' || t === 'google_gemini') && (d === 'consultation_health' || d === 'api_secrets' || d === 'financial_data');
+                    matrix.push({
+                        tool_name: toolNames[t] || t,
+                        data_name: dataNames[d] || d,
+                        status: isCrit ? 'CRITICAL' : ((t === 'azure_openai' || t === 'ms_copilot') ? 'COMPLIANT' : 'WARNING'),
+                        model_training: (t === 'chatgpt_consumer' || t === 'google_gemini') ? 'YES (High Risk)' : 'NO (Protected)',
+                        action_required: isCrit ? 'Strictly Prohibit' : ((t === 'azure_openai' || t === 'ms_copilot') ? 'Permitted' : 'Permit with Guidelines')
+                    });
+                });
+            });
+
+            return {
+                company_name: 'Tara Infotech Ltd',
+                overall_score: score,
+                health_grade: score < 45 ? 'Grade D • Severe Exposure' : (score < 70 ? 'Grade C • High Risk' : 'Grade B • Moderate'),
+                red_flags: redFlags,
+                risk_matrix: matrix
+            };
+        }
+
+        function renderAIGovernanceDashboard(result) {
+            const container = document.getElementById('aigov-results-container');
+            container.style.display = 'block';
+
+            // Update Bento stats
+            const scoreVal = document.getElementById('aigov-score-val');
+            scoreVal.textContent = `${result.overall_score}/100`;
+            scoreVal.className = `stat-card-val ${result.overall_score < 50 ? 'val-danger' : (result.overall_score < 75 ? 'val-warning' : 'val-success')}`;
+
+            document.getElementById('aigov-grade-val').textContent = result.health_grade;
+            document.getElementById('aigov-exposure-val').textContent = result.overall_score < 50 ? '£17.5M' : (result.overall_score < 75 ? '£8.7M' : '£2.5M');
+            document.getElementById('aigov-redflag-count').textContent = `${result.red_flags.length} Red Flags Found`;
+
+            // Render Red Flags List
+            const flagsList = document.getElementById('aigov-redflags-list');
+            flagsList.innerHTML = result.red_flags.map((rf, idx) => `
+                <div class="issue-item ${rf.severity === 'CRITICAL' ? '' : 'warning'}">
+                    <div class="issue-header">
+                        <span class="issue-title">#${idx + 1} &bull; ${escapeHtml(rf.title)}</span>
+                        <span class="issue-badge ${rf.severity === 'CRITICAL' ? 'badge-danger' : 'badge-warning'}">${rf.severity}</span>
+                    </div>
+                    <div class="issue-statute">🏛️ Governing Law: ${escapeHtml(rf.statute)}</div>
+                    <p class="issue-desc">${escapeHtml(rf.risk)}</p>
+                    <div style="font-size: 11.5px; color: var(--danger); font-weight:700; margin-bottom: 8px;">
+                        ⚠️ Maximum Fine Exposure: ${escapeHtml(rf.fine_exposure || 'Up to £17.5M under ICO rules')}
+                    </div>
+                    <div class="issue-fix-box">
+                        <strong>✓ Mandatory Remediation:</strong> ${escapeHtml(rf.remediation)}
+                    </div>
+                </div>
+            `).join('');
+
+            // Render Matrix Table
+            const tbody = document.getElementById('aigov-matrix-tbody');
+            tbody.innerHTML = result.risk_matrix.map(row => `
+                <tr>
+                    <td><strong>${escapeHtml(row.tool_name)}</strong></td>
+                    <td>${escapeHtml(row.data_name)}</td>
+                    <td><span class="aitool-tag ${row.model_training.includes('YES') ? 'tag-danger' : 'tag-success'}">${escapeHtml(row.model_training)}</span></td>
+                    <td><span class="pill-badge ${row.status === 'CRITICAL' ? 'badge-danger' : (row.status === 'WARNING' ? 'badge-warning' : 'pill-progress')}" style="font-size:10.5px;">${row.status}</span></td>
+                    <td style="font-weight: 600; color: ${row.status === 'CRITICAL' ? 'var(--danger)' : (row.status === 'WARNING' ? 'var(--warning)' : 'var(--success)')};">${escapeHtml(row.action_required)}</td>
+                </tr>
+            `).join('');
+
+            // Build statutory texts
+            generatedDPIAText = `# STATUTORY DATA PROTECTION IMPACT ASSESSMENT (DPIA)
+## SYSTEMATIC PROCESSING OF PERSONAL DATA VIA GENERATIVE ARTIFICIAL INTELLIGENCE
+Governing Statute: UK GDPR (Article 35), Data Protection Act 2018 & India DPDP Act 2023
+Organization: Tara Infotech Ltd
+DPIA Assessment Reference: DPIA-AI-2026-001
+Status: ACTIVE REGULATORY AUDIT
+Overall Compliance Rating: ${result.overall_score}/100 (${result.health_grade})
+
+--------------------------------------------------------------------------------
+
+1. SYSTEMATIC DESCRIPTION OF AI PROCESSING
+- Technologies Evaluated: ${selectedAITools.join(', ')}
+- Ingested Data Types: ${selectedAIDataTypes.join(', ')}
+- Operational Purpose: Automated consultation transcript analysis, code generation, and client advisory workflows.
+- Core Vulnerability: Cross-border inference dispatch and model weight harvesting by third-party LLMs.
+
+2. STATUTORY RISK ASSESSMENT (ARTICLE 35(7))
+- Special Category Health / Consultation Data: Processing Article 9 data via external LLMs requires Explicit Consent and a certified Zero-Retention contract.
+- Model Training Isolation: Prompts must NOT be recycled into foundational model parameter weights.
+- International Transfers: Prompt egress to US inference clusters must be secured via the UK International Data Transfer Addendum (IDTA).
+
+3. MANDATORY REMEDIATION CONTROLS
+1. Mandate migration of all sensitive customer consultation processing to Azure OpenAI UK South region.
+2. Promulgate and execute the Tara Employee AI Acceptable Use Policy within 14 calendar days.
+3. Deploy client-side pseudonymization filters to scrub telephone numbers and names before inference.
+
+Approved by: Lead Data Protection Officer (Tara PrivacyOS Audited)`;
+
+            generatedAUPText = `# TARA INFOTECH LTD — EMPLOYEE ARTIFICIAL INTELLIGENCE ACCEPTABLE USE POLICY (AUP)
+Version: 2.0 (Statutory Compliance Update)
+Applies to: All Employees, Contractors, Advisors, and Remote Practitioners
+
+--------------------------------------------------------------------------------
+
+1. PURPOSE & MANDATE
+This policy governs workplace usage of Generative AI tools (ChatGPT, Claude, Microsoft Copilot, Cursor). Non-compliance exposes the company to statutory penalties up to £17.5M under the UK Data Protection Act 2018 and ₹250 Cr under the India DPDP Act 2023.
+
+2. THE 3 GOLDEN RULES
+[RULE 1] NO SPECIAL CATEGORY DATA: Never paste customer consultation notes, spiritual queries, or medical details into public consumer AI.
+[RULE 2] NO SECRETS OR PASSWORDS: Never paste API keys, AWS credentials, JWT tokens, or proprietary source code.
+[RULE 3] VERIFY ACCURACY: Employees remain 100% accountable for work delivered to clients; hallucinated outputs must be caught prior to dispatch.
+
+3. SANCTIONED VS. PROHIBITED TOOLS
+- APPROVED: Company Azure OpenAI Enterprise, Microsoft 365 Copilot (Enterprise Tenant), Cursor with Telemetry Disabled.
+- PROHIBITED: Personal/Free ChatGPT accounts, Google Gemini consumer tier, public WhatsApp AI bots.
+
+4. EMPLOYEE UNDERTAKING
+I confirm that I have read, understood, and agree to abide by Tara Infotech Ltd's Employee AI Acceptable Use Policy.
+
+Employee Signature: ___________________________
+Date: _______________________________________`;
+
+            switchAIGovDocSubtab(currentAIGovDoc);
+            container.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function switchAIGovDocSubtab(type) {
+            currentAIGovDoc = type;
+            document.getElementById('aigov-subtab-dpia').classList.toggle('active', type === 'dpia');
+            document.getElementById('aigov-subtab-aup').classList.toggle('active', type === 'aup');
+            document.getElementById('aigov-doc-viewer').textContent = type === 'dpia' ? generatedDPIAText : generatedAUPText;
+        }
+
+        function copyCurrentAIGovDoc() {
+            const text = currentAIGovDoc === 'dpia' ? generatedDPIAText : generatedAUPText;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast(`Copied ${currentAIGovDoc === 'dpia' ? 'AI DPIA' : 'AI Policy'} to clipboard!`, '📋');
+            });
+        }
+
+        function downloadCurrentAIGovDoc(ext) {
+            const text = currentAIGovDoc === 'dpia' ? generatedDPIAText : generatedAUPText;
+            const filename = currentAIGovDoc === 'dpia' ? 'Statutory_AI_DPIA_Assessment.md' : 'Employee_AI_Acceptable_Use_Policy.md';
+            const blob = new Blob([text], { type: 'text/markdown;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast(`Downloaded ${filename}!`, '📥');
+        }
+
+        // ==============================================================
+        // PHASE 5: VISUAL DATA-FLOW & CROSS-BORDER MAP CONTROLLER
+        // ==============================================================
+        let currentTopoPreset = 'tara-consultation';
+        let currentTopoFilter = 'ALL';
+        let currentTopology = null;
+
+        const defaultTopologies = {
+            'tara-consultation': {
+                name: "Tara Spiritual Consultation App",
+                company: "Tara Infotech Ltd",
+                nodes: [
+                    { id: "uk_users", label: "UK Clients & Users", sub: "Mobile & Web App", x: 80, y: 140, flag: "🇬🇧", color: "#00CEFF", icon: "👤", cat: "Data Subject" },
+                    { id: "gateway", label: "FastAPI Gateway", sub: "AWS London (eu-west-2)", x: 310, y: 140, flag: "🇬🇧", color: "#6C5CE7", icon: "⚡", cat: "API Controller" },
+                    { id: "db", label: "PostgreSQL Database", sub: "AES-256 Encrypted", x: 550, y: 70, flag: "🇬🇧", color: "#51CF66", icon: "🗄️", cat: "Primary DB" },
+                    { id: "stripe", label: "Stripe UK Gateway", sub: "Wallet Top-Ups", x: 310, y: 310, flag: "🇬🇧", color: "#51CF66", icon: "💳", cat: "Payment Subprocessor" },
+                    { id: "openai", label: "OpenAI GPT-4 Mini", sub: "US Cloud Inference", x: 550, y: 220, flag: "🇺🇸", color: "#FFD43B", icon: "🤖", cat: "AI Subprocessor" },
+                    { id: "india_ops", label: "India Tech & Support", sub: "Noida / Bengaluru Hub", x: 790, y: 140, flag: "🇮🇳", color: "#FF6B6B", icon: "🇮🇳", cat: "Overseas Importer" }
+                ],
+                links: [
+                    { id: "l1", source: "uk_users", target: "gateway", label: "Birth Details & Consultations", data: ["Name", "DOB", "Chat Transcripts"], law: "UK GDPR Art 6(1)(b) Contract & Art 9(2)(a)", status: "COMPLIANT", cb: false, fine: "None" },
+                    { id: "l2", source: "gateway", target: "db", label: "Encrypted Storage (90d)", data: ["User Account", "Consultation Records"], law: "UK GDPR Art 5(1)(e) Storage Limit", status: "COMPLIANT", cb: false, fine: "None" },
+                    { id: "l3", source: "uk_users", target: "stripe", label: "Wallet Payments (Tokens)", data: ["Billing Postcode", "Card Token"], law: "PCI-DSS / Art 6(1)(b)", status: "COMPLIANT", cb: false, fine: "None" },
+                    { id: "l4", source: "gateway", target: "openai", label: "Transcript Summaries", data: ["Audio Transcripts", "Spiritual Queries"], law: "UK GDPR Chapter V (Art 44)", status: "WARNING", cb: true, fine: "Up to £8.7M under ICO Transfer Rules" },
+                    { id: "l5", source: "db", target: "india_ops", label: "Support & QA Access", data: ["Customer Phone Numbers", "Failed Logs"], law: "UK GDPR Section 119A DPA 2018", status: "VIOLATION", cb: true, fine: "Up to £17.5M (ICO) / ₹250Cr (DPDPA)" }
+                ]
+            },
+            'medconnect-telehealth': {
+                name: "MedConnect Telemedicine EHR",
+                company: "MedConnect Health Ltd",
+                nodes: [
+                    { id: "patients", label: "NHS Patients & Doctors", sub: "Telehealth Portal", x: 80, y: 140, flag: "🇬🇧", color: "#00CEFF", icon: "🏥", cat: "Data Subject" },
+                    { id: "gateway", label: "Express.js API", sub: "AWS London (eu-west-2)", x: 310, y: 140, flag: "🇬🇧", color: "#6C5CE7", icon: "⚡", cat: "API Controller" },
+                    { id: "ehr_db", label: "Patient EHR Database", sub: "RDS Postgres KMS", x: 550, y: 80, flag: "🇬🇧", color: "#51CF66", icon: "🗄️", cat: "Primary DB" },
+                    { id: "s3_scans", label: "AWS S3 Medical Scans", sub: "MRI & Blood Reports", x: 550, y: 240, flag: "🇬🇧", color: "#51CF66", icon: "🧬", cat: "Cloud Storage" },
+                    { id: "india_sre", label: "India DevOps & SRE", sub: "24/7 Cloud Support", x: 790, y: 140, flag: "🇮🇳", color: "#FF6B6B", icon: "🇮🇳", cat: "Overseas Importer" }
+                ],
+                links: [
+                    { id: "ml1", source: "patients", target: "gateway", label: "EHR Diagnoses & Prescriptions", data: ["NHS Number", "Medical Notes", "Prescriptions"], law: "UK GDPR Art 9(2)(h) Healthcare", status: "COMPLIANT", cb: false, fine: "None" },
+                    { id: "ml2", source: "gateway", target: "ehr_db", label: "Encrypted Diagnostic Store", data: ["Full Patient EHR"], law: "UK GDPR Art 9(2)(h) & DPA 2018", status: "COMPLIANT", cb: false, fine: "None" },
+                    { id: "ml3", source: "gateway", target: "s3_scans", label: "Medical Imaging Ingest", data: ["X-Ray Scans", "Lab Reports"], law: "UK GDPR Art 32 KMS AES-256", status: "COMPLIANT", cb: false, fine: "None" },
+                    { id: "ml4", source: "ehr_db", target: "india_sre", label: "Production Log Telemetry", data: ["CloudWatch Error Streams", "IP Addresses"], law: "UK GDPR Chapter V (Art 46)", status: "VIOLATION", cb: true, fine: "Up to £17.5M for Special Category Egress" }
+                ]
+            }
+        };
+
+        function loadTopologyPreset(presetKey) {
+            currentTopoPreset = presetKey;
+            renderTopologyCanvas();
+            showToast(`Loaded ${presetKey === 'tara-consultation' ? 'Tara Spiritual Platform' : 'MedConnect Telemedicine'} architecture`, '🗺️');
+        }
+
+        function filterTopologyFlows(filterType, btn) {
+            currentTopoFilter = filterType;
+            document.querySelectorAll('.topo-filter-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            renderTopologyCanvas();
+        }
+
+        function renderTopologyCanvas() {
+            const svg = document.getElementById('topo-svg-map');
+            if (!svg) return;
+
+            const topo = defaultTopologies[currentTopoPreset] || defaultTopologies['tara-consultation'];
+            currentTopology = topo;
+
+            // Update stats
+            const totalNodes = topo.nodes.length;
+            const totalFlows = topo.links.length;
+            const cbFlows = topo.links.filter(l => l.cb).length;
+            const violations = topo.links.filter(l => l.status === 'VIOLATION').length;
+
+            const nEl = document.getElementById('topo-stat-nodes');
+            if (nEl) nEl.textContent = `${totalNodes} Services`;
+            const fEl = document.getElementById('topo-stat-flows');
+            if (fEl) fEl.textContent = `${totalFlows} Data Routes`;
+            const cbEl = document.getElementById('topo-stat-cb');
+            if (cbEl) cbEl.textContent = `${cbFlows} Overseas Transfers`;
+            const vEl = document.getElementById('topo-stat-violations');
+            if (vEl) vEl.textContent = `${violations} Missing IDTA`;
+
+            // Filter links
+            let filteredLinks = topo.links;
+            if (currentTopoFilter === 'CROSS_BORDER') {
+                filteredLinks = topo.links.filter(l => l.cb);
+            } else if (currentTopoFilter === 'VIOLATION') {
+                filteredLinks = topo.links.filter(l => l.status === 'VIOLATION');
+            }
+
+            const nodeMap = {};
+            topo.nodes.forEach(n => { nodeMap[n.id] = n; });
+
+            let svgHtml = `
+                <defs>
+                    <linearGradient id="grad-compliant" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#00CEFF"/>
+                        <stop offset="100%" stop-color="#51CF66"/>
+                    </linearGradient>
+                    <linearGradient id="grad-warning" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#6C5CE7"/>
+                        <stop offset="100%" stop-color="#FFD43B"/>
+                    </linearGradient>
+                    <linearGradient id="grad-violation" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#51CF66"/>
+                        <stop offset="100%" stop-color="#FF6B6B"/>
+                    </linearGradient>
+                </defs>
+            `;
+
+            // Draw Links (Curved Cables)
+            filteredLinks.forEach(link => {
+                const s = nodeMap[link.source];
+                const t = nodeMap[link.target];
+                if (!s || !t) return;
+
+                const sx = s.x + 80;
+                const sy = s.y + 40;
+                const tx = t.x + 80;
+                const ty = t.y + 40;
+                const mx = (sx + tx) / 2;
+                const my = (sy + ty) / 2 - (Math.abs(sx - tx) > 100 ? 25 : 0);
+
+                const strokeColor = link.status === 'VIOLATION' ? '#FF6B6B' : (link.status === 'WARNING' ? '#FFD43B' : '#00CEFF');
+                const strokeGrad = link.status === 'VIOLATION' ? 'url(#grad-violation)' : (link.status === 'WARNING' ? 'url(#grad-warning)' : 'url(#grad-compliant)');
+
+                svgHtml += `
+                    <g onclick="inspectTopologyLink('${link.id}')" style="cursor:pointer;">
+                        <!-- Shadow glow line -->
+                        <path d="M ${sx} ${sy} Q ${mx} ${my} ${tx} ${ty}" fill="none" stroke="${strokeColor}" stroke-width="6" opacity="0.15" />
+                        <!-- Animated dashed cable -->
+                        <path class="flow-cable" d="M ${sx} ${sy} Q ${mx} ${my} ${tx} ${ty}" fill="none" stroke="${strokeGrad}" stroke-width="2.5" />
+                        <!-- Link Label Pill -->
+                        <rect x="${mx - 55}" y="${my - 12}" width="110" height="20" rx="10" fill="#0C0C1D" stroke="${strokeColor}" stroke-width="1" opacity="0.9"/>
+                        <text x="${mx}" y="${my + 2}" font-size="9" font-family="'JetBrains Mono', monospace" fill="#E2E8F0" text-anchor="middle" font-weight="600">${link.status === 'VIOLATION' ? '⚠️ UK-INDIA IDTA' : (link.cb ? '✈️ UK-US CLOUD' : '🔒 SECURE FLOW')}</text>
+                    </g>
+                `;
+            });
+
+            // Draw Nodes
+            topo.nodes.forEach(node => {
+                const isViolationTarget = topo.links.some(l => l.target === node.id && l.status === 'VIOLATION');
+                const borderColor = isViolationTarget ? '#FF6B6B' : node.color;
+                const haloShadow = isViolationTarget ? 'rgba(255, 107, 107, 0.4)' : `${node.color}33`;
+
+                svgHtml += `
+                    <g class="topo-node" transform="translate(${node.x}, ${node.y})" onclick="inspectTopologyNode('${node.id}')">
+                        <!-- Node Background Card -->
+                        <rect width="160" height="80" rx="14" fill="#0F1026" stroke="${borderColor}" stroke-width="1.8" style="filter: drop-shadow(0 4px 16px ${haloShadow});" />
+                        <rect width="160" height="80" rx="14" fill="url(#grad-card)" opacity="0.05" />
+                        
+                        <!-- Top Accent Line -->
+                        <rect x="14" y="0" width="132" height="2" fill="${borderColor}" opacity="0.8"/>
+                        
+                        <!-- Node Icon & Flag -->
+                        <text x="16" y="30" font-size="18">${node.icon}</text>
+                        <text x="140" y="26" font-size="14" text-anchor="end">${node.flag}</text>
+                        
+                        <!-- Node Title & Subtitle -->
+                        <text x="16" y="50" font-size="11.5" font-family="'Space Grotesk', sans-serif" font-weight="700" fill="#FFFFFF">${escapeHtml(node.label)}</text>
+                        <text x="16" y="66" font-size="9.5" font-family="'Inter', sans-serif" fill="#94A3B8">${escapeHtml(node.sub)}</text>
+                    </g>
+                `;
+            });
+
+            svg.innerHTML = svgHtml;
+        }
+
+        function inspectTopologyLink(linkId) {
+            const topo = currentTopology || defaultTopologies['tara-consultation'];
+            const link = topo.links.find(l => l.id === linkId);
+            if (!link) return;
+
+            const nodeMap = {};
+            topo.nodes.forEach(n => { nodeMap[n.id] = n; });
+            const s = nodeMap[link.source];
+            const t = nodeMap[link.target];
+
+            const panel = document.getElementById('topo-inspector-panel');
+            document.getElementById('insp-title').textContent = link.label;
+            document.getElementById('insp-subtitle').textContent = `${s ? s.label : link.source} ➔ ${t ? t.label : link.target}`;
+
+            const statusClass = link.status === 'VIOLATION' ? 'badge-danger' : (link.status === 'WARNING' ? 'badge-warning' : 'pill-progress');
+
+            document.getElementById('insp-body-content').innerHTML = `
+                <div>
+                    <span class="pill-badge ${statusClass}" style="font-size: 11px; padding: 4px 10px;">
+                        ${link.status === 'VIOLATION' ? '🚨 STATUTORY VIOLATION' : (link.status === 'WARNING' ? '⚠️ OVERSEAS TRANSFER AUDIT' : '✓ LAWFUL DOMESTIC FLOW')}
+                    </span>
+                </div>
+
+                <div style="background: rgba(255,255,255,0.03); border:1px solid var(--glass-border); border-radius:10px; padding:14px;">
+                    <div style="font-size:11px; color:var(--text-muted); font-weight:700; text-transform:uppercase;">In-Flight Personal Data</div>
+                    <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:8px;">
+                        ${link.data.map(d => `<span class="aitool-tag tag-neutral">${escapeHtml(d)}</span>`).join('')}
+                    </div>
+                </div>
+
+                <div style="background: rgba(255,255,255,0.03); border:1px solid var(--glass-border); border-radius:10px; padding:14px;">
+                    <div style="font-size:11px; color:var(--text-muted); font-weight:700; text-transform:uppercase;">Statutory Lawful Basis</div>
+                    <div style="font-size:13px; font-weight:600; color:var(--text-primary); margin-top:6px;">${escapeHtml(link.law)}</div>
+                </div>
+
+                ${link.cb ? `
+                    <div style="background: var(--danger-bg); border:1px solid var(--danger-border); border-radius:10px; padding:14px;">
+                        <div style="font-size:11px; color:var(--danger); font-weight:700; text-transform:uppercase;">Cross-Border Transfer Analysis</div>
+                        <p style="font-size:12.5px; color:#FCA5A5; margin-top:6px; line-height:1.5;">
+                            ${link.status === 'VIOLATION' ? 'Transfers personal data from UK controllers to India developers without a formal UK International Data Transfer Agreement (IDTA). Direct breach of ICO Chapter V regulations.' : 'Data egresses to US cloud infrastructure. Requires UK-US Data Bridge compliance check.'}
+                        </p>
+                        <div style="font-size:12px; font-weight:700; color:var(--danger); margin-top:8px;">
+                            Statutory Exposure: ${escapeHtml(link.fine)}
+                        </div>
+                    </div>
+                ` : ''}
+
+                <div style="margin-top:auto; padding-top:10px;">
+                    <button class="btn-primary-action" style="width:100%; justify-content:center;" onclick="openIDTAModal()">
+                        <span>📄 Generate UK-India IDTA Schedule</span>
+                    </button>
+                </div>
+            `;
+
+            panel.classList.add('open');
+        }
+
+        function inspectTopologyNode(nodeId) {
+            const topo = currentTopology || defaultTopologies['tara-consultation'];
+            const node = topo.nodes.find(n => n.id === nodeId);
+            if (!node) return;
+
+            const panel = document.getElementById('topo-inspector-panel');
+            document.getElementById('insp-title').textContent = `${node.icon} ${node.label}`;
+            document.getElementById('insp-subtitle').textContent = `${node.cat} &bull; ${node.flag} ${node.jurisdiction || 'Cloud Node'}`;
+
+            const connectedLinks = topo.links.filter(l => l.source === node.id || l.target === node.id);
+
+            document.getElementById('insp-body-content').innerHTML = `
+                <div style="background: rgba(255,255,255,0.03); border:1px solid var(--glass-border); border-radius:10px; padding:14px;">
+                    <div style="font-size:11px; color:var(--text-muted); font-weight:700; text-transform:uppercase;">Hosting &amp; Location</div>
+                    <div style="font-size:13px; font-weight:600; color:var(--text-primary); margin-top:6px;">${node.flag} ${escapeHtml(node.sub)}</div>
+                </div>
+
+                <div style="background: rgba(255,255,255,0.03); border:1px solid var(--glass-border); border-radius:10px; padding:14px;">
+                    <div style="font-size:11px; color:var(--text-muted); font-weight:700; text-transform:uppercase;">Connected Data Flows (${connectedLinks.length})</div>
+                    <div style="display:flex; flex-direction:column; gap:6px; margin-top:8px;">
+                        ${connectedLinks.map(l => `
+                            <div style="font-size:12px; color:var(--text-secondary); display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px solid rgba(255,255,255,0.04);">
+                                <span>${escapeHtml(l.label)}</span>
+                                <span style="font-weight:700; color:${l.status === 'VIOLATION' ? 'var(--danger)' : 'var(--success)'};">${l.status}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <div style="margin-top:auto; padding-top:10px;">
+                    <button class="btn-primary-action" style="width:100%; justify-content:center;" onclick="openIDTAModal()">
+                        <span>📄 Generate UK-India IDTA Schedule</span>
+                    </button>
+                </div>
+            `;
+
+            panel.classList.add('open');
+        }
+
+        function closeTopologyInspector() {
+            const panel = document.getElementById('topo-inspector-panel');
+            if (panel) panel.classList.remove('open');
+        }
+
+        const sampleIDTAContract = `# STATUTORY UK INTERNATIONAL DATA TRANSFER AGREEMENT (IDTA)
+## MANDATORY ADDENDUM TO DATA PROCESSING AGREEMENT (DPA)
+Governing Authority: Information Commissioner's Office (ICO)
+Governing Statute: UK GDPR Section 119A Data Protection Act 2018
+Transfer Mechanism: Standard Data Protection Clauses (UK IDTA Standard)
+Execution Date: August 8, 2026
+
+--------------------------------------------------------------------------------
+
+PART 1: PARTIES & ROLES TABLE
+- DATA EXPORTER (Controller): Tara Infotech Ltd (England & Wales, United Kingdom)
+- DATA IMPORTER (Processor): Tara Infotech India Pvt Ltd (Republic of India - DPDPA 2023)
+- Purpose of Transfer: Overseas cloud software development, QA testing, production troubleshooting, and Tier-2 customer support.
+
+PART 2: TRANSFER DETAILS & ARTICLE 30 SPECIFICATION
+1. Categories of Data Subjects: UK customers using astrological consultation and wellness platforms.
+2. Categories of Data Transferred: User accounts (Name, Email, Telephone), Consultation records, Birth charts (DOB, Time, Place of birth), Audio/Chat transcripts.
+3. Special Category Data: Health & Spiritual Beliefs (UK GDPR Article 9) processed strictly under Article 9(2)(a) Explicit Consent.
+
+PART 3: MANDATORY TECHNICAL & ORGANISATIONAL SAFEGUARDS (TOMS)
+1. Importer personnel in India shall access UK personal data exclusively via encrypted Zero Trust Bastion hosts with MFA.
+2. Absolute prohibition on downloading customer phone numbers or consultation logs to personal smartphones in India.
+3. Importer must notify Exporter of any security incident within 24 hours to comply with the ICO 72-hour breach deadline.
+
+For Data Exporter (Tara Infotech Ltd): Lead Data Protection Officer
+For Data Importer (Tara Infotech India Pvt Ltd): Managing Director (India Operations)`;
+
+        function openIDTAModal() {
+            const modal = document.getElementById('idta-modal-overlay');
+            const viewer = document.getElementById('idta-document-viewer');
+            viewer.textContent = sampleIDTAContract;
+            modal.classList.add('open');
+        }
+
+        function closeIDTAModal() {
+            document.getElementById('idta-modal-overlay').classList.remove('open');
+        }
+
+        function copyIDTAContract() {
+            navigator.clipboard.writeText(sampleIDTAContract).then(() => {
+                showToast('Copied statutory IDTA contract to clipboard!', '📋');
+            });
+        }
+
+        function downloadIDTAContract(fmt) {
+            const blob = new Blob([sampleIDTAContract], { type: 'text/markdown;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Statutory_UK_India_IDTA_Contract.md';
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('Downloaded Statutory UK-India IDTA Schedule!', '📥');
         }
     </script>
 </body>

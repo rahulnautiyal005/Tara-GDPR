@@ -3,327 +3,1443 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tara PrivacyOS — Sign In</title>
-    <meta name="description" content="Sign in to Tara PrivacyOS — AI-powered privacy compliance and document auditing.">
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+    <title>Tara PrivacyOS — Autonomous Legal Intelligence & Privacy Engine</title>
+    <meta name="description" content="Next-Generation AI Legal Intelligence: Code-to-GDPR, Document Auto-Fixer, and Real-Time Statutory Governance.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #FAFAF8;
-            --bg-card: #FFFFFF;
-            --border: #E8E5DE;
-            --border-hover: #D4CFC5;
-            --text-primary: #1A1A2E;
-            --text-secondary: #5A5A72;
-            --text-muted: #8E8E9F;
-            --accent: #2D5BFF;
-            --accent-hover: #1A45E0;
-            --accent-light: #EEF2FF;
-            --accent-glow: rgba(45, 91, 255, 0.12);
-            --radius: 16px;
-            --shadow-md: 0 4px 16px rgba(0,0,0,0.06), 0 2px 6px rgba(0,0,0,0.03);
-            --shadow-lg: 0 12px 40px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04);
-            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --bg-void: #030308;
+            --bg-surface: rgba(10, 10, 24, 0.72);
+            --bg-card: rgba(16, 17, 38, 0.75);
+            --bg-glass-subtle: rgba(255, 255, 255, 0.035);
+            --border-glass: rgba(255, 255, 255, 0.09);
+            --border-glow: rgba(99, 102, 241, 0.45);
+            --text-main: #F8FAFC;
+            --text-secondary: #94A3B8;
+            --text-muted: #64748B;
+            --cyan-neon: #00F2FE;
+            --purple-neon: #7928CA;
+            --violet-core: #6366F1;
+            --emerald-glow: #10B981;
+            --rose-glow: #F43F5E;
+            --amber-glow: #F59E0B;
+            --primary-gradient: linear-gradient(135deg, #00F2FE 0%, #4FACFE 40%, #7928CA 100%);
+            --aurora-gradient: linear-gradient(135deg, rgba(0, 242, 254, 0.15), rgba(121, 40, 202, 0.15));
+            --btn-gradient: linear-gradient(135deg, #00C6FF 0%, #0072FF 50%, #7928CA 100%);
+            --glow-cyan: 0 0 25px rgba(0, 242, 254, 0.45);
+            --glow-purple: 0 0 35px rgba(121, 40, 202, 0.4);
+            --radius-xl: 24px;
+            --radius-lg: 16px;
+            --radius-md: 12px;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
 
         body {
-            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg);
-            color: var(--text-primary);
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-void);
+            color: var(--text-main);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
+            overflow-x: hidden;
             padding: 24px;
-            -webkit-font-smoothing: antialiased;
         }
 
-        .login-container {
+        /* ─── Interactive Interactive WebGL / Canvas Background ─── */
+        #neural-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ─── Dynamic Ambient Glowing Nebulas ─── */
+        .nebula {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.45;
+            pointer-events: none;
+            z-index: 1;
+            animation: nebulaDrift 20s infinite alternate ease-in-out;
+        }
+        .nebula-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #7928CA, rgba(99, 102, 241, 0.15));
+            top: -150px;
+            left: -100px;
+            animation-duration: 22s;
+        }
+        .nebula-2 {
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, #00F2FE, rgba(0, 114, 255, 0.1));
+            bottom: -200px;
+            right: -150px;
+            animation-duration: 28s;
+        }
+        .nebula-3 {
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.25), transparent);
+            top: 40%;
+            left: 45%;
+            animation-duration: 18s;
+        }
+
+        @keyframes nebulaDrift {
+            0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            50% { transform: translate(60px, -40px) scale(1.15) rotate(180deg); }
+            100% { transform: translate(-40px, 50px) scale(0.9) rotate(360deg); }
+        }
+
+        /* ─── Cyber Grid Overlay ─── */
+        .cyber-grid {
+            position: fixed;
+            inset: 0;
+            background-size: 50px 50px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, #000 60%, transparent 100%);
+            -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, #000 60%, transparent 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* ─── Master Split Stage ─── */
+        .master-stage {
+            position: relative;
+            z-index: 10;
             width: 100%;
-            max-width: 420px;
+            max-width: 1240px;
+            display: grid;
+            grid-template-columns: 1.15fr 0.95fr;
+            gap: 48px;
+            align-items: center;
+            perspective: 1200px;
         }
 
-        /* Logo & Brand */
-        .brand {
-            text-align: center;
-            margin-bottom: 32px;
+        @media (max-width: 1024px) {
+            .master-stage {
+                grid-template-columns: 1fr;
+                gap: 36px;
+                max-width: 580px;
+            }
+            .showcase-panel {
+                text-align: center;
+            }
+            .brand-row {
+                justify-content: center;
+            }
+            .persona-grid {
+                justify-content: center;
+            }
+            .trust-badges {
+                justify-content: center;
+            }
         }
 
-        .brand-logo {
+        /* ═════════════════════════════════════════════
+           LEFT SHOWCASE PANEL
+           ═════════════════════════════════════════════ */
+        .showcase-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        /* Brand Row */
+        .brand-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .brand-badge {
             width: 56px;
             height: 56px;
-            background: linear-gradient(135deg, #2D5BFF, #7C3AED);
             border-radius: 16px;
-            display: inline-flex;
+            background: linear-gradient(135deg, #00F2FE, #7928CA);
+            padding: 2px;
+            position: relative;
+            box-shadow: 0 0 30px rgba(0, 242, 254, 0.4), 0 0 50px rgba(121, 40, 202, 0.3);
+            animation: badgeFloat 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes badgeFloat {
+            0% { transform: translateY(0px) rotate(0deg); }
+            100% { transform: translateY(-6px) rotate(2deg); }
+        }
+
+        .brand-badge-inner {
+            width: 100%;
+            height: 100%;
+            background: #080816;
+            border-radius: 14px;
+            display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
+            font-family: 'Space Grotesk', sans-serif;
             font-size: 26px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            box-shadow: 0 6px 20px rgba(45, 91, 255, 0.25);
+            font-weight: 800;
+            color: #FFF;
+            text-shadow: 0 0 12px rgba(0, 242, 254, 0.8);
         }
 
-        .brand h1 {
-            font-family: 'DM Serif Display', serif;
+        .brand-meta h1 {
+            font-family: 'Space Grotesk', sans-serif;
             font-size: 28px;
-            color: var(--text-primary);
-            margin-bottom: 8px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, #FFFFFF 30%, #94A3B8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .brand p {
-            font-size: 15px;
+        .brand-meta .pill-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            background: rgba(0, 242, 254, 0.1);
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            color: var(--cyan-neon);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-top: 4px;
+        }
+
+        .pill-pulse {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--cyan-neon);
+            box-shadow: 0 0 8px var(--cyan-neon);
+            animation: pulse-ring 1.8s infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 242, 254, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(0, 242, 254, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 242, 254, 0); }
+        }
+
+        /* Headline & Dynamic Text */
+        .showcase-hero h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(34px, 4vw, 46px);
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -0.03em;
+            color: #FFFFFF;
+            margin-bottom: 14px;
+        }
+
+        .text-gradient-aurora {
+            background: linear-gradient(135deg, #00F2FE 0%, #38BDF8 40%, #C084FC 80%, #F472B6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% 200%;
+            animation: gradientShift 6s ease infinite alternate;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        .showcase-hero p {
             color: var(--text-secondary);
-            line-height: 1.5;
+            font-size: 16px;
+            line-height: 1.6;
+            max-width: 520px;
         }
 
-        /* Card */
-        .login-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 32px;
-            box-shadow: var(--shadow-lg);
+        /* Live AI Statutory Terminal Widget */
+        .cyber-terminal {
+            background: rgba(12, 13, 29, 0.75);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-lg);
+            padding: 18px 22px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
         }
 
-        /* Form */
+        .cyber-terminal::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0, 242, 254, 0.6), rgba(121, 40, 202, 0.6), transparent);
+        }
+
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 12px;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .terminal-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .tdot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        .tdot-red { background: #FF5F56; }
+        .tdot-yellow { background: #FFBD2E; }
+        .tdot-green { background: #27C93F; }
+
+        .terminal-feed {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            line-height: 1.7;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .feed-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feed-prefix {
+            color: var(--cyan-neon);
+            font-weight: 700;
+        }
+
+        .feed-text {
+            color: var(--text-secondary);
+        }
+
+        .feed-highlight {
+            color: #38BDF8;
+            font-weight: 600;
+        }
+
+        .feed-badge {
+            margin-left: auto;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .badge-pass {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34D399;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .badge-ai {
+            background: rgba(121, 40, 202, 0.2);
+            color: #C084FC;
+            border: 1px solid rgba(121, 40, 202, 0.4);
+        }
+
+        /* ─── Interactive Quick Persona Selector ─── */
+        .persona-section-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .persona-section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border-glass);
+        }
+
+        .persona-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        @media (max-width: 640px) {
+            .persona-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .persona-card {
+            background: rgba(16, 18, 38, 0.65);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-md);
+            padding: 12px 14px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .persona-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0, 242, 254, 0.08), rgba(121, 40, 202, 0.08));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .persona-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(0, 242, 254, 0.4);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), 0 0 15px rgba(0, 242, 254, 0.15);
+        }
+
+        .persona-card:hover::before {
+            opacity: 1;
+        }
+
+        .persona-card.active {
+            border-color: var(--cyan-neon);
+            background: rgba(22, 27, 58, 0.85);
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
+        }
+
+        .persona-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .persona-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+        }
+
+        .avatar-dpo { background: linear-gradient(135deg, #6366F1, #8B5CF6); }
+        .avatar-dev { background: linear-gradient(135deg, #06B6D4, #3B82F6); }
+        .avatar-guest { background: linear-gradient(135deg, #EC4899, #F43F5E); }
+
+        .persona-role-badge {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-secondary);
+        }
+
+        .persona-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: #FFFFFF;
+            margin-top: 4px;
+        }
+
+        .persona-desc {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        /* Trust Badges */
+        .trust-badges {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            padding-top: 8px;
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .trust-icon {
+            color: #10B981;
+        }
+
+        /* ═════════════════════════════════════════════
+           RIGHT AUTH CARD (FUTURISTIC 3D GLASSPANE)
+           ═════════════════════════════════════════════ */
+        .auth-container {
+            position: relative;
+        }
+
+        /* Rainbow Ambient Halo */
+        .auth-halo {
+            position: absolute;
+            inset: -2px;
+            border-radius: calc(var(--radius-xl) + 2px);
+            background: linear-gradient(135deg, rgba(0, 242, 254, 0.5), rgba(121, 40, 202, 0.4), rgba(244, 63, 94, 0.4), rgba(0, 242, 254, 0.5));
+            background-size: 300% 300%;
+            animation: borderSpin 8s ease infinite;
+            filter: blur(12px);
+            opacity: 0.7;
+            z-index: 1;
+        }
+
+        @keyframes borderSpin {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .auth-card {
+            position: relative;
+            z-index: 2;
+            background: rgba(12, 13, 29, 0.82);
+            backdrop-filter: blur(36px) saturate(1.4);
+            -webkit-backdrop-filter: blur(36px) saturate(1.4);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: var(--radius-xl);
+            padding: 42px 40px;
+            box-shadow: 
+                0 25px 60px -15px rgba(0, 0, 0, 0.7),
+                inset 0 1px 1px rgba(255, 255, 255, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Status Ping Header */
+        .auth-top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .engine-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 12px;
+            border-radius: 30px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            font-size: 11px;
+            font-weight: 600;
+            color: #34D399;
+        }
+
+        .status-led {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #10B981;
+            box-shadow: 0 0 10px #10B981;
+            animation: pulse-ring 2s infinite;
+        }
+
+        .auth-version {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+        }
+
+        .auth-header {
+            margin-bottom: 28px;
+        }
+
+        .auth-header h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: #FFFFFF;
+            letter-spacing: -0.02em;
+            margin-bottom: 6px;
+        }
+
+        .auth-header p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        /* Form Controls */
         .form-group {
             margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-label-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
         }
 
         .form-label {
-            display: block;
-            font-size: 14px;
+            font-size: 12px;
             font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 8px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .form-forgot {
+            font-size: 12px;
+            color: var(--cyan-neon);
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        .form-forgot:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        .input-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 16px;
+            color: var(--text-muted);
+            font-size: 16px;
+            pointer-events: none;
+            transition: color 0.2s;
         }
 
         .form-input {
             width: 100%;
-            padding: 12px 16px;
-            border: 1px solid var(--border);
-            border-radius: 10px;
+            background: rgba(18, 20, 44, 0.7);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-md);
+            padding: 14px 44px 14px 44px;
+            color: #FFFFFF;
             font-family: inherit;
-            font-size: 15px;
-            color: var(--text-primary);
-            background: #F8F7F4;
+            font-size: 14px;
             outline: none;
-            transition: var(--transition);
+            transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
         .form-input:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px var(--accent-glow);
-            background: white;
+            border-color: var(--cyan-neon);
+            background: rgba(22, 25, 54, 0.95);
+            box-shadow: 0 0 0 3px rgba(0, 242, 254, 0.18), 0 0 20px rgba(0, 242, 254, 0.15);
         }
 
-        .form-input::placeholder {
-            color: var(--text-muted);
+        .form-input:focus ~ .input-icon {
+            color: var(--cyan-neon);
         }
 
-        .form-hint {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-top: 6px;
-        }
-
-        /* Button */
-        .btn-login {
-            width: 100%;
-            padding: 14px 24px;
-            background: linear-gradient(135deg, #2D5BFF, #5B3AE0);
-            color: white;
+        .btn-toggle-pwd {
+            position: absolute;
+            right: 14px;
+            background: none;
             border: none;
-            border-radius: 12px;
-            font-family: inherit;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 16px;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s;
+        }
+        .btn-toggle-pwd:hover {
+            color: #FFFFFF;
+        }
+
+        /* Password Security Gauge */
+        .password-gauge {
+            display: flex;
+            gap: 4px;
+            margin-top: 8px;
+            align-items: center;
+        }
+
+        .gauge-bar {
+            height: 3px;
+            flex: 1;
+            border-radius: 2px;
+            background: rgba(255, 255, 255, 0.08);
+            transition: background 0.3s ease;
+        }
+
+        .gauge-bar.active-weak { background: #F43F5E; box-shadow: 0 0 6px #F43F5E; }
+        .gauge-bar.active-medium { background: #F59E0B; box-shadow: 0 0 6px #F59E0B; }
+        .gauge-bar.active-strong { background: #10B981; box-shadow: 0 0 6px #10B981; }
+
+        .gauge-text {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-left: 6px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Session Switch */
+        .form-session-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 14px;
+            margin-bottom: 26px;
+        }
+
+        .cyber-checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            font-size: 13px;
+            color: var(--text-secondary);
+            user-select: none;
+        }
+
+        .cyber-checkbox-label input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 5px;
+            border: 1px solid var(--border-glass);
+            background: rgba(255, 255, 255, 0.04);
+            cursor: pointer;
+            position: relative;
+            display: inline-grid;
+            place-content: center;
+            transition: all 0.2s;
+        }
+
+        .cyber-checkbox-label input[type="checkbox"]:checked {
+            background: linear-gradient(135deg, #00F2FE, #6366F1);
+            border-color: transparent;
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+        }
+
+        .cyber-checkbox-label input[type="checkbox"]:checked::after {
+            content: '✓';
+            color: #030308;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .session-hint {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Primary Action Button with Dynamic Shimmer Wave */
+        .btn-launch {
+            width: 100%;
+            background: var(--btn-gradient);
+            border: none;
+            border-radius: var(--radius-md);
+            padding: 16px 24px;
+            color: #FFFFFF;
+            font-family: 'Space Grotesk', sans-serif;
             font-size: 16px;
             font-weight: 700;
+            letter-spacing: 0.02em;
             cursor: pointer;
-            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0, 114, 255, 0.4), 0 0 20px rgba(121, 40, 202, 0.25);
+            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
-            box-shadow: 0 4px 16px rgba(45, 91, 255, 0.25);
-            margin-top: 24px;
         }
 
-        .btn-login:hover {
+        .btn-launch::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            transform: skewX(-20deg);
+            animation: buttonShimmer 4s infinite;
+        }
+
+        @keyframes buttonShimmer {
+            0% { left: -100%; }
+            35% { left: 150%; }
+            100% { left: 150%; }
+        }
+
+        .btn-launch:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 28px rgba(45, 91, 255, 0.35);
+            box-shadow: 0 12px 36px rgba(0, 114, 255, 0.6), 0 0 35px rgba(0, 242, 254, 0.4);
+            filter: brightness(1.1);
         }
 
-        .btn-login:active {
-            transform: translateY(0);
+        .btn-launch:active {
+            transform: translateY(1px);
         }
 
-        .btn-login:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
+        .btn-launch .btn-arrow {
+            transition: transform 0.2s ease;
+        }
+        .btn-launch:hover .btn-arrow {
+            transform: translateX(4px);
         }
 
-        .btn-login .spinner {
+        .btn-spinner {
             display: none;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255,255,255,0.3);
-            border-top-color: white;
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #FFF;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
         }
 
-        .btn-login.loading .spinner { display: block; }
-        .btn-login.loading .btn-label { display: none; }
-
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        /* Divider */
-        .divider {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin: 20px 0;
-            color: var(--text-muted);
-            font-size: 13px;
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
-        .divider::before,
-        .divider::after {
+        .btn-launch.loading .btn-text,
+        .btn-launch.loading .btn-arrow {
+            display: none;
+        }
+        .btn-launch.loading .btn-spinner {
+            display: block;
+        }
+
+        /* Divider */
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin: 22px 0;
+            color: var(--text-muted);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 600;
+        }
+
+        .auth-divider::before,
+        .auth-divider::after {
             content: '';
             flex: 1;
             height: 1px;
-            background: var(--border);
+            background: rgba(255, 255, 255, 0.08);
         }
 
-        /* Quick Access */
-        .btn-quick {
+        /* Secondary Instant Skip / Demo Button */
+        .btn-instant-demo {
             width: 100%;
-            padding: 12px 20px;
-            background: var(--accent-light);
-            color: var(--accent);
-            border: 1px solid rgba(45, 91, 255, 0.15);
-            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: var(--radius-md);
+            padding: 13px 20px;
+            color: var(--text-main);
             font-family: inherit;
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
-            transition: var(--transition);
+            transition: all 0.25s ease;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
         }
 
-        .btn-quick:hover {
-            background: #DDE5FF;
-            border-color: var(--accent);
+        .btn-instant-demo:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(0, 242, 254, 0.4);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+            color: var(--cyan-neon);
         }
 
-        /* Footer */
-        .login-footer {
+        .demo-lightning {
+            color: #F59E0B;
+            font-size: 16px;
+        }
+
+        /* Key shortcut hint */
+        .shortcut-hint {
             text-align: center;
-            margin-top: 24px;
-            font-size: 13px;
+            margin-top: 20px;
+            font-size: 11px;
             color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
         }
 
-        .login-footer span {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
+        .key-badge {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--text-secondary);
+            font-size: 10px;
         }
 
-        /* Toast */
-        .toast {
+        /* Toast notification */
+        .toast-system {
             position: fixed;
             bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%) translateY(20px);
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow-lg);
-            padding: 12px 24px;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--text-primary);
+            right: 30px;
+            background: rgba(14, 15, 34, 0.95);
+            border: 1px solid rgba(0, 242, 254, 0.4);
+            border-radius: var(--radius-md);
+            padding: 14px 20px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(0, 242, 254, 0.2);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            transform: translateY(100px);
             opacity: 0;
             pointer-events: none;
-            transition: var(--transition);
-            z-index: 1000;
+            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
-        .toast.show {
-            transform: translateX(-50%) translateY(0);
+        .toast-system.visible {
+            transform: translateY(0);
             opacity: 1;
+            pointer-events: auto;
+        }
+
+        .toast-icon-wrap {
+            font-size: 20px;
+        }
+
+        .toast-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #FFFFFF;
+        }
+
+        .toast-desc {
+            font-size: 11px;
+            color: var(--text-secondary);
         }
     </style>
 </head>
 <body>
 
-    <div class="login-container">
-        <!-- Brand -->
-        <div class="brand">
-            <div class="brand-logo">T</div>
-            <h1>Welcome to Tara</h1>
-            <p>AI-powered privacy compliance for your documents and code.</p>
-        </div>
+    <!-- Cyber Canvas Background -->
+    <canvas id="neural-canvas"></canvas>
 
-        <!-- Login Card -->
-        <div class="login-card">
-            <form id="login-form" onsubmit="handleLogin(event)">
-                <div class="form-group">
-                    <label class="form-label" for="login-email">Email</label>
-                    <input id="login-email" type="email" class="form-input" placeholder="you@company.com" value="admin@tarainfotech.com" required>
+    <!-- Glowing Background Nebulas -->
+    <div class="nebula nebula-1"></div>
+    <div class="nebula nebula-2"></div>
+    <div class="nebula nebula-3"></div>
+
+    <!-- Cyber Grid Mask -->
+    <div class="cyber-grid"></div>
+
+    <!-- Master Split Screen Layout -->
+    <main class="master-stage">
+
+        <!-- ════════════ LEFT SHOWCASE PANEL ════════════ -->
+        <section class="showcase-panel">
+
+            <!-- Brand Header -->
+            <div class="brand-row">
+                <div class="brand-badge">
+                    <div class="brand-badge-inner">T</div>
+                </div>
+                <div class="brand-meta">
+                    <h1>Tara PrivacyOS</h1>
+                    <div class="pill-tag">
+                        <span class="pill-pulse"></span>
+                        Autonomous Legal Engine v2.4
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Title & Value Proposition -->
+            <div class="showcase-hero">
+                <h2>Autonomous Legal AI for <span class="text-gradient-aurora">Next-Gen Privacy</span> Engineering.</h2>
+                <p>Instantly audit source repositories, automatically refactor statutory clauses, and enforce continuous UK GDPR & India DPDP Act 2023 compliance across distributed clouds.</p>
+            </div>
+
+            <!-- Live AI Statutory Terminal Widget -->
+            <div class="cyber-terminal">
+                <div class="terminal-header">
+                    <div class="terminal-dots">
+                        <span class="tdot tdot-red"></span>
+                        <span class="tdot tdot-yellow"></span>
+                        <span class="tdot tdot-green"></span>
+                    </div>
+                    <span>LIVE COMPLIANCE RADAR • 14 ENGINES</span>
+                </div>
+                <div class="terminal-feed" id="terminal-feed">
+                    <div class="feed-row">
+                        <span class="feed-prefix">✦</span>
+                        <span class="feed-text">Indexed Article 30 RoPA Schema across <span class="feed-highlight">28,400+</span> Legal Datasets</span>
+                        <span class="feed-badge badge-pass">SYNCED</span>
+                    </div>
+                    <div class="feed-row">
+                        <span class="feed-prefix">⚡</span>
+                        <span class="feed-text">Azure OpenAI <span class="feed-highlight">gpt-4o-mini</span> Statutory Copilot</span>
+                        <span class="feed-badge badge-ai">ONLINE (34ms)</span>
+                    </div>
+                    <div class="feed-row">
+                        <span class="feed-prefix">🛡️</span>
+                        <span class="feed-text">DPDPA 2023 Data Principal Consent Guard</span>
+                        <span class="feed-badge badge-pass">ENFORCED</span>
+                    </div>
+                    <div class="feed-row">
+                        <span class="feed-prefix">🤖</span>
+                        <span class="feed-text">Shadow AI & LLM Governance Copilot (Article 35 DPIA)</span>
+                        <span class="feed-badge badge-ai">ACTIVE</span>
+                    </div>
+                    <div class="feed-row">
+                        <span class="feed-prefix">🗺️</span>
+                        <span class="feed-text">UK ↔ India Cross-Border Visual Lineage & IDTA Bridge</span>
+                        <span class="feed-badge badge-pass">RADAR LIVE</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Persona Switcher -->
+            <div>
+                <div class="persona-section-label">⚡ One-Click Demo Personas</div>
+                <div class="persona-grid" style="margin-top: 12px;">
+                    <div class="persona-card active" onclick="selectPersona('dpo', 'sarah.chen@enterprisegov.org', 'Lead Privacy Counsel')">
+                        <div class="persona-top">
+                            <div class="persona-avatar avatar-dpo">⚖️</div>
+                            <span class="persona-role-badge">DPO</span>
+                        </div>
+                        <div class="persona-name">Sarah Chen</div>
+                        <div class="persona-desc">Enterprise Privacy Counsel</div>
+                    </div>
+
+                    <div class="persona-card" onclick="selectPersona('dev', 'alex.rivera@cloudscale.dev', 'DevSecOps Architect')">
+                        <div class="persona-top">
+                            <div class="persona-avatar avatar-dev">🚀</div>
+                            <span class="persona-role-badge">ENGINEERING</span>
+                        </div>
+                        <div class="persona-name">Alex Rivera</div>
+                        <div class="persona-desc">DevSecOps Tech Lead</div>
+                    </div>
+
+                    <div class="persona-card" onclick="selectPersona('guest', 'guest.auditor@taraprivacy.io', 'External Auditor')">
+                        <div class="persona-top">
+                            <div class="persona-avatar avatar-guest">⚡</div>
+                            <span class="persona-role-badge">INSTANT</span>
+                        </div>
+                        <div class="persona-name">Sandbox Guest</div>
+                        <div class="persona-desc">Zero-Setup Live Demo</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trust Verification Badges -->
+            <div class="trust-badges">
+                <div class="trust-item">
+                    <span class="trust-icon">✓</span> SOC2 Type II Certified
+                </div>
+                <div class="trust-item">
+                    <span class="trust-icon">✓</span> UK ICO Registered
+                </div>
+                <div class="trust-item">
+                    <span class="trust-icon">✓</span> Zero Data Retention Guarantee
+                </div>
+                <div class="trust-item">
+                    <span class="trust-icon">✓</span> AES-256 HSM Encrypted
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ════════════ RIGHT AUTHENTICATION CARD ════════════ -->
+        <section class="auth-container">
+            <div class="auth-halo"></div>
+            <div class="auth-card" id="tilt-card">
+
+                <!-- Card Header -->
+                <div class="auth-top-bar">
+                    <div class="engine-status">
+                        <span class="status-led"></span>
+                        Privacy Core Operational
+                    </div>
+                    <div class="auth-version">SHA-256 VERIFIED</div>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-label" for="login-password">Password</label>
-                    <input id="login-password" type="password" class="form-input" placeholder="Enter your password" value="Demo2026!" required>
-                    <p class="form-hint">Demo mode — any credentials work</p>
+                <div class="auth-header">
+                    <h3>Enterprise Sign In</h3>
+                    <p>Enter your credentials or choose a 1-click persona to launch.</p>
                 </div>
 
-                <button type="submit" class="btn-login" id="btn-login">
-                    <span class="spinner"></span>
-                    <span class="btn-label">Sign In</span>
+                <!-- Main Login Form -->
+                <form id="login-form" onsubmit="handleFormSubmit(event)">
+                    <div class="form-group">
+                        <div class="form-label-row">
+                            <label class="form-label" for="login-email">Corporate Work Email</label>
+                        </div>
+                        <div class="input-wrap">
+                            <span class="input-icon">✉</span>
+                            <input id="login-email" type="email" class="form-input" placeholder="name@company.com" value="sarah.chen@enterprisegov.org" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-label-row">
+                            <label class="form-label" for="login-password">Access Token / Password</label>
+                            <a href="javascript:void(0)" class="form-forgot" onclick="demoPasswordReset()">Reset?</a>
+                        </div>
+                        <div class="input-wrap">
+                            <span class="input-icon">🔒</span>
+                            <input id="login-password" type="password" class="form-input" placeholder="••••••••••••" value="EnterpriseSecure2026!" required oninput="evaluatePasswordStrength(this.value)">
+                            <button type="button" class="btn-toggle-pwd" onclick="togglePasswordVisibility()" aria-label="Toggle password">
+                                <span id="pwd-icon">👁</span>
+                            </button>
+                        </div>
+                        <!-- Password Security Gauge -->
+                        <div class="password-gauge">
+                            <div class="gauge-bar active-strong" id="gauge-1"></div>
+                            <div class="gauge-bar active-strong" id="gauge-2"></div>
+                            <div class="gauge-bar active-strong" id="gauge-3"></div>
+                            <div class="gauge-bar active-strong" id="gauge-4"></div>
+                            <span class="gauge-text" id="gauge-label">STATUTORY STRONG</span>
+                        </div>
+                    </div>
+
+                    <!-- Remember & Session Options -->
+                    <div class="form-session-row">
+                        <label class="cyber-checkbox-label">
+                            <input type="checkbox" checked id="remember-device">
+                            <span>Keep Session Active</span>
+                        </label>
+                        <span class="session-hint">TLS 1.3 · 24h Expiry</span>
+                    </div>
+
+                    <!-- Primary Launch Button -->
+                    <button type="submit" class="btn-launch" id="btn-submit">
+                        <span class="btn-spinner"></span>
+                        <span class="btn-text">Launch PrivacyOS Workspace</span>
+                        <span class="btn-arrow">→</span>
+                    </button>
+                </form>
+
+                <!-- Divider -->
+                <div class="auth-divider">Or quick access</div>
+
+                <!-- Instant 1-Click Access -->
+                <button type="button" class="btn-instant-demo" onclick="instantQuickDemo()">
+                    <span class="demo-lightning">⚡</span>
+                    <span>Instant Sandbox Access (Skip Credentials)</span>
                 </button>
-            </form>
 
-            <div class="divider">or</div>
+                <!-- Shortcut Hint -->
+                <div class="shortcut-hint">
+                    Press <span class="key-badge">Enter ↵</span> to authenticate instantly
+                </div>
 
-            <button type="button" class="btn-quick" onclick="quickAccess()">
-                ⚡ Quick Access (Skip Login)
-            </button>
-        </div>
+            </div>
+        </section>
 
-        <!-- Footer -->
-        <div class="login-footer">
-            <span>🔒 Secure · UK GDPR & India DPDP Ready</span>
+    </main>
+
+    <!-- Floating System Toast -->
+    <div class="toast-system" id="system-toast">
+        <div class="toast-icon-wrap" id="toast-icon">🛡️</div>
+        <div>
+            <div class="toast-title" id="toast-title">Access Granted</div>
+            <div class="toast-desc" id="toast-desc">Initializing encrypted session...</div>
         </div>
     </div>
 
-    <!-- Toast -->
-    <div id="toast" class="toast">
-        <span id="toast-icon">✅</span>
-        <span id="toast-msg">Welcome!</span>
-    </div>
-
+    <!-- ════════════ JAVASCRIPT LOGIC & VISUAL EFFECTS ════════════ -->
     <script>
-        function showToast(msg, icon = '✅') {
-            const t = document.getElementById('toast');
-            document.getElementById('toast-icon').textContent = icon;
-            document.getElementById('toast-msg').textContent = msg;
-            t.classList.add('show');
-            setTimeout(() => t.classList.remove('show'), 3000);
+        /* ─── Neural Constellation Background Canvas ─── */
+        (function initNeuralCanvas() {
+            const canvas = document.getElementById('neural-canvas');
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            let particles = [];
+            const particleCount = 55;
+
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * width;
+                    this.y = Math.random() * height;
+                    this.vx = (Math.random() - 0.5) * 0.7;
+                    this.vy = (Math.random() - 0.5) * 0.7;
+                    this.radius = Math.random() * 2 + 1;
+                    this.color = Math.random() > 0.4 ? 'rgba(0, 242, 254,' : 'rgba(121, 40, 202,';
+                }
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    if (this.x < 0 || this.x > width) this.vx *= -1;
+                    if (this.y < 0 || this.y > height) this.vy *= -1;
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = this.color + ' 0.7)';
+                    ctx.fill();
+                }
+            }
+
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+
+            let mouse = { x: null, y: null };
+            window.addEventListener('mousemove', (e) => {
+                mouse.x = e.clientX;
+                mouse.y = e.clientY;
+            });
+            window.addEventListener('mouseleave', () => {
+                mouse.x = null;
+                mouse.y = null;
+            });
+
+            function render() {
+                ctx.clearRect(0, 0, width, height);
+
+                // Draw connections
+                for (let i = 0; i < particles.length; i++) {
+                    particles[i].update();
+                    particles[i].draw();
+
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+
+                        if (dist < 130) {
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            const alpha = (1 - dist / 130) * 0.18;
+                            ctx.strokeStyle = `rgba(0, 242, 254, ${alpha})`;
+                            ctx.lineWidth = 0.8;
+                            ctx.stroke();
+                        }
+                    }
+
+                    // Mouse attraction / interaction
+                    if (mouse.x !== null) {
+                        const mdx = particles[i].x - mouse.x;
+                        const mdy = particles[i].y - mouse.y;
+                        const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+                        if (mdist < 160) {
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(mouse.x, mouse.y);
+                            const malpha = (1 - mdist / 160) * 0.25;
+                            ctx.strokeStyle = `rgba(121, 40, 202, ${malpha})`;
+                            ctx.lineWidth = 1;
+                            ctx.stroke();
+                        }
+                    }
+                }
+
+                requestAnimationFrame(render);
+            }
+            render();
+        })();
+
+        /* ─── 3D Card Tilt Interaction ─── */
+        (function initCardTilt() {
+            const card = document.getElementById('tilt-card');
+            if (!card || window.innerWidth < 1024) return;
+
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * -6;
+                const rotateY = ((x - centerX) / centerX) * 6;
+
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-2px)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)';
+            });
+        })();
+
+        /* ─── Dynamic Live Terminal Ticker Feed ─── */
+        (function cycleTerminalFeed() {
+            const feed = document.getElementById('terminal-feed');
+            const messages = [
+                { prefix: '✦', text: 'Indexed Article 30 RoPA Schema across <span class="feed-highlight">28,400+</span> Legal Datasets', badge: 'SYNCED', badgeClass: 'badge-pass' },
+                { prefix: '⚡', text: 'Azure OpenAI <span class="feed-highlight">gpt-4o-mini</span> Statutory Copilot', badge: 'ONLINE (34ms)', badgeClass: 'badge-ai' },
+                { prefix: '🛡️', text: 'DPDPA 2023 Data Principal Consent Guard', badge: 'ENFORCED', badgeClass: 'badge-pass' },
+                { prefix: '🔍', text: 'Auto-scanned GitHub Repo: Zero PII leakage detected', badge: 'VERIFIED', badgeClass: 'badge-pass' },
+                { prefix: '📜', text: 'UK GDPR Cross-Border Transfer Assessment (Art. 46)', badge: 'AUDITED', badgeClass: 'badge-ai' }
+            ];
+            let idx = 3;
+
+            setInterval(() => {
+                const msg = messages[idx % messages.length];
+                idx++;
+                const row = document.createElement('div');
+                row.className = 'feed-row';
+                row.style.opacity = '0';
+                row.style.transform = 'translateY(10px)';
+                row.style.transition = 'all 0.4s ease';
+                row.innerHTML = `
+                    <span class="feed-prefix">${msg.prefix}</span>
+                    <span class="feed-text">${msg.text}</span>
+                    <span class="feed-badge ${msg.badgeClass}">${msg.badge}</span>
+                `;
+
+                if (feed.children.length >= 3) {
+                    feed.removeChild(feed.children[0]);
+                }
+                feed.appendChild(row);
+                setTimeout(() => {
+                    row.style.opacity = '1';
+                    row.style.transform = 'translateY(0)';
+                }, 50);
+            }, 3500);
+        })();
+
+        /* ─── Persona Switcher ─── */
+        function selectPersona(type, email, roleTitle) {
+            document.querySelectorAll('.persona-card').forEach(c => c.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+
+            const emailInput = document.getElementById('login-email');
+            const pwdInput = document.getElementById('login-password');
+
+            emailInput.value = email;
+            if (type === 'dpo') {
+                pwdInput.value = 'EnterpriseSecure2026!';
+            } else if (type === 'dev') {
+                pwdInput.value = 'DevSecOpsReady#2026';
+            } else {
+                pwdInput.value = 'GuestSandboxPass!2026';
+            }
+
+            evaluatePasswordStrength(pwdInput.value);
+            showToast('Persona Loaded', `Switched to ${roleTitle}: ${email}`, '👤');
         }
 
-        function getDestination() {
+        /* ─── Password Gauge ─── */
+        function evaluatePasswordStrength(val) {
+            const b1 = document.getElementById('gauge-1');
+            const b2 = document.getElementById('gauge-2');
+            const b3 = document.getElementById('gauge-3');
+            const b4 = document.getElementById('gauge-4');
+            const label = document.getElementById('gauge-label');
+
+            [b1, b2, b3, b4].forEach(b => {
+                b.className = 'gauge-bar';
+            });
+
+            if (!val || val.length === 0) {
+                label.textContent = 'ENTER PASSWORD';
+                return;
+            }
+
+            if (val.length < 6) {
+                b1.className = 'gauge-bar active-weak';
+                label.textContent = 'WEAK ENCRYPTION';
+                label.style.color = '#F43F5E';
+            } else if (val.length < 10) {
+                b1.className = 'gauge-bar active-medium';
+                b2.className = 'gauge-bar active-medium';
+                label.textContent = 'MODERATE';
+                label.style.color = '#F59E0B';
+            } else {
+                b1.className = 'gauge-bar active-strong';
+                b2.className = 'gauge-bar active-strong';
+                b3.className = 'gauge-bar active-strong';
+                b4.className = 'gauge-bar active-strong';
+                label.textContent = 'STATUTORY STRONG';
+                label.style.color = '#10B981';
+            }
+        }
+
+        /* ─── Toggle Password Visibility ─── */
+        function togglePasswordVisibility() {
+            const input = document.getElementById('login-password');
+            const icon = document.getElementById('pwd-icon');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.textContent = '🔒';
+            } else {
+                input.type = 'password';
+                icon.textContent = '👁';
+            }
+        }
+
+        /* ─── System Toast Notification ─── */
+        function showToast(title, desc, icon = '🛡️') {
+            const toast = document.getElementById('system-toast');
+            document.getElementById('toast-title').textContent = title;
+            document.getElementById('toast-desc').textContent = desc;
+            document.getElementById('toast-icon').textContent = icon;
+
+            toast.classList.add('visible');
+            clearTimeout(window.__toastTimer);
+            window.__toastTimer = setTimeout(() => {
+                toast.classList.remove('visible');
+            }, 3200);
+        }
+
+        function demoPasswordReset() {
+            showToast('Magic Link Sent', 'Temporary security reset token dispatched to mailbox.', '📬');
+        }
+
+        /* ─── Form Submission & Transition ─── */
+        function getRedirectTarget() {
             const isFile = window.location.protocol === 'file:';
             const params = new URLSearchParams(window.location.search);
             const redirect = params.get('redirect');
@@ -331,37 +1447,37 @@
             return isFile ? 'AI-PrivacyOS-Production-Demo.html' : '/dashboard';
         }
 
-        function doLogin(email) {
-            const btn = document.getElementById('btn-login');
+        function executeAuthentication(email) {
+            const btn = document.getElementById('btn-submit');
             btn.classList.add('loading');
             btn.disabled = true;
 
             const name = email.split('@')[0].replace(/[._-]/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
 
+            // Save session credentials
+            localStorage.setItem('tara_auth', JSON.stringify({
+                isLoggedIn: true,
+                name: name || 'Authorized Principal',
+                email: email,
+                loginTime: new Date().toISOString(),
+                role: email.includes('chen') ? 'Lead Privacy Counsel' : (email.includes('alex') ? 'DevSecOps Architect' : 'Compliance Auditor')
+            }));
+
+            showToast('Authentication Verified', `Welcome aboard, ${name}. Loading workspace...`, '⚡');
+
             setTimeout(() => {
-                localStorage.setItem('tara_auth', JSON.stringify({
-                    isLoggedIn: true,
-                    name: name || 'User',
-                    email: email,
-                    loginTime: new Date().toISOString()
-                }));
-
-                showToast(`Welcome, ${name}!`, '👋');
-
-                setTimeout(() => {
-                    window.location.href = getDestination();
-                }, 600);
-            }, 500);
+                window.location.href = getRedirectTarget();
+            }, 750);
         }
 
-        function handleLogin(e) {
+        function handleFormSubmit(e) {
             e.preventDefault();
             const email = document.getElementById('login-email').value.trim();
-            doLogin(email);
+            executeAuthentication(email);
         }
 
-        function quickAccess() {
-            doLogin('guest@tarainfotech.com');
+        function instantQuickDemo() {
+            executeAuthentication('guest.auditor@taraprivacy.io');
         }
     </script>
 </body>
