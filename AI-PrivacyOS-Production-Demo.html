@@ -3350,58 +3350,6 @@ ZenAuraa uses cookies and mobile SDKs to provide and enhance our services.
                 renderActiveRepoSubtab();
                 showToast(`Scanned ${repoUrl.split('/').pop()} & generated live Data-Flow Map!`, '🚀');
             }, 600);
-## 1. Information We Collect
-We collect personal data required to deliver our consultation services:
-- **Account Identity:** Full name, verified email, telephone number.
-- **Astrological Details:** Date of birth, precise birth time, and coordinates (processed under UK GDPR Article 9 explicit consent).
-- **Consultation Transcripts:** Chat messages and call recordings exchanged between users and practitioners.
-
-## 2. Lawful Grounds for Processing
-- **Contractual Necessity (Article 6(1)(b)):** Providing booked astrology and wellness sessions.
-- **Explicit Consent (Article 9(2)(a)):** For special category data voluntarily disclosed during readings.
-- **Legal Compliance:** Mandatory invoice retention under applicable tax statutes.
-
-## 3. Subprocessors & Data Transfers
-- **Cloud Database:** Hosted within UK/EU region (London AWS).
-- **AI Processing:** Consultation transcripts processed through Azure OpenAI with Zero-Data-Retention agreements.
-- **International Access:** Cross-border developer access governed by UK International Data Transfer Agreements (IDTA).
-
-## 4. Your Statutory Rights (DSAR)
-You have the right to access, rectify, or erase your personal information. Contact our Data Protection Officer at privacy@${companyName.toLowerCase().replace(/[^a-z]/g, '')}.com.`,
-                    article_30_ropa: [
-                        { activity_id: "ROPA-01", purpose: "User Registration & Authentication", lawful_basis: "Contract (Art 6(1)(b))", categories_of_data: "Name, Email, Password Hash", retention_period: "Duration of account + 12 months" },
-                        { activity_id: "ROPA-02", purpose: "Spiritual Consultation Delivery", lawful_basis: "Explicit Consent (Art 9(2)(a))", categories_of_data: "Birth chart, audio recordings, chat logs", retention_period: "90 days automatic purge" },
-                        { activity_id: "ROPA-03", purpose: "AI Session Summarization", lawful_basis: "Explicit Consent (Art 9)", categories_of_data: "Consultation chat transcripts", retention_period: "Zero vendor retention (ephemeral)" },
-                        { activity_id: "ROPA-04", purpose: "Payment Billing & Wallet Credits", lawful_basis: "Legal Obligation (Art 6(1)(c))", categories_of_data: "Stripe transaction IDs, invoice logs", retention_period: "6 years (Tax compliance)" }
-                    ],
-                    dpia_assessment: {
-                        dpia_mandated: true,
-                        justification: "Systematic processing of Article 9 Special Category Data (spiritual/health consultation queries) and automated AI transcript summarization.",
-                        necessity_assessment: "Processing is proportionate to delivering personalized consultation readings requested by the data subject.",
-                        dpo_signoff_status: "Approved with required 90-day automated purge policy",
-                        identified_risks_and_mitigations: [
-                            { severity: "Critical", risk_title: "AI Prompt Logging of Sensitive Consultations", mitigation: "Enforce zero-retention API headers on third-party LLM endpoints." },
-                            { severity: "High", risk_title: "Direct Client Contact Exposure to Practitioners", mitigation: "Implement Twilio proxy masking for in-app calls and chats." }
-                        ]
-                    },
-                    developer_remediation_blueprint: {
-                        action_checklist: [
-                            { priority: "CRITICAL", task: "Add Article 9 Explicit Consent Hook", action: "Show mandatory unchecked box before session start", statute: "UK GDPR Art 9", component: "BookingModal.tsx" },
-                            { priority: "HIGH", task: "Implement 90-Day Auto-Purge Cron", action: "Delete consultation transcripts exceeding 90 days", statute: "UK GDPR Art 5(1)(e)", component: "cron/purge_logs.py" }
-                        ],
-                        ready_to_use_code_patches: {
-                            "FastAPI_Article9_Consent_Middleware.py": `@app.post("/api/session/start")\ndef start_session(req: SessionRequest):\n    if not req.explicit_art9_consent:\n        raise HTTPException(status_code=400, detail="Article 9 explicit consent is legally required.")\n    return {"status": "authorized"}`
-                        }
-                    }
-                };
-
-                document.getElementById('repo-domain-title').textContent = "Astrology & Spiritual Consultation Backend";
-                document.getElementById('repo-domain-desc').textContent = "FastAPI + PostgreSQL backend handling astrological birth charts and sensitive consultation transcripts.";
-                document.getElementById('repo-health-pill').textContent = "Grade: B+ (82% Health)";
-
-                renderActiveRepoSubtab();
-                showToast('GitHub compliance scan successful!', '🚀');
-            }, 600);
         }
 
         function switchRepoSubtab(tabName) {
