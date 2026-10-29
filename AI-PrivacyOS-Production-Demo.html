@@ -2384,6 +2384,9 @@
                     <button class="repo-subtab-btn" id="subtab-btn-dev" onclick="switchRepoSubtab('dev')">
                         💻 Tech Patches
                     </button>
+                    <button class="repo-subtab-btn" id="subtab-btn-dataflow" onclick="switchRepoSubtab('dataflow')">
+                        🗺️ Visual Data Flow
+                    </button>
                 </div>
 
                 <!-- Tab Contents -->
@@ -2784,6 +2787,9 @@
                         <button class="topo-filter-btn active" id="filter-all" onclick="filterTopologyFlows('ALL', this)">All Data Flows (5)</button>
                         <button class="topo-filter-btn" id="filter-crossborder" onclick="filterTopologyFlows('CROSS_BORDER', this)">🌍 Cross-Border Only (2)</button>
                         <button class="topo-filter-btn" id="filter-risk" onclick="filterTopologyFlows('VIOLATION', this)">🚨 Red Flags Only (1)</button>
+                        <button class="btn-export" onclick="exportGitHubMermaid()" style="font-size:12px; padding:6px 12px; margin-left:8px; border-color:rgba(0, 206, 255, 0.4); color:var(--accent-2);">
+                            <span>🐙</span> Export GitHub README (Mermaid)
+                        </button>
                     </div>
                 </div>
 
@@ -3526,6 +3532,65 @@ You have the right to access, rectify, or erase your personal information. Conta
                         ${checklistHtml}
                     </div>
                     ${patchesHtml}
+                `;
+            } else if (activeRepoSubtab === 'dataflow') {
+                const currentRepoName = document.getElementById('company-name-input').value.trim() || 'Your Repository';
+                container.innerHTML = `
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:12px;">
+                        <div>
+                            <h4 style="color:var(--text-primary); font-size:16px; font-family:'Space Grotesk',sans-serif;">🗺️ Visual Data Flow Lineage for ${escapeHtml(currentRepoName)}</h4>
+                            <p style="color:var(--text-muted); font-size:12.5px;">Auto-generated architecture lineage and international transfer routes for this repository.</p>
+                        </div>
+                        <div style="display:flex; gap:8px;">
+                            <button class="btn-primary-action" onclick="switchPhase('dataflow')" style="padding:7px 14px; font-size:12px;">
+                                <span>🔍 Open in Fullscreen Topology Map (Tab 5)</span>
+                            </button>
+                            <button class="btn-export" onclick="exportGitHubMermaid()" style="font-size:12px; padding:6px 12px; border-color:rgba(0, 206, 255, 0.4); color:var(--accent-2);">
+                                <span>🐙</span> Copy GitHub Mermaid Code
+                            </button>
+                        </div>
+                    </div>
+
+                    <div style="background:rgba(10, 11, 26, 0.7); border:1px solid var(--glass-border); border-radius:14px; padding:22px; margin-bottom:20px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                            <strong style="color:var(--accent-2); font-size:13px; font-family:'Space Grotesk',sans-serif;">
+                                📦 Repository Architecture Node Summary
+                            </strong>
+                            <span class="pill-badge badge-warning" style="font-size:11px;">1 Cross-Border Transfer Flagged</span>
+                        </div>
+                        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:12px;">
+                            <div style="background:rgba(255,255,255,0.02); border:1px solid var(--glass-border); border-radius:10px; padding:12px;">
+                                <div style="font-size:11px; color:var(--text-muted);">SOURCE CLIENTS</div>
+                                <div style="font-weight:700; color:var(--text-primary); margin-top:4px;">👤 UK Users (Web / Mobile)</div>
+                                <div style="font-size:11.5px; color:var(--success); margin-top:2px;">Article 6(1)(b) Contractual</div>
+                            </div>
+                            <div style="background:rgba(255,255,255,0.02); border:1px solid var(--glass-border); border-radius:10px; padding:12px;">
+                                <div style="font-size:11px; color:var(--text-muted);">INGESTION API</div>
+                                <div style="font-weight:700; color:var(--text-primary); margin-top:4px;">⚡ FastAPI Service (AWS London)</div>
+                                <div style="font-size:11.5px; color:var(--accent-2); margin-top:2px;">TLS 1.3 End-to-End</div>
+                            </div>
+                            <div style="background:rgba(255,255,255,0.02); border:1px solid var(--glass-border); border-radius:10px; padding:12px;">
+                                <div style="font-size:11px; color:var(--text-muted);">DATABASE</div>
+                                <div style="font-weight:700; color:var(--text-primary); margin-top:4px;">🗄️ PostgreSQL Customer DB</div>
+                                <div style="font-size:11.5px; color:var(--success); margin-top:2px;">AES-256 KMS at Rest</div>
+                            </div>
+                            <div style="background:var(--danger-bg); border:1px solid var(--danger-border); border-radius:10px; padding:12px;">
+                                <div style="font-size:11px; color:var(--danger);">OVERSEAS IMPORTER</div>
+                                <div style="font-weight:700; color:var(--text-primary); margin-top:4px;">🇮🇳 India Dev &amp; QA Team</div>
+                                <div style="font-size:11.5px; color:var(--danger); font-weight:700; margin-top:2px;">⚠️ Missing UK IDTA Contract</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.02); border:1px solid var(--glass-border); border-radius:12px; padding:16px;">
+                        <div>
+                            <strong style="color:var(--text-primary); font-size:13.5px;">Want to show this data-flow map directly in your GitHub README?</strong>
+                            <p style="color:var(--text-secondary); font-size:12px; margin-top:2px;">GitHub natively supports Mermaid diagrams without any plugins or extensions.</p>
+                        </div>
+                        <button class="btn-primary-action" onclick="exportGitHubMermaid()" style="padding:7px 16px; font-size:12px;">
+                            <span>📋 Copy GitHub README Mermaid Code</span>
+                        </button>
+                    </div>
                 `;
             }
         }
@@ -4332,6 +4397,81 @@ For Data Importer (Tara Infotech India Pvt Ltd): Managing Director (India Operat
             a.click();
             URL.revokeObjectURL(url);
             showToast('Downloaded Statutory UK-India IDTA Schedule!', '📥');
+        }
+
+        // ==============================================================
+        // GITHUB README MERMAID EXPORT CONTROLLER
+        // ==============================================================
+        function generateMermaidForCurrentTopology() {
+            const topo = currentTopology || defaultTopologies[currentTopoPreset] || defaultTopologies['tara-consultation'];
+            let m = '```mermaid\ngraph LR\n';
+            
+            const ukNodes = topo.nodes.filter(n => n.flag === '🇬🇧');
+            const usNodes = topo.nodes.filter(n => n.flag === '🇺🇸');
+            const inNodes = topo.nodes.filter(n => n.flag === '🇮🇳');
+            
+            if (ukNodes.length > 0) {
+                m += '    subgraph UK ["🇬🇧 United Kingdom (Origin)"]\n';
+                ukNodes.forEach(n => {
+                    m += `        ${n.id}["${n.icon} ${n.label}<br/><small>${n.sub}</small>"]\n`;
+                });
+                m += '    end\n';
+            }
+            if (usNodes.length > 0) {
+                m += '    subgraph US ["🇺🇸 United States (Cloud Inference)"]\n';
+                usNodes.forEach(n => {
+                    m += `        ${n.id}["${n.icon} ${n.label}<br/><small>${n.sub}</small>"]\n`;
+                });
+                m += '    end\n';
+            }
+            if (inNodes.length > 0) {
+                m += '    subgraph India ["🇮🇳 India (Cross-Border Importer)"]\n';
+                inNodes.forEach(n => {
+                    m += `        ${n.id}["${n.icon} ${n.label}<br/><small>${n.sub}</small>"]\n`;
+                });
+                m += '    end\n';
+            }
+            
+            topo.links.forEach(l => {
+                if (l.status === 'VIOLATION') {
+                    m += `    ${l.source} ==>|🚨 ${l.label} (IDTA Required)| ${l.target}\n`;
+                } else if (l.cb) {
+                    m += `    ${l.source} -.->|⚠️ ${l.label}| ${l.target}\n`;
+                } else {
+                    m += `    ${l.source} -->|🔒 ${l.label}| ${l.target}\n`;
+                }
+            });
+
+            m += '\n    classDef violation stroke:#FF6B6B,stroke-width:3px,fill:#2D1515,color:#FFB4B4;\n';
+            m += '    classDef warning stroke:#FFD43B,stroke-width:2px,fill:#2D2510,color:#FFE066;\n';
+            m += '    classDef compliant stroke:#00CEFF,stroke-width:2px,fill:#0E1B2E,color:#C0E8FF;\n';
+            
+            topo.nodes.forEach(n => {
+                const isViol = topo.links.some(l => l.target === n.id && l.status === 'VIOLATION');
+                const isWarn = topo.links.some(l => l.target === n.id && l.cb && l.status !== 'VIOLATION');
+                if (isViol) m += `    class ${n.id} violation;\n`;
+                else if (isWarn) m += `    class ${n.id} warning;\n`;
+                else m += `    class ${n.id} compliant;\n`;
+            });
+
+            m += '```';
+            return m;
+        }
+
+        function exportGitHubMermaid() {
+            const mermaidCode = generateMermaidForCurrentTopology();
+            const fullSnippet = `### 🗺️ Data Protection & Cross-Border Lineage Architecture (UK GDPR & India DPDPA)
+
+[![UK GDPR & Data Flow Verified](https://img.shields.io/badge/UK_GDPR-Data_Flow_Verified-00CEFF?style=flat-square&logo=shield)](https://github.com/rahulnautiyal005/Tara-GDPR)
+[![DPDPA 2023 Compliant](https://img.shields.io/badge/India_DPDPA_2023-Audited-51CF66?style=flat-square)](https://github.com/rahulnautiyal005/Tara-GDPR)
+
+${mermaidCode}
+
+*Architecture lineage verified by [Tara PrivacyOS](https://github.com/rahulnautiyal005/Tara-GDPR) &bull; Governed under UK GDPR Article 30 (RoPA) & Section 119A DPA 2018 (UK IDTA).*`;
+
+            navigator.clipboard.writeText(fullSnippet).then(() => {
+                showToast('Copied GitHub Mermaid code! Paste directly into README.md', '🐙');
+            });
         }
     </script>
 </body>
