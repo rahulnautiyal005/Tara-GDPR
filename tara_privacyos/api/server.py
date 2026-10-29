@@ -374,10 +374,18 @@ def extract_and_generate_gdpr(req: GitHubScanRequest):
             company_name=req.company_name
         )
 
+        # Step 3: Automatically construct tailored Visual Data-Flow Topology for scanned repo
+        data_flow_topo = data_flow_engine.build_topology_from_extraction(
+            extraction_data=extraction_data,
+            company_name=req.company_name or "Client App",
+            repo_url=req.repo_url
+        )
+
         return {
             "status": "SUCCESS",
             "extraction": extraction_data,
-            "compliance_package": compliance_package
+            "compliance_package": compliance_package,
+            "data_flow_topology": data_flow_topo
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Pipeline error: {str(e)}")
