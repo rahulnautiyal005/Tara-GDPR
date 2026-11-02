@@ -194,7 +194,18 @@ class TaraRAGEngine:
             }
 
         # 4. Compliance / Legal / Engineering Query
-        retrieved_chunks = self.retriever.search(query, jurisdiction=jurisdiction, top_k=top_k)
+        # Context-aware query expansion for follow-up conversational turns
+        search_query = query
+        if history and len(query.split()) < 8:
+            last_user_q = ""
+            for h in reversed(history):
+                if h.get("role") == "user" and h.get("content"):
+                    last_user_q = h.get("content", "")
+                    break
+            if last_user_q:
+                search_query = f"{last_user_q} {query}"
+
+        retrieved_chunks = self.retriever.search(search_query, jurisdiction=jurisdiction, top_k=top_k)
 
         # Build Grounded Context Block
         context_blocks = []

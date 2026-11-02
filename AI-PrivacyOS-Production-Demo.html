@@ -2122,6 +2122,12 @@
         </nav>
 
         <div class="topbar-right">
+            <a href="LawAi-Guardrails-Charter.html" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(37, 99, 235, 0.22); border: 1px solid rgba(37, 99, 235, 0.5); color: #93C5FD; font-size: 11.5px; font-weight: 600; padding: 6px 12px; border-radius: 6px; text-decoration: none; margin-right: 12px; transition: all 0.2s;">
+                <span>⚖️</span> AI Guardrails Charter
+            </a>
+            <a href="/rag-guide" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(131, 56, 236, 0.22); border: 1px solid rgba(131, 56, 236, 0.5); color: #D8B4FE; font-size: 11.5px; font-weight: 600; padding: 6px 12px; border-radius: 6px; text-decoration: none; margin-right: 12px; transition: all 0.2s;">
+                <span>📚</span> RAG Client Guide
+            </a>
             <div class="user-status-pill">
                 <span class="live-dot"></span>
                 <span id="current-user-name">Rahul (Admin)</span>
@@ -2404,6 +2410,7 @@
                 <span class="phase-header-badge">Phase 3 &bull; AI Assistant</span>
                 <h2>Legal AI Chatbot</h2>
                 <p>Ask any legal, GDPR, or India DPDPA question in simple everyday words. Powered by our proprietary legal intelligence engine grounded in official ICO &amp; DPDPA statutory provisions.</p>
+                <div style="margin-top: 8px;"><a href="/rag-guide" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(58, 134, 255, 0.18); border: 1px solid rgba(58, 134, 255, 0.45); color: #93C5FD; font-size: 11.5px; font-weight: 600; padding: 5px 12px; border-radius: 6px; text-decoration: none;"><span>📚</span> Client Explainer: How RAG Works (Visual Guide) ↗</a></div>
             </div>
 
             <div class="chat-container">
@@ -3603,7 +3610,10 @@ ZenAuraa uses cookies and mobile SDKs to provide and enhance our services.
             sendChatUserMessage();
         }
 
+        let dashboardChatHistory = [];
+
         function clearChatMessages() {
+            dashboardChatHistory = [];
             const box = document.getElementById('chat-messages-box');
             box.innerHTML = `
                 <div class="chat-bubble bot">
@@ -3646,21 +3656,34 @@ ZenAuraa uses cookies and mobile SDKs to provide and enhance our services.
             box.scrollTop = box.scrollHeight;
 
             try {
+                // Multi-turn conversation memory: send recent conversation context
                 const res = await fetch('/api/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: msg })
+                    body: JSON.stringify({ 
+                        message: msg,
+                        history: dashboardChatHistory.slice(-8)
+                    })
                 });
 
                 if (res.ok) {
                     const data = await res.json();
                     document.getElementById(typingId)?.remove();
 
+                    const replyText = data.response || data.answer || data.message || '';
+
+                    // Save user query & bot answer to memory for seamless multi-turn continuity
+                    dashboardChatHistory.push({ role: 'user', content: msg });
+                    dashboardChatHistory.push({ role: 'assistant', content: replyText });
+                    if (dashboardChatHistory.length > 12) {
+                        dashboardChatHistory = dashboardChatHistory.slice(-12);
+                    }
+
                     box.innerHTML += `
                         <div class="chat-bubble bot">
                             <div class="bubble-avatar">T</div>
                             <div class="bubble-content">
-                                ${formatChatReply(data.response || data.answer || data.message)}
+                                ${formatChatReply(replyText)}
                                 <span class="bubble-citation">🏛️ Statutory Source: ${data.citation || 'UK ICO & India DPDPA'}</span>
                             </div>
                         </div>

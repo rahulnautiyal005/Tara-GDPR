@@ -157,6 +157,20 @@ def get_plan():
         return FileResponse(plan_path)
     raise HTTPException(status_code=404, detail="Plan viewer file not found")
 
+@app.get("/guardrails")
+def get_guardrails():
+    guardrails_path = os.path.join(BASE_DIR, "LawAi-Guardrails-Charter.html")
+    if os.path.exists(guardrails_path):
+        return FileResponse(guardrails_path)
+    raise HTTPException(status_code=404, detail="Guardrails charter file not found")
+
+@app.get("/rag-guide")
+def get_rag_guide():
+    rag_path = os.path.join(BASE_DIR, "How-RAG-Works-In-Tara-LawAi.html")
+    if os.path.exists(rag_path):
+        return FileResponse(rag_path)
+    raise HTTPException(status_code=404, detail="RAG client guide not found")
+
 @app.get("/api/health")
 def health_check():
     return {
