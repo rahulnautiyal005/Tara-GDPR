@@ -550,6 +550,14 @@
         /* Input Form Controls */
         .form-group {
             margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-label-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
         }
 
         .form-label-row {
@@ -591,7 +599,7 @@
             font-family: inherit;
             color: #FFFFFF;
             outline: none;
-            transition: var(--transition);
+            transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
         .input-box:focus {
@@ -795,7 +803,11 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(0, 242, 254, 0.2);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            transform: translateY(100px);
             opacity: 0;
             pointer-events: none;
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -1007,7 +1019,75 @@
             setTimeout(() => t.classList.remove('show'), 3000);
         }
 
-        function getDestination() {
+        /* ─── Password Gauge ─── */
+        function evaluatePasswordStrength(val) {
+            const b1 = document.getElementById('gauge-1');
+            const b2 = document.getElementById('gauge-2');
+            const b3 = document.getElementById('gauge-3');
+            const b4 = document.getElementById('gauge-4');
+            const label = document.getElementById('gauge-label');
+
+            [b1, b2, b3, b4].forEach(b => {
+                b.className = 'gauge-bar';
+            });
+
+            if (!val || val.length === 0) {
+                label.textContent = 'ENTER PASSWORD';
+                return;
+            }
+
+            if (val.length < 6) {
+                b1.className = 'gauge-bar active-weak';
+                label.textContent = 'WEAK ENCRYPTION';
+                label.style.color = '#F43F5E';
+            } else if (val.length < 10) {
+                b1.className = 'gauge-bar active-medium';
+                b2.className = 'gauge-bar active-medium';
+                label.textContent = 'MODERATE';
+                label.style.color = '#F59E0B';
+            } else {
+                b1.className = 'gauge-bar active-strong';
+                b2.className = 'gauge-bar active-strong';
+                b3.className = 'gauge-bar active-strong';
+                b4.className = 'gauge-bar active-strong';
+                label.textContent = 'STATUTORY STRONG';
+                label.style.color = '#10B981';
+            }
+        }
+
+        /* ─── Toggle Password Visibility ─── */
+        function togglePasswordVisibility() {
+            const input = document.getElementById('login-password');
+            const icon = document.getElementById('pwd-icon');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.textContent = '🔒';
+            } else {
+                input.type = 'password';
+                icon.textContent = '👁';
+            }
+        }
+
+        /* ─── System Toast Notification ─── */
+        function showToast(title, desc, icon = '🛡️') {
+            const toast = document.getElementById('system-toast');
+            document.getElementById('toast-title').textContent = title;
+            document.getElementById('toast-desc').textContent = desc;
+            document.getElementById('toast-icon').textContent = icon;
+
+            toast.classList.add('visible');
+            clearTimeout(window.__toastTimer);
+            window.__toastTimer = setTimeout(() => {
+                toast.classList.remove('visible');
+            }, 3200);
+        }
+
+        function demoPasswordReset() {
+            showToast('Magic Link Sent', 'Temporary security reset token dispatched to mailbox.', '📬');
+        }
+
+        /* ─── Form Submission & Transition ─── */
+        function getRedirectTarget() {
             const isFile = window.location.protocol === 'file:';
             const params = new URLSearchParams(window.location.search);
             const redirect = params.get('redirect');
@@ -1015,12 +1095,23 @@
             return isFile ? 'AI-PrivacyOS-Production-Demo.html' : '/dashboard';
         }
 
-        function doLogin(email) {
-            const btn = document.getElementById('btn-login');
+        function executeAuthentication(email) {
+            const btn = document.getElementById('btn-submit');
             btn.classList.add('loading');
             btn.disabled = true;
 
             const name = email.split('@')[0].replace(/[._-]/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+
+            // Save session credentials
+            localStorage.setItem('tara_auth', JSON.stringify({
+                isLoggedIn: true,
+                name: name || 'Authorized Principal',
+                email: email,
+                loginTime: new Date().toISOString(),
+                role: email.includes('chen') ? 'Lead Privacy Counsel' : (email.includes('alex') ? 'DevSecOps Architect' : 'Compliance Auditor')
+            }));
+
+            showToast('Authentication Verified', `Welcome aboard, ${name}. Loading workspace...`, '⚡');
 
             setTimeout(() => {
                 localStorage.setItem('tara_auth', JSON.stringify({
@@ -1038,10 +1129,10 @@
             }, 600);
         }
 
-        function handleLogin(e) {
+        function handleFormSubmit(e) {
             e.preventDefault();
             const email = document.getElementById('login-email').value.trim();
-            doLogin(email);
+            executeAuthentication(email);
         }
 
         function quickAccess() {

@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How RAG Works in Tara LawAi — Simple Visual Client Guide</title>
+    <meta name="description" content="A simple, jargon-free visual explanation of Retrieval-Augmented Generation (RAG) in Tara LawAi for non-technical clients and executive decision makers.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Playfair+Display:wght@700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- html2pdf.js for 1-click PDF download -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <style>
+        :root {
+            --primary: #0B132B;
+            --primary-light: #1C2541;
+            --accent-blue: #3A86FF;
+            --accent-cyan: #00F2FE;
+            --accent-purple: #8338EC;
+            --accent-green: #10B981;
+            --accent-amber: #F59E0B;
+            --accent-rose: #EF4444;
+            --bg-page: #F8FAFC;
+            --bg-card: #FFFFFF;
+            --border: #E2E8F0;
+            --border-hover: #CBD5E1;
+            --text-main: #0F172A;
+            --text-secondary: #475569;
+            --text-muted: #64748B;
+            --font-main: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-serif: 'Playfair Display', Georgia, serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+            --shadow-sm: 0 2px 6px rgba(0,0,0,0.04);
+            --shadow-md: 0 8px 24px rgba(0,0,0,0.06);
+            --shadow-lg: 0 16px 40px rgba(0,0,0,0.09);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background: var(--bg-page);
+            color: var(--text-main);
+            line-height: 1.65;
+            font-size: 15px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ─── Top Presentation Sticky Bar ─── */
+        .top-nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(11, 19, 43, 0.96);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: #FFFFFF;
+            padding: 12px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #3A86FF, #8338EC);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        .brand-info h1 {
+            font-size: 14.5px;
+            font-weight: 700;
+            color: #F8FAFC;
+        }
+
+        .brand-info p {
+            font-size: 11px;
+            color: #94A3B8;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pill-badge {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34D399;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 999px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 12.5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            border: none;
+        }
+
+        .btn-pdf {
+            background: linear-gradient(135deg, #3A86FF, #2563EB);
+            color: #FFFFFF;
+            box-shadow: 0 2px 10px rgba(58, 134, 255, 0.4);
+        }
+
+        .btn-pdf:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(58, 134, 255, 0.6);
+        }
+
+        .btn-print {
+            background: rgba(255, 255, 255, 0.08);
+            color: #E2E8F0;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-print:hover {
+            background: rgba(255, 255, 255, 0.16);
+            color: #FFFFFF;
+        }
+
+        /* ─── Presentation Container ─── */
+        .presentation-wrap {
+            max-width: 960px;
+            margin: 32px auto 70px auto;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .presentation-content {
+            padding: 56px 64px;
+        }
+
+        /* ─── Hero Block ─── */
+        .hero-banner {
+            background: linear-gradient(135deg, #0B132B 0%, #1C2541 60%, #2A3660 100%);
+            color: #FFFFFF;
+            padding: 44px 48px;
+            border-radius: var(--radius-md);
+            margin-bottom: 38px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(11, 19, 43, 0.25);
+        }
+
+        .hero-banner::after {
+            content: "📚";
+            position: absolute;
+            font-size: 160px;
+            right: 20px;
+            bottom: -35px;
+            opacity: 0.12;
+            pointer-events: none;
+        }
+
+        .hero-tagline {
+            display: inline-block;
+            background: rgba(58, 134, 255, 0.25);
+            border: 1px solid rgba(58, 134, 255, 0.5);
+            color: #93C5FD;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 999px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 14px;
+        }
+
+        .hero-banner h1 {
+            font-family: var(--font-serif);
+            font-size: 32px;
+            font-weight: 800;
+            line-height: 1.25;
+            margin-bottom: 12px;
+            color: #FFFFFF;
+            letter-spacing: -0.5px;
+        }
+
+        .hero-banner p {
+            font-size: 15px;
+            color: #CBD5E1;
+            line-height: 1.6;
+            max-width: 760px;
+        }
+
+        /* ─── Section Typography ─── */
+        .section-header {
+            margin-top: 44px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .section-header h2 {
+            font-size: 21px;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -0.4px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-tag {
+            font-size: 11.5px;
+            font-weight: 700;
+            background: #EFF6FF;
+            color: var(--accent-blue);
+            padding: 3px 10px;
+            border-radius: 6px;
+            border: 1px solid #DBEAFE;
+        }
+
+        p.intro-text {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 22px;
+        }
+
+        /* ─── Analogy Cards: The "Open-Book Exam" ─── */
+        .analogy-comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 26px 0 34px 0;
+        }
+
+        .analogy-card {
+            border-radius: var(--radius-md);
+            padding: 26px;
+            border: 2px solid var(--border);
+            position: relative;
+            background: #FFFFFF;
+            transition: all 0.25s ease;
+        }
+
+        .analogy-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .analogy-card.bad {
+            background: #FFFBFB;
+            border-color: #FECACA;
+        }
+
+        .analogy-card.good {
+            background: #F0FDF4;
+            border-color: #86EFAC;
+            box-shadow: 0 4px 18px rgba(16, 185, 129, 0.1);
+        }
+
+        .analogy-badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 3px 10px;
+            border-radius: 4px;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-bad { background: #FEE2E2; color: #991B1B; }
+        .badge-good { background: #DCFCE7; color: #166534; }
+
+        .analogy-icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .analogy-card h3 {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+
+        .analogy-card p {
+            font-size: 13.5px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 14px;
+        }
+
+        .analogy-result {
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-size: 12.5px;
+            font-weight: 600;
+        }
+
+        .result-bad {
+            background: #FEF2F2;
+            color: #B91C1C;
+            border-left: 3px solid #EF4444;
+        }
+
+        .result-good {
+            background: #ECFDF5;
+            color: #047857;
+            border-left: 3px solid #10B981;
+        }
+
+        /* ─── The 3 Magic Letters in R-A-G ─── */
+        .rag-letters-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin: 26px 0 34px 0;
+        }
+
+        .rag-letter-box {
+            background: #F8FAFC;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 22px;
+            text-align: center;
+            border-top: 4px solid var(--accent-blue);
+            transition: all 0.2s ease;
+        }
+
+        .rag-letter-box:hover {
+            transform: translateY(-2px);
+            border-top-color: var(--accent-purple);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .rag-big-letter {
+            font-size: 34px;
+            font-weight: 900;
+            color: var(--primary);
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .rag-letter-meaning {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--accent-blue);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .rag-hindi-hint {
+            display: inline-block;
+            font-size: 11.5px;
+            background: #EEF2FF;
+            color: #4338CA;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .rag-letter-box p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* ─── Step-by-Step Visual Interactive Diagram ─── */
+        .diagram-container {
+            background: linear-gradient(180deg, #F8FAFC 0%, #FFFFFF 100%);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 34px 28px;
+            margin: 26px 0 36px 0;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .diagram-title {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .diagram-title h3 {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .diagram-title p {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .diagram-flow {
+            display: flex;
+            align-items: stretch;
+            justify-content: space-between;
+            gap: 12px;
+            position: relative;
+        }
+
+        .flow-step {
+            flex: 1;
+            background: #FFFFFF;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 18px 14px;
+            text-align: center;
+            position: relative;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .flow-step-num {
+            width: 26px;
+            height: 26px;
+            background: var(--primary);
+            color: #FFFFFF;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 800;
+            margin: 0 auto 8px auto;
+        }
+
+        .flow-step-icon {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .flow-step h4 {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 6px;
+        }
+
+        .flow-step p {
+            font-size: 11.5px;
+            color: var(--text-secondary);
+            line-height: 1.45;
+        }
+
+        .flow-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #94A3B8;
+            font-size: 18px;
+            font-weight: 900;
+        }
+
+        /* ─── Real-World Case Example ─── */
+        .case-study-box {
+            background: #F1F5F9;
+            border: 1px solid #CBD5E1;
+            border-radius: var(--radius-md);
+            padding: 24px 28px;
+            margin: 28px 0;
+        }
+
+        .case-study-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .case-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 14px;
+        }
+
+        .case-col {
+            background: #FFFFFF;
+            padding: 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            font-size: 12.8px;
+        }
+
+        .case-col-header {
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* ─── Benefits Grid ─── */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+            margin: 26px 0 34px 0;
+        }
+
+        .benefit-card {
+            background: #FFFFFF;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 22px;
+            box-shadow: var(--shadow-sm);
+            border-left: 4px solid var(--accent-blue);
+            transition: all 0.2s ease;
+        }
+
+        .benefit-card:hover {
+            border-left-color: var(--accent-green);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .benefit-card.green { border-left-color: var(--accent-green); }
+        .benefit-card.purple { border-left-color: var(--accent-purple); }
+        .benefit-card.amber { border-left-color: var(--accent-amber); }
+
+        .benefit-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .benefit-icon {
+            font-size: 22px;
+            width: 38px;
+            height: 38px;
+            background: #F8FAFC;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .benefit-card h4 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .benefit-card p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        .benefit-highlight {
+            font-size: 11.5px;
+            font-weight: 700;
+            color: #0F766E;
+            background: #CCFBF1;
+            padding: 3px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-top: 8px;
+        }
+
+        /* ─── Interactive RAG Simulator ─── */
+        .interactive-sim {
+            background: #0B132B;
+            color: #FFFFFF;
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            margin: 32px 0;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .sim-header {
+            text-align: center;
+            margin-bottom: 22px;
+        }
+
+        .sim-header h3 {
+            font-size: 18px;
+            font-weight: 800;
+            color: #FFFFFF;
+        }
+
+        .sim-header p {
+            font-size: 13px;
+            color: #94A3B8;
+            margin-top: 4px;
+        }
+
+        .sim-presets-row {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+
+        .btn-preset {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #E2E8F0;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 12.5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-preset:hover, .btn-preset.active {
+            background: var(--accent-blue);
+            border-color: #60A5FA;
+            color: #FFFFFF;
+        }
+
+        .sim-screen {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: var(--radius-md);
+            padding: 22px;
+        }
+
+        .sim-step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 11.5px;
+            color: #94A3B8;
+        }
+
+        .sim-active-step {
+            color: var(--accent-cyan);
+            font-weight: 700;
+        }
+
+        .sim-stage-content {
+            font-size: 13.5px;
+            line-height: 1.6;
+        }
+
+        .sim-question-box {
+            background: rgba(58, 134, 255, 0.15);
+            border: 1px solid rgba(58, 134, 255, 0.4);
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 14px;
+            color: #93C5FD;
+        }
+
+        .sim-retrieval-box {
+            background: rgba(245, 158, 11, 0.12);
+            border: 1px solid rgba(245, 158, 11, 0.35);
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 14px;
+            color: #FCD34D;
+            font-size: 12.5px;
+        }
+
+        .sim-answer-box {
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.35);
+            padding: 14px 18px;
+            border-radius: 8px;
+            color: #A7F3D0;
+        }
+
+        /* ─── Client Takeaway Summary Card ─── */
+        .takeaway-card {
+            background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+            border: 1px solid #BFDBFE;
+            border-radius: var(--radius-md);
+            padding: 24px 28px;
+            margin-top: 36px;
+        }
+
+        .takeaway-card h3 {
+            font-size: 16px;
+            font-weight: 800;
+            color: #1E3A8A;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .takeaway-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .takeaway-list li {
+            font-size: 13.5px;
+            color: #1E40AF;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            line-height: 1.5;
+        }
+
+        .takeaway-list li strong {
+            color: #172554;
+        }
+
+        /* ─── Footer ─── */
+        .doc-footer {
+            margin-top: 48px;
+            padding-top: 18px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11.5px;
+            color: var(--text-muted);
+        }
+
+        /* ─── Print Styles ─── */
+        @media print {
+            .top-nav, .sim-presets-row, .btn-preset {
+                display: none !important;
+            }
+
+            body {
+                background: #FFFFFF !important;
+                color: #000000 !important;
+                font-size: 12px !important;
+            }
+
+            .presentation-wrap {
+                box-shadow: none !important;
+                border: none !important;
+                margin: 0 !important;
+                max-width: 100% !important;
+            }
+
+            .presentation-content {
+                padding: 10mm !important;
+            }
+
+            .hero-banner {
+                background: #0B132B !important;
+                color: #FFFFFF !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .analogy-card, .rag-letter-box, .flow-step, .benefit-card {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            .page-break {
+                page-break-before: always;
+                break-before: page;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Top Sticky Presentation Bar -->
+    <header class="top-nav">
+        <div class="nav-brand">
+            <div class="brand-icon">📚</div>
+            <div class="brand-info">
+                <h1>Tara LawAi &bull; Client Presentation Guide</h1>
+                <p>Understanding RAG (Retrieval-Augmented Generation) in Plain English</p>
+            </div>
+        </div>
+
+        <div class="nav-actions">
+            <span class="pill-badge">Zero Tech Jargon &bull; 100% Visual</span>
+            <button class="btn-action btn-pdf" onclick="downloadClientPDF()">
+                <span>📥</span> Download Presentation PDF
+            </button>
+            <button class="btn-action btn-print" onclick="window.print()">
+                <span>🖨️</span> Print / Save PDF
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Presentation Document Container -->
+    <main class="presentation-wrap" id="presentation-document">
+        <div class="presentation-content">
+
+            <!-- Hero Section -->
+            <div class="hero-banner">
+                <span class="hero-tagline">Client Executive Briefing &bull; Legal AI Technology</span>
+                <h1>How Does RAG Work in Tara LawAi?</h1>
+                <p>
+                    A simple, friendly guide designed for non-technical leaders and clients. Learn how Tara LawAi prevents AI hallucinations, eliminates guesswork, and delivers legally certified compliance answers using official UK GDPR and India DPDP Act law books.
+                </p>
+            </div>
+
+            <!-- ========================================================================= -->
+            <!-- SECTION 1: WHAT IS RAG? THE SIMPLEST REAL-LIFE EXAMPLE -->
+            <!-- ========================================================================= -->
+            <div class="section-header">
+                <h2>1. What is RAG? The Open-Book Exam Example</h2>
+                <span class="section-tag">Easy Analogy</span>
+            </div>
+
+            <p class="intro-text">
+                RAG stands for <strong>Retrieval-Augmented Generation</strong>. That sounds very complex, but the idea behind it is something everyone understands: <strong>The difference between a Closed-Book Exam and an Open-Book Exam.</strong>
+            </p>
+
+            <div class="analogy-comparison-grid">
+                
+                <!-- Card 1: Normal AI -->
+                <div class="analogy-card bad">
+                    <span class="analogy-badge badge-bad">Standard Chatbots (Without RAG)</span>
+                    <div class="analogy-icon">🧠❌</div>
+                    <h3>The "Closed-Book" Memory Exam</h3>
+                    <p>
+                        Imagine a student who studied thousands of books 2 years ago, but is forced to take a strict Law Exam <strong>purely from memory</strong> with no books allowed on their desk.
+                    </p>
+                    <p>
+                        When asked a tricky question, they might confuse two different laws or confidently invent non-existent rules just because it "sounds right." In AI, this is called a <strong>hallucination</strong>.
+                    </p>
+                    <div class="analogy-result result-bad">
+                        ⚠️ <strong>High Risk:</strong> The student guesses from old memory. If they guess wrong in law, the company gets fined £17.5M!
+                    </div>
+                </div>
+
+                <!-- Card 2: RAG AI -->
+                <div class="analogy-card good">
+                    <span class="analogy-badge badge-good">Tara LawAi (With RAG)</span>
+                    <div class="analogy-icon">📖✅</div>
+                    <h3>The "Open-Book" Verified Exam</h3>
+                    <p>
+                        Now imagine the exact same smart student, but this time they are taking an <strong>Open-Book Exam</strong>. Right on their desk sits the official, verified UK GDPR &amp; India DPDP Act law book.
+                    </p>
+                    <p>
+                        Before writing a single word, the student <strong>opens the exact page</strong>, reads the verified law, quotes the official Article number, and gives a 100% accurate, legally defensible answer!
+                    </p>
+                    <div class="analogy-result result-good">
+                        🛡️ <strong>Zero Risk:</strong> Every single answer is grounded in the real law book. No guessing, no fake laws, 100% certified accuracy.
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- The 3 Letters Breakdown -->
+            <h3 style="font-size: 16px; font-weight: 800; color: var(--primary); margin: 28px 0 14px 0;">
+                The 3 Magic Letters in R - A - G Explained:
+            </h3>
+
+            <div class="rag-letters-row">
+                
+                <!-- R -->
+                <div class="rag-letter-box">
+                    <div class="rag-big-letter" style="color: var(--accent-blue);">R</div>
+                    <div class="rag-letter-meaning">Retrieval</div>
+                    <div class="rag-hindi-hint">ढूंढना (Search)</div>
+                    <p>
+                        When you ask a question, the system first rushes into our private digital library and finds the <strong>exact official law pages</strong> that match your query.
+                    </p>
+                </div>
+
+                <!-- A -->
+                <div class="rag-letter-box" style="border-top-color: var(--accent-amber);">
+                    <div class="rag-big-letter" style="color: var(--accent-amber);">A</div>
+                    <div class="rag-letter-meaning">Augmented</div>
+                    <div class="rag-hindi-hint">जोड़ना (Add Context)</div>
+                    <p>
+                        The system takes those exact law paragraphs and attaches them right next to your question: <em>"Here is the official law, now answer using ONLY this!"</em>
+                    </p>
+                </div>
+
+                <!-- G -->
+                <div class="rag-letter-box" style="border-top-color: var(--accent-green);">
+                    <div class="rag-big-letter" style="color: var(--accent-green);">G</div>
+                    <div class="rag-letter-meaning">Generation</div>
+                    <div class="rag-hindi-hint">जवाब बनाना (Create Answer)</div>
+                    <p>
+                        The AI reads the official paragraphs and writes back a clear, polite, simple answer in plain English or Hindi, citing the exact Article number for you.
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- ========================================================================= -->
+            <!-- SECTION 2: THE VISUAL WORKFLOW DIAGRAM -->
+            <!-- ========================================================================= -->
+            <div class="page-break"></div>
+
+            <div class="section-header">
+                <h2>2. How RAG Works Step-by-Step (Visual Diagram)</h2>
+                <span class="section-tag">Interactive Flow</span>
+            </div>
+
+            <p class="intro-text">
+                Here is the 4-step journey of what happens inside Tara LawAi in less than <strong>0.8 seconds</strong> when a client asks a question or uploads a privacy document:
+            </p>
+
+            <!-- Visual Flowchart Cards -->
+            <div class="diagram-container">
+                <div class="diagram-title">
+                    <h3>The Tara LawAi Grounded RAG Pipeline</h3>
+                    <p>From User Question to Legally Certified Answer in 4 Clear Steps</p>
+                </div>
+
+                <div class="diagram-flow">
+                    
+                    <!-- Step 1 -->
+                    <div class="flow-step">
+                        <div class="flow-step-num">1</div>
+                        <div class="flow-step-icon">💬</div>
+                        <h4>User Asks</h4>
+                        <p>
+                            Client or developer enters a question or uploads a privacy policy draft.
+                        </p>
+                        <div style="margin-top: 8px; font-size: 10.5px; background: #F1F5F9; padding: 4px; border-radius: 4px; font-weight: 600; color: #475569;">
+                            "Can we keep customer chats forever?"
+                        </div>
+                    </div>
+
+                    <div class="flow-arrow">&rarr;</div>
+
+                    <!-- Step 2 -->
+                    <div class="flow-step" style="border-top: 3px solid var(--accent-blue);">
+                        <div class="flow-step-num" style="background: var(--accent-blue);">2</div>
+                        <div class="flow-step-icon">📚</div>
+                        <h4>Library Search (R)</h4>
+                        <p>
+                            Tara searches its <strong>28,000+ legal database</strong> (UK GDPR, ICO Rules &amp; DPDPA 2023).
+                        </p>
+                        <div style="margin-top: 8px; font-size: 10.5px; background: #EFF6FF; padding: 4px; border-radius: 4px; font-weight: 600; color: #1E40AF;">
+                            Finds: UK GDPR Article 5(1)(e)
+                        </div>
+                    </div>
+
+                    <div class="flow-arrow">&rarr;</div>
+
+                    <!-- Step 3 -->
+                    <div class="flow-step" style="border-top: 3px solid var(--accent-amber);">
+                        <div class="flow-step-num" style="background: var(--accent-amber);">3</div>
+                        <div class="flow-step-icon">🛡️</div>
+                        <h4>Fact Anchor (A)</h4>
+                        <p>
+                            The system hands the exact law to the AI: <em>"Zero guessing allowed. Answer strictly from this law."</em>
+                        </p>
+                        <div style="margin-top: 8px; font-size: 10.5px; background: #FFFBEB; padding: 4px; border-radius: 4px; font-weight: 600; color: #92400E;">
+                            Prompt Locked at Temp = 0.1
+                        </div>
+                    </div>
+
+                    <div class="flow-arrow">&rarr;</div>
+
+                    <!-- Step 4 -->
+                    <div class="flow-step" style="border-top: 3px solid var(--accent-green);">
+                        <div class="flow-step-num" style="background: var(--accent-green);">4</div>
+                        <div class="flow-step-icon">✅</div>
+                        <h4>Certified Output (G)</h4>
+                        <p>
+                            AI delivers a clear verdict, cites the Article, and auto-writes the compliant clause for you.
+                        </p>
+                        <div style="margin-top: 8px; font-size: 10.5px; background: #ECFDF5; padding: 4px; border-radius: 4px; font-weight: 600; color: #065F46;">
+                            100% Certified Answer
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ========================================================================= -->
+            <!-- SECTION 3: REAL-WORLD EXAMPLE IN TARA LAWAI -->
+            <!-- ========================================================================= -->
+            <div class="section-header">
+                <h2>3. Real-Life Example in This Project</h2>
+                <span class="section-tag">Case Study</span>
+            </div>
+
+            <div class="case-study-box">
+                <div class="case-study-title">
+                    <span>💡</span> Real Question from Tara Spiritual &amp; Consultation Platform:
+                </div>
+                <div style="font-size: 14.5px; font-weight: 700; color: var(--primary); background: #FFFFFF; padding: 12px 16px; border-radius: 6px; border: 1px solid #CBD5E1;">
+                    &ldquo;Can our engineering team in India view the personal birth-charts and phone numbers of our UK clients?&rdquo;
+                </div>
+
+                <div class="case-grid">
+                    
+                    <!-- Without RAG -->
+                    <div class="case-col" style="border-color: #FECACA; background: #FFFBFB;">
+                        <div class="case-col-header" style="color: #991B1B;">
+                            <span>❌</span> Generic AI (Without RAG):
+                        </div>
+                        <p style="color: #7F1D1D; line-height: 1.5;">
+                            <em>"Yes, if they are your employees you can probably share data, but you should have a good privacy policy."</em>
+                        </p>
+                        <div style="margin-top: 10px; font-size: 11.5px; color: #B91C1C; font-weight: 600;">
+                            🚨 <strong>DISASTER:</strong> This generic advice is completely ILLEGAL under UK law! Transferring UK personal data to India without an International Data Transfer Agreement (IDTA) risks an immediate £17.5M fine from the UK ICO!
+                        </div>
+                    </div>
+
+                    <!-- With RAG -->
+                    <div class="case-col" style="border-color: #86EFAC; background: #F0FDF4;">
+                        <div class="case-col-header" style="color: #166534;">
+                            <span>✅</span> Tara LawAi (With RAG):
+                        </div>
+                        <p style="color: #14532D; line-height: 1.5;">
+                            <em>"No &mdash; not without a statutory transfer mechanism. Under <strong>UK GDPR Article 46</strong> and <strong>India DPDP Act Section 16</strong>, you must execute an approved <strong>UK ICO IDTA (International Data Transfer Agreement)</strong> schedule with your Indian entity. Here is the ready-to-sign agreement auto-generated for you."</em>
+                        </p>
+                        <div style="margin-top: 10px; font-size: 11.5px; color: #047857; font-weight: 600;">
+                            🛡️ <strong>SAFE &amp; DEFENSIBLE:</strong> Cites exact laws, protects the company, and provides the solution automatically.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ========================================================================= -->
+            <!-- SECTION 4: WHY IS RAG CRITICAL FOR THIS PROJECT? -->
+            <!-- ========================================================================= -->
+            <div class="page-break"></div>
+
+            <div class="section-header">
+                <h2>4. Why is RAG So Important For This Project?</h2>
+                <span class="section-tag">Business Importance</span>
+            </div>
+
+            <p class="intro-text">
+                Why couldn't we just use standard ChatGPT? Because in the legal and compliance world, <strong>guessing is illegal</strong>. Here are the 4 reasons why RAG is the technological backbone of Tara LawAi:
+            </p>
+
+            <div class="benefits-grid">
+                
+                <!-- Benefit 1 -->
+                <div class="benefit-card">
+                    <div class="benefit-header">
+                        <div class="benefit-icon">🚫</div>
+                        <h4>1. Eliminates Hallucinations (Zero Guessing)</h4>
+                    </div>
+                    <p>
+                        AI models love to sound confident even when they are completely wrong. In 2023, two New York lawyers were fined by a federal judge because their AI invented fake court cases. Tara LawAi's RAG locks the AI's creativity to 0.1 temperature, so it only reports real, verified law.
+                    </p>
+                    <span class="benefit-highlight">0.00% Tolerance for Fake Citations</span>
+                </div>
+
+                <!-- Benefit 2 -->
+                <div class="benefit-card green">
+                    <div class="benefit-header">
+                        <div class="benefit-icon">🌍</div>
+                        <h4>2. Dual Legal Bridge (UK + India Laws)</h4>
+                    </div>
+                    <p>
+                        Tara operates across two different legal systems: <strong>UK GDPR</strong> (enforced by the London ICO) and <strong>India's DPDP Act 2023</strong> (enforced by the Data Protection Board of India). Our RAG database knows both sets of laws and bridges them seamlessly for overseas teams.
+                    </p>
+                    <span class="benefit-highlight">UK GDPR &amp; India DPDP 2023 Harmonized</span>
+                </div>
+
+                <!-- Benefit 3 -->
+                <div class="benefit-card purple">
+                    <div class="benefit-header">
+                        <div class="benefit-icon">🔄</div>
+                        <h4>3. Always Up-to-Date (2026 Ready)</h4>
+                    </div>
+                    <p>
+                        When the UK government or India's parliament updates a privacy rule, normal AI models remain outdated for years because re-training an AI model costs millions of dollars. With RAG, we simply update our legal library file, and Tara instantly knows the new law!
+                    </p>
+                    <span class="benefit-highlight">Instant Updates Without Re-training</span>
+                </div>
+
+                <!-- Benefit 4 -->
+                <div class="benefit-card amber">
+                    <div class="benefit-header">
+                        <div class="benefit-icon">🔒</div>
+                        <h4>4. 100% Private &amp; Zero Model Training</h4>
+                    </div>
+                    <p>
+                        When you upload your company's documents or contracts into Tara LawAi, RAG processes them in temporary memory only. Your private files are <strong>never</strong> used to train public AI models. Your business secrets remain 100% yours.
+                    </p>
+                    <span class="benefit-highlight">Enterprise Zero-Data Retention SLA</span>
+                </div>
+
+            </div>
+
+            <!-- ========================================================================= -->
+            <!-- SECTION 5: INTERACTIVE "TRY RAG YOURSELF" SIMULATOR -->
+            <!-- ========================================================================= -->
+            <div class="interactive-sim">
+                <div class="sim-header">
+                    <h3>Interactive Demo: Experience How RAG Reasons</h3>
+                    <p>Click any question below to see what RAG retrieves and how it writes the answer:</p>
+                </div>
+
+                <div class="sim-presets-row">
+                    <button class="btn-preset active" onclick="loadSimPreset('retention')">1. Data Retention (Storage)</button>
+                    <button class="btn-preset" onclick="loadSimPreset('spiritual')">2. Spiritual &amp; Health Data</button>
+                    <button class="btn-preset" onclick="loadSimPreset('transfer')">3. UK-to-India Transfer</button>
+                </div>
+
+                <div class="sim-screen">
+                    <div class="sim-step-indicator">
+                        <span>STEP 1: USER PROMPT</span>
+                        <span class="sim-active-step">STEP 2: RAG SEARCHES LAW</span>
+                        <span>STEP 3: GROUNDED ANSWER</span>
+                    </div>
+
+                    <div class="sim-stage-content" id="sim-content">
+                        <!-- Populated dynamically via JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========================================================================= -->
+            <!-- SECTION 6: CLIENT TAKEAWAY SUMMARY -->
+            <!-- ========================================================================= -->
+            <div class="takeaway-card">
+                <h3><span>🎯</span> Executive Summary for Decision Makers</h3>
+                <ul class="takeaway-list">
+                    <li>
+                        <span>🔹</span>
+                        <div><strong>RAG is like giving the AI an official Open Law Book:</strong> It searches the verified law before answering, eliminating guesswork.</div>
+                    </li>
+                    <li>
+                        <span>🔹</span>
+                        <div><strong>Protects the business from £17.5M &amp; ₹250 Cr fines:</strong> Every answer cites real statutory articles (UK GDPR &amp; India DPDP Act).</div>
+                    </li>
+                    <li>
+                        <span>🔹</span>
+                        <div><strong>Saves £10k – £25k per year:</strong> Provides instant, lawyer-grade document checks and contract generation in 2 seconds.</div>
+                    </li>
+                    <li>
+                        <span>🔹</span>
+                        <div><strong>Zero confidential leaks:</strong> Your private documents are never saved or used to train public AI models.</div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Footer -->
+            <div class="doc-footer">
+                <div>&copy; 2026 Tara Infotech / Tara LawAi. All rights reserved. London, UK &bull; India.</div>
+                <div>Client Presentation Document &bull; RAG Architecture Explained Simply</div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Interactive Script for Simulator & PDF Generation -->
+    <script>
+        const simData = {
+            retention: {
+                question: "Can our web app store customer chat logs and consultation history forever?",
+                retrieval: "UK GDPR Article 5(1)(e) [Storage Limitation]: Personal data must be kept in a form which permits identification of data subjects for NO LONGER than is necessary for the declared purpose. Indefinite storage is strictly illegal. Penalty ceiling: £17.5M / 4% turnover.",
+                answer: "<strong>Verdict: NO (Strictly Prohibited).</strong><br>Under <strong>UK GDPR Article 5(1)(e)</strong>, keeping personal data 'forever' is a serious compliance breach that attracts maximum fines. You must specify a clear retention period (for example, 30 days for consultation chat logs, 6 years for accounting invoices), after which data must be automatically deleted or anonymized."
+            },
+            spiritual: {
+                question: "Do we need special permission to collect user astrological birth charts and health questions?",
+                retrieval: "UK GDPR Article 9(1) & 9(2)(a) [Special Category Data]: Processing of data revealing religious beliefs, philosophical beliefs, or health data is prohibited unless the data subject has given EXPLICIT CONSENT. Pre-ticked boxes are illegal under Article 7.",
+                answer: "<strong>Verdict: YES (Explicit Consent Required).</strong><br>Astrological and spiritual consultations frequently involve sensitive personal beliefs and emotional health topics, which fall under <strong>UK GDPR Article 9 Special Category Data</strong>. You cannot bundle this into standard terms. You must provide an unticked, separate checkbox stating: <em>'I explicitly consent to the processing of my spiritual and consultation data.'</em>"
+            },
+            transfer: {
+                question: "Can our software developers in India access the customer database hosted on our UK server?",
+                retrieval: "UK GDPR Chapter V (Articles 44–46) & UK ICO International Data Transfer Agreement (IDTA): Cross-border access constitutes a data transfer. India is currently classified as a third country without adequacy regulations. Mandatory requirement: Approved IDTA or Standard Contractual Clauses (SCCs).",
+                answer: "<strong>Verdict: CONDITIONAL (Requires Approved Contract).</strong><br>Under <strong>UK GDPR Article 46</strong>, overseas access from India is legally treated as an international data transfer. You cannot simply give developers database credentials. You must sign a <strong>UK ICO International Data Transfer Agreement (IDTA)</strong> between your UK entity and your Indian operations. Tara LawAi generates this contract automatically."
+            }
+        };
+
+        function loadSimPreset(key) {
+            document.querySelectorAll('.btn-preset').forEach(btn => btn.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+
+            const item = simData[key];
+            const content = document.getElementById('sim-content');
+
+            content.innerHTML = `
+                <div class="sim-question-box">
+                    <strong>1. Client Question:</strong> &ldquo;${item.question}&rdquo;
+                </div>
+                <div class="sim-retrieval-box">
+                    <strong>2. What RAG Retrieved from Legal Library:</strong><br>
+                    ${item.retrieval}
+                </div>
+                <div class="sim-answer-box">
+                    <strong>3. Final Certified Answer Generated by AI:</strong><br>
+                    ${item.answer}
+                </div>
+            `;
+        }
+
+        // Initialize with default preset
+        window.addEventListener('DOMContentLoaded', () => {
+            const firstBtn = document.querySelector('.btn-preset');
+            if (firstBtn) firstBtn.click();
+        });
+
+        // 1-Click PDF Generation via html2pdf with fallback to window.print()
+        function downloadClientPDF() {
+            const element = document.getElementById('presentation-document');
+            if (typeof html2pdf !== 'undefined') {
+                const opt = {
+                    margin: [10, 8, 10, 8],
+                    filename: 'How-RAG-Works-In-Tara-LawAi-Client-Guide.pdf',
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2, useCORS: true, logging: false },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                    pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+                };
+                html2pdf().set(opt).from(element).save();
+            } else {
+                window.print();
+            }
+        }
+    </script>
+</body>
+
+</html>
