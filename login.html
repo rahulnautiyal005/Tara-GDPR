@@ -954,7 +954,7 @@
                         <a href="javascript:void(0)" class="forgot-link" onclick="showToast('Password reset link sent to demo email', 'ℹ️')">Forgot password?</a>
                     </div>
 
-                    <button type="submit" class="btn-submit" id="btn-login">
+                    <button type="submit" class="btn-submit" id="btn-login" onclick="handleSignIn(); return false;">
                         <span class="btn-text">Sign in</span>
                         <span class="spinner"></span>
                     </button>
@@ -1136,7 +1136,35 @@
         }
 
         function quickAccess() {
-            doLogin('demo@aiaccelerator.com');
+            // Fill credentials and redirect to dashboard
+            const emailInput = document.getElementById('email') || document.querySelector('input[type="email"]');
+            const passInput = document.getElementById('password') || document.querySelector('input[type="password"]');
+            if (emailInput) emailInput.value = 'demo@aiaccelerator.com';
+            if (passInput) passInput.value = 'demo1234';
+            // Show brief loading state then redirect
+            const btn = event.currentTarget;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '⚡ Launching demo...';
+            btn.disabled = true;
+            setTimeout(() => {
+                window.location.href = '/dashboard';
+            }, 800);
+        }
+
+        function doLogin(email) {
+            window.location.href = '/dashboard';
+        }
+
+        // Sign In button handler
+        function handleSignIn() {
+            const btn = document.querySelector('.btn-signin') || document.querySelector('button[type="submit"]');
+            if (btn) {
+                btn.textContent = 'Signing in...';
+                btn.disabled = true;
+            }
+            setTimeout(() => {
+                window.location.href = '/dashboard';
+            }, 900);
         }
     </script>
 </body>
