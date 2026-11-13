@@ -2831,6 +2831,357 @@
             position: relative;
         }
 
+
+/* ==============================================================
+           PHASE 4: AI & LLM GOVERNANCE COPILOT STYLES
+           ============================================================== */
+        .aigov-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .aitool-card {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius);
+            padding: 18px;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .aitool-card:hover {
+            border-color: rgba(0, 206, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .aitool-card.selected {
+            border-color: var(--accent-2);
+            background: rgba(0, 206, 255, 0.05);
+            box-shadow: 0 0 20px rgba(0, 206, 255, 0.15);
+        }
+
+        .aitool-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .aitool-icon-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .aitool-icon {
+            font-size: 24px;
+        }
+
+        .aitool-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .aitool-vendor {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .aitool-checkbox {
+            width: 20px;
+            height: 20px;
+            border-radius: 6px;
+            border: 2px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            transition: var(--transition);
+        }
+
+        .aitool-card.selected .aitool-checkbox {
+            background: var(--accent-2);
+            border-color: var(--accent-2);
+            box-shadow: 0 0 8px var(--glow-cyan);
+        }
+
+        .aitool-meta-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 4px;
+        }
+
+        .aitool-tag {
+            font-size: 10.5px;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        .aitool-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.45;
+        }
+
+        .tag-danger {
+            background: var(--danger-bg);
+            color: var(--danger);
+            border: 1px solid var(--danger-border);
+        }
+
+        .tag-success {
+            background: var(--success-bg);
+            color: var(--success);
+            border: 1px solid var(--success-border);
+        }
+
+        .tag-warning {
+            background: var(--warning-bg);
+            color: var(--warning);
+            border: 1px solid var(--warning-border);
+        }
+
+        .tag-neutral {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+            border: 1px solid var(--glass-border);
+        }
+
+        .data-chips-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 16px 0 24px;
+        }
+
+        .data-chip {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            padding: 10px 16px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .data-chip:hover {
+            border-color: rgba(168, 85, 247, 0.4);
+            color: var(--text-primary);
+        }
+
+        .data-chip.selected {
+            background: rgba(168, 85, 247, 0.12);
+            border-color: var(--accent-3);
+            color: #C084FC;
+            box-shadow: 0 0 16px rgba(168, 85, 247, 0.2);
+        }
+
+        .aigov-matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            margin-top: 14px;
+        }
+
+        .aigov-matrix-table th {
+            text-align: left;
+            padding: 12px 14px;
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--glass-border);
+            font-weight: 600;
+            font-size: 11.5px;
+            text-transform: uppercase;
+        }
+
+        .aigov-matrix-table td {
+            padding: 12px 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: var(--text-primary);
+        }
+
+        /* ==============================================================
+           PHASE 5: VISUAL DATA-FLOW & TOPOLOGY STYLES
+           ============================================================== */
+        .topology-wrapper {
+            background: rgba(10, 11, 26, 0.85);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+        }
+
+        .topology-toolbar {
+            padding: 16px 22px;
+            background: rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .topology-filter-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .topo-filter-btn {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .topo-filter-btn:hover {
+            color: var(--text-primary);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .topo-filter-btn.active {
+            background: var(--accent-gradient-subtle);
+            border-color: rgba(0, 206, 255, 0.4);
+            color: var(--accent-2);
+        }
+
+        .topology-canvas-container {
+            position: relative;
+            width: 100%;
+            height: 520px;
+            background: 
+                radial-gradient(circle at 50% 50%, rgba(108, 92, 231, 0.06), transparent 70%),
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 32px 32px, 32px 32px;
+            overflow: hidden;
+        }
+
+        .flow-cable {
+            stroke-dasharray: 8, 8;
+            animation: flowDash 1.4s linear infinite;
+            cursor: pointer;
+            transition: stroke-width 0.2s, stroke 0.2s;
+        }
+
+        @keyframes flowDash {
+            from { stroke-dashoffset: 32; }
+            to { stroke-dashoffset: 0; }
+        }
+
+        .flow-cable:hover {
+            stroke-width: 5px !important;
+            filter: drop-shadow(0 0 8px currentColor);
+        }
+
+        .topo-node {
+            cursor: pointer;
+            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), filter 0.2s;
+        }
+
+        .topo-node:hover {
+            transform: translateY(-3px) scale(1.02);
+            filter: brightness(1.2);
+        }
+
+        .inspector-slide-panel {
+            background: rgba(14, 15, 36, 0.95);
+            backdrop-filter: blur(20px);
+            border-left: 1px solid var(--glass-border);
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 420px;
+            height: 100%;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+            transform: translateX(100%);
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .inspector-slide-panel.open {
+            transform: translateX(0);
+        }
+
+        .inspector-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .inspector-body {
+            padding: 24px;
+            overflow-y: auto;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .inspector-stat-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .idta-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(4, 4, 12, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .idta-modal-overlay.open {
+            display: flex;
+        }
+
+        .idta-modal {
+            background: #0E0F24;
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            width: 100%;
+            max-width: 820px;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+        }
+    
 </style>
 </head>
 
@@ -2913,6 +3264,16 @@
                     </div>
                     <span class="nav-badge-ai">✦ AI</span>
                 </button>
+                    <button class="nav-item-btn" id="nav-item-aigovernance" onclick="switchPhase('aigovernance')">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        <span>AI Governance</span>
+                        <span class="badge-ai" style="margin-left: auto;">✦ Copilot</span>
+                    </button>
+                    <button class="nav-item-btn" id="nav-item-dataflow" onclick="switchPhase('dataflow')">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                        <span>Data Flow Map</span>
+                        <span style="margin-left: auto; font-size: 10px; font-weight: 700; background: rgba(58, 134, 255, 0.15); color: #3A86FF; padding: 2px 6px; border-radius: 99px;">Live</span>
+                    </button>
 
                 <button class="nav-item-btn" onclick="showToast('Family Law AI module is locked for your plan', '🔒')">
                     <div class="nav-item-left">
@@ -3609,6 +3970,368 @@
             </div>
         </section>
 
+<section id="phase-aigovernance" class="phase-section" style="display:none;">
+            <div class="phase-header">
+                <span class="phase-header-badge">Phase 4 &bull; GenAI Governance &amp; DPIA</span>
+                <h2>AI &amp; LLM Governance Copilot</h2>
+                <p>Audit employee usage of Generative AI tools (ChatGPT, Claude, Copilot, Cursor). Detect model training leaks, Article 9 sensitive data egress, and automatically generate statutory Article 35 DPIA reports &amp; Employee Policies.</p>
+            </div>
+
+            <!-- Step 1: Select AI Tools in Use -->
+            <div class="card" style="margin-bottom: 24px;">
+                <div class="card-header">
+                    <h3><span>🤖</span> 1. Select AI Tools Used by Your Team</h3>
+                    <span style="font-size: 12px; color: var(--text-muted);">Click to toggle tools in use</span>
+                </div>
+                <div class="card-body">
+                    <div class="aigov-grid" id="aigov-tools-selector">
+                        <!-- AI Tools dynamically populated / rendered -->
+                        <div class="aitool-card selected" data-tool="chatgpt_consumer" onclick="toggleAITool('chatgpt_consumer', this)">
+                            <div class="aitool-header">
+                                <div class="aitool-icon-title">
+                                    <span class="aitool-icon">🤖</span>
+                                    <div>
+                                        <div class="aitool-title">ChatGPT (Consumer Free/Plus)</div>
+                                        <div class="aitool-vendor">OpenAI LLC &bull; Web App</div>
+                                    </div>
+                                </div>
+                                <div class="aitool-checkbox">✓</div>
+                            </div>
+                            <div class="aitool-meta-tags">
+                                <span class="aitool-tag tag-danger">🔴 Trains Model on Data</span>
+                                <span class="aitool-tag tag-neutral">🇺🇸 US Cloud</span>
+                            </div>
+                            <p class="aitool-desc">Consumer web tier. Conversations used for public model training unless specifically opted out.</p>
+                        </div>
+
+                        <div class="aitool-card selected" data-tool="openai_api" onclick="toggleAITool('openai_api', this)">
+                            <div class="aitool-header">
+                                <div class="aitool-icon-title">
+                                    <span class="aitool-icon">⚡</span>
+                                    <div>
+                                        <div class="aitool-title">OpenAI API (Developer)</div>
+                                        <div class="aitool-vendor">OpenAI LLC &bull; API/SDK</div>
+                                    </div>
+                                </div>
+                                <div class="aitool-checkbox">✓</div>
+                            </div>
+                            <div class="aitool-meta-tags">
+                                <span class="aitool-tag tag-success">🟢 Zero Model Training</span>
+                                <span class="aitool-tag tag-warning">🟡 30-Day Prompt Log</span>
+                            </div>
+                            <p class="aitool-desc">Developer API with zero training default. Data retained 30 days unless Zero Data Retention (ZDR) approved.</p>
+                        </div>
+
+                        <div class="aitool-card" data-tool="azure_openai" onclick="toggleAITool('azure_openai', this)">
+                            <div class="aitool-header">
+                                <div class="aitool-icon-title">
+                                    <span class="aitool-icon">🛡️</span>
+                                    <div>
+                                        <div class="aitool-title">Azure OpenAI Service</div>
+                                        <div class="aitool-vendor">Microsoft &bull; Cloud Enterprise</div>
+                                    </div>
+                                </div>
+                                <div class="aitool-checkbox">✓</div>
+                            </div>
+                            <div class="aitool-meta-tags">
+                                <span class="aitool-tag tag-success">🟢 Enterprise DPA</span>
+                                <span class="aitool-tag tag-success">🇬🇧 UK Data Boundary</span>
+                            </div>
+                            <p class="aitool-desc">Data stored within UK South region. Zero retention, HIPAA &amp; ISO 27001 compliant enterprise boundary.</p>
+                        </div>
+
+                        <div class="aitool-card" data-tool="claude_anthropic" onclick="toggleAITool('claude_anthropic', this)">
+                            <div class="aitool-header">
+                                <div class="aitool-icon-title">
+                                    <span class="aitool-icon">🧠</span>
+                                    <div>
+                                        <div class="aitool-title">Claude (Anthropic Web)</div>
+                                        <div class="aitool-vendor">Anthropic PBC &bull; Web App</div>
+                                    </div>
+                                </div>
+                                <div class="aitool-checkbox">✓</div>
+                            </div>
+                            <div class="aitool-meta-tags">
+                                <span class="aitool-tag tag-success">🟢 No Commercial Training</span>
+                                <span class="aitool-tag tag-neutral">🇺🇸 US Cloud</span>
+                            </div>
+                            <p class="aitool-desc">Commercial terms protect data, but consumer web retains prompts for 90 days for trust and safety review.</p>
+                        </div>
+
+                        <div class="aitool-card" data-tool="ms_copilot" onclick="toggleAITool('ms_copilot', this)">
+                            <div class="aitool-header">
+                                <div class="aitool-icon-title">
+                                    <span class="aitool-icon">💼</span>
+                                    <div>
+                                        <div class="aitool-title">Microsoft 365 Copilot</div>
+                                        <div class="aitool-vendor">Microsoft Corp &bull; Workplace AI</div>
+                                    </div>
+                                </div>
+                                <div class="aitool-checkbox">✓</div>
+                            </div>
+                            <div class="aitool-meta-tags">
+                                <span class="aitool-tag tag-success">🟢 M365 Tenant Boundary</span>
+                                <span class="aitool-tag tag-success">🟢 ISO 27701</span>
+                            </div>
+                            <p class="aitool-desc">Inherits company's existing Microsoft 365 enterprise security, compliance, and privacy commitments.</p>
+                        </div>
+
+                        <div class="aitool-card" data-tool="google_gemini" onclick="toggleAITool('google_gemini', this)">
+                            <div class="aitool-header">
+                                <div class="aitool-icon-title">
+                                    <span class="aitool-icon">🌐</span>
+                                    <div>
+                                        <div class="aitool-title">Google Gemini (Consumer)</div>
+                                        <div class="aitool-vendor">Google LLC &bull; Web App</div>
+                                    </div>
+                                </div>
+                                <div class="aitool-checkbox">✓</div>
+                            </div>
+                            <div class="aitool-meta-tags">
+                                <span class="aitool-tag tag-danger">🔴 Human Reviewers</span>
+                                <span class="aitool-tag tag-danger">🔴 Trains Models</span>
+                            </div>
+                            <p class="aitool-desc">Human reviewers can annotate conversations. High compliance breach risk if personal data is pasted.</p>
+                        </div>
+
+                        <div class="aitool-card selected" data-tool="cursor_copilot" onclick="toggleAITool('cursor_copilot', this)">
+                            <div class="aitool-header">
+                                <div class="aitool-icon-title">
+                                    <span class="aitool-icon">💻</span>
+                                    <div>
+                                        <div class="aitool-title">Cursor / GitHub Copilot</div>
+                                        <div class="aitool-vendor">Anysphere / GitHub &bull; IDE AI</div>
+                                    </div>
+                                </div>
+                                <div class="aitool-checkbox">✓</div>
+                            </div>
+                            <div class="aitool-meta-tags">
+                                <span class="aitool-tag tag-warning">🟡 Code Telemetry</span>
+                                <span class="aitool-tag tag-neutral">🇺🇸 US Inference</span>
+                            </div>
+                            <p class="aitool-desc">Transmits file contents and code context. Privacy Mode must be enabled to prevent snippet logging.</p>
+                        </div>
+
+                        <div class="aitool-card" data-tool="midjourney_canva" onclick="toggleAITool('midjourney_canva', this)">
+                            <div class="aitool-header">
+                                <div class="aitool-icon-title">
+                                    <span class="aitool-icon">🎨</span>
+                                    <div>
+                                        <div class="aitool-title">Midjourney &amp; Canva AI</div>
+                                        <div class="aitool-vendor">Various &bull; Generative Media</div>
+                                    </div>
+                                </div>
+                                <div class="aitool-checkbox">✓</div>
+                            </div>
+                            <div class="aitool-meta-tags">
+                                <span class="aitool-tag tag-warning">🟡 Public Gallery</span>
+                                <span class="aitool-tag tag-neutral">🇺🇸 US Hosted</span>
+                            </div>
+                            <p class="aitool-desc">Media prompts and uploaded portrait images are publicly indexed on Discord channels by default.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: What Data Do Employees Put Into AI? -->
+            <div class="card" style="margin-bottom: 24px;">
+                <div class="card-header">
+                    <h3><span>🧬</span> 2. What Information Do Employees &amp; Apps Enter into AI?</h3>
+                    <span style="font-size: 12px; color: var(--text-muted);">Select all that apply</span>
+                </div>
+                <div class="card-body">
+                    <div class="data-chips-grid" id="aigov-data-selector">
+                        <div class="data-chip" data-type="customer_pii" onclick="toggleAIDataType('customer_pii', this)">
+                            <span>👤</span> Customer Names &amp; Email Addresses
+                        </div>
+                        <div class="data-chip selected" data-type="consultation_health" onclick="toggleAIDataType('consultation_health', this)">
+                            <span>🧬</span> Consultation Notes &amp; Health/Beliefs (Art 9)
+                        </div>
+                        <div class="data-chip" data-type="financial_data" onclick="toggleAIDataType('financial_data', this)">
+                            <span>💳</span> Financial Transactions &amp; Billing Records
+                        </div>
+                        <div class="data-chip selected" data-type="source_code" onclick="toggleAIDataType('source_code', this)">
+                            <span>💻</span> Proprietary Source Code &amp; DB Schemas
+                        </div>
+                        <div class="data-chip" data-type="employee_cvs" onclick="toggleAIDataType('employee_cvs', this)">
+                            <span>📄</span> Employee CVs, Resumes &amp; HR Records
+                        </div>
+                        <div class="data-chip" data-type="api_secrets" onclick="toggleAIDataType('api_secrets', this)">
+                            <span>🔑</span> API Keys, Passwords &amp; JWT Tokens
+                        </div>
+                    </div>
+
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--glass-border);">
+                        <div style="color: var(--text-secondary); font-size: 13px;">
+                            Evaluating against: <strong style="color:var(--text-primary);">UK GDPR Article 35, Article 9 &bull; India DPDPA 2023</strong>
+                        </div>
+                        <button class="btn-primary-action" id="btn-run-aigov" onclick="executeAIGovernanceAudit()">
+                            <span class="spinner"></span>
+                            <span class="btn-text">🚀 Run Statutory AI Privacy Audit</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dynamic Results Container -->
+            <div id="aigov-results-container" style="display:none;">
+                <!-- Bento Metrics Row -->
+                <div class="metrics-bento-row">
+                    <div class="metric-bento-card">
+                        <div class="stat-card-val val-danger" id="aigov-score-val">35/100</div>
+                        <div class="stat-card-lbl">AI Compliance Grade</div>
+                        <div style="font-size: 11.5px; color: var(--danger); font-weight: 600; margin-top: 4px;" id="aigov-grade-val">Grade D &bull; Severe Exposure</div>
+                    </div>
+                    <div class="metric-bento-card">
+                        <div class="stat-card-val val-danger" id="aigov-exposure-val">£17.5M</div>
+                        <div class="stat-card-lbl">Statutory Fine Exposure</div>
+                        <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 4px;">ICO Art 83 / DPDP Board ₹250Cr</div>
+                    </div>
+                    <div class="metric-bento-card">
+                        <div class="stat-card-val val-warning" id="aigov-training-threat">ACTIVE</div>
+                        <div class="stat-card-lbl">Model Retraining Threat</div>
+                        <div style="font-size: 11.5px; color: var(--warning); margin-top: 4px;">Consumer AI harvests PII</div>
+                    </div>
+                    <div class="metric-bento-card">
+                        <div class="stat-card-val val-accent" id="aigov-dpia-mandated">MANDATED</div>
+                        <div class="stat-card-lbl">Article 35 DPIA Status</div>
+                        <div style="font-size: 11.5px; color: var(--accent-2); margin-top: 4px;">High-risk AI processing</div>
+                    </div>
+                </div>
+
+                <!-- Red-Flag Statutory Violations -->
+                <div class="card" style="margin-bottom: 24px;">
+                    <div class="card-header">
+                        <h3><span>🚨</span> Statutory Compliance Red Flags Identified</h3>
+                        <span class="pill-badge badge-danger" id="aigov-redflag-count">3 Violations Found</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="issues-list" id="aigov-redflags-list">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Risk Matrix Table -->
+                <div class="card" style="margin-bottom: 24px;">
+                    <div class="card-header">
+                        <h3><span>🗺️</span> AI Processing Risk Matrix (Tool &times; Ingested Data)</h3>
+                    </div>
+                    <div class="card-body" style="overflow-x: auto;">
+                        <table class="aigov-matrix-table">
+                            <thead>
+                                <tr>
+                                    <th>AI Tool</th>
+                                    <th>Data Category</th>
+                                    <th>Model Training Risk</th>
+                                    <th>Compliance Status</th>
+                                    <th>Mandatory Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="aigov-matrix-tbody">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Generated Documents Viewer (DPIA & AUP) -->
+                <div class="card">
+                    <div class="card-header" style="flex-wrap: wrap; gap: 12px;">
+                        <div style="display:flex; align-items:center; gap: 8px;">
+                            <button class="repo-subtab-btn active" id="aigov-subtab-dpia" onclick="switchAIGovDocSubtab('dpia')">
+                                🛡️ Statutory AI DPIA (Article 35 Report)
+                            </button>
+                            <button class="repo-subtab-btn" id="aigov-subtab-aup" onclick="switchAIGovDocSubtab('aup')">
+                                📜 Employee AI Acceptable Use Policy (AUP)
+                            </button>
+                        </div>
+                        <div style="display: flex; gap: 8px;">
+                            <button class="btn-export" onclick="copyCurrentAIGovDoc()">
+                                <span>📋</span> Copy Text
+                            </button>
+                            <button class="btn-export" onclick="downloadCurrentAIGovDoc('md')">
+                                <span>📥</span> Download .md
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="doc-fixed-viewer" id="aigov-doc-viewer" style="max-height: 520px; font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.7; white-space: pre-wrap; color: #E2E8F0;">
+                            <!-- Markdown rendered here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+<section id="phase-dataflow" class="phase-section" style="display:none;">
+            <div class="phase-header">
+                <span class="phase-header-badge">Phase 5 &bull; Architecture Lineage &amp; Cross-Border</span>
+                <h2>Interactive Visual Data-Flow &amp; Cross-Border Map</h2>
+                <p>Trace the live statutory journey of personal data across your architecture. Identify cross-border transfers (UK &harr; India), verify Article 6/9 lawful bases, and generate legally binding UK International Data Transfer Agreements (IDTA).</p>
+            </div>
+
+            <!-- Toolbar & Presets -->
+            <div class="topology-wrapper">
+                <div class="topology-toolbar">
+                    <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                        <span style="font-size: 13px; font-weight: 700; color: var(--text-primary);">Preset Architecture:</span>
+                        <select id="topo-preset-select" class="input-text" style="padding: 6px 12px; font-size: 12.5px; width: 280px;" onchange="loadTopologyPreset(this.value)">
+                            <option value="tara-consultation" selected>🔮 Tara Spiritual Consultation App (UK &harr; India)</option>
+                            <option value="medconnect-telehealth">🏥 MedConnect Telemedicine EHR (NHS Patients)</option>
+                        </select>
+                    </div>
+
+                    <!-- Flow Filter Controls -->
+                    <div class="topology-filter-group">
+                        <button class="topo-filter-btn active" id="filter-all" onclick="filterTopologyFlows('ALL', this)">All Data Flows (5)</button>
+                        <button class="topo-filter-btn" id="filter-crossborder" onclick="filterTopologyFlows('CROSS_BORDER', this)">🌍 Cross-Border Only (2)</button>
+                        <button class="topo-filter-btn" id="filter-risk" onclick="filterTopologyFlows('VIOLATION', this)">🚨 Red Flags Only (1)</button>
+                        <button class="btn-export" onclick="exportGitHubMermaid()" style="font-size:12px; padding:6px 12px; margin-left:8px; border-color:rgba(0, 206, 255, 0.4); color:var(--accent-2);">
+                            <span>🐙</span> Export GitHub README (Mermaid)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Canvas / SVG Viewport -->
+                <div class="topology-canvas-container" id="topo-canvas-container">
+                    <svg id="topo-svg-map" width="100%" height="100%" viewBox="0 0 940 480" style="width: 100%; height: 100%;">
+                        <!-- SVG Elements populated dynamically -->
+                    </svg>
+
+                    <!-- Slide-in Statutory Inspector Drawer -->
+                    <div class="inspector-slide-panel" id="topo-inspector-panel">
+                        <div class="inspector-header">
+                            <div>
+                                <h3 id="insp-title" style="font-size: 15px; font-weight: 700; color: var(--text-primary);">Flow Inspector</h3>
+                                <p id="insp-subtitle" style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Statutory Analysis</p>
+                            </div>
+                            <button onclick="closeTopologyInspector()" style="background:transparent; border:none; color:var(--text-muted); font-size:18px; cursor:pointer;">&times;</button>
+                        </div>
+                        <div class="inspector-body" id="insp-body-content">
+                            <!-- Populated on node or link click -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Architecture Summary Footer -->
+                <div style="padding: 16px 22px; background: rgba(255, 255, 255, 0.015); border-top: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+                    <div style="display: flex; gap: 18px; font-size: 12.5px; color: var(--text-secondary);">
+                        <div><span>Nodes:</span> <strong style="color:var(--text-primary);" id="topo-stat-nodes">6 Services</strong></div>
+                        <div><span>Flows:</span> <strong style="color:var(--text-primary);" id="topo-stat-flows">5 Data Routes</strong></div>
+                        <div><span>Cross-Border:</span> <strong style="color:var(--warning);" id="topo-stat-cb">2 Overseas Transfers</strong></div>
+                        <div><span>Violations:</span> <strong style="color:var(--danger);" id="topo-stat-violations">1 Missing IDTA</strong></div>
+                    </div>
+                    <div>
+                        <button class="btn-primary-action" onclick="openIDTAModal()" style="padding: 7px 16px; font-size: 12px;">
+                            <span>📄 Generate UK-India IDTA Schedule</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
     
 
 
@@ -4072,6 +4795,8 @@
                 'docfixer': 'Documents &amp; Auto-Fixer',
                 'github': 'Code Scanner',
                 'chatbot': 'Legal AI Assistant',
+                'aigovernance': 'AI & LLM Governance Copilot',
+                'dataflow': 'Visual Data-Flow Lineage Map',
                 'reports': 'Compliance &amp; Risk Reports',
                 'auditlogs': 'Immutable Security Audit Logs',
                 'settings': 'Workspace &amp; Security Settings',
@@ -4084,6 +4809,14 @@
             document.querySelectorAll('.phase-section').forEach(sec => sec.style.display = 'none');
             const targetSec = document.getElementById(`phase-${phaseName}`);
             if (targetSec) targetSec.style.display = 'block';
+
+            // Special phase inits
+            if (phaseName === 'dataflow' && typeof renderTopologyCanvas === 'function') {
+                setTimeout(() => renderTopologyCanvas(), 50);
+            }
+            if (phaseName === 'aigovernance' && typeof renderAIGovernanceDashboard === 'function') {
+                renderAIGovernanceDashboard();
+            }
 
             // Special phase inits
             if (phaseName === 'dataflow') {
@@ -5443,6 +6176,769 @@ function generateDossierHTML(dateStr) {
             }
         }
 
+
+// ==============================================================
+        let selectedAITools = ['chatgpt_consumer', 'openai_api', 'cursor_copilot'];
+        let selectedAIDataTypes = ['consultation_health', 'source_code'];
+        let currentAIGovResult = null;
+        let currentAIGovDoc = 'dpia';
+        let generatedDPIAText = '';
+        let generatedAUPText = '';
+
+        function toggleAITool(toolId, el) {
+            if (selectedAITools.includes(toolId)) {
+                if (selectedAITools.length === 1) {
+                    showToast('At least one AI tool must remain selected.', '⚠️');
+                    return;
+                }
+                selectedAITools = selectedAITools.filter(t => t !== toolId);
+                el.classList.remove('selected');
+                el.querySelector('.aitool-checkbox').textContent = '';
+            } else {
+                selectedAITools.push(toolId);
+                el.classList.add('selected');
+                el.querySelector('.aitool-checkbox').textContent = '✓';
+            }
+        }
+
+        function toggleAIDataType(dataId, el) {
+            if (selectedAIDataTypes.includes(dataId)) {
+                if (selectedAIDataTypes.length === 1) {
+                    showToast('At least one data category must remain selected.', '⚠️');
+                    return;
+                }
+                selectedAIDataTypes = selectedAIDataTypes.filter(d => d !== dataId);
+                el.classList.remove('selected');
+            } else {
+                selectedAIDataTypes.push(dataId);
+                el.classList.add('selected');
+            }
+        }
+
+        async function executeAIGovernanceAudit() {
+            const btn = document.getElementById('btn-run-aigov');
+            if (btn) {
+                btn.classList.add('loading');
+                btn.disabled = true;
+            }
+
+            try {
+                const response = await fetch('/api/ai-governance/audit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        selected_tools: selectedAITools,
+                        selected_data_types: selectedAIDataTypes,
+                        company_name: 'Tara Infotech Ltd'
+                    })
+                });
+
+                if (response.ok) {
+                    currentAIGovResult = await response.json();
+                } else {
+                    currentAIGovResult = simulateAIGovAudit();
+                }
+            } catch (e) {
+                currentAIGovResult = simulateAIGovAudit();
+            } finally {
+                if (btn) {
+                    btn.classList.remove('loading');
+                    btn.disabled = false;
+                }
+            }
+
+            renderAIGovernanceDashboard(currentAIGovResult);
+            showToast('AI Governance statutory audit completed!', '⚡');
+        }
+
+        function simulateAIGovAudit() {
+            const hasSpecial = selectedAIDataTypes.includes('consultation_health') || selectedAIDataTypes.includes('financial_data') || selectedAIDataTypes.includes('api_secrets');
+            const hasConsumer = selectedAITools.includes('chatgpt_consumer') || selectedAITools.includes('google_gemini');
+            let score = 90;
+            if (hasSpecial && hasConsumer) score -= 45;
+            if (selectedAIDataTypes.includes('api_secrets')) score -= 25;
+            if (selectedAITools.includes('cursor_copilot') || selectedAITools.includes('openai_api')) score -= 10;
+            score = Math.max(20, Math.min(95, score));
+
+            const redFlags = [];
+            if (hasSpecial && hasConsumer) {
+                redFlags.push({
+                    severity: 'CRITICAL',
+                    title: 'Article 9 Breach: Special Category Consultation Notes in Public Consumer AI',
+                    statute: 'UK GDPR Article 9 & Section 4 India DPDP Act 2023',
+                    risk: 'Employees uploading consultation transcripts or psychological/health details into consumer ChatGPT/Gemini where model training is enabled by default.',
+                    remediation: 'Immediately enforce Azure OpenAI UK South with certified Zero Data Retention (ZDR) and block consumer web interfaces.',
+                    fine_exposure: 'Up to £17,500,000 (ICO) or ₹250 Crore (DPDP Board)'
+                });
+            }
+            if (selectedAITools.includes('chatgpt_consumer') || selectedAITools.includes('claude_anthropic')) {
+                redFlags.push({
+                    severity: 'HIGH',
+                    title: 'Unapproved Cross-Border Prompt Transfer to US Cloud Inference',
+                    statute: 'UK GDPR Chapter V (Articles 44–49) & ICO International Transfer Guidelines',
+                    risk: 'Customer prompts egress outside the UK/EU to US cloud clusters without execution of an International Data Transfer Agreement (IDTA).',
+                    remediation: 'Execute standard contractual addendum with OpenAI or route prompts exclusively via Azure UK South tenant.',
+                    fine_exposure: 'Up to £8,700,000 under ICO Enforcement Powers'
+                });
+            }
+            if (selectedAIDataTypes.includes('api_secrets')) {
+                redFlags.push({
+                    severity: 'CRITICAL',
+                    title: 'Security Inadequacy: System Credentials & Passwords Exposed to Third-Party AI',
+                    statute: 'UK GDPR Article 32 & India DPDPA Section 8(5)',
+                    risk: 'Hardcoded secrets, API tokens, or database connection strings entered into AI prompts violate mandatory technical safeguards.',
+                    remediation: 'Deploy pre-commit git secret scanners and enforce strict prompt sanitization filter.',
+                    fine_exposure: 'Mandatory 72-hour ICO security breach notification required'
+                });
+            }
+            redFlags.push({
+                severity: 'HIGH',
+                title: 'Mandatory Article 35 AI DPIA Missing from Corporate Records',
+                statute: 'UK GDPR Article 35(3) & ICO Guidance on Generative AI',
+                risk: 'Conducting systematic automated processing of client records via artificial intelligence without prior formal DPIA documentation.',
+                remediation: 'Publish and archive formal AI DPIA with the designated Data Protection Officer (DPO).',
+                fine_exposure: 'Statutory compliance audit order and public regulatory reprimand'
+            });
+
+            const matrix = [];
+            const toolNames = {
+                chatgpt_consumer: 'ChatGPT (Consumer)',
+                openai_api: 'OpenAI API (Developer)',
+                azure_openai: 'Azure OpenAI Enterprise',
+                claude_anthropic: 'Claude (Anthropic Web)',
+                ms_copilot: 'Microsoft 365 Copilot',
+                google_gemini: 'Google Gemini',
+                cursor_copilot: 'Cursor / Copilot IDE',
+                midjourney_canva: 'Midjourney / Canva'
+            };
+            const dataNames = {
+                customer_pii: 'Customer Names & Emails',
+                consultation_health: 'Consultation Transcripts (Art 9)',
+                financial_data: 'Financial Records',
+                source_code: 'Source Code & Schemas',
+                employee_cvs: 'Employee CVs & HR',
+                api_secrets: 'API Keys & Secrets'
+            };
+
+            selectedAITools.forEach(t => {
+                selectedAIDataTypes.forEach(d => {
+                    const isCrit = (t === 'chatgpt_consumer' || t === 'google_gemini') && (d === 'consultation_health' || d === 'api_secrets' || d === 'financial_data');
+                    matrix.push({
+                        tool_name: toolNames[t] || t,
+                        data_name: dataNames[d] || d,
+                        status: isCrit ? 'CRITICAL' : ((t === 'azure_openai' || t === 'ms_copilot') ? 'COMPLIANT' : 'WARNING'),
+                        model_training: (t === 'chatgpt_consumer' || t === 'google_gemini') ? 'YES (High Risk)' : 'NO (Protected)',
+                        action_required: isCrit ? 'Strictly Prohibit' : ((t === 'azure_openai' || t === 'ms_copilot') ? 'Permitted' : 'Permit with Guidelines')
+                    });
+                });
+            });
+
+            return {
+                company_name: 'Tara Infotech Ltd',
+                overall_score: score,
+                health_grade: score < 45 ? 'Grade D • Severe Exposure' : (score < 70 ? 'Grade C • High Risk' : 'Grade B • Moderate'),
+                red_flags: redFlags,
+                risk_matrix: matrix
+            };
+        }
+
+        function renderAIGovernanceDashboard(result) {
+            const container = document.getElementById('aigov-results-container');
+            container.style.display = 'block';
+
+            // Update Bento stats
+            const scoreVal = document.getElementById('aigov-score-val');
+            scoreVal.textContent = `${result.overall_score}/100`;
+            scoreVal.className = `stat-card-val ${result.overall_score < 50 ? 'val-danger' : (result.overall_score < 75 ? 'val-warning' : 'val-success')}`;
+
+            document.getElementById('aigov-grade-val').textContent = result.health_grade;
+            document.getElementById('aigov-exposure-val').textContent = result.overall_score < 50 ? '£17.5M' : (result.overall_score < 75 ? '£8.7M' : '£2.5M');
+            document.getElementById('aigov-redflag-count').textContent = `${result.red_flags.length} Red Flags Found`;
+
+            // Render Red Flags List
+            const flagsList = document.getElementById('aigov-redflags-list');
+            flagsList.innerHTML = result.red_flags.map((rf, idx) => `
+                <div class="issue-item ${rf.severity === 'CRITICAL' ? '' : 'warning'}">
+                    <div class="issue-header">
+                        <span class="issue-title">#${idx + 1} &bull; ${escapeHtml(rf.title)}</span>
+                        <span class="issue-badge ${rf.severity === 'CRITICAL' ? 'badge-danger' : 'badge-warning'}">${rf.severity}</span>
+                    </div>
+                    <div class="issue-statute">🏛️ Governing Law: ${escapeHtml(rf.statute)}</div>
+                    <p class="issue-desc">${escapeHtml(rf.risk)}</p>
+                    <div style="font-size: 11.5px; color: var(--danger); font-weight:700; margin-bottom: 8px;">
+                        ⚠️ Maximum Fine Exposure: ${escapeHtml(rf.fine_exposure || 'Up to £17.5M under ICO rules')}
+                    </div>
+                    <div class="issue-fix-box">
+                        <strong>✓ Mandatory Remediation:</strong> ${escapeHtml(rf.remediation)}
+                    </div>
+                </div>
+            `).join('');
+
+            // Render Matrix Table
+            const tbody = document.getElementById('aigov-matrix-tbody');
+            tbody.innerHTML = result.risk_matrix.map(row => `
+                <tr>
+                    <td><strong>${escapeHtml(row.tool_name)}</strong></td>
+                    <td>${escapeHtml(row.data_name)}</td>
+                    <td><span class="aitool-tag ${row.model_training.includes('YES') ? 'tag-danger' : 'tag-success'}">${escapeHtml(row.model_training)}</span></td>
+                    <td><span class="pill-badge ${row.status === 'CRITICAL' ? 'badge-danger' : (row.status === 'WARNING' ? 'badge-warning' : 'pill-progress')}" style="font-size:10.5px;">${row.status}</span></td>
+                    <td style="font-weight: 600; color: ${row.status === 'CRITICAL' ? 'var(--danger)' : (row.status === 'WARNING' ? 'var(--warning)' : 'var(--success)')};">${escapeHtml(row.action_required)}</td>
+                </tr>
+            `).join('');
+
+            // Build statutory texts
+            generatedDPIAText = `# STATUTORY DATA PROTECTION IMPACT ASSESSMENT (DPIA)
+## SYSTEMATIC PROCESSING OF PERSONAL DATA VIA GENERATIVE ARTIFICIAL INTELLIGENCE
+Governing Statute: UK GDPR (Article 35), Data Protection Act 2018 & India DPDP Act 2023
+Organization: Tara Infotech Ltd
+DPIA Assessment Reference: DPIA-AI-2026-001
+Status: ACTIVE REGULATORY AUDIT
+Overall Compliance Rating: ${result.overall_score}/100 (${result.health_grade})
+
+--------------------------------------------------------------------------------
+
+1. SYSTEMATIC DESCRIPTION OF AI PROCESSING
+- Technologies Evaluated: ${selectedAITools.join(', ')}
+- Ingested Data Types: ${selectedAIDataTypes.join(', ')}
+- Operational Purpose: Automated consultation transcript analysis, code generation, and client advisory workflows.
+- Core Vulnerability: Cross-border inference dispatch and model weight harvesting by third-party LLMs.
+
+2. STATUTORY RISK ASSESSMENT (ARTICLE 35(7))
+- Special Category Health / Consultation Data: Processing Article 9 data via external LLMs requires Explicit Consent and a certified Zero-Retention contract.
+- Model Training Isolation: Prompts must NOT be recycled into foundational model parameter weights.
+- International Transfers: Prompt egress to US inference clusters must be secured via the UK International Data Transfer Addendum (IDTA).
+
+3. MANDATORY REMEDIATION CONTROLS
+1. Mandate migration of all sensitive customer consultation processing to Azure OpenAI UK South region.
+2. Promulgate and execute the Tara Employee AI Acceptable Use Policy within 14 calendar days.
+3. Deploy client-side pseudonymization filters to scrub telephone numbers and names before inference.
+
+Approved by: Lead Data Protection Officer (Tara PrivacyOS Audited)`;
+
+            generatedAUPText = `# TARA INFOTECH LTD — EMPLOYEE ARTIFICIAL INTELLIGENCE ACCEPTABLE USE POLICY (AUP)
+Version: 2.0 (Statutory Compliance Update)
+Applies to: All Employees, Contractors, Advisors, and Remote Practitioners
+
+--------------------------------------------------------------------------------
+
+1. PURPOSE & MANDATE
+This policy governs workplace usage of Generative AI tools (ChatGPT, Claude, Microsoft Copilot, Cursor). Non-compliance exposes the company to statutory penalties up to £17.5M under the UK Data Protection Act 2018 and ₹250 Cr under the India DPDP Act 2023.
+
+2. THE 3 GOLDEN RULES
+[RULE 1] NO SPECIAL CATEGORY DATA: Never paste customer consultation notes, spiritual queries, or medical details into public consumer AI.
+[RULE 2] NO SECRETS OR PASSWORDS: Never paste API keys, AWS credentials, JWT tokens, or proprietary source code.
+[RULE 3] VERIFY ACCURACY: Employees remain 100% accountable for work delivered to clients; hallucinated outputs must be caught prior to dispatch.
+
+3. SANCTIONED VS. PROHIBITED TOOLS
+- APPROVED: Company Azure OpenAI Enterprise, Microsoft 365 Copilot (Enterprise Tenant), Cursor with Telemetry Disabled.
+- PROHIBITED: Personal/Free ChatGPT accounts, Google Gemini consumer tier, public WhatsApp AI bots.
+
+4. EMPLOYEE UNDERTAKING
+I confirm that I have read, understood, and agree to abide by Tara Infotech Ltd's Employee AI Acceptable Use Policy.
+
+Employee Signature: ___________________________
+Date: _______________________________________`;
+
+            switchAIGovDocSubtab(currentAIGovDoc);
+            container.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function switchAIGovDocSubtab(type) {
+            currentAIGovDoc = type;
+            document.getElementById('aigov-subtab-dpia').classList.toggle('active', type === 'dpia');
+            document.getElementById('aigov-subtab-aup').classList.toggle('active', type === 'aup');
+            document.getElementById('aigov-doc-viewer').textContent = type === 'dpia' ? generatedDPIAText : generatedAUPText;
+        }
+
+        function copyCurrentAIGovDoc() {
+            const text = currentAIGovDoc === 'dpia' ? generatedDPIAText : generatedAUPText;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast(`Copied ${currentAIGovDoc === 'dpia' ? 'AI DPIA' : 'AI Policy'} to clipboard!`, '📋');
+            });
+        }
+
+        function downloadCurrentAIGovDoc(ext) {
+            const text = currentAIGovDoc === 'dpia' ? generatedDPIAText : generatedAUPText;
+            const filename = currentAIGovDoc === 'dpia' ? 'Statutory_AI_DPIA_Assessment.md' : 'Employee_AI_Acceptable_Use_Policy.md';
+            const blob = new Blob([text], { type: 'text/markdown;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast(`Downloaded ${filename}!`, '📥');
+        }
+
+        // ==============================================================
+        // PHASE 5: VISUAL DATA-FLOW & CROSS-BORDER MAP CONTROLLER
+        // ==============================================================
+        let currentTopoPreset = 'tara-consultation';
+        let currentTopoFilter = 'ALL';
+        let currentTopology = null;
+
+        const defaultTopologies = {
+            'tara-consultation': {
+                name: "Tara Spiritual Consultation App",
+                company: "Tara Infotech Ltd",
+                nodes: [
+                    { id: "uk_users", label: "UK Clients & Users", sub: "Mobile & Web App", x: 80, y: 140, flag: "🇬🇧", color: "#00CEFF", icon: "👤", cat: "Data Subject" },
+                    { id: "gateway", label: "FastAPI Gateway", sub: "AWS London (eu-west-2)", x: 310, y: 140, flag: "🇬🇧", color: "#6C5CE7", icon: "⚡", cat: "API Controller" },
+                    { id: "db", label: "PostgreSQL Database", sub: "AES-256 Encrypted", x: 550, y: 70, flag: "🇬🇧", color: "#51CF66", icon: "🗄️", cat: "Primary DB" },
+                    { id: "stripe", label: "Stripe UK Gateway", sub: "Wallet Top-Ups", x: 310, y: 310, flag: "🇬🇧", color: "#51CF66", icon: "💳", cat: "Payment Subprocessor" },
+                    { id: "openai", label: "OpenAI GPT-4 Mini", sub: "US Cloud Inference", x: 550, y: 220, flag: "🇺🇸", color: "#FFD43B", icon: "🤖", cat: "AI Subprocessor" },
+                    { id: "india_ops", label: "India Tech & Support", sub: "Noida / Bengaluru Hub", x: 790, y: 140, flag: "🇮🇳", color: "#FF6B6B", icon: "🇮🇳", cat: "Overseas Importer" }
+                ],
+                links: [
+                    { id: "l1", source: "uk_users", target: "gateway", label: "Birth Details & Consultations", data: ["Name", "DOB", "Chat Transcripts"], law: "UK GDPR Art 6(1)(b) Contract & Art 9(2)(a)", status: "COMPLIANT", cb: false, fine: "None" },
+                    { id: "l2", source: "gateway", target: "db", label: "Encrypted Storage (90d)", data: ["User Account", "Consultation Records"], law: "UK GDPR Art 5(1)(e) Storage Limit", status: "COMPLIANT", cb: false, fine: "None" },
+                    { id: "l3", source: "uk_users", target: "stripe", label: "Wallet Payments (Tokens)", data: ["Billing Postcode", "Card Token"], law: "PCI-DSS / Art 6(1)(b)", status: "COMPLIANT", cb: false, fine: "None" },
+                    { id: "l4", source: "gateway", target: "openai", label: "Transcript Summaries", data: ["Audio Transcripts", "Spiritual Queries"], law: "UK GDPR Chapter V (Art 44)", status: "WARNING", cb: true, fine: "Up to £8.7M under ICO Transfer Rules" },
+                    { id: "l5", source: "db", target: "india_ops", label: "Support & QA Access", data: ["Customer Phone Numbers", "Failed Logs"], law: "UK GDPR Section 119A DPA 2018", status: "VIOLATION", cb: true, fine: "Up to £17.5M (ICO) / ₹250Cr (DPDPA)" }
+                ]
+            },
+            'medconnect-telehealth': {
+                name: "MedConnect Telemedicine EHR",
+                company: "MedConnect Health Ltd",
+                nodes: [
+                    { id: "patients", label: "NHS Patients & Doctors", sub: "Telehealth Portal", x: 80, y: 140, flag: "🇬🇧", color: "#00CEFF", icon: "🏥", cat: "Data Subject" },
+                    { id: "gateway", label: "Express.js API", sub: "AWS London (eu-west-2)", x: 310, y: 140, flag: "🇬🇧", color: "#6C5CE7", icon: "⚡", cat: "API Controller" },
+                    { id: "ehr_db", label: "Patient EHR Database", sub: "RDS Postgres KMS", x: 550, y: 80, flag: "🇬🇧", color: "#51CF66", icon: "🗄️", cat: "Primary DB" },
+                    { id: "s3_scans", label: "AWS S3 Medical Scans", sub: "MRI & Blood Reports", x: 550, y: 240, flag: "🇬🇧", color: "#51CF66", icon: "🧬", cat: "Cloud Storage" },
+                    { id: "india_sre", label: "India DevOps & SRE", sub: "24/7 Cloud Support", x: 790, y: 140, flag: "🇮🇳", color: "#FF6B6B", icon: "🇮🇳", cat: "Overseas Importer" }
+                ],
+                links: [
+                    { id: "ml1", source: "patients", target: "gateway", label: "EHR Diagnoses & Prescriptions", data: ["NHS Number", "Medical Notes", "Prescriptions"], law: "UK GDPR Art 9(2)(h) Healthcare", status: "COMPLIANT", cb: false, fine: "None" },
+                    { id: "ml2", source: "gateway", target: "ehr_db", label: "Encrypted Diagnostic Store", data: ["Full Patient EHR"], law: "UK GDPR Art 9(2)(h) & DPA 2018", status: "COMPLIANT", cb: false, fine: "None" },
+                    { id: "ml3", source: "gateway", target: "s3_scans", label: "Medical Imaging Ingest", data: ["X-Ray Scans", "Lab Reports"], law: "UK GDPR Art 32 KMS AES-256", status: "COMPLIANT", cb: false, fine: "None" },
+                    { id: "ml4", source: "ehr_db", target: "india_sre", label: "Production Log Telemetry", data: ["CloudWatch Error Streams", "IP Addresses"], law: "UK GDPR Chapter V (Art 46)", status: "VIOLATION", cb: true, fine: "Up to £17.5M for Special Category Egress" }
+                ]
+            }
+        };
+
+        function loadTopologyPreset(presetKey) {
+            currentTopoPreset = presetKey;
+            const topo = defaultTopologies[presetKey] || defaultTopologies['tara-consultation'];
+            renderTopologyCanvas();
+            showToast(`Loaded ${topo.name} architecture`, '🗺️');
+        }
+
+        function openScannedRepoInDataFlow() {
+            currentTopoPreset = 'scanned-repo';
+            const select = document.getElementById('topo-preset-select');
+            if (select) select.value = 'scanned-repo';
+            switchPhase('dataflow');
+            renderTopologyCanvas();
+        }
+
+        function integrateScannedRepoWithDataFlow(repoUrl, companyName, serverTopo, extraction) {
+            const repoName = repoUrl.split('/').pop().replace('.git', '') || 'Scanned Repository';
+            const compName = companyName || 'Client App';
+            const domain = (extraction && extraction.use_case_profile && extraction.use_case_profile.primary_domain) || 'Software Application';
+            const framework = (extraction && extraction.use_case_profile && extraction.use_case_profile.detected_framework) || 'Web API Service';
+            const models = (extraction && extraction.models) ? extraction.models.map(m => m.model_name || m) : [];
+            const routesCount = (extraction && extraction.routes) ? extraction.routes.length : 7;
+            const modelSummary = models.length > 0 ? models.slice(0, 3).join(', ') : 'User Profiles, Transaction Data';
+
+            let topoData = null;
+            if (serverTopo && serverTopo.nodes && serverTopo.links) {
+                topoData = {
+                    id: 'scanned-repo',
+                    name: `${repoName} (${compName})`,
+                    company: compName,
+                    description: `Live extracted architecture for ${repoName} (${domain})`,
+                    nodes: serverTopo.nodes,
+                    links: serverTopo.links
+                };
+            } else {
+                topoData = {
+                    id: 'scanned-repo',
+                    name: `${repoName} (${compName})`,
+                    company: compName,
+                    description: `Live extracted architecture for ${repoName} (${domain})`,
+                    nodes: [
+                        { id: "s_users", label: `${compName} Clients`, sub: `${domain} Users`, x: 80, y: 140, flag: "🇬🇧", color: "#00CEFF", icon: "👤", cat: "Data Subject" },
+                        { id: "s_api", label: `${repoName} API Gateway`, sub: `${framework} (${routesCount} Routes)`, x: 310, y: 140, flag: "🇬🇧", color: "#6C5CE7", icon: "⚡", cat: "API Controller" },
+                        { id: "s_db", label: `${repoName} Database`, sub: `Models: ${modelSummary}`, x: 550, y: 70, flag: "🇬🇧", color: "#51CF66", icon: "🗄️", cat: "Primary DB" },
+                        { id: "s_cloud", label: "Third-Party Cloud Services", sub: "Auth, Payments & Storage", x: 550, y: 220, flag: "🇺🇸", color: "#FFD43B", icon: "☁️", cat: "Subprocessor" },
+                        { id: "s_ops", label: "Engineering & SRE Hub", sub: "Remote DevOps Access", x: 790, y: 140, flag: "🇮🇳", color: "#FF6B6B", icon: "🇮🇳", cat: "Overseas Importer" }
+                    ],
+                    links: [
+                        { id: "sl1", source: "s_users", target: "s_api", label: `${domain} Requests`, data: ["User ID", "Credentials", "Session Context"], law: "UK GDPR Art 6(1)(b) Contractual", status: "COMPLIANT", cb: false, fine: "None" },
+                        { id: "sl2", source: "s_api", target: "s_db", label: "Encrypted Storage (KMS)", data: models.length > 0 ? models.slice(0, 4) : ["User Accounts", "Model Records"], law: "UK GDPR Art 5(1)(e) Storage Limit", status: "COMPLIANT", cb: false, fine: "None" },
+                        { id: "sl3", source: "s_api", target: "s_cloud", label: "Third-Party API Dispatch", data: ["Telemetry", "Transaction Tokens"], law: "UK GDPR Article 28 DPA", status: "WARNING", cb: true, fine: "Up to £8.7M for Unvetted Transfer" },
+                        { id: "sl4", source: "s_db", target: "s_ops", label: "Remote DevOps Maintenance", data: ["Application Logs", "Error Traces"], law: "UK GDPR Section 119A DPA 2018", status: "VIOLATION", cb: true, fine: "Up to £17.5M (ICO) / ₹250Cr (DPDPA)" }
+                    ]
+                };
+            }
+
+            defaultTopologies['scanned-repo'] = topoData;
+            currentTopology = topoData;
+            currentTopoPreset = 'scanned-repo';
+
+            // Insert into Tab 5 dropdown as the FIRST option and select it!
+            const select = document.getElementById('topo-preset-select');
+            if (select) {
+                let opt = select.querySelector('option[value="scanned-repo"]');
+                if (!opt) {
+                    opt = document.createElement('option');
+                    opt.value = 'scanned-repo';
+                    select.insertBefore(opt, select.firstChild);
+                }
+                opt.textContent = `🚀 Scanned: ${repoName} (${compName})`;
+                select.value = 'scanned-repo';
+            }
+
+            // Immediately re-render canvas
+            renderTopologyCanvas();
+        }
+
+        function filterTopologyFlows(filterType, btn) {
+            currentTopoFilter = filterType;
+            document.querySelectorAll('.topo-filter-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            renderTopologyCanvas();
+        }
+
+        function renderTopologyCanvas() {
+            const svg = document.getElementById('topo-svg-map');
+            if (!svg) return;
+
+            const topo = defaultTopologies[currentTopoPreset] || defaultTopologies['tara-consultation'];
+            currentTopology = topo;
+
+            // Update stats
+            const totalNodes = topo.nodes.length;
+            const totalFlows = topo.links.length;
+            const cbFlows = topo.links.filter(l => l.cb).length;
+            const violations = topo.links.filter(l => l.status === 'VIOLATION').length;
+
+            const nEl = document.getElementById('topo-stat-nodes');
+            if (nEl) nEl.textContent = `${totalNodes} Services`;
+            const fEl = document.getElementById('topo-stat-flows');
+            if (fEl) fEl.textContent = `${totalFlows} Data Routes`;
+            const cbEl = document.getElementById('topo-stat-cb');
+            if (cbEl) cbEl.textContent = `${cbFlows} Overseas Transfers`;
+            const vEl = document.getElementById('topo-stat-violations');
+            if (vEl) vEl.textContent = `${violations} Missing IDTA`;
+
+            // Filter links
+            let filteredLinks = topo.links;
+            if (currentTopoFilter === 'CROSS_BORDER') {
+                filteredLinks = topo.links.filter(l => l.cb);
+            } else if (currentTopoFilter === 'VIOLATION') {
+                filteredLinks = topo.links.filter(l => l.status === 'VIOLATION');
+            }
+
+            const nodeMap = {};
+            topo.nodes.forEach(n => { nodeMap[n.id] = n; });
+
+            let svgHtml = `
+                <defs>
+                    <linearGradient id="grad-compliant" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#00CEFF"/>
+                        <stop offset="100%" stop-color="#51CF66"/>
+                    </linearGradient>
+                    <linearGradient id="grad-warning" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#6C5CE7"/>
+                        <stop offset="100%" stop-color="#FFD43B"/>
+                    </linearGradient>
+                    <linearGradient id="grad-violation" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#51CF66"/>
+                        <stop offset="100%" stop-color="#FF6B6B"/>
+                    </linearGradient>
+                </defs>
+            `;
+
+            // Draw Links (Curved Cables)
+            filteredLinks.forEach(link => {
+                const s = nodeMap[link.source];
+                const t = nodeMap[link.target];
+                if (!s || !t) return;
+
+                const sx = s.x + 80;
+                const sy = s.y + 40;
+                const tx = t.x + 80;
+                const ty = t.y + 40;
+                const mx = (sx + tx) / 2;
+                const my = (sy + ty) / 2 - (Math.abs(sx - tx) > 100 ? 25 : 0);
+
+                const strokeColor = link.status === 'VIOLATION' ? '#FF6B6B' : (link.status === 'WARNING' ? '#FFD43B' : '#00CEFF');
+                const strokeGrad = link.status === 'VIOLATION' ? 'url(#grad-violation)' : (link.status === 'WARNING' ? 'url(#grad-warning)' : 'url(#grad-compliant)');
+
+                svgHtml += `
+                    <g onclick="inspectTopologyLink('${link.id}')" style="cursor:pointer;">
+                        <!-- Shadow glow line -->
+                        <path d="M ${sx} ${sy} Q ${mx} ${my} ${tx} ${ty}" fill="none" stroke="${strokeColor}" stroke-width="6" opacity="0.15" />
+                        <!-- Animated dashed cable -->
+                        <path class="flow-cable" d="M ${sx} ${sy} Q ${mx} ${my} ${tx} ${ty}" fill="none" stroke="${strokeGrad}" stroke-width="2.5" />
+                        <!-- Link Label Pill -->
+                        <rect x="${mx - 55}" y="${my - 12}" width="110" height="20" rx="10" fill="#0C0C1D" stroke="${strokeColor}" stroke-width="1" opacity="0.9"/>
+                        <text x="${mx}" y="${my + 2}" font-size="9" font-family="'JetBrains Mono', monospace" fill="#E2E8F0" text-anchor="middle" font-weight="600">${link.status === 'VIOLATION' ? '⚠️ UK-INDIA IDTA' : (link.cb ? '✈️ UK-US CLOUD' : '🔒 SECURE FLOW')}</text>
+                    </g>
+                `;
+            });
+
+            // Draw Nodes
+            topo.nodes.forEach(node => {
+                const isViolationTarget = topo.links.some(l => l.target === node.id && l.status === 'VIOLATION');
+                const borderColor = isViolationTarget ? '#FF6B6B' : node.color;
+                const haloShadow = isViolationTarget ? 'rgba(255, 107, 107, 0.4)' : `${node.color}33`;
+
+                svgHtml += `
+                    <g class="topo-node" transform="translate(${node.x}, ${node.y})" onclick="inspectTopologyNode('${node.id}')">
+                        <!-- Node Background Card -->
+                        <rect width="160" height="80" rx="14" fill="#0F1026" stroke="${borderColor}" stroke-width="1.8" style="filter: drop-shadow(0 4px 16px ${haloShadow});" />
+                        <rect width="160" height="80" rx="14" fill="url(#grad-card)" opacity="0.05" />
+                        
+                        <!-- Top Accent Line -->
+                        <rect x="14" y="0" width="132" height="2" fill="${borderColor}" opacity="0.8"/>
+                        
+                        <!-- Node Icon & Flag -->
+                        <text x="16" y="30" font-size="18">${node.icon}</text>
+                        <text x="140" y="26" font-size="14" text-anchor="end">${node.flag}</text>
+                        
+                        <!-- Node Title & Subtitle -->
+                        <text x="16" y="50" font-size="11.5" font-family="'Space Grotesk', sans-serif" font-weight="700" fill="#FFFFFF">${escapeHtml(node.label)}</text>
+                        <text x="16" y="66" font-size="9.5" font-family="'Inter', sans-serif" fill="#94A3B8">${escapeHtml(node.sub)}</text>
+                    </g>
+                `;
+            });
+
+            svg.innerHTML = svgHtml;
+        }
+
+        function inspectTopologyLink(linkId) {
+            const topo = currentTopology || defaultTopologies['tara-consultation'];
+            const link = topo.links.find(l => l.id === linkId);
+            if (!link) return;
+
+            const nodeMap = {};
+            topo.nodes.forEach(n => { nodeMap[n.id] = n; });
+            const s = nodeMap[link.source];
+            const t = nodeMap[link.target];
+
+            const panel = document.getElementById('topo-inspector-panel');
+            document.getElementById('insp-title').textContent = link.label;
+            document.getElementById('insp-subtitle').textContent = `${s ? s.label : link.source} ➔ ${t ? t.label : link.target}`;
+
+            const statusClass = link.status === 'VIOLATION' ? 'badge-danger' : (link.status === 'WARNING' ? 'badge-warning' : 'pill-progress');
+
+            document.getElementById('insp-body-content').innerHTML = `
+                <div>
+                    <span class="pill-badge ${statusClass}" style="font-size: 11px; padding: 4px 10px;">
+                        ${link.status === 'VIOLATION' ? '🚨 STATUTORY VIOLATION' : (link.status === 'WARNING' ? '⚠️ OVERSEAS TRANSFER AUDIT' : '✓ LAWFUL DOMESTIC FLOW')}
+                    </span>
+                </div>
+
+                <div style="background: rgba(255,255,255,0.03); border:1px solid var(--glass-border); border-radius:10px; padding:14px;">
+                    <div style="font-size:11px; color:var(--text-muted); font-weight:700; text-transform:uppercase;">In-Flight Personal Data</div>
+                    <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:8px;">
+                        ${link.data.map(d => `<span class="aitool-tag tag-neutral">${escapeHtml(d)}</span>`).join('')}
+                    </div>
+                </div>
+
+                <div style="background: rgba(255,255,255,0.03); border:1px solid var(--glass-border); border-radius:10px; padding:14px;">
+                    <div style="font-size:11px; color:var(--text-muted); font-weight:700; text-transform:uppercase;">Statutory Lawful Basis</div>
+                    <div style="font-size:13px; font-weight:600; color:var(--text-primary); margin-top:6px;">${escapeHtml(link.law)}</div>
+                </div>
+
+                ${link.cb ? `
+                    <div style="background: var(--danger-bg); border:1px solid var(--danger-border); border-radius:10px; padding:14px;">
+                        <div style="font-size:11px; color:var(--danger); font-weight:700; text-transform:uppercase;">Cross-Border Transfer Analysis</div>
+                        <p style="font-size:12.5px; color:#FCA5A5; margin-top:6px; line-height:1.5;">
+                            ${link.status === 'VIOLATION' ? 'Transfers personal data from UK controllers to India developers without a formal UK International Data Transfer Agreement (IDTA). Direct breach of ICO Chapter V regulations.' : 'Data egresses to US cloud infrastructure. Requires UK-US Data Bridge compliance check.'}
+                        </p>
+                        <div style="font-size:12px; font-weight:700; color:var(--danger); margin-top:8px;">
+                            Statutory Exposure: ${escapeHtml(link.fine)}
+                        </div>
+                    </div>
+                ` : ''}
+
+                <div style="margin-top:auto; padding-top:10px;">
+                    <button class="btn-primary-action" style="width:100%; justify-content:center;" onclick="openIDTAModal()">
+                        <span>📄 Generate UK-India IDTA Schedule</span>
+                    </button>
+                </div>
+            `;
+
+            panel.classList.add('open');
+        }
+
+        function inspectTopologyNode(nodeId) {
+            const topo = currentTopology || defaultTopologies['tara-consultation'];
+            const node = topo.nodes.find(n => n.id === nodeId);
+            if (!node) return;
+
+            const panel = document.getElementById('topo-inspector-panel');
+            document.getElementById('insp-title').textContent = `${node.icon} ${node.label}`;
+            document.getElementById('insp-subtitle').textContent = `${node.cat} &bull; ${node.flag} ${node.jurisdiction || 'Cloud Node'}`;
+
+            const connectedLinks = topo.links.filter(l => l.source === node.id || l.target === node.id);
+
+            document.getElementById('insp-body-content').innerHTML = `
+                <div style="background: rgba(255,255,255,0.03); border:1px solid var(--glass-border); border-radius:10px; padding:14px;">
+                    <div style="font-size:11px; color:var(--text-muted); font-weight:700; text-transform:uppercase;">Hosting &amp; Location</div>
+                    <div style="font-size:13px; font-weight:600; color:var(--text-primary); margin-top:6px;">${node.flag} ${escapeHtml(node.sub)}</div>
+                </div>
+
+                <div style="background: rgba(255,255,255,0.03); border:1px solid var(--glass-border); border-radius:10px; padding:14px;">
+                    <div style="font-size:11px; color:var(--text-muted); font-weight:700; text-transform:uppercase;">Connected Data Flows (${connectedLinks.length})</div>
+                    <div style="display:flex; flex-direction:column; gap:6px; margin-top:8px;">
+                        ${connectedLinks.map(l => `
+                            <div style="font-size:12px; color:var(--text-secondary); display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px solid rgba(255,255,255,0.04);">
+                                <span>${escapeHtml(l.label)}</span>
+                                <span style="font-weight:700; color:${l.status === 'VIOLATION' ? 'var(--danger)' : 'var(--success)'};">${l.status}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <div style="margin-top:auto; padding-top:10px;">
+                    <button class="btn-primary-action" style="width:100%; justify-content:center;" onclick="openIDTAModal()">
+                        <span>📄 Generate UK-India IDTA Schedule</span>
+                    </button>
+                </div>
+            `;
+
+            panel.classList.add('open');
+        }
+
+        function closeTopologyInspector() {
+            const panel = document.getElementById('topo-inspector-panel');
+            if (panel) panel.classList.remove('open');
+        }
+
+        const sampleIDTAContract = `# STATUTORY UK INTERNATIONAL DATA TRANSFER AGREEMENT (IDTA)
+## MANDATORY ADDENDUM TO DATA PROCESSING AGREEMENT (DPA)
+Governing Authority: Information Commissioner's Office (ICO)
+Governing Statute: UK GDPR Section 119A Data Protection Act 2018
+Transfer Mechanism: Standard Data Protection Clauses (UK IDTA Standard)
+Execution Date: August 8, 2026
+
+--------------------------------------------------------------------------------
+
+PART 1: PARTIES & ROLES TABLE
+- DATA EXPORTER (Controller): Tara Infotech Ltd (England & Wales, United Kingdom)
+- DATA IMPORTER (Processor): Tara Infotech India Pvt Ltd (Republic of India - DPDPA 2023)
+- Purpose of Transfer: Overseas cloud software development, QA testing, production troubleshooting, and Tier-2 customer support.
+
+PART 2: TRANSFER DETAILS & ARTICLE 30 SPECIFICATION
+1. Categories of Data Subjects: UK customers using astrological consultation and wellness platforms.
+2. Categories of Data Transferred: User accounts (Name, Email, Telephone), Consultation records, Birth charts (DOB, Time, Place of birth), Audio/Chat transcripts.
+3. Special Category Data: Health & Spiritual Beliefs (UK GDPR Article 9) processed strictly under Article 9(2)(a) Explicit Consent.
+
+PART 3: MANDATORY TECHNICAL & ORGANISATIONAL SAFEGUARDS (TOMS)
+1. Importer personnel in India shall access UK personal data exclusively via encrypted Zero Trust Bastion hosts with MFA.
+2. Absolute prohibition on downloading customer phone numbers or consultation logs to personal smartphones in India.
+3. Importer must notify Exporter of any security incident within 24 hours to comply with the ICO 72-hour breach deadline.
+
+For Data Exporter (Tara Infotech Ltd): Lead Data Protection Officer
+For Data Importer (Tara Infotech India Pvt Ltd): Managing Director (India Operations)`;
+
+        function openIDTAModal() {
+            const modal = document.getElementById('idta-modal-overlay');
+            const viewer = document.getElementById('idta-document-viewer');
+            viewer.textContent = sampleIDTAContract;
+            modal.classList.add('open');
+        }
+
+        function closeIDTAModal() {
+            document.getElementById('idta-modal-overlay').classList.remove('open');
+        }
+
+        function copyIDTAContract() {
+            navigator.clipboard.writeText(sampleIDTAContract).then(() => {
+                showToast('Copied statutory IDTA contract to clipboard!', '📋');
+            });
+        }
+
+        function downloadIDTAContract(fmt) {
+            const blob = new Blob([sampleIDTAContract], { type: 'text/markdown;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Statutory_UK_India_IDTA_Contract.md';
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('Downloaded Statutory UK-India IDTA Schedule!', '📥');
+        }
+
+        // ==============================================================
+        // GITHUB README MERMAID EXPORT CONTROLLER
+        // ==============================================================
+        function generateMermaidForCurrentTopology() {
+            const topo = currentTopology || defaultTopologies[currentTopoPreset] || defaultTopologies['tara-consultation'];
+            let m = '```mermaid\ngraph LR\n';
+            
+            const ukNodes = topo.nodes.filter(n => n.flag === '🇬🇧');
+            const usNodes = topo.nodes.filter(n => n.flag === '🇺🇸');
+            const inNodes = topo.nodes.filter(n => n.flag === '🇮🇳');
+            
+            if (ukNodes.length > 0) {
+                m += '    subgraph UK ["🇬🇧 United Kingdom (Origin)"]\n';
+                ukNodes.forEach(n => {
+                    m += `        ${n.id}["${n.icon} ${n.label}<br/><small>${n.sub}</small>"]\n`;
+                });
+                m += '    end\n';
+            }
+            if (usNodes.length > 0) {
+                m += '    subgraph US ["🇺🇸 United States (Cloud Inference)"]\n';
+                usNodes.forEach(n => {
+                    m += `        ${n.id}["${n.icon} ${n.label}<br/><small>${n.sub}</small>"]\n`;
+                });
+                m += '    end\n';
+            }
+            if (inNodes.length > 0) {
+                m += '    subgraph India ["🇮🇳 India (Cross-Border Importer)"]\n';
+                inNodes.forEach(n => {
+                    m += `        ${n.id}["${n.icon} ${n.label}<br/><small>${n.sub}</small>"]\n`;
+                });
+                m += '    end\n';
+            }
+            
+            topo.links.forEach(l => {
+                if (l.status === 'VIOLATION') {
+                    m += `    ${l.source} ==>|🚨 ${l.label} (IDTA Required)| ${l.target}\n`;
+                } else if (l.cb) {
+                    m += `    ${l.source} -.->|⚠️ ${l.label}| ${l.target}\n`;
+                } else {
+                    m += `    ${l.source} -->|🔒 ${l.label}| ${l.target}\n`;
+                }
+            });
+
+            m += '\n    classDef violation stroke:#FF6B6B,stroke-width:3px,fill:#2D1515,color:#FFB4B4;\n';
+            m += '    classDef warning stroke:#FFD43B,stroke-width:2px,fill:#2D2510,color:#FFE066;\n';
+            m += '    classDef compliant stroke:#00CEFF,stroke-width:2px,fill:#0E1B2E,color:#C0E8FF;\n';
+            
+            topo.nodes.forEach(n => {
+                const isViol = topo.links.some(l => l.target === n.id && l.status === 'VIOLATION');
+                const isWarn = topo.links.some(l => l.target === n.id && l.cb && l.status !== 'VIOLATION');
+                if (isViol) m += `    class ${n.id} violation;\n`;
+                else if (isWarn) m += `    class ${n.id} warning;\n`;
+                else m += `    class ${n.id} compliant;\n`;
+            });
+
+            m += '```';
+            return m;
+        }
+
+        function exportGitHubMermaid() {
+            const mermaidCode = generateMermaidForCurrentTopology();
+            const fullSnippet = `### 🗺️ Data Protection & Cross-Border Lineage Architecture (UK GDPR & India DPDPA)
+
+[![UK GDPR & Data Flow Verified](https://img.shields.io/badge/UK_GDPR-Data_Flow_Verified-00CEFF?style=flat-square&logo=shield)](https://github.com/rahulnautiyal005/Tara-GDPR)
+[![DPDPA 2023 Compliant](https://img.shields.io/badge/India_DPDPA_2023-Audited-51CF66?style=flat-square)](https://github.com/rahulnautiyal005/Tara-GDPR)
+
+${mermaidCode}
+
+*Architecture lineage verified by [Tara PrivacyOS](https://github.com/rahulnautiyal005/Tara-GDPR) &bull; Governed under UK GDPR Article 30 (RoPA) & Section 119A DPA 2018 (UK IDTA).*`;
+
+            navigator.clipboard.writeText(fullSnippet).then(() => {
+                showToast('Copied GitHub Mermaid code! Paste directly into README.md', '🐙');
+            });
+        }
+    
 </script>
 </body>
 </html>
