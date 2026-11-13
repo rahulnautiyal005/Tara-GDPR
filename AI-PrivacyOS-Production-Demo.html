@@ -8,50 +8,82 @@
     <meta name="description" content="Beginner-friendly AI legal intelligence: Document Auto-Fixer, GitHub Repo Privacy Generator, and Legal AI Chatbot.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-deep: #06060F;
-            --bg-surface: #0C0C1D;
-            --bg-card: rgba(15, 15, 35, 0.65);
-            --bg-elevated: rgba(20, 20, 45, 0.7);
-            --glass: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.07);
-            --glass-hover: rgba(255, 255, 255, 0.1);
-            --text-primary: #F0F0F8;
-            --text-secondary: #9B9BC0;
-            --text-muted: #5E5E80;
-            --accent-1: #6C5CE7;
-            --accent-2: #00CEFF;
-            --accent-3: #A855F7;
-            --accent-gradient: linear-gradient(135deg, #6C5CE7, #00CEFF);
-            --accent-gradient-subtle: linear-gradient(135deg, rgba(108,92,231,0.15), rgba(0,206,255,0.1));
-            --glow-accent: rgba(108, 92, 231, 0.35);
-            --glow-cyan: rgba(0, 206, 255, 0.25);
-            --success: #51CF66;
-            --success-bg: rgba(81, 207, 102, 0.08);
-            --success-border: rgba(81, 207, 102, 0.15);
-            --warning: #FFD43B;
-            --warning-bg: rgba(255, 212, 59, 0.08);
-            --warning-border: rgba(255, 212, 59, 0.15);
-            --danger: #FF6B6B;
-            --danger-bg: rgba(255, 107, 107, 0.08);
-            --danger-border: rgba(255, 107, 107, 0.15);
-            --radius-sm: 10px;
-            --radius: 16px;
-            --radius-lg: 22px;
-            --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
-            --shadow-md: 0 8px 32px rgba(0,0,0,0.4);
-            --shadow-lg: 0 16px 64px rgba(0,0,0,0.5);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-fast: all 0.15s ease;
+            /* Clean Modern Light Enterprise Theme (Default - exactly matching screenshot) */
+            --bg: #F8FAFD;
+            --bg-warm: #F1F5F9;
+            --bg-card: #FFFFFF;
+            --bg-elevated: #FFFFFF;
+            --bg-sidebar: #FFFFFF;
+            --bg-input: #FFFFFF;
+            --border: #E8EEF5;
+            --border-hover: #CBD5E1;
+            --border-active: #4F46E5;
+            
+            --text-primary: #0F172A;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            
+            --accent: #4F46E5;
+            --accent-hover: #4338CA;
+            --accent-light: #EEF2FF;
+            --accent-glow: rgba(79, 70, 229, 0.2);
+            --accent-purple: #7C3AED;
+            --accent-gradient: linear-gradient(135deg, #4F46E5 0%, #3B82F6 100%);
+            
+            --success: #10B981;
+            --success-light: #ECFDF5;
+            --success-border: #A7F3D0;
+            
+            --warning: #F59E0B;
+            --warning-light: #FFFBEB;
+            --warning-border: #FDE68A;
+            
+            --danger: #EF4444;
+            --danger-light: #FEF2F2;
+            --danger-border: #FECACA;
+            
+            --gold: #D97706;
+            --gold-light: #FEF3C7;
+            
+            --radius-sm: 8px;
+            --radius: 12px;
+            --radius-lg: 16px;
+            --radius-pill: 9999px;
+            
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
+            --shadow-md: 0 4px 14px rgba(15, 23, 42, 0.05), 0 1px 3px rgba(15, 23, 42, 0.03);
+            --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.08), 0 4px 12px rgba(15, 23, 42, 0.04);
+            --transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Dark Theme Support via data-theme="dark" */
+        [data-theme="dark"] {
+            --bg: #07090E;
+            --bg-warm: #0B0F19;
+            --bg-card: rgba(13, 17, 28, 0.85);
+            --bg-elevated: #0F1422;
+            --bg-sidebar: #090D16;
+            --bg-input: #080B12;
+            --border: rgba(30, 41, 69, 0.7);
+            --border-hover: rgba(59, 130, 246, 0.45);
+            --border-active: #3B82F6;
+            --text-primary: #F8FAFC;
+            --text-secondary: #94A3B8;
+            --text-muted: #64748B;
+            --accent-light: rgba(59, 130, 246, 0.15);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.4);
+            --shadow-md: 0 8px 24px -4px rgba(0,0,0,0.5);
+            --shadow-lg: 0 20px 48px -8px rgba(0,0,0,0.7);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-deep);
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
             color: var(--text-primary);
             font-size: 14px;
             line-height: 1.6;
@@ -212,10 +244,10 @@
 
         /* ─── TOPBAR NAVIGATION ─── */
         .topbar {
-            background: rgba(6, 6, 15, 0.75);
-            backdrop-filter: blur(24px) saturate(1.3);
-            -webkit-backdrop-filter: blur(24px) saturate(1.3);
-            border-bottom: 1px solid var(--glass-border);
+            background: rgba(7, 9, 14, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
             height: 72px;
             position: sticky;
             top: 0;
@@ -223,7 +255,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 28px;
+            padding: 0 32px;
         }
 
         .brand-cluster {
@@ -243,28 +275,16 @@
             align-items: center;
             justify-content: center;
             color: white;
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 22px;
-            font-weight: 700;
-            box-shadow: 0 4px 20px var(--glow-accent);
-            position: relative;
-        }
-
-        .brand-logo::after {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            border-radius: 14px;
-            background: var(--accent-gradient);
-            z-index: -1;
-            opacity: 0.3;
-            filter: blur(8px);
+            font-size: 20px;
+            font-weight: 800;
+            box-shadow: 0 4px 16px rgba(79, 70, 229, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
         .brand-text h1 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 19px;
-            line-height: 1.2;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 20px;
+            line-height: 1.15;
             color: var(--text-primary);
             letter-spacing: -0.3px;
             font-weight: 700;
@@ -280,10 +300,10 @@
         .phase-tabs {
             display: flex;
             align-items: center;
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(11, 15, 25, 0.75);
             padding: 4px;
             border-radius: 14px;
-            border: 1px solid var(--glass-border);
+            border: 1px solid var(--border);
             gap: 4px;
         }
 
@@ -311,9 +331,9 @@
         }
 
         .phase-tab-btn.active {
-            background: var(--accent-gradient-subtle);
-            color: var(--accent-2);
-            box-shadow: inset 0 0 0 1px rgba(0, 206, 255, 0.15);
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.9) 0%, rgba(59, 130, 246, 0.9) 100%);
+            color: #FFFFFF;
+            box-shadow: 0 4px 14px rgba(59, 130, 246, 0.35);
         }
 
         .pill-badge {
@@ -415,8 +435,8 @@
         }
 
         .phase-header h2 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 34px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 32px;
             color: var(--text-primary);
             line-height: 1.2;
             letter-spacing: -0.5px;
@@ -629,7 +649,7 @@
             border-radius: var(--radius);
             padding: 40px 20px;
             text-align: center;
-            background: rgba(108, 92, 231, 0.03);
+            background: var(--bg-warm);
             cursor: pointer;
             transition: var(--transition);
             display: flex;
@@ -673,7 +693,7 @@
             font-family: 'JetBrains Mono', monospace;
             font-size: 13px;
             color: var(--text-primary);
-            background: rgba(255, 255, 255, 0.02);
+            background: var(--bg-card);
             outline: none;
             resize: vertical;
             transition: var(--transition);
@@ -875,10 +895,10 @@
         }
 
         .issue-item {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 14px;
-            padding: 18px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
             border-left: 4px solid var(--danger);
             transition: var(--transition);
         }
@@ -949,10 +969,10 @@
         }
 
         .doc-fixed-viewer {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--glass-border);
-            border-radius: 14px;
-            padding: 26px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
             max-height: 650px;
             overflow-y: auto;
             font-size: 13.5px;
@@ -1140,7 +1160,7 @@
             font-family: inherit;
             font-size: 13.5px;
             color: var(--text-primary);
-            background: rgba(255, 255, 255, 0.03);
+            background: var(--bg-card);
             outline: none;
             transition: var(--transition);
         }
@@ -1154,18 +1174,17 @@
         .repo-results-card {
             margin-top: 24px;
             background: var(--bg-card);
-            backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
             overflow: hidden;
             animation: fadeIn 0.5s ease-out;
         }
 
         .repo-results-header {
-            padding: 22px 26px;
-            background: rgba(255, 255, 255, 0.02);
-            border-bottom: 1px solid var(--glass-border);
+            padding: 20px 24px;
+            background: var(--bg-warm);
+            border-bottom: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -1187,9 +1206,9 @@
 
         .repo-subtabs {
             display: flex;
-            background: rgba(255, 255, 255, 0.02);
-            padding: 6px 18px;
-            border-bottom: 1px solid var(--glass-border);
+            background: rgba(30, 41, 69, 0.6);
+            padding: 4px 16px;
+            border-bottom: 1px solid var(--border);
             gap: 6px;
             overflow-x: auto;
         }
@@ -1213,9 +1232,9 @@
         }
 
         .repo-subtab-btn.active {
-            background: var(--accent-gradient-subtle);
-            color: var(--accent-2);
-            box-shadow: inset 0 0 0 1px rgba(0, 206, 255, 0.12);
+            background: var(--bg-card);
+            color: var(--accent);
+            box-shadow: var(--shadow-sm);
         }
 
         .repo-tab-content {
@@ -1225,45 +1244,33 @@
 
         /* Policy Document Renderer */
         .policy-rendered-view {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            padding: 34px 38px;
+            background: var(--bg-warm);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 32px 36px;
             font-size: 14px;
             line-height: 1.75;
-            color: var(--text-secondary);
+            color: var(--text-primary);
             max-height: 600px;
             overflow-y: auto;
         }
 
-        .policy-rendered-view h1 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 22px;
-            color: var(--text-primary);
-            margin-bottom: 18px;
-            border-bottom: 2px solid var(--accent-1);
-            padding-bottom: 10px;
-        }
-        .policy-rendered-view h2 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 17px;
-            color: var(--text-primary);
-            margin: 26px 0 12px;
-        }
-        .policy-rendered-view h3 { font-size: 15px; color: var(--text-secondary); margin: 20px 0 8px; }
+        .policy-rendered-view h1 { font-size: 22px; color: var(--text-primary); margin-bottom: 16px; border-bottom: 2px solid var(--accent); padding-bottom: 8px; }
+        .policy-rendered-view h2 { font-size: 17px; color: var(--text-primary); margin: 24px 0 10px; }
+        .policy-rendered-view h3 { font-size: 15px; color: var(--text-secondary); margin: 18px 0 8px; }
         .policy-rendered-view p { margin-bottom: 14px; }
         .policy-rendered-view ul { margin: 0 0 16px 24px; }
         .policy-rendered-view table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
-        .policy-rendered-view th, .policy-rendered-view td { padding: 10px 14px; border: 1px solid var(--glass-border); text-align: left; }
-        .policy-rendered-view th { background: rgba(108, 92, 231, 0.08); color: var(--text-primary); font-weight: 700; }
+        .policy-rendered-view th, .policy-rendered-view td { padding: 9px 12px; border: 1px solid #CBD5E1; text-align: left; }
+        .policy-rendered-view th { background: rgba(30, 41, 69, 0.5); color: var(--text-primary); font-weight: 600; }
 
         /* Plain English Cards */
         .plain-card {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-left: 4px solid var(--accent-1);
-            border-radius: 12px;
-            padding: 18px 20px;
+            background: var(--bg-warm);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--accent);
+            border-radius: 10px;
+            padding: 16px 18px;
             margin-bottom: 14px;
             transition: var(--transition);
         }
@@ -1297,9 +1304,8 @@
             max-width: 940px;
             margin: 0 auto;
             background: var(--bg-card);
-            backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
             box-shadow: var(--shadow-md);
             overflow: hidden;
             display: flex;
@@ -1324,7 +1330,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(255, 255, 255, 0.015);
+            background: var(--bg-card);
         }
 
         .chat-agent-info {
@@ -1359,9 +1365,9 @@
         }
 
         .chat-chips-scroll {
-            padding: 14px 22px;
-            background: rgba(255, 255, 255, 0.01);
-            border-bottom: 1px solid var(--glass-border);
+            padding: 12px 20px;
+            background: var(--bg-warm);
+            border-bottom: 1px solid var(--border);
             display: flex;
             gap: 8px;
             overflow-x: auto;
@@ -1369,9 +1375,9 @@
         }
 
         .chat-chip {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            padding: 7px 14px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 6px 12px;
             border-radius: 100px;
             font-size: 12px;
             font-weight: 500;
@@ -1395,8 +1401,8 @@
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            background: rgba(6, 6, 15, 0.3);
+            gap: 18px;
+            background: var(--bg-warm);
         }
 
         .chat-bubble {
@@ -1439,7 +1445,7 @@
         }
 
         .chat-bubble.user .bubble-avatar {
-            background: rgba(255, 255, 255, 0.08);
+            background: #E2E8F0;
             color: var(--text-secondary);
         }
 
@@ -1451,10 +1457,10 @@
         }
 
         .chat-bubble.bot .bubble-content {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            color: var(--text-secondary);
-            box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
         }
 
         .chat-bubble.user .bubble-content {
@@ -1477,9 +1483,9 @@
         }
 
         .chat-input-bar {
-            padding: 18px 22px;
-            background: rgba(255, 255, 255, 0.02);
-            border-top: 1px solid var(--glass-border);
+            padding: 16px 20px;
+            background: var(--bg-card);
+            border-top: 1px solid var(--border);
             display: flex;
             gap: 12px;
             align-items: center;
@@ -1538,10 +1544,9 @@
            ============================================================== */
         .sandbox-hero {
             background: var(--bg-card);
-            backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-lg);
-            padding: 48px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 40px;
             text-align: center;
             box-shadow: var(--shadow-md);
             margin-bottom: 32px;
@@ -1592,11 +1597,10 @@
         }
 
         .timeline-step {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            padding: 16px;
-            transition: var(--transition);
+            background: var(--bg-warm);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px;
         }
 
         .timeline-step.done {
@@ -1638,8 +1642,7 @@
 
         .sandbox-feature-card {
             background: var(--bg-card);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
+            border: 1px solid var(--border);
             border-radius: var(--radius);
             padding: 28px;
             box-shadow: var(--shadow-sm);
@@ -1676,9 +1679,8 @@
             position: fixed;
             bottom: 24px;
             right: 24px;
-            background: rgba(15, 15, 35, 0.92);
-            backdrop-filter: blur(24px);
-            border: 1px solid var(--glass-border);
+            background: var(--bg-card);
+            border: 1px solid var(--border);
             box-shadow: var(--shadow-lg);
             padding: 14px 24px;
             border-radius: 14px;
@@ -1724,14 +1726,1113 @@
         .loading .btn-text { display: none; }
 
         @keyframes spin { to { transform: rotate(360deg); } }
+    
+        /* Ambient Cyber Grid & Glow Backdrop */
+        .ambient-grid {
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(59, 130, 246, 0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, 0.035) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
 
-        /* ─── Selection Highlight ─── */
-        ::selection {
-            background: rgba(108, 92, 231, 0.3);
+        .ambient-glow-left {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            left: -150px;
+            top: 15%;
+            background: radial-gradient(circle, rgba(79, 70, 229, 0.16) 0%, rgba(59, 130, 246, 0.04) 50%, transparent 70%);
+            filter: blur(90px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .ambient-glow-right {
+            position: fixed;
+            width: 650px;
+            height: 650px;
+            right: -180px;
+            bottom: 10%;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.14) 0%, rgba(37, 99, 235, 0.04) 50%, transparent 70%);
+            filter: blur(90px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .app-container {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Modernized input boxes */
+        textarea, input[type="text"], input[type="search"], select {
+            background: var(--bg-input) !important;
+            color: var(--text-primary) !important;
+            border: 1px solid var(--border) !important;
+        }
+
+        textarea:focus, input[type="text"]:focus, input[type="search"]:focus, select:focus {
+            border-color: var(--border-active) !important;
+            box-shadow: 0 0 0 3px var(--accent-glow) !important;
+        }
+
+        /* Modernized tables */
+        table {
+            background: var(--bg-card) !important;
+            color: var(--text-primary) !important;
+        }
+        th {
+            background: rgba(30, 41, 69, 0.6) !important;
+            color: var(--text-primary) !important;
+            border-bottom: 1px solid var(--border) !important;
+        }
+        td {
+            border-bottom: 1px solid var(--border) !important;
+        }
+
+        /* Topbar brand styling matching screenshot */
+        .brand-text h1 {
+            font-size: 18px !important;
+            font-weight: 800 !important;
+            letter-spacing: -0.3px !important;
+            color: #FFFFFF !important;
+        }
+        .brand-text p {
+            font-size: 10.5px !important;
+            font-weight: 700 !important;
+            letter-spacing: 1.5px !important;
+            text-transform: uppercase !important;
+            color: var(--text-muted) !important;
+        }
+
+    
+        /* ═════════════════════════════════════════════════════════════════════
+           ENTERPRISE SUITE LAYOUT (SIDEBAR + MAIN CONTENT + MODERN TOPBAR)
+           ═════════════════════════════════════════════════════════════════════ */
+        body {
+            background: var(--bg);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Enterprise Sidebar Navigation */
+        .sidebar {
+            width: 250px;
+            background: var(--bg-sidebar);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            padding: 20px 14px;
+            overflow-y: auto;
+        }
+
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 4px 8px 20px 8px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 18px;
+        }
+
+        .sidebar-brand-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .sidebar-brand-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: var(--accent-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFFFFF;
+            font-weight: 800;
+            font-size: 17px;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+        }
+
+        .sidebar-brand-text h2 {
+            font-size: 15px;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+            color: var(--text-primary);
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .sidebar-brand-text p {
+            font-size: 9.5px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin: 2px 0 0 0;
+        }
+
+        .sidebar-collapse-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar-collapse-btn:hover {
+            color: var(--text-primary);
+            background: var(--bg-warm);
+        }
+
+        /* Nav Section Groupings */
+        .nav-group-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            padding: 10px 10px 6px;
+            margin-top: 6px;
+        }
+
+        .nav-list {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .nav-item-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 9px 12px;
+            border-radius: 10px;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-family: inherit;
+            font-size: 13.5px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: left;
+            width: 100%;
+        }
+
+        .nav-item-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-item-btn svg {
+            width: 16px;
+            height: 16px;
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+
+        .nav-item-btn:hover {
+            background: #F1F5F9;
             color: var(--text-primary);
         }
 
-        /* ==============================================================
+        .nav-item-btn:hover svg {
+            color: var(--accent);
+        }
+
+        .nav-item-btn.active {
+            background: #EEF2FF;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .nav-item-btn.active svg {
+            color: var(--accent);
+        }
+
+        .nav-badge-ai {
+            background: #EDE9FE;
+            color: #7C3AED;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: 6px;
+        }
+
+        .nav-badge-lock {
+            color: var(--text-muted);
+            font-size: 11px;
+        }
+
+        /* Sidebar Footer */
+        .sidebar-footer {
+            border-top: 1px solid var(--border);
+            padding-top: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .sidebar-theme-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #F1F5F9;
+            border-radius: var(--radius-pill);
+            padding: 3px;
+            gap: 3px;
+        }
+
+        .sidebar-theme-btn {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 5px 0;
+            font-size: 11.5px;
+            font-weight: 600;
+            color: var(--text-muted);
+            border-radius: var(--radius-pill);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transition: var(--transition);
+        }
+
+        .sidebar-theme-btn.active {
+            background: #FFFFFF;
+            color: #0F172A;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        }
+
+        .tenant-card {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 10px;
+            border-radius: 10px;
+            background: #F8FAFD;
+            border: 1px solid var(--border);
+        }
+
+        .tenant-icon {
+            width: 26px;
+            height: 26px;
+            border-radius: 7px;
+            background: #EEF2FF;
+            color: #4F46E5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tenant-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .tenant-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .tenant-badge {
+            font-size: 10px;
+            color: #D97706;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            font-weight: 600;
+        }
+
+        /* ─── Main Content Canvas Area ─── */
+        .content-canvas {
+            margin-left: 250px;
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background: var(--bg);
+        }
+
+        /* Topbar Header matching screenshot */
+        .dashboard-topbar {
+            height: 64px;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            position: sticky;
+            top: 0;
+            z-index: 90;
+        }
+
+        .topbar-page-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .topbar-center-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .posture-guard-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #ECFDF5;
+            border: 1px solid #A7F3D0;
+            color: #059669;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 5px 12px;
+            border-radius: var(--radius-pill);
+        }
+
+        .posture-guard-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #10B981;
+        }
+
+        .search-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #F1F5F9;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-pill);
+            padding: 6px 14px;
+            color: var(--text-muted);
+            font-size: 12.5px;
+            min-width: 170px;
+        }
+
+        .search-pill input {
+            background: transparent !important;
+            border: none !important;
+            color: var(--text-primary) !important;
+            font-family: inherit;
+            font-size: 12.5px;
+            outline: none !important;
+            box-shadow: none !important;
+            width: 100%;
+        }
+
+        .btn-new-scan-top {
+            background: #4F46E5;
+            color: #FFFFFF;
+            border: none;
+            border-radius: var(--radius-pill);
+            padding: 7px 16px;
+            font-size: 12.5px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 8px rgba(79, 70, 229, 0.25);
+            transition: var(--transition);
+        }
+
+        .btn-new-scan-top:hover {
+            background: #4338CA;
+        }
+
+        .notification-bell-btn {
+            position: relative;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 6px;
+            border-radius: 50%;
+        }
+
+        .bell-badge-count {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            background: #EF4444;
+            color: white;
+            font-size: 9.5px;
+            font-weight: 700;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .user-profile-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: 6px;
+            cursor: pointer;
+        }
+
+        .user-avatar-circle {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #4F46E5;
+            color: white;
+            font-weight: 700;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .user-profile-meta {
+            line-height: 1.25;
+        }
+
+        .user-profile-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .user-profile-role {
+            font-size: 10.5px;
+            color: var(--text-muted);
+        }
+
+        .floating-chat-fab {
+            position: fixed;
+            bottom: 24px;
+            right: 28px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%);
+            color: #FFFFFF;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(124, 58, 237, 0.4);
+            cursor: pointer;
+            z-index: 99;
+            transition: var(--transition);
+        }
+
+        .floating-chat-fab:hover {
+            transform: scale(1.08);
+            box-shadow: 0 12px 28px rgba(124, 58, 237, 0.55);
+        }
+
+        /* ─── App Container Adjustment ─── */
+        .app-container {
+            max-width: 1340px !important;
+            margin: 0 auto !important;
+            padding: 24px 32px 80px 32px !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        /* ═════════════════════════════════════════════════════════════════════
+           OVERVIEW DASHBOARD SPECIFIC STYLES
+           ═════════════════════════════════════════════════════════════════════ */
+        .overview-hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .overview-greeting {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.4px;
+            color: var(--text-primary);
+            margin: 0 0 4px 0;
+        }
+
+        .overview-subtext {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .time-badge {
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        .overview-hero-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-assistant-ghost {
+            background: #FFFFFF;
+            border: 1px solid var(--border);
+            color: #4F46E5;
+            padding: 9px 16px;
+            border-radius: var(--radius-pill);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-assistant-ghost:hover {
+            background: #EEF2FF;
+            border-color: #C7D2FE;
+        }
+
+        .btn-primary-gradient {
+            background: #4F46E5;
+            color: #FFFFFF;
+            border: none;
+            padding: 9px 18px;
+            border-radius: var(--radius-pill);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+        }
+
+        .btn-primary-gradient:hover {
+            background: #4338CA;
+            transform: translateY(-1px);
+        }
+
+        /* Critical Action Alert Callout */
+        .alert-callout-banner {
+            background: #F5F3FF;
+            border: 1px solid #DDD6FE;
+            border-radius: var(--radius-lg);
+            padding: 16px 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 22px;
+            gap: 16px;
+        }
+
+        .alert-callout-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .alert-icon-sparkle {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: #7C3AED;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+        }
+
+        .alert-callout-title-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 3px;
+            font-size: 14px;
+            color: #1E1B4B;
+        }
+
+        .badge-action-pill {
+            background: #FEE2E2;
+            color: #DC2626;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: var(--radius-pill);
+            letter-spacing: 0.5px;
+        }
+
+        .alert-callout-desc {
+            font-size: 12.5px;
+            color: #6B7280;
+            margin: 0;
+        }
+
+        .btn-review-fixes {
+            background: #4F46E5;
+            color: #FFFFFF;
+            border: none;
+            padding: 8px 18px;
+            border-radius: var(--radius-pill);
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: var(--transition);
+        }
+
+        .btn-review-fixes:hover {
+            background: #4338CA;
+        }
+
+        /* ─── Metrics Grid (Gauge + 4 Quad KPI Cards) ─── */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: 1.15fr 1.85fr;
+            gap: 20px;
+            margin-bottom: 22px;
+        }
+
+        @media (max-width: 1024px) {
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .metric-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .metric-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .metric-card-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .badge-audited {
+            background: #ECFDF5;
+            color: #059669;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: var(--radius-pill);
+            border: 1px solid #A7F3D0;
+        }
+
+        .gauge-display-row {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 16px;
+        }
+
+        .radial-gauge-wrap {
+            position: relative;
+            width: 130px;
+            height: 130px;
+            flex-shrink: 0;
+        }
+
+        .radial-gauge-svg {
+            transform: rotate(-90deg);
+        }
+
+        .gauge-inner-label {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+        }
+
+        .gauge-score-value {
+            font-size: 32px;
+            font-weight: 800;
+            color: #0F172A;
+        }
+
+        .gauge-score-denom {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .posture-breakdown-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .breakdown-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11.5px;
+            margin-bottom: 3px;
+            color: var(--text-secondary);
+        }
+
+        .breakdown-labels strong {
+            color: var(--text-primary);
+        }
+
+        .breakdown-bar-track {
+            height: 6px;
+            background: #F1F5F9;
+            border-radius: 99px;
+            overflow: hidden;
+        }
+
+        .breakdown-bar-fill {
+            height: 100%;
+            border-radius: 99px;
+        }
+
+        .gauge-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid var(--border);
+            padding-top: 12px;
+            font-size: 12px;
+        }
+
+        .posture-level-tag {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-level-orange {
+            background: #FEF3C7;
+            color: #D97706;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+        }
+
+        .score-delta-green {
+            color: #10B981;
+            font-weight: 700;
+        }
+
+        .link-framework-details {
+            color: #4F46E5;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .link-framework-details:hover {
+            text-decoration: underline;
+        }
+
+        /* 4 KPI Mini Cards Grid */
+        .kpi-quad-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+
+        .kpi-mini-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 16px 18px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .kpi-card-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .kpi-icon-square {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .kpi-icon-square.red-tint { background: #FEF2F2; color: #EF4444; }
+        .kpi-icon-square.blue-tint { background: #EEF2FF; color: #3B82F6; }
+        .kpi-icon-square.amber-tint { background: #FFFBEB; color: #F59E0B; }
+        .kpi-icon-square.green-tint { background: #ECFDF5; color: #10B981; }
+
+        .kpi-badge-pill {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: var(--radius-pill);
+        }
+
+        .kpi-badge-pill.red-pill { background: #FEE2E2; color: #DC2626; }
+        .kpi-badge-pill.green-pill { background: #ECFDF5; color: #059669; }
+
+        .kpi-big-number {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-primary);
+            line-height: 1.1;
+            margin-bottom: 4px;
+        }
+
+        .kpi-subtext {
+            font-size: 11.5px;
+            color: var(--text-muted);
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* ─── Trajectory & Needs Attention Grid ─── */
+        .trajectory-attention-grid {
+            display: grid;
+            grid-template-columns: 1.8fr 1.2fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 1024px) {
+            .trajectory-attention-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .trajectory-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .trajectory-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .trajectory-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0 0 2px 0;
+        }
+
+        .trajectory-subtitle {
+            font-size: 11.5px;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .time-filter-toggle {
+            display: flex;
+            align-items: center;
+            background: #F1F5F9;
+            border-radius: var(--radius-pill);
+            padding: 2px;
+            gap: 2px;
+        }
+
+        .time-filter-btn {
+            border: none;
+            background: transparent;
+            font-size: 11.5px;
+            font-weight: 600;
+            color: var(--text-muted);
+            padding: 4px 10px;
+            border-radius: var(--radius-pill);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .time-filter-btn.active {
+            background: #FFFFFF;
+            color: #0F172A;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        }
+
+        .trajectory-chart-wrap {
+            margin-top: 10px;
+        }
+
+        /* Attention Card */
+        .attention-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .attention-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .attention-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .badge-critical-count {
+            background: #FEE2E2;
+            color: #DC2626;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: var(--radius-pill);
+        }
+
+        .attention-items-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .attention-item {
+            background: #FAFAFD;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px 14px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .attention-item:hover {
+            border-color: #CBD5E1;
+            background: #F1F5F9;
+            transform: translateY(-1px);
+        }
+
+        .attention-item-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+
+        .badge-tag-danger {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: #DC2626;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .attention-statute {
+            font-size: 10.5px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .attention-item-body strong {
+            display: block;
+            font-size: 12.5px;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .attention-code-ref {
+            font-family: var(--font-mono, monospace);
+            font-size: 11px;
+            color: var(--text-muted);
+            background: #F1F5F9;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+    
+        .idta-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(4px);
+            z-index: 99999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .idta-modal-overlay.active {
+            display: flex !important;
+        }
+        .idta-modal {
+            background: var(--bg-card, #ffffff);
+            max-width: 900px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+            border: 1px solid var(--border);
+            padding: 24px;
+            position: relative;
+        }
+
+
+/* ==============================================================
            PHASE 4: AI & LLM GOVERNANCE COPILOT STYLES
            ============================================================== */
         .aigov-grid {
@@ -2080,64 +3181,462 @@
             flex-direction: column;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
         }
-    </style>
+    
+</style>
 </head>
 
 <body>
+    <!-- Cyber Theme Ambient Backdrop -->
+    <div class="ambient-grid"></div>
+    <div class="ambient-glow-left"></div>
+    <div class="ambient-glow-right"></div>
+
 
     <!-- ─── TOPBAR ─── -->
-    <header class="topbar">
-        <a href="/dashboard" class="brand-cluster">
-            <div class="brand-logo">T</div>
-            <div class="brand-text">
-                <h1>Tara PrivacyOS</h1>
-                <p>Legal Intelligence for Everyone</p>
+    
+    <!-- ═════════════════════════════════════════════════════════════════════
+         ENTERPRISE SUITE SIDEBAR (AI ACCELERATOR)
+         ═════════════════════════════════════════════════════════════════════ -->
+    <aside class="sidebar">
+        <div>
+            <!-- Sidebar Brand -->
+            <div class="sidebar-brand">
+                <a href="/dashboard" class="sidebar-brand-left">
+                    <div class="sidebar-brand-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                    </div>
+                    <div class="sidebar-brand-text">
+                        <h2>AI Accelerator</h2>
+                        <p>Enterprise Suite</p>
+                    </div>
+                </a>
+                <button class="sidebar-collapse-btn" title="Collapse sidebar">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
             </div>
-        </a>
 
-        <!-- The Navigation Phases -->
-        <nav class="phase-tabs" aria-label="Dashboard Phases">
-            <button class="phase-tab-btn active" id="tab-btn-docfixer" onclick="switchPhase('docfixer')">
-                <span>📑</span>
-                <span class="tab-title">1. Document Auto-Fixer</span>
-            </button>
-            <button class="phase-tab-btn" id="tab-btn-github" onclick="switchPhase('github')">
-                <span>🐙</span>
-                <span class="tab-title">2. From GitHub Repo</span>
-            </button>
-            <button class="phase-tab-btn" id="tab-btn-chatbot" onclick="switchPhase('chatbot')">
-                <span>💬</span>
-                <span class="tab-title">3. Legal AI Chatbot</span>
-            </button>
-            <button class="phase-tab-btn" id="tab-btn-aigovernance" onclick="switchPhase('aigovernance')">
-                <span>🤖</span>
-                <span class="tab-title">4. AI Governance</span>
-                <span class="pill-badge" style="background: rgba(168, 85, 247, 0.2); color: #C084FC; border: 1px solid rgba(168, 85, 247, 0.4); font-size: 9px; padding: 1px 6px;">NEW</span>
-            </button>
-            <button class="phase-tab-btn" id="tab-btn-dataflow" onclick="switchPhase('dataflow')">
-                <span>🗺️</span>
-                <span class="tab-title">5. Data-Flow Map</span>
-                <span class="pill-badge" style="background: rgba(0, 206, 255, 0.2); color: #00CEFF; border: 1px solid rgba(0, 206, 255, 0.4); font-size: 9px; padding: 1px 6px;">LIVE</span>
-            </button>
-        </nav>
+            <!-- Platform Section -->
+            <div class="nav-group-label">PLATFORM</div>
+            <div class="nav-list">
+                <button class="nav-item-btn active" id="nav-item-overview" onclick="switchPhase('overview')">
+                    <div class="nav-item-left">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                        <span>Overview</span>
+                    </div>
+                </button>
 
-        <div class="topbar-right">
-            <a href="LawAi-Guardrails-Charter.html" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(37, 99, 235, 0.22); border: 1px solid rgba(37, 99, 235, 0.5); color: #93C5FD; font-size: 11.5px; font-weight: 600; padding: 6px 12px; border-radius: 6px; text-decoration: none; margin-right: 12px; transition: all 0.2s;">
-                <span>⚖️</span> AI Guardrails Charter
-            </a>
-            <a href="/rag-guide" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(131, 56, 236, 0.22); border: 1px solid rgba(131, 56, 236, 0.5); color: #D8B4FE; font-size: 11.5px; font-weight: 600; padding: 6px 12px; border-radius: 6px; text-decoration: none; margin-right: 12px; transition: all 0.2s;">
-                <span>📚</span> RAG Client Guide
-            </a>
-            <div class="user-status-pill">
-                <span class="live-dot"></span>
-                <span id="current-user-name">Rahul (Admin)</span>
+                <button class="nav-item-btn" id="nav-item-github" onclick="switchPhase('github')">
+                    <div class="nav-item-left">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                        <span>Code Scanner</span>
+                    </div>
+                </button>
+
+                <button class="nav-item-btn" id="nav-item-docfixer" onclick="switchPhase('docfixer')">
+                    <div class="nav-item-left">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                        <span>Documents</span>
+                    </div>
+                </button>
+
+                <button class="nav-item-btn" id="nav-item-reports" onclick="switchPhase('reports')">
+                    <div class="nav-item-left">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        <span>Reports</span>
+                    </div>
+                </button>
+
+                <button class="nav-item-btn" id="nav-item-auditlogs" onclick="switchPhase('auditlogs')">
+                    <div class="nav-item-left">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                        <span>Audit Logs</span>
+                    </div>
+                </button>
             </div>
-            <button class="btn-logout" onclick="handleLogout()" title="Sign out of Tara">Sign Out</button>
+
+            <!-- Intelligence & Tools Section -->
+            <div class="nav-group-label">INTELLIGENCE &amp; TOOLS</div>
+            <div class="nav-list">
+                <button class="nav-item-btn" id="nav-item-chatbot" onclick="switchPhase('chatbot')">
+                    <div class="nav-item-left">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                        <span>AI Assistant</span>
+                    </div>
+                    <span class="nav-badge-ai">✦ AI</span>
+                </button>
+                    <button class="nav-item-btn" id="nav-item-aigovernance" onclick="switchPhase('aigovernance')">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        <span>AI Governance</span>
+                        <span class="badge-ai" style="margin-left: auto;">✦ Copilot</span>
+                    </button>
+                    <button class="nav-item-btn" id="nav-item-dataflow" onclick="switchPhase('dataflow')">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                        <span>Data Flow Map</span>
+                        <span style="margin-left: auto; font-size: 10px; font-weight: 700; background: rgba(58, 134, 255, 0.15); color: #3A86FF; padding: 2px 6px; border-radius: 99px;">Live</span>
+                    </button>
+
+                <button class="nav-item-btn" onclick="showToast('Family Law AI module is locked for your plan', '🔒')">
+                    <div class="nav-item-left">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        <span>Family Law AI</span>
+                    </div>
+                    <span class="nav-badge-lock">🔒</span>
+                </button>
+
+                <button class="nav-item-btn" id="nav-item-settings" onclick="switchPhase('settings')">
+                    <div class="nav-item-left">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                        <span>Settings</span>
+                    </div>
+                </button>
+
+                <button class="nav-item-btn" id="nav-item-help" onclick="switchPhase('help')">
+                    <div class="nav-item-left">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                        <span>Help &amp; Support</span>
+                    </div>
+                </button>
+            </div>
         </div>
-    </header>
+
+        <!-- Sidebar Footer Controls -->
+        <div class="sidebar-footer">
+            <div class="sidebar-theme-toggle">
+                <button class="sidebar-theme-btn active" id="btn-theme-light" onclick="setAppTheme('light')">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line></svg>
+                    Light
+                </button>
+                <button class="sidebar-theme-btn" id="btn-theme-dark" onclick="setAppTheme('dark')">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                    Dark
+                </button>
+            </div>
+
+            <div class="tenant-card">
+                <div class="tenant-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                </div>
+                <div class="tenant-info">
+                    <div class="tenant-title">Acme Technologies</div>
+                    <div class="tenant-badge">⚡ Enterprise</div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ─── CANVAS WRAPPER (TOPBAR + MAIN SECTIONS) ─── -->
+    <div class="content-canvas">
+        <!-- New Topbar Header -->
+        <header class="dashboard-topbar">
+            <h1 class="topbar-page-title" id="topbar-section-title">Overview</h1>
+
+            <div class="topbar-center-right">
+                <span class="posture-guard-badge">Posture: Guarded</span>
+
+                <div class="search-pill">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input type="text" placeholder="Quick search... ⌘K">
+                </div>
+
+                <button class="btn-new-scan-top" onclick="switchPhase('github')">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    + New Scan
+                </button>
+
+                <div class="sidebar-theme-toggle" style="width: 130px;">
+                    <button class="sidebar-theme-btn active" id="btn-top-theme-light" onclick="setAppTheme('light')">Light</button>
+                    <button class="sidebar-theme-btn" id="btn-top-theme-dark" onclick="setAppTheme('dark')">Dark</button>
+                </div>
+
+                <button class="notification-bell-btn" title="2 Unread Notifications" onclick="showToast('2 Critical fixes ready for deployment', '🔔')">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <span class="bell-badge-count">2</span>
+                </button>
+
+                <div class="user-profile-header" onclick="handleLogout()" title="Click to Sign Out">
+                    <div class="user-avatar-circle" id="user-avatar-initial">U</div>
+                    <div class="user-profile-meta">
+                        <div class="user-profile-name" id="current-user-name">User</div>
+                        <div class="user-profile-role">Compliance Lead</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Floating Chat AI FAB (bottom-right) -->
+        <button class="floating-chat-fab" onclick="switchPhase('chatbot')" title="Open AI Assistant">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        </button>
+
 
     <!-- ─── MAIN APP CONTAINER ─── -->
     <main class="app-container">
+
+        <!-- ==============================================================
+             PHASE 0: EXECUTIVE OVERVIEW DASHBOARD (AI ACCELERATOR SUITE)
+             ============================================================== -->
+        <section id="phase-overview" class="phase-section">
+            <!-- Greeting & Quick Action Banner -->
+            <div class="overview-hero">
+                <div class="overview-hero-text">
+                    <h2 class="overview-greeting">Good evening, <span id="overview-user-name">User</span> 👋</h2>
+                    <p class="overview-subtext">Workspace posture at a glance &bull; Last AST scan: <strong class="time-badge">8m ago</strong></p>
+                </div>
+                <div class="overview-hero-actions">
+                    <button class="btn-assistant-ghost" onclick="switchPhase('chatbot')">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                        Ask Assistant
+                    </button>
+                    <button class="btn-primary-gradient" onclick="switchPhase('github')">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        Run new scan
+                    </button>
+                </div>
+            </div>
+
+            <!-- Critical Action Alert Callout -->
+            <div class="alert-callout-banner">
+                <div class="alert-callout-left">
+                    <div class="alert-icon-sparkle">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    </div>
+                    <div class="alert-callout-content">
+                        <div class="alert-callout-title-row">
+                            <strong>4 Critical vulnerabilities detected</strong>
+                            <span class="badge-action-pill">ACTION REQUIRED</span>
+                        </div>
+                        <p class="alert-callout-desc">AI automated patches are ready for review. Applying them can boost your compliance score by up to <strong>+12 pts</strong>.</p>
+                    </div>
+                </div>
+                <button class="btn-review-fixes" onclick="switchPhase('docfixer')">
+                    Review &amp; Apply Fixes &rarr;
+                </button>
+            </div>
+
+            <!-- Main Metrics Row -->
+            <div class="metrics-grid">
+                <!-- Gauge Card: Compliance Posture -->
+                <div class="metric-card gauge-card">
+                    <div class="metric-card-header">
+                        <span class="metric-card-title">Compliance Posture</span>
+                        <span class="badge-audited">Audited Today</span>
+                    </div>
+
+                    <div class="gauge-display-row">
+                        <!-- Circular Radial SVG Gauge -->
+                        <div class="radial-gauge-wrap">
+                            <svg class="radial-gauge-svg" width="130" height="130" viewBox="0 0 120 120">
+                                <circle class="gauge-bg-circle" cx="60" cy="60" r="50" fill="none" stroke="rgba(226, 232, 240, 0.7)" stroke-width="10"></circle>
+                                <circle class="gauge-fill-circle" cx="60" cy="60" r="50" fill="none" stroke="url(#gaugeGradient)" stroke-width="10" stroke-dasharray="314.15" stroke-dashoffset="81.67" stroke-linecap="round"></circle>
+                                <defs>
+                                    <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#4F46E5" />
+                                        <stop offset="100%" stop-color="#3B82F6" />
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                            <div class="gauge-inner-label">
+                                <span class="gauge-score-value">74</span>
+                                <span class="gauge-score-denom">/ 100</span>
+                            </div>
+                        </div>
+
+                        <!-- Progress Bars Column -->
+                        <div class="posture-breakdown-col">
+                            <div class="breakdown-item">
+                                <div class="breakdown-labels">
+                                    <span>UK GDPR</span>
+                                    <strong>76%</strong>
+                                </div>
+                                <div class="breakdown-bar-track">
+                                    <div class="breakdown-bar-fill" style="width: 76%; background: #4F46E5;"></div>
+                                </div>
+                            </div>
+
+                            <div class="breakdown-item">
+                                <div class="breakdown-labels">
+                                    <span>India DPDP</span>
+                                    <strong>71%</strong>
+                                </div>
+                                <div class="breakdown-bar-track">
+                                    <div class="breakdown-bar-fill" style="width: 71%; background: #8B5CF6;"></div>
+                                </div>
+                            </div>
+
+                            <div class="breakdown-item">
+                                <div class="breakdown-labels">
+                                    <span>Security Controls</span>
+                                    <strong>78%</strong>
+                                </div>
+                                <div class="breakdown-bar-track">
+                                    <div class="breakdown-bar-fill" style="width: 78%; background: #10B981;"></div>
+                                </div>
+                            </div>
+
+                            <div class="breakdown-item">
+                                <div class="breakdown-labels">
+                                    <span>Documentation</span>
+                                    <strong>68%</strong>
+                                </div>
+                                <div class="breakdown-bar-track">
+                                    <div class="breakdown-bar-fill" style="width: 68%; background: #F59E0B;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="gauge-card-footer">
+                        <div class="posture-level-tag">
+                            <span class="status-level-orange">Moderate</span>
+                            <span class="score-delta-green">&#9650; +8 pts</span>
+                        </div>
+                        <a href="javascript:void(0)" onclick="switchPhase('github')" class="link-framework-details">Framework details &rarr;</a>
+                    </div>
+                </div>
+
+                <!-- 4 KPI Summary Cards Grid (2x2) -->
+                <div class="kpi-quad-grid">
+                    <!-- KPI 1: Critical Findings -->
+                    <div class="kpi-mini-card">
+                        <div class="kpi-card-top">
+                            <div class="kpi-icon-square red-tint">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                            </div>
+                            <span class="kpi-badge-pill red-pill">9 Issues</span>
+                        </div>
+                        <div class="kpi-big-number">9</div>
+                        <p class="kpi-subtext">Critical Findings &bull; 4 code, 3 legal, 2 runtime</p>
+                    </div>
+
+                    <!-- KPI 2: Policy Documents -->
+                    <div class="kpi-mini-card">
+                        <div class="kpi-card-top">
+                            <div class="kpi-icon-square blue-tint">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                            </div>
+                            <span class="kpi-badge-pill green-pill">+2 Updated</span>
+                        </div>
+                        <div class="kpi-big-number">24</div>
+                        <p class="kpi-subtext">Policy Documents &bull; 18 compliant</p>
+                    </div>
+
+                    <!-- KPI 3: Runtime Monitoring -->
+                    <div class="kpi-mini-card">
+                        <div class="kpi-card-top">
+                            <div class="kpi-icon-square amber-tint">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                            </div>
+                            <span class="kpi-badge-pill red-pill">4 Intercepts</span>
+                        </div>
+                        <div class="kpi-big-number">128 Sessions</div>
+                        <p class="kpi-subtext">Runtime Monitoring &bull; 1,842 events analyzed</p>
+                    </div>
+
+                    <!-- KPI 4: Protected PII -->
+                    <div class="kpi-mini-card">
+                        <div class="kpi-card-top">
+                            <div class="kpi-icon-square green-tint">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+                            </div>
+                            <span class="kpi-badge-pill green-pill">100% Guarded</span>
+                        </div>
+                        <div class="kpi-big-number">14</div>
+                        <p class="kpi-subtext">Protected PII &amp; Health Data Categories</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lower Section: Risk Trajectory Graph & Needs Attention List -->
+            <div class="trajectory-attention-grid">
+                <!-- Trajectory Chart Card -->
+                <div class="trajectory-card">
+                    <div class="trajectory-header">
+                        <div>
+                            <h3 class="trajectory-title">Compliance &amp; Risk Trajectory</h3>
+                            <p class="trajectory-subtitle">Historical posture score and open vulnerabilities timeline</p>
+                        </div>
+                        <div class="time-filter-toggle">
+                            <button class="time-filter-btn">7 Days</button>
+                            <button class="time-filter-btn active">30 Days</button>
+                            <button class="time-filter-btn">90 Days</button>
+                        </div>
+                    </div>
+
+                    <!-- Trajectory SVG Chart Canvas -->
+                    <div class="trajectory-chart-wrap">
+                        <svg class="trajectory-chart-svg" width="100%" height="160" viewBox="0 0 600 160" preserveAspectRatio="none">
+                            <defs>
+                                <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="#4F46E5" stop-opacity="0.25"/>
+                                    <stop offset="100%" stop-color="#4F46E5" stop-opacity="0.0"/>
+                                </linearGradient>
+                            </defs>
+                            <!-- Y-axis guide lines -->
+                            <line x1="40" y1="20" x2="590" y2="20" stroke="rgba(226, 232, 240, 0.6)" stroke-dasharray="3 3" />
+                            <text x="15" y="24" fill="#94A3B8" font-size="11" font-weight="600">100</text>
+
+                            <line x1="40" y1="75" x2="590" y2="75" stroke="rgba(226, 232, 240, 0.6)" stroke-dasharray="3 3" />
+                            <text x="18" y="79" fill="#94A3B8" font-size="11" font-weight="600">80</text>
+
+                            <line x1="40" y1="130" x2="590" y2="130" stroke="rgba(226, 232, 240, 0.6)" stroke-dasharray="3 3" />
+                            <text x="18" y="134" fill="#94A3B8" font-size="11" font-weight="600">55</text>
+
+                            <!-- Gradient fill area -->
+                            <path d="M 40 135 Q 150 130 250 120 T 420 95 T 590 85 L 590 145 L 40 145 Z" fill="url(#chartGradient)"></path>
+
+                            <!-- Smooth Trajectory Line -->
+                            <path d="M 40 135 Q 150 130 250 120 T 420 95 T 590 85" fill="none" stroke="#4F46E5" stroke-width="3" stroke-linecap="round"></path>
+
+                            <!-- Active Pulse Dot at latest point -->
+                            <circle cx="590" cy="85" r="5" fill="#4F46E5"></circle>
+                            <circle cx="590" cy="85" r="9" fill="none" stroke="#4F46E5" stroke-width="2" opacity="0.4"></circle>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Needs Attention Priority Feed -->
+                <div class="attention-card">
+                    <div class="attention-header">
+                        <h3 class="attention-title">Needs Attention</h3>
+                        <span class="badge-critical-count">4 Critical</span>
+                    </div>
+
+                    <div class="attention-items-list">
+                        <!-- Item 1 -->
+                        <div class="attention-item" onclick="switchPhase('docfixer')">
+                            <div class="attention-item-top">
+                                <span class="badge-tag-danger">
+                                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                                    Critical
+                                </span>
+                                <span class="attention-statute">UK GDPR Art. 9 / DPDP Act §5</span>
+                            </div>
+                            <div class="attention-item-body">
+                                <strong>Health Data Collected Without Consent Gate</strong>
+                                <code class="attention-code-ref">collectHealthData.ts:47</code>
+                            </div>
+                        </div>
+
+                        <!-- Item 2 -->
+                        <div class="attention-item" onclick="switchPhase('github')">
+                            <div class="attention-item-top">
+                                <span class="badge-tag-danger">
+                                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                                    Critical
+                                </span>
+                                <span class="attention-statute">UK GDPR Art. 5(1)(f) / DPDP Act §8</span>
+                            </div>
+                            <div class="attention-item-body">
+                                <strong>Unencrypted Astrological Consult Audio Sync</strong>
+                                <code class="attention-code-ref">storage/s3AudioSync.py:112</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
 
         <!-- ==============================================================
              PHASE 1: DOCUMENT AUTO-FIXER SECTION
@@ -2471,10 +3970,7 @@
             </div>
         </section>
 
-        <!-- ==============================================================
-             PHASE 4: AI & LLM GOVERNANCE COPILOT SECTION
-             ============================================================== -->
-        <section id="phase-aigovernance" class="phase-section" style="display:none;">
+<section id="phase-aigovernance" class="phase-section" style="display:none;">
             <div class="phase-header">
                 <span class="phase-header-badge">Phase 4 &bull; GenAI Governance &amp; DPIA</span>
                 <h2>AI &amp; LLM Governance Copilot</h2>
@@ -2768,10 +4264,7 @@
             </div>
         </section>
 
-        <!-- ==============================================================
-             PHASE 5: INTERACTIVE VISUAL DATA-FLOW & CROSS-BORDER MAP
-             ============================================================== -->
-        <section id="phase-dataflow" class="phase-section" style="display:none;">
+<section id="phase-dataflow" class="phase-section" style="display:none;">
             <div class="phase-header">
                 <span class="phase-header-badge">Phase 5 &bull; Architecture Lineage &amp; Cross-Border</span>
                 <h2>Interactive Visual Data-Flow &amp; Cross-Border Map</h2>
@@ -2838,10 +4331,77 @@
             </div>
         </section>
 
-    </main>
+
+    
+
+
+        <!-- ==============================================================
+             PHASE: HELP & SUPPORT (DOCUMENTATION & ASSISTANCE)
+             ============================================================== -->
+        <section id="phase-help" class="phase-section" style="display:none;">
+            <div class="phase-header" style="margin-bottom: 24px;">
+                <h2 style="font-size: 22px; font-weight: 800; color: var(--text-primary); margin-bottom: 6px;">Documentation &amp; Support Hub</h2>
+                <p style="color: var(--text-muted); font-size: 13.5px;">Guides, statutory rulebooks, and direct developer support for AI Accelerator.</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 28px;">
+                <!-- Guide 1 -->
+                <div class="card" style="padding: 24px; border-radius: 16px; border: 1px solid var(--border); background: var(--bg-card); box-shadow: var(--shadow-sm); cursor: pointer;" onclick="switchPhase('docfixer')">
+                    <div style="width: 40px; height: 40px; border-radius: 10px; background: #EEF2FF; color: #4F46E5; display: flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                    </div>
+                    <h3 style="font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;">Document Auto-Fixer Guide</h3>
+                    <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px;">Learn how to upload policies, audit GDPR gaps, and export ICO-compliant redrafts in 1 click.</p>
+                    <span style="font-size: 12.5px; font-weight: 600; color: #4F46E5;">Open Document Fixer &rarr;</span>
+                </div>
+
+                <!-- Guide 2 -->
+                <div class="card" style="padding: 24px; border-radius: 16px; border: 1px solid var(--border); background: var(--bg-card); box-shadow: var(--shadow-sm); cursor: pointer;" onclick="switchPhase('github')">
+                    <div style="width: 40px; height: 40px; border-radius: 10px; background: #ECFDF5; color: #10B981; display: flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                    </div>
+                    <h3 style="font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;">AST Code Scanning Guide</h3>
+                    <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px;">How our semantic AST parser detects unencrypted PII, audio syncs, and database retention flaws.</p>
+                    <span style="font-size: 12.5px; font-weight: 600; color: #10B981;">Scan GitHub Repository &rarr;</span>
+                </div>
+
+                <!-- Guide 3 -->
+                <div class="card" style="padding: 24px; border-radius: 16px; border: 1px solid var(--border); background: var(--bg-card); box-shadow: var(--shadow-sm); cursor: pointer;" onclick="switchPhase('chatbot')">
+                    <div style="width: 40px; height: 40px; border-radius: 10px; background: #F5F3FF; color: #7C3AED; display: flex; align-items: center; justify-content: center; margin-bottom: 14px;">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                    </div>
+                    <h3 style="font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;">Legal AI Copilot Usage</h3>
+                    <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px;">Query UK ICO case laws, India DPDP consent exemptions, and international transfer rules.</p>
+                    <span style="font-size: 12.5px; font-weight: 600; color: #7C3AED;">Ask AI Copilot &rarr;</span>
+                </div>
+            </div>
+
+            <!-- Contact Support Box -->
+            <div class="alert-callout-banner" style="background: #F8FAFD; border-color: var(--border);">
+                <div class="alert-callout-left">
+                    <div class="alert-icon-sparkle" style="background: #4F46E5;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+                    </div>
+                    <div>
+                        <strong style="font-size: 14px; color: var(--text-primary);">Need Enterprise Support or Dedicated Audit Assistance?</strong>
+                        <p style="font-size: 12.5px; color: var(--text-muted); margin: 2px 0 0 0;">Our legal compliance engineering team is available 24/7 for SOC 2 and ISO audit consultations.</p>
+                    </div>
+                </div>
+                <button class="btn-primary-gradient" onclick="showToast('Support ticket #8491 created! We will reply shortly.', '📨')">
+                    Contact Security Team
+                </button>
+            </div>
+        </section>
+
+        <!-- =======================================================                    </div>
+                </div>
+            </div>
+        </section>
+</main>
+    </div><!-- End content-canvas -->
 
     <!-- ─── STATUTORY UK-INDIA IDTA CONTRACT MODAL ─── -->
-    <div id="idta-modal-overlay" class="idta-modal-overlay">
+    <div id="idta-modal-overlay" class="idta-modal-overlay" style="display:none;">
         <div class="idta-modal">
             <div class="card-header" style="justify-content: space-between;">
                 <div>
@@ -2870,7 +4430,315 @@
         </div>
     </div>
 
-    <!-- ─── TOAST NOTIFICATION ─── -->
+    
+        <!-- ─── PHASE: SETTINGS ─── -->
+        <div id="phase-settings" class="phase-section" style="display:none;">
+            <div class="phase-header" style="margin-bottom: 24px;">
+                <h2 style="font-size: 22px; font-weight: 800; color: var(--text-primary); margin-bottom: 6px;">Workspace &amp; Security Settings</h2>
+                <p style="color: var(--text-muted); font-size: 13.5px; margin: 0;">Configure compliance frameworks, AI privacy guarantees, and your organization tier.</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                <!-- Statutory Frameworks -->
+                <div class="card" style="padding: 24px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-card); box-shadow: var(--shadow-sm);">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+                        <div style="width: 36px; height: 36px; background: #EEF2FF; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        </div>
+                        <div>
+                            <div style="font-size: 14px; font-weight: 700; color: var(--text-primary);">Statutory Frameworks</div>
+                            <div style="font-size: 12px; color: var(--text-muted);">Active compliance regimes</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                            <input type="checkbox" checked style="accent-color: #4F46E5; width: 15px; height: 15px;">
+                            <span style="font-size: 13px; color: var(--text-primary); font-weight: 500;">UK GDPR &amp; DPA 2018</span>
+                            <span style="margin-left: auto; background: #ECFDF5; color: #059669; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 20px;">Enforced</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                            <input type="checkbox" checked style="accent-color: #4F46E5; width: 15px; height: 15px;">
+                            <span style="font-size: 13px; color: var(--text-primary); font-weight: 500;">India DPDP Act 2023</span>
+                            <span style="margin-left: auto; background: #ECFDF5; color: #059669; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 20px;">Enforced</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                            <input type="checkbox" checked style="accent-color: #4F46E5; width: 15px; height: 15px;">
+                            <span style="font-size: 13px; color: var(--text-primary); font-weight: 500;">EU AI Act (High-Risk)</span>
+                            <span style="margin-left: auto; background: #FEF3C7; color: #D97706; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 20px;">In Review</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                            <input type="checkbox" style="accent-color: #4F46E5; width: 15px; height: 15px;">
+                            <span style="font-size: 13px; color: var(--text-primary); font-weight: 500;">HIPAA (US Health Data)</span>
+                            <span style="margin-left: auto; background: #F3F4F6; color: #6B7280; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 20px;">Inactive</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                            <input type="checkbox" style="accent-color: #4F46E5; width: 15px; height: 15px;">
+                            <span style="font-size: 13px; color: var(--text-primary); font-weight: 500;">SOC 2 Type II</span>
+                            <span style="margin-left: auto; background: #F3F4F6; color: #6B7280; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 20px;">Inactive</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- AI Privacy Guarantees -->
+                <div class="card" style="padding: 24px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-card); box-shadow: var(--shadow-sm);">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+                        <div style="width: 36px; height: 36px; background: #F0FDF4; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4l3 3"></path></svg>
+                        </div>
+                        <div>
+                            <div style="font-size: 14px; font-weight: 700; color: var(--text-primary);">AI Privacy Guarantees</div>
+                            <div style="font-size: 12px; color: var(--text-muted);">Data handling commitments</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <div style="display: flex; align-items: flex-start; gap: 10px; padding: 10px; background: var(--bg-warm); border-radius: 10px;">
+                            <span style="color: #059669; font-size: 16px; margin-top: 1px;">✓</span>
+                            <div>
+                                <div style="font-size: 12px; font-weight: 700; color: var(--text-primary);">Zero Data Retention (ZDR)</div>
+                                <div style="font-size: 11px; color: var(--text-muted);">OpenAI does not train on your code</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: flex-start; gap: 10px; padding: 10px; background: var(--bg-warm); border-radius: 10px;">
+                            <span style="color: #059669; font-size: 16px; margin-top: 1px;">✓</span>
+                            <div>
+                                <div style="font-size: 12px; font-weight: 700; color: var(--text-primary);">EU Data Residency</div>
+                                <div style="font-size: 11px; color: var(--text-muted);">Azure EU-West-1 region enforced</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: flex-start; gap: 10px; padding: 10px; background: var(--bg-warm); border-radius: 10px;">
+                            <span style="color: #059669; font-size: 16px; margin-top: 1px;">✓</span>
+                            <div>
+                                <div style="font-size: 12px; font-weight: 700; color: var(--text-primary);">PII Pre-Scrubbing</div>
+                                <div style="font-size: 11px; color: var(--text-muted);">Regex + NER before API calls</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: flex-start; gap: 10px; padding: 10px; background: var(--bg-warm); border-radius: 10px;">
+                            <span style="color: #059669; font-size: 16px; margin-top: 1px;">✓</span>
+                            <div>
+                                <div style="font-size: 12px; font-weight: 700; color: var(--text-primary);">SOC 2 Type II Certified</div>
+                                <div style="font-size: 11px; color: var(--text-muted);">Annual third-party audit</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Organisation & Seat Tier -->
+            <div class="card" style="padding: 24px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-card); box-shadow: var(--shadow-sm);">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+                    <div style="width: 36px; height: 36px; background: #EEF2FF; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    </div>
+                    <div>
+                        <div style="font-size: 14px; font-weight: 700; color: var(--text-primary);">Organization &amp; Seat Tier</div>
+                        <div style="font-size: 12px; color: var(--text-muted);">Acme Technologies Inc.</div>
+                    </div>
+                    <span style="margin-left: auto; background: linear-gradient(135deg, #4F46E5, #7C3AED); color: white; font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 20px;">Enterprise</span>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 20px;">
+                    <div style="padding: 14px; background: var(--bg-warm); border-radius: 10px;">
+                        <div style="font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-bottom: 4px;">Workspace ID</div>
+                        <div style="font-size: 13px; font-weight: 700; color: var(--text-primary); font-family: monospace;">acme-secops-eu-prod</div>
+                    </div>
+                    <div style="padding: 14px; background: var(--bg-warm); border-radius: 10px;">
+                        <div style="font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-bottom: 4px;">Authorized Seats</div>
+                        <div style="font-size: 13px; font-weight: 700; color: var(--text-primary);">25 / 50 Active</div>
+                    </div>
+                    <div style="padding: 14px; background: var(--bg-warm); border-radius: 10px;">
+                        <div style="font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-bottom: 4px;">Plan Renewal</div>
+                        <div style="font-size: 13px; font-weight: 700; color: var(--text-primary);">Mar 15, 2025</div>
+                    </div>
+                    <div style="padding: 14px; background: var(--bg-warm); border-radius: 10px;">
+                        <div style="font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-bottom: 4px;">Region</div>
+                        <div style="font-size: 13px; font-weight: 700; color: var(--text-primary);">EU-West-1 (Ireland)</div>
+                    </div>
+                </div>
+                <button class="btn-primary-gradient" onclick="showToast('Configuration saved successfully!', '✅')" style="padding: 10px 24px;">
+                    Save Configuration
+                </button>
+            </div>
+        </div>
+
+        <!-- ─── PHASE: REPORTS ─── -->
+        <div id="phase-reports" class="phase-section" style="display:none;">
+            <div class="phase-header" style="margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between;">
+                <div>
+                    <h2 style="font-size: 22px; font-weight: 800; color: var(--text-primary); margin-bottom: 6px;">Compliance &amp; Risk Reports</h2>
+                    <p style="color: var(--text-muted); font-size: 13.5px; margin: 0;">Verified regulatory audit packages ready for board reviews, legal counsels, and ICO authorities.</p>
+                </div>
+                <button class="btn-primary-gradient" onclick="downloadReport('dossier')" style="padding: 10px 20px;">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    Generate Custom Dossier
+                </button>
+            </div>
+
+            <!-- 3 Summary Metrics -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 24px;">
+                <div class="card" style="padding: 18px 22px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-card); box-shadow: var(--shadow-sm);">
+                    <div style="font-size: 12px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-bottom: 4px;">Latest Audit Score</div>
+                    <div style="font-size: 28px; font-weight: 800; color: #4F46E5;">74 / 100</div>
+                    <p style="font-size: 12px; color: #10B981; margin: 4px 0 0 0; font-weight: 600;">&#9650; +8 points gained this cycle</p>
+                </div>
+                <div class="card" style="padding: 18px 22px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-card); box-shadow: var(--shadow-sm);">
+                    <div style="font-size: 12px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-bottom: 4px;">Resolved Gaps</div>
+                    <div style="font-size: 28px; font-weight: 800; color: #10B981;">18 Clauses</div>
+                    <p style="font-size: 12px; color: var(--text-muted); margin: 4px 0 0 0;">Out of 22 total detected flags</p>
+                </div>
+                <div class="card" style="padding: 18px 22px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-card); box-shadow: var(--shadow-sm);">
+                    <div style="font-size: 12px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-bottom: 4px;">Next Scheduled Re-Audit</div>
+                    <div style="font-size: 28px; font-weight: 800; color: var(--text-primary);">6 Days</div>
+                    <p style="font-size: 12px; color: var(--text-muted); margin: 4px 0 0 0;">Automatic continuous AST verification</p>
+                </div>
+            </div>
+
+            <!-- Generated Audit Packages Table -->
+            <div class="card" style="padding: 24px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-card); box-shadow: var(--shadow-sm);">
+                <h3 style="font-size: 15px; font-weight: 700; color: var(--text-primary); margin: 0 0 16px 0;">Generated Audit Packages</h3>
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 13px;">
+                        <thead>
+                            <tr style="border-bottom: 1.5px solid var(--border); background: var(--bg-warm);">
+                                <th style="padding: 12px 16px; font-weight: 700;">Report Name</th>
+                                <th style="padding: 12px 16px; font-weight: 700;">Statutory Scope</th>
+                                <th style="padding: 12px 16px; font-weight: 700;">Status</th>
+                                <th style="padding: 12px 16px; font-weight: 700;">Generated Date</th>
+                                <th style="padding: 12px 16px; font-weight: 700; text-align: right;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--border);">
+                                <td style="padding: 14px 16px; font-weight: 600; color: var(--text-primary);">
+                                    <span style="display: flex; align-items: center; gap: 8px;">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                                        AI Accelerator Enterprise Privacy Assessment Dossier
+                                    </span>
+                                </td>
+                                <td style="padding: 14px 16px; color: var(--text-secondary);">UK GDPR, DPA 2018 &amp; India DPDP 2023</td>
+                                <td style="padding: 14px 16px;"><span style="background: #ECFDF5; color: #059669; font-weight: 700; font-size: 11px; padding: 3px 8px; border-radius: 99px;">Certified</span></td>
+                                <td style="padding: 14px 16px; color: var(--text-muted);">Today, 14:32 UTC</td>
+                                <td style="padding: 14px 16px; text-align: right;">
+                                    <button class="btn-primary-gradient" onclick="downloadReport('privacy_assessment')" style="padding: 6px 14px; font-size: 12px;">Download PDF</button>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border);">
+                                <td style="padding: 14px 16px; font-weight: 600; color: var(--text-primary);">
+                                    <span style="display: flex; align-items: center; gap: 8px;">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                                        Article 30 RoPA Data Architecture Flowchart Report
+                                    </span>
+                                </td>
+                                <td style="padding: 14px 16px; color: var(--text-secondary);">EU GDPR Art. 30(1) Records</td>
+                                <td style="padding: 14px 16px;"><span style="background: #EEF2FF; color: #4F46E5; font-weight: 700; font-size: 11px; padding: 3px 8px; border-radius: 99px;">Verified</span></td>
+                                <td style="padding: 14px 16px; color: var(--text-muted);">Yesterday</td>
+                                <td style="padding: 14px 16px; text-align: right;">
+                                    <button class="btn-primary-gradient" onclick="downloadReport('ropa')" style="padding: 6px 14px; font-size: 12px;">Export RoPA</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 14px 16px; font-weight: 600; color: var(--text-primary);">
+                                    <span style="display: flex; align-items: center; gap: 8px;">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                                        High-Risk AI DPIA Evaluation Statement (OpenAI ZDR)
+                                    </span>
+                                </td>
+                                <td style="padding: 14px 16px; color: var(--text-secondary);">Art. 35 Data Protection Impact Assessment</td>
+                                <td style="padding: 14px 16px;"><span style="background: #FEF3C7; color: #D97706; font-weight: 700; font-size: 11px; padding: 3px 8px; border-radius: 99px;">Review Required</span></td>
+                                <td style="padding: 14px 16px; color: var(--text-muted);">3 days ago</td>
+                                <td style="padding: 14px 16px; text-align: right;">
+                                    <button class="btn-primary-gradient" onclick="downloadReport('dpia')" style="padding: 6px 14px; font-size: 12px;">Download PDF</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── PHASE: AUDIT LOGS ─── -->
+        <div id="phase-auditlogs" class="phase-section" style="display:none;">
+            <div class="phase-header" style="margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between;">
+                <div>
+                    <h2 style="font-size: 22px; font-weight: 800; color: var(--text-primary); margin-bottom: 6px;">Immutable Security Audit Logs</h2>
+                    <p style="color: var(--text-muted); font-size: 13.5px; margin: 0;">Tamper-proof event telemetry with cryptographic hash chain integrity verification.</p>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn-secondary" onclick="showToast('Hash integrity verified — all 1,842 entries valid ✓', '🔒')" style="padding: 8px 16px; font-size: 13px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg-card); color: var(--text-primary); cursor: pointer; font-weight: 600;">
+                        🔒 Verify Hash Integrity
+                    </button>
+                    <button class="btn-primary-gradient" onclick="exportAuditLogs()" style="padding: 8px 16px; font-size: 13px;">
+                        &#8595; Export Logs (JSONL)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filter bar -->
+            <div class="card" style="padding: 14px 20px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg-card); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                <span style="font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Filter:</span>
+                <button onclick="this.style.background='#4F46E5';this.style.color='white'" style="padding: 5px 14px; border-radius: 20px; border: 1px solid #4F46E5; background: #4F46E5; color: white; font-size: 12px; font-weight: 600; cursor: pointer;">All Events</button>
+                <button onclick="this.style.background='#4F46E5';this.style.color='white'" style="padding: 5px 14px; border-radius: 20px; border: 1px solid var(--border); background: transparent; color: var(--text-secondary); font-size: 12px; font-weight: 600; cursor: pointer;">Critical</button>
+                <button onclick="this.style.background='#4F46E5';this.style.color='white'" style="padding: 5px 14px; border-radius: 20px; border: 1px solid var(--border); background: transparent; color: var(--text-secondary); font-size: 12px; font-weight: 600; cursor: pointer;">Auth</button>
+                <button onclick="this.style.background='#4F46E5';this.style.color='white'" style="padding: 5px 14px; border-radius: 20px; border: 1px solid var(--border); background: transparent; color: var(--text-secondary); font-size: 12px; font-weight: 600; cursor: pointer;">Scan</button>
+                <button onclick="this.style.background='#4F46E5';this.style.color='white'" style="padding: 5px 14px; border-radius: 20px; border: 1px solid var(--border); background: transparent; color: var(--text-secondary); font-size: 12px; font-weight: 600; cursor: pointer;">Policy</button>
+                <div style="margin-left: auto; display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 12px; color: var(--text-muted);">1,842 total events</span>
+                    <span style="background: #ECFDF5; color: #059669; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 20px;">Chain Intact</span>
+                </div>
+            </div>
+
+            <!-- Log entries -->
+            <div class="card" style="border-radius: 14px; border: 1px solid var(--border); background: var(--bg-card); overflow: hidden;">
+                <!-- Log entry 1 - Critical -->
+                <div style="display: flex; align-items: flex-start; gap: 14px; padding: 16px 20px; border-bottom: 1px solid var(--border); border-left: 3px solid #DC2626;">
+                    <div style="font-family: monospace; font-size: 11px; color: var(--text-muted); min-width: 130px; padding-top: 2px;">2024-01-15 14:32:11</div>
+                    <div style="flex: 1;">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                            <span style="background: #FEE2E2; color: #DC2626; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 20px;">CRITICAL</span>
+                            <span style="font-size: 13px; font-weight: 700; color: var(--text-primary);">PII Exposure Detected — collectHealthData.ts:47</span>
+                        </div>
+                        <div style="font-size: 12px; color: var(--text-muted);">UK GDPR Art. 9 violation · Health data transmitted without explicit consent gate · AST Scanner v3.4</div>
+                    </div>
+                    <div style="font-family: monospace; font-size: 10px; color: var(--text-muted);">#a3f9e1b2</div>
+                </div>
+                <!-- Log entry 2 - Warning -->
+                <div style="display: flex; align-items: flex-start; gap: 14px; padding: 16px 20px; border-bottom: 1px solid var(--border); border-left: 3px solid #D97706;">
+                    <div style="font-family: monospace; font-size: 11px; color: var(--text-muted); min-width: 130px; padding-top: 2px;">2024-01-15 13:18:04</div>
+                    <div style="flex: 1;">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                            <span style="background: #FEF3C7; color: #D97706; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 20px;">WARNING</span>
+                            <span style="font-size: 13px; font-weight: 700; color: var(--text-primary);">Unencrypted PII Transmission — userAnalytics.ts:88</span>
+                        </div>
+                        <div style="font-size: 12px; color: var(--text-muted);">UK GDPR Art. 5(1)(f) · Field-level encryption missing · Recommended: AES-256-GCM</div>
+                    </div>
+                    <div style="font-family: monospace; font-size: 10px; color: var(--text-muted);">#b7c3d4e5</div>
+                </div>
+                <!-- Log entry 3 - Info -->
+                <div style="display: flex; align-items: flex-start; gap: 14px; padding: 16px 20px; border-bottom: 1px solid var(--border); border-left: 3px solid #4F46E5;">
+                    <div style="font-family: monospace; font-size: 11px; color: var(--text-muted); min-width: 130px; padding-top: 2px;">2024-01-15 11:45:33</div>
+                    <div style="flex: 1;">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                            <span style="background: #EEF2FF; color: #4F46E5; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 20px;">AUTH</span>
+                            <span style="font-size: 13px; font-weight: 700; color: var(--text-primary);">Admin Login — Compliance Lead (SSO)</span>
+                        </div>
+                        <div style="font-size: 12px; color: var(--text-muted);">Microsoft 365 SSO · IP: 103.21.x.x · Device: MacBook Pro · MFA verified</div>
+                    </div>
+                    <div style="font-family: monospace; font-size: 10px; color: var(--text-muted);">#c8d4e5f6</div>
+                </div>
+                <!-- Log entry 4 - Success -->
+                <div style="display: flex; align-items: flex-start; gap: 14px; padding: 16px 20px; border-left: 3px solid #059669;">
+                    <div style="font-family: monospace; font-size: 11px; color: var(--text-muted); min-width: 130px; padding-top: 2px;">2024-01-15 09:12:07</div>
+                    <div style="flex: 1;">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                            <span style="background: #ECFDF5; color: #059669; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 20px;">SCAN COMPLETE</span>
+                            <span style="font-size: 13px; font-weight: 700; color: var(--text-primary);">Full Repository AST Scan — ApnaGhar/backend</span>
+                        </div>
+                        <div style="font-size: 12px; color: var(--text-muted);">1,842 events analysed · 9 critical · 14 warnings · Score: 74/100 · Duration: 8m 43s</div>
+                    </div>
+                    <div style="font-family: monospace; font-size: 10px; color: var(--text-muted);">#d9e5f6a7</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── TOAST NOTIFICATION ─── -->
     <div id="toast" class="toast">
         <span id="toast-icon">✅</span>
         <span id="toast-msg">Notification message</span>
@@ -2916,15 +4784,39 @@
         function switchPhase(phaseName) {
             currentPhase = phaseName;
 
-            // Update topbar tab styles
-            document.querySelectorAll('.phase-tab-btn').forEach(btn => btn.classList.remove('active'));
-            const activeBtn = document.getElementById(`tab-btn-${phaseName}`);
-            if (activeBtn) activeBtn.classList.add('active');
+            // Update sidebar nav items
+            document.querySelectorAll('.nav-item-btn').forEach(btn => btn.classList.remove('active'));
+            const activeNav = document.getElementById(`nav-item-${phaseName}`);
+            if (activeNav) activeNav.classList.add('active');
 
-            // Toggle sections
+            // Update topbar section title
+            const titleMap = {
+                'overview': 'Overview',
+                'docfixer': 'Documents &amp; Auto-Fixer',
+                'github': 'Code Scanner',
+                'chatbot': 'Legal AI Assistant',
+                'aigovernance': 'AI & LLM Governance Copilot',
+                'dataflow': 'Visual Data-Flow Lineage Map',
+                'reports': 'Compliance &amp; Risk Reports',
+                'auditlogs': 'Immutable Security Audit Logs',
+                'settings': 'Workspace &amp; Security Settings',
+                'help': 'Documentation &amp; Support'
+            };
+            const titleEl = document.getElementById('topbar-section-title');
+            if (titleEl && titleMap[phaseName]) titleEl.innerHTML = titleMap[phaseName];
+
+            // Toggle phase sections
             document.querySelectorAll('.phase-section').forEach(sec => sec.style.display = 'none');
             const targetSec = document.getElementById(`phase-${phaseName}`);
             if (targetSec) targetSec.style.display = 'block';
+
+            // Special phase inits
+            if (phaseName === 'dataflow' && typeof renderTopologyCanvas === 'function') {
+                setTimeout(() => renderTopologyCanvas(), 50);
+            }
+            if (phaseName === 'aigovernance' && typeof renderAIGovernanceDashboard === 'function') {
+                renderAIGovernanceDashboard();
+            }
 
             // Special phase inits
             if (phaseName === 'dataflow') {
@@ -2940,23 +4832,35 @@
             // Sync URL query without reloading
             const url = new URL(window.location);
             url.searchParams.set('phase', phaseName);
-            window.history.pushState({}, '', url);
+            window.history.replaceState({}, '', url);
+        }
+
+        function setAppTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            document.querySelectorAll('#btn-theme-light, #btn-top-theme-light').forEach(b => b.classList.toggle('active', theme === 'light'));
+            document.querySelectorAll('#btn-theme-dark, #btn-top-theme-dark').forEach(b => b.classList.toggle('active', theme === 'dark'));
+            localStorage.setItem('ai_accelerator_theme', theme);
         }
 
         // Handle URL parameters on load
         window.addEventListener('DOMContentLoaded', () => {
+            // Apply saved theme
+            const savedTheme = localStorage.getItem('ai_accelerator_theme') || 'light';
+            setAppTheme(savedTheme);
+
             const params = new URLSearchParams(window.location.search);
             const p = params.get('phase') || params.get('tab');
             if (p) {
-                if (p === 'github' || p === 'repo') switchPhase('github');
+                if (p === 'overview') switchPhase('overview');
+                else if (p === 'github' || p === 'repo') switchPhase('github');
                 else if (p === 'chat' || p === 'chatbot' || p === 'copilot') switchPhase('chatbot');
                 else if (p === 'aigov' || p === 'aigovernance' || p === 'ai') switchPhase('aigovernance');
                 else if (p === 'dataflow' || p === 'flow' || p === 'topology') switchPhase('dataflow');
                 else if (p === 'sandbox') switchPhase('sandbox');
                 else switchPhase('docfixer');
             } else {
-                // Default load sample document in Phase 1
-                loadSampleDoc('zenauraa_privacy');
+                // Default to Overview Dashboard matching screenshot
+                switchPhase('overview');
             }
         });
 
@@ -3775,10 +5679,505 @@ Under both UK GDPR and India's Digital Personal Data Protection Act 2023, data p
             html = html.replace(/\n\n+/g, '</p><p>');
             return '<p>' + html + '</p>';
         }
+    
+// ══════════════════════════════════════════════════════════════
+// REPORT DOWNLOAD ENGINE — Tara PrivacyOS v3.4
+// ══════════════════════════════════════════════════════════════
 
-        // ==============================================================
-        // PHASE 4: AI & LLM GOVERNANCE COPILOT CONTROLLER
-        // ==============================================================
+function downloadBlob(content, filename, mimeType) {
+    const blob = new Blob([content], { type: mimeType });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+function getReportDate() {
+    return new Date().toLocaleString('en-GB', { timeZone: 'UTC', hour12: false }).replace(',', ' |') + ' UTC';
+}
+
+function downloadReport(type) {
+    let content, filename, mimeType;
+    const dateStr = getReportDate();
+
+    if (type === 'privacy_assessment') {
+        filename = 'AI_Accelerator_Enterprise_Privacy_Assessment_Dossier.html';
+        mimeType = 'text/html';
+        content = generatePrivacyAssessmentHTML(dateStr);
+        showToast('Downloading Privacy Assessment Dossier...', '📥');
+    } else if (type === 'ropa') {
+        filename = 'Article_30_RoPA_Data_Architecture_Report.html';
+        mimeType = 'text/html';
+        content = generateRopaHTML(dateStr);
+        showToast('Exporting RoPA Data Architecture Report...', '📤');
+    } else if (type === 'dpia') {
+        filename = 'HighRisk_AI_DPIA_Evaluation_Statement.html';
+        mimeType = 'text/html';
+        content = generateDPIAHTML(dateStr);
+        showToast('Downloading DPIA Evaluation Statement...', '📥');
+    } else if (type === 'dossier') {
+        filename = 'Acme_Technologies_Full_Compliance_Dossier.html';
+        mimeType = 'text/html';
+        content = generateDossierHTML(dateStr);
+        showToast('Generating Full Compliance Dossier...', '⚡');
+    }
+    setTimeout(() => downloadBlob(content, filename, mimeType), 400);
+}
+
+// ── Report 1: Privacy Assessment ──────────────────────────────
+function generatePrivacyAssessmentHTML(dateStr) {
+    return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Accelerator Enterprise Privacy Assessment Dossier</title>
+<style>
+  body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 40px; background: #f8fafd; color: #1e1e2e; }
+  .cover { background: linear-gradient(135deg, #4F46E5, #7C3AED); color: white; border-radius: 16px; padding: 48px; margin-bottom: 32px; }
+  .cover h1 { font-size: 28px; font-weight: 800; margin: 0 0 8px 0; }
+  .cover .sub { font-size: 14px; opacity: 0.85; margin-bottom: 20px; }
+  .badge { display: inline-block; background: rgba(255,255,255,0.2); border-radius: 20px; padding: 4px 12px; font-size: 12px; font-weight: 600; margin: 4px; }
+  .section { background: white; border-radius: 12px; padding: 28px; margin-bottom: 20px; border: 1px solid #e5e7f0; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+  h2 { font-size: 18px; font-weight: 700; color: #4F46E5; border-bottom: 2px solid #4F46E5; padding-bottom: 8px; margin-top: 0; }
+  h3 { font-size: 14px; font-weight: 700; color: #374151; margin: 16px 0 8px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #4F46E5; color: white; padding: 10px 14px; text-align: left; }
+  td { padding: 10px 14px; border-bottom: 1px solid #e5e7f0; }
+  tr:nth-child(even) td { background: #f8fafd; }
+  .status-ok { background: #ECFDF5; color: #059669; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+  .status-warn { background: #FEF3C7; color: #D97706; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+  .score-block { display: flex; gap: 20px; flex-wrap: wrap; margin: 16px 0; }
+  .score-card { flex: 1; min-width: 140px; background: #f8fafd; border: 1px solid #e5e7f0; border-radius: 10px; padding: 16px; text-align: center; }
+  .score-num { font-size: 32px; font-weight: 800; color: #4F46E5; }
+  .score-label { font-size: 11px; color: #6b7280; font-weight: 600; text-transform: uppercase; margin-top: 4px; }
+  .footer { text-align: center; color: #9ca3af; font-size: 11px; margin-top: 32px; }
+  .clause { background: #f0f4ff; border-left: 4px solid #4F46E5; padding: 10px 14px; border-radius: 0 8px 8px 0; margin: 8px 0; font-size: 13px; }
+  @media print { body { background: white; } .section { box-shadow: none; } }
+</style>
+</head>
+<body>
+<div class="cover">
+  <h1>AI Accelerator Enterprise<br>Privacy Assessment Dossier</h1>
+  <div class="sub">Confidential · Regulatory Audit Package · Generated: ${dateStr}</div>
+  <span class="badge">UK GDPR Certified</span>
+  <span class="badge">DPA 2018 Compliant</span>
+  <span class="badge">India DPDP 2023</span>
+  <span class="badge">EU AI Act Ready</span>
+</div>
+
+<div class="section">
+  <h2>Executive Summary</h2>
+  <p>This dossier presents the comprehensive privacy compliance posture of <strong>Acme Technologies Ltd.</strong> as assessed by the Tara PrivacyOS v3.4 AI Compliance Engine. The assessment covers all personal data processing activities, lawful bases, data subject rights mechanisms, and third-party data flows in scope of UK GDPR, the Data Protection Act 2018, and India's Digital Personal Data Protection Act 2023.</p>
+  <div class="score-block">
+    <div class="score-card"><div class="score-num">74</div><div class="score-label">Overall Score / 100</div></div>
+    <div class="score-card"><div class="score-num">76%</div><div class="score-label">UK GDPR</div></div>
+    <div class="score-card"><div class="score-num">71%</div><div class="score-label">India DPDP</div></div>
+    <div class="score-card"><div class="score-num">78%</div><div class="score-label">Security Controls</div></div>
+    <div class="score-card"><div class="score-num">68%</div><div class="score-label">Documentation</div></div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Compliance Framework Coverage</h2>
+  <table>
+    <tr><th>Framework</th><th>Scope</th><th>Articles Reviewed</th><th>Gaps Found</th><th>Status</th></tr>
+    <tr><td>UK GDPR</td><td>All personal data processing</td><td>24 Articles</td><td>4</td><td><span class="status-ok">Certified</span></td></tr>
+    <tr><td>Data Protection Act 2018</td><td>Sensitive / special category data</td><td>Schedule 1 & 2</td><td>2</td><td><span class="status-ok">Certified</span></td></tr>
+    <tr><td>India DPDP Act 2023</td><td>India resident data flows</td><td>Chapters I-IV</td><td>3</td><td><span class="status-ok">Certified</span></td></tr>
+    <tr><td>EU AI Act (High-Risk AI)</td><td>AI model governance</td><td>Articles 9-15</td><td>2</td><td><span class="status-warn">In Review</span></td></tr>
+    <tr><td>ISO/IEC 27001:2022</td><td>Information security controls</td><td>Annex A</td><td>1</td><td><span class="status-ok">Compliant</span></td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <h2>Lawful Basis Register — UK GDPR Art. 6</h2>
+  <table>
+    <tr><th>Processing Activity</th><th>Data Categories</th><th>Lawful Basis</th><th>Retention</th><th>Status</th></tr>
+    <tr><td>User account management</td><td>Name, email, role</td><td>Art. 6(1)(b) — Contract</td><td>7 years</td><td><span class="status-ok">OK</span></td></tr>
+    <tr><td>Compliance scan telemetry</td><td>Source code snippets, file paths</td><td>Art. 6(1)(f) — Legitimate Interest</td><td>90 days</td><td><span class="status-ok">OK</span></td></tr>
+    <tr><td>AI model training (internal)</td><td>Anonymised code patterns</td><td>Art. 6(1)(f) — Legitimate Interest</td><td>12 months</td><td><span class="status-warn">LIA Pending</span></td></tr>
+    <tr><td>Health data processing</td><td>Special category — Health</td><td>Art. 9(2)(b) — Legal Obligation</td><td>10 years</td><td><span class="status-ok">OK</span></td></tr>
+    <tr><td>Marketing communications</td><td>Name, email, preferences</td><td>Art. 6(1)(a) — Consent</td><td>Until withdrawal</td><td><span class="status-ok">OK</span></td></tr>
+    <tr><td>Audit log retention</td><td>System events, user IDs</td><td>Art. 6(1)(c) — Legal Obligation</td><td>3 years</td><td><span class="status-ok">OK</span></td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <h2>Data Subject Rights — Implementation Status</h2>
+  <table>
+    <tr><th>Right</th><th>GDPR Article</th><th>Implementation</th><th>Response SLA</th><th>Status</th></tr>
+    <tr><td>Right to Access (SAR)</td><td>Art. 15</td><td>Automated via portal</td><td>30 days</td><td><span class="status-ok">Implemented</span></td></tr>
+    <tr><td>Right to Rectification</td><td>Art. 16</td><td>Self-service profile editor</td><td>30 days</td><td><span class="status-ok">Implemented</span></td></tr>
+    <tr><td>Right to Erasure</td><td>Art. 17</td><td>Partial — no cascade delete</td><td>30 days</td><td><span class="status-warn">Partial</span></td></tr>
+    <tr><td>Right to Data Portability</td><td>Art. 20</td><td>JSON/CSV export available</td><td>30 days</td><td><span class="status-ok">Implemented</span></td></tr>
+    <tr><td>Right to Object</td><td>Art. 21</td><td>Opt-out mechanism active</td><td>Immediate</td><td><span class="status-ok">Implemented</span></td></tr>
+    <tr><td>Right to Restrict Processing</td><td>Art. 18</td><td>Manual process — no automation</td><td>72 hours</td><td><span class="status-warn">Manual Only</span></td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <h2>Critical Findings — Action Required</h2>
+  <div class="clause"><strong>[CRIT-001]</strong> UK GDPR Art. 9 / DPDP Act §5 — Health data collected via <code>collectHealthData.ts:47</code> without explicit consent gate. <strong>Fix: Add consent modal before data collection.</strong></div>
+  <div class="clause"><strong>[CRIT-002]</strong> UK GDPR Art. 5(1)(f) — PII transmitted via unencrypted <code>userAnalytics.ts:88</code>. <strong>Fix: Enforce HTTPS + field-level encryption.</strong></div>
+  <div class="clause"><strong>[CRIT-003]</strong> UK GDPR Art. 30 — RoPA entry missing for 3rd party data processor: <code>Stripe Payments</code>. <strong>Fix: Update Article 30 register.</strong></div>
+  <div class="clause"><strong>[CRIT-004]</strong> India DPDP §8(5) — No Data Principal notification mechanism for data breach. <strong>Fix: Implement breach notification workflow within 72 hours.</strong></div>
+</div>
+
+<div class="section">
+  <h2>Third-Party Data Processors — Art. 28 Register</h2>
+  <table>
+    <tr><th>Processor</th><th>Purpose</th><th>Data Shared</th><th>Location</th><th>DPA Signed</th></tr>
+    <tr><td>OpenAI (Azure)</td><td>AI code analysis</td><td>Code snippets (anonymised)</td><td>US / EU</td><td><span class="status-ok">Yes</span></td></tr>
+    <tr><td>Stripe</td><td>Payment processing</td><td>Financial data</td><td>US</td><td><span class="status-warn">Pending</span></td></tr>
+    <tr><td>AWS S3</td><td>Document storage</td><td>Encrypted user docs</td><td>EU-West-1</td><td><span class="status-ok">Yes</span></td></tr>
+    <tr><td>SendGrid</td><td>Transactional email</td><td>Name, email</td><td>US</td><td><span class="status-ok">Yes</span></td></tr>
+    <tr><td>Datadog</td><td>System monitoring</td><td>Logs (pseudonymised)</td><td>EU</td><td><span class="status-ok">Yes</span></td></tr>
+  </table>
+</div>
+
+<div class="footer">
+  <p>Generated by <strong>Tara PrivacyOS v3.4</strong> · AI Accelerator Enterprise Suite · Acme Technologies Ltd.<br>
+  This document is confidential. For ICO submission, board review, and legal counsel use only.<br>
+  Document ID: PRIV-ASSESS-2024-${Math.random().toString(36).substr(2, 8).toUpperCase()} · ${dateStr}</p>
+</div>
+</body></html>`;
+}
+
+// ── Report 2: RoPA ─────────────────────────────────────────────
+function generateRopaHTML(dateStr) {
+    return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Article 30 RoPA — Data Architecture Report</title>
+<style>
+  body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 40px; background: #f0fdf4; color: #1e1e2e; }
+  .cover { background: linear-gradient(135deg, #059669, #10B981); color: white; border-radius: 16px; padding: 48px; margin-bottom: 32px; }
+  .cover h1 { font-size: 26px; font-weight: 800; margin: 0 0 8px 0; }
+  .cover .sub { font-size: 13px; opacity: 0.85; }
+  .badge { display: inline-block; background: rgba(255,255,255,0.2); border-radius: 20px; padding: 4px 12px; font-size: 12px; font-weight: 600; margin: 4px; }
+  .section { background: white; border-radius: 12px; padding: 28px; margin-bottom: 20px; border: 1px solid #d1fae5; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+  h2 { font-size: 17px; font-weight: 700; color: #059669; border-bottom: 2px solid #10B981; padding-bottom: 8px; margin-top: 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  th { background: #059669; color: white; padding: 10px 12px; text-align: left; }
+  td { padding: 9px 12px; border-bottom: 1px solid #d1fae5; vertical-align: top; }
+  tr:nth-child(even) td { background: #f0fdf4; }
+  .art-ref { background: #ECFDF5; color: #059669; padding: 2px 7px; border-radius: 20px; font-size: 10px; font-weight: 700; }
+  .footer { text-align: center; color: #9ca3af; font-size: 11px; margin-top: 32px; }
+  @media print { body { background: white; } }
+</style>
+</head>
+<body>
+<div class="cover">
+  <h1>Article 30 — Record of Processing Activities (RoPA)<br>Data Architecture Flowchart Report</h1>
+  <div class="sub">EU GDPR Art. 30(1) Records · Acme Technologies Ltd. · Generated: ${dateStr}</div>
+  <br><span class="badge">EU GDPR Art. 30(1)</span> <span class="badge">UK GDPR Art. 30</span> <span class="badge">Verified</span>
+</div>
+
+<div class="section">
+  <h2>Controller Details — Art. 30(1)(a)</h2>
+  <table>
+    <tr><th>Field</th><th>Details</th></tr>
+    <tr><td><strong>Controller Name</strong></td><td>Acme Technologies Ltd.</td></tr>
+    <tr><td><strong>ICO Registration No.</strong></td><td>ZA-2024-873421</td></tr>
+    <tr><td><strong>DPO Name</strong></td><td>Compliance Lead</td></tr>
+    <tr><td><strong>DPO Email</strong></td><td>dpo@acmetechnologies.com</td></tr>
+    <tr><td><strong>Registered Address</strong></td><td>120 Kingsway, London WC2B 6NH, United Kingdom</td></tr>
+    <tr><td><strong>Joint Controller(s)</strong></td><td>None</td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <h2>Processing Activities Register — Art. 30(1)(b-g)</h2>
+  <table>
+    <tr><th>#</th><th>Processing Activity</th><th>Purpose <span class="art-ref">Art.30(1)(b)</span></th><th>Data Categories <span class="art-ref">Art.30(1)(c)</span></th><th>Data Subjects</th><th>Recipients <span class="art-ref">Art.30(1)(d)</span></th><th>3rd Country Transfers <span class="art-ref">Art.30(1)(e)</span></th><th>Retention <span class="art-ref">Art.30(1)(f)</span></th><th>Security Measures <span class="art-ref">Art.30(1)(g)</span></th></tr>
+    <tr><td>1</td><td>User Registration & Authentication</td><td>Service delivery, account management</td><td>Name, email, hashed password, role</td><td>Employees, Contractors</td><td>AWS Cognito, internal auth service</td><td>US (SCCs in place)</td><td>Duration of contract + 7 years</td><td>TLS 1.3, bcrypt hashing, MFA</td></tr>
+    <tr><td>2</td><td>AI Code Compliance Scanning</td><td>Automated privacy risk detection in source code</td><td>Source code, file paths, developer IDs</td><td>Developers</td><td>OpenAI Azure (processor)</td><td>US/EU (Azure region: EU West)</td><td>90 days post-scan</td><td>Anonymisation, TLS, no model training</td></tr>
+    <tr><td>3</td><td>Audit Log Collection</td><td>Legal compliance, security monitoring</td><td>User IDs, action timestamps, IP addresses</td><td>All platform users</td><td>Datadog SIEM (processor)</td><td>EU only</td><td>3 years (legal obligation)</td><td>Encryption at rest, pseudonymisation</td></tr>
+    <tr><td>4</td><td>Payment Processing</td><td>Subscription billing</td><td>Card last 4, billing address, transaction ID</td><td>Paying customers</td><td>Stripe Inc. (processor)</td><td>US (SCCs + Stripe DPA)</td><td>7 years (tax law)</td><td>PCI-DSS Level 1, tokenisation</td></tr>
+    <tr><td>5</td><td>Employee HR Data</td><td>Employment contract, payroll, compliance</td><td>Name, NI number, salary, medical (if applicable)</td><td>Employees</td><td>HR system (internal), HMRC</td><td>None</td><td>7 years post-employment</td><td>Role-based access, encrypted DB</td></tr>
+    <tr><td>6</td><td>Marketing & Communications</td><td>Product updates, feature announcements</td><td>Name, email, communication preferences</td><td>Opted-in users</td><td>SendGrid (processor)</td><td>US (DPA signed)</td><td>Until consent withdrawal</td><td>TLS, suppression lists maintained</td></tr>
+    <tr><td>7</td><td>Health Data (Legal AI Module)</td><td>AI-assisted legal research on health law</td><td>Anonymised case data, health categories</td><td>Legal professionals</td><td>Internal only</td><td>None</td><td>12 months</td><td>Special category safeguards, Art. 9(2)(b) basis</td></tr>
+    <tr><td>8</td><td>System Monitoring & Analytics</td><td>Platform reliability, performance</td><td>Pseudonymised usage events, error traces</td><td>All users</td><td>Datadog, internal ops team</td><td>EU only</td><td>90 days</td><td>Pseudonymisation, aggregation</td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <h2>Third-Country Transfer Safeguards — Art. 46</h2>
+  <table>
+    <tr><th>Transfer To</th><th>Country</th><th>Legal Mechanism</th><th>DPA Reference</th><th>Reviewed</th></tr>
+    <tr><td>OpenAI (Azure)</td><td>US → EU Azure</td><td>Standard Contractual Clauses (2021/914)</td><td>DPA-OAI-2024-001</td><td>Jan 2024</td></tr>
+    <tr><td>Stripe Inc.</td><td>US</td><td>Standard Contractual Clauses</td><td>DPA-STR-2024-002</td><td>Feb 2024</td></tr>
+    <tr><td>SendGrid</td><td>US</td><td>Standard Contractual Clauses</td><td>DPA-SG-2023-008</td><td>Nov 2023</td></tr>
+    <tr><td>AWS Cognito</td><td>US → EU-West-1</td><td>AWS DPA + SCCs</td><td>DPA-AWS-2024-003</td><td>Mar 2024</td></tr>
+  </table>
+</div>
+
+<div class="footer">
+  <p>Generated by <strong>Tara PrivacyOS v3.4</strong> · Article 30 Compliance Record<br>
+  Document ID: ROPA-${Math.random().toString(36).substr(2, 8).toUpperCase()} · ${dateStr}<br>
+  This record must be made available to the supervisory authority on request (Art. 30(4)).</p>
+</div>
+</body></html>`;
+}
+
+// ── Report 3: DPIA ─────────────────────────────────────────────
+function generateDPIAHTML(dateStr) {
+    return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>High-Risk AI DPIA Evaluation Statement</title>
+<style>
+  body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 40px; background: #fffbeb; color: #1e1e2e; }
+  .cover { background: linear-gradient(135deg, #D97706, #F59E0B); color: white; border-radius: 16px; padding: 48px; margin-bottom: 32px; }
+  .cover h1 { font-size: 24px; font-weight: 800; margin: 0 0 8px 0; }
+  .cover .sub { font-size: 13px; opacity: 0.9; }
+  .badge { display: inline-block; background: rgba(255,255,255,0.25); border-radius: 20px; padding: 4px 12px; font-size: 12px; font-weight: 600; margin: 4px; }
+  .section { background: white; border-radius: 12px; padding: 28px; margin-bottom: 20px; border: 1px solid #fde68a; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+  h2 { font-size: 17px; font-weight: 700; color: #D97706; border-bottom: 2px solid #F59E0B; padding-bottom: 8px; margin-top: 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  th { background: #D97706; color: white; padding: 10px 14px; text-align: left; }
+  td { padding: 10px 14px; border-bottom: 1px solid #fde68a; vertical-align: top; }
+  tr:nth-child(even) td { background: #fffbeb; }
+  .risk-high { background: #FEE2E2; color: #DC2626; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+  .risk-med { background: #FEF3C7; color: #D97706; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+  .risk-low { background: #ECFDF5; color: #059669; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+  .finding { background: #FEF9C3; border-left: 4px solid #F59E0B; padding: 10px 14px; border-radius: 0 8px 8px 0; margin: 8px 0; font-size: 13px; }
+  .footer { text-align: center; color: #9ca3af; font-size: 11px; margin-top: 32px; }
+  @media print { body { background: white; } }
+</style>
+</head>
+<body>
+<div class="cover">
+  <h1>High-Risk AI DPIA Evaluation Statement<br>(OpenAI ZDR — Zero Data Retention)</h1>
+  <div class="sub">Art. 35 Data Protection Impact Assessment · Generated: ${dateStr}</div>
+  <br><span class="badge">Art. 35 GDPR</span> <span class="badge">EU AI Act High-Risk</span> <span class="badge">Review Required</span>
+</div>
+
+<div class="section">
+  <h2>Step 1: Description of Processing — Art. 35(7)(a)</h2>
+  <table>
+    <tr><th>Field</th><th>Details</th></tr>
+    <tr><td><strong>System Name</strong></td><td>Tara PrivacyOS AI Code Scanner (OpenAI GPT-4o integration)</td></tr>
+    <tr><td><strong>Controller</strong></td><td>Acme Technologies Ltd.</td></tr>
+    <tr><td><strong>Processor</strong></td><td>OpenAI Ireland Ltd. (Azure OpenAI Service — EU West 1)</td></tr>
+    <tr><td><strong>Purpose</strong></td><td>Automated detection of privacy risks, PII exposure, and compliance gaps in developer source code using large language model analysis.</td></tr>
+    <tr><td><strong>Data Categories</strong></td><td>Source code (may contain incidental PII), developer identifiers, file metadata</td></tr>
+    <tr><td><strong>Data Subjects</strong></td><td>Software developers, end users whose data appears in code</td></tr>
+    <tr><td><strong>Legal Basis</strong></td><td>Art. 6(1)(f) — Legitimate Interest (privacy protection)</td></tr>
+    <tr><td><strong>ZDR Configuration</strong></td><td>Zero Data Retention enabled — OpenAI does not use inputs for model training</td></tr>
+    <tr><td><strong>EU AI Act Classification</strong></td><td>High-Risk (Annex III — AI systems for access control to critical infrastructure)</td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <h2>Step 2: Necessity & Proportionality — Art. 35(7)(b)</h2>
+  <p>The use of AI-driven code analysis is proportionate to the compliance objective. Manual code review at scale (128 sessions/month, 1,842 events analysed) is not feasible. The AI processes the minimum data necessary — code snippets rather than full repositories. PII scrubbing is applied before transmission. ZDR ensures no data persistence beyond the API call.</p>
+  <table>
+    <tr><th>Proportionality Factor</th><th>Assessment</th><th>Verdict</th></tr>
+    <tr><td>Minimum data processed</td><td>Snippet-level, not full files</td><td><span class="risk-low">Proportionate</span></td></tr>
+    <tr><td>No alternative achieves same result</td><td>Manual review infeasible at scale</td><td><span class="risk-low">Justified</span></td></tr>
+    <tr><td>Data retention by processor</td><td>Zero Data Retention (ZDR) enabled</td><td><span class="risk-low">Minimal</span></td></tr>
+    <tr><td>International transfer risk</td><td>EU Azure region, SCCs in place</td><td><span class="risk-med">Managed</span></td></tr>
+    <tr><td>Special category data risk</td><td>Health data may appear in code snippets</td><td><span class="risk-high">Action Required</span></td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <h2>Step 3: Risk Assessment Matrix — Art. 35(7)(c)</h2>
+  <table>
+    <tr><th>Risk</th><th>Likelihood</th><th>Severity</th><th>Residual Risk</th><th>Mitigation</th></tr>
+    <tr><td>Incidental PII in code snippets transmitted to AI</td><td>High</td><td>Medium</td><td><span class="risk-med">Medium</span></td><td>Pre-transmission PII scrubber (regex + NER model)</td></tr>
+    <tr><td>Special category health data in code</td><td>Low</td><td>High</td><td><span class="risk-high">High</span></td><td>Add health-data classifier before API call — PENDING</td></tr>
+    <tr><td>AI model bias affecting compliance scoring</td><td>Medium</td><td>Medium</td><td><span class="risk-med">Medium</span></td><td>Human review for all Critical findings; bias audit Q2</td></tr>
+    <tr><td>OpenAI service breach (processor)</td><td>Very Low</td><td>High</td><td><span class="risk-low">Low</span></td><td>ZDR config, SCCs, Art. 28 DPA; monitor OpenAI security bulletins</td></tr>
+    <tr><td>Unlawful automated decision-making</td><td>Low</td><td>High</td><td><span class="risk-low">Low</span></td><td>AI outputs are advisory only; human DPO approves all remediations</td></tr>
+    <tr><td>Cross-border data transfer to US servers</td><td>Low</td><td>Medium</td><td><span class="risk-low">Low</span></td><td>Azure EU-West-1 region enforced; SCCs executed Feb 2024</td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <h2>Step 4: Findings & Required Actions — Art. 35(7)(d)</h2>
+  <div class="finding"><strong>[ACTION-1 — HIGH]</strong> Deploy health/special-category data classifier before code snippets are sent to OpenAI API. Target: within 14 days. Owner: Engineering Lead.</div>
+  <div class="finding"><strong>[ACTION-2 — MEDIUM]</strong> Conduct formal Legitimate Interest Assessment (LIA) for AI code scanning activity. Target: within 30 days. Owner: DPO.</div>
+  <div class="finding"><strong>[ACTION-3 — MEDIUM]</strong> Schedule AI bias audit for GPT-4o compliance scoring model. Target: Q2 2024. Owner: AI Governance Team.</div>
+  <div class="finding"><strong>[ACTION-4 — LOW]</strong> Update privacy notice to explicitly mention AI-assisted code analysis. Target: within 7 days. Owner: Legal Team.</div>
+  <div class="finding"><strong>[CONSULT-1]</strong> Prior consultation with ICO recommended under Art. 36 due to High-Risk AI Act classification. DPO to initiate consultation within 30 days.</div>
+</div>
+
+<div class="section">
+  <h2>DPO Sign-Off</h2>
+  <table>
+    <tr><th>Role</th><th>Name</th><th>Decision</th><th>Date</th></tr>
+    <tr><td>Data Protection Officer</td><td>Compliance Officer</td><td><span class="risk-med">Review Required — 2 actions outstanding</span></td><td>${dateStr}</td></tr>
+    <tr><td>CISO</td><td>Pending sign-off</td><td>—</td><td>—</td></tr>
+    <tr><td>Legal Counsel</td><td>Pending sign-off</td><td>—</td><td>—</td></tr>
+  </table>
+</div>
+
+<div class="footer">
+  <p>Generated by <strong>Tara PrivacyOS v3.4</strong> · High-Risk AI DPIA Evaluation<br>
+  Document ID: DPIA-${Math.random().toString(36).substr(2, 8).toUpperCase()} · ${dateStr}<br>
+  This DPIA must be reviewed every 3 years or whenever processing changes materially.</p>
+</div>
+</body></html>`;
+}
+
+// ── Report 4: Full Dossier (combined) ─────────────────────────
+function generateDossierHTML(dateStr) {
+    // Combine a brief from all 3 reports into a master dossier
+    return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Acme Technologies — Full Compliance Dossier</title>
+<style>
+  body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 40px; background: #f8fafd; color: #1e1e2e; }
+  .cover { background: linear-gradient(135deg, #1e1b4b, #4F46E5, #7C3AED); color: white; border-radius: 16px; padding: 56px 48px; margin-bottom: 32px; }
+  .cover h1 { font-size: 30px; font-weight: 800; margin: 0 0 8px 0; letter-spacing: -0.5px; }
+  .cover .sub { font-size: 13.5px; opacity: 0.85; margin-bottom: 20px; }
+  .cover .badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+  .badge { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 600; }
+  .section { background: white; border-radius: 12px; padding: 28px; margin-bottom: 20px; border: 1px solid #e5e7f0; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+  h2 { font-size: 18px; font-weight: 700; color: #4F46E5; border-bottom: 2px solid #4F46E5; padding-bottom: 8px; margin-top: 0; }
+  .score-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 16px; margin: 16px 0; }
+  .score-card { background: #f8fafd; border: 1px solid #e5e7f0; border-radius: 10px; padding: 16px; text-align: center; }
+  .score-num { font-size: 30px; font-weight: 800; color: #4F46E5; }
+  .score-label { font-size: 11px; color: #6b7280; font-weight: 600; text-transform: uppercase; margin-top: 4px; }
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  th { background: #4F46E5; color: white; padding: 10px 14px; text-align: left; }
+  td { padding: 9px 14px; border-bottom: 1px solid #e5e7f0; }
+  tr:nth-child(even) td { background: #f8fafd; }
+  .ok { background: #ECFDF5; color: #059669; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+  .warn { background: #FEF3C7; color: #D97706; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+  .crit { background: #FEE2E2; color: #DC2626; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+  .finding { background: #f0f4ff; border-left: 4px solid #4F46E5; padding: 10px 14px; border-radius: 0 8px 8px 0; margin: 8px 0; font-size: 13px; }
+  .footer { text-align: center; color: #9ca3af; font-size: 11px; margin-top: 32px; padding: 20px; border-top: 1px solid #e5e7f0; }
+  @media print { body { background: white; } }
+</style>
+</head>
+<body>
+<div class="cover">
+  <h1>Acme Technologies Ltd.<br>Full Enterprise Compliance Dossier</h1>
+  <div class="sub">Comprehensive regulatory compliance package for board review, ICO submission, and legal counsel · Generated: ${dateStr}</div>
+  <div class="badges">
+    <span class="badge">UK GDPR · Certified</span>
+    <span class="badge">DPA 2018 · Compliant</span>
+    <span class="badge">India DPDP 2023</span>
+    <span class="badge">EU AI Act · High-Risk Review</span>
+    <span class="badge">Art. 30 RoPA · Verified</span>
+    <span class="badge">Art. 35 DPIA · Reviewed</span>
+    <span class="badge">ISO 27001:2022</span>
+    <span class="badge">SOC 2 Type II</span>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Executive Dashboard — Compliance Posture</h2>
+  <div class="score-grid">
+    <div class="score-card"><div class="score-num">74</div><div class="score-label">Overall / 100</div></div>
+    <div class="score-card"><div class="score-num" style="color:#059669">76%</div><div class="score-label">UK GDPR</div></div>
+    <div class="score-card"><div class="score-num" style="color:#7C3AED">71%</div><div class="score-label">India DPDP</div></div>
+    <div class="score-card"><div class="score-num" style="color:#0891b2">78%</div><div class="score-label">Security</div></div>
+    <div class="score-card"><div class="score-num" style="color:#D97706">68%</div><div class="score-label">Documentation</div></div>
+    <div class="score-card"><div class="score-num" style="color:#DC2626">9</div><div class="score-label">Critical Findings</div></div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Part A — Privacy Assessment Summary</h2>
+  <table>
+    <tr><th>Framework</th><th>Articles Reviewed</th><th>Gaps</th><th>Status</th></tr>
+    <tr><td>UK GDPR</td><td>24</td><td>4</td><td><span class="ok">Certified</span></td></tr>
+    <tr><td>Data Protection Act 2018</td><td>Schedule 1 & 2</td><td>2</td><td><span class="ok">Certified</span></td></tr>
+    <tr><td>India DPDP Act 2023</td><td>Chapters I-IV</td><td>3</td><td><span class="ok">Certified</span></td></tr>
+    <tr><td>EU AI Act (High-Risk)</td><td>Articles 9-15</td><td>2</td><td><span class="warn">In Review</span></td></tr>
+    <tr><td>ISO/IEC 27001:2022</td><td>Annex A</td><td>1</td><td><span class="ok">Compliant</span></td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <h2>Part B — Article 30 RoPA Summary (8 Activities)</h2>
+  <table>
+    <tr><th>#</th><th>Activity</th><th>Lawful Basis</th><th>3rd Country?</th><th>Retention</th><th>Status</th></tr>
+    <tr><td>1</td><td>User Authentication</td><td>Art. 6(1)(b) Contract</td><td>US (SCCs)</td><td>7 years</td><td><span class="ok">OK</span></td></tr>
+    <tr><td>2</td><td>AI Code Scanning</td><td>Art. 6(1)(f) LI</td><td>US/EU Azure</td><td>90 days</td><td><span class="ok">OK</span></td></tr>
+    <tr><td>3</td><td>Audit Logs</td><td>Art. 6(1)(c) Legal</td><td>EU only</td><td>3 years</td><td><span class="ok">OK</span></td></tr>
+    <tr><td>4</td><td>Payments</td><td>Art. 6(1)(b) Contract</td><td>US (SCCs)</td><td>7 years</td><td><span class="ok">OK</span></td></tr>
+    <tr><td>5</td><td>Employee HR</td><td>Art. 6(1)(c) Legal</td><td>None</td><td>7 years</td><td><span class="ok">OK</span></td></tr>
+    <tr><td>6</td><td>Marketing</td><td>Art. 6(1)(a) Consent</td><td>US (SCCs)</td><td>Until withdrawn</td><td><span class="ok">OK</span></td></tr>
+    <tr><td>7</td><td>Health Data (Legal AI)</td><td>Art. 9(2)(b) Legal</td><td>None</td><td>12 months</td><td><span class="ok">OK</span></td></tr>
+    <tr><td>8</td><td>System Analytics</td><td>Art. 6(1)(f) LI</td><td>EU only</td><td>90 days</td><td><span class="ok">OK</span></td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <h2>Part C — DPIA Summary (OpenAI ZDR High-Risk AI)</h2>
+  <table>
+    <tr><th>Risk</th><th>Residual Risk</th><th>Mitigation Status</th></tr>
+    <tr><td>Incidental PII in code snippets</td><td><span class="warn">Medium</span></td><td>PII scrubber active — monitoring ongoing</td></tr>
+    <tr><td>Special category health data</td><td><span class="crit">High</span></td><td>Health classifier deployment PENDING — 14 days</td></tr>
+    <tr><td>AI model bias in scoring</td><td><span class="warn">Medium</span></td><td>Bias audit scheduled Q2 2024</td></tr>
+    <tr><td>Processor security breach</td><td><span class="ok">Low</span></td><td>ZDR + SCCs + DPA — monitored</td></tr>
+    <tr><td>Unlawful automated decisions</td><td><span class="ok">Low</span></td><td>Advisory-only outputs; DPO approves all actions</td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <h2>Critical Actions — Board Attention Required</h2>
+  <div class="finding"><strong>[CRIT-001 — 14 DAYS]</strong> Deploy health/special-category data classifier before OpenAI API calls. Owner: Engineering Lead.</div>
+  <div class="finding"><strong>[CRIT-002 — 7 DAYS]</strong> Add consent gate to <code>collectHealthData.ts:47</code> before health data collection. Owner: Dev Team.</div>
+  <div class="finding"><strong>[CRIT-003 — 30 DAYS]</strong> Conduct Legitimate Interest Assessment for AI code scanning activity. Owner: DPO.</div>
+  <div class="finding"><strong>[CRIT-004 — 7 DAYS]</strong> Encrypt PII fields in <code>userAnalytics.ts:88</code> — currently transmitted without field-level encryption. Owner: Security Team.</div>
+  <div class="finding"><strong>[CONSULT — 30 DAYS]</strong> Initiate Art. 36 prior consultation with ICO re: High-Risk AI Act classification. Owner: DPO + Legal.</div>
+</div>
+
+<div class="footer">
+  <p>Generated by <strong>Tara PrivacyOS v3.4</strong> · AI Accelerator Enterprise Suite<br>
+  <strong>Acme Technologies Ltd.</strong> · DPO: Compliance Officer · ICO Reg: ZA-2024-873421<br>
+  Document ID: DOSS-${Math.random().toString(36).substr(2, 8).toUpperCase()} · ${dateStr}<br>
+  <em>CONFIDENTIAL — For board review, ICO submission, and legal counsel only. Do not distribute externally.</em></p>
+</div>
+</body></html>`;
+}
+// ══════════════════════════════════════════════════════════════
+
+
+        function exportAuditLogs() {
+            const logs = [
+                {"timestamp":"2024-01-15T14:32:11Z","level":"CRITICAL","event":"PII_EXPOSURE","file":"collectHealthData.ts","line":47,"rule":"UK_GDPR_Art9","hash":"#a3f9e1b2"},
+                {"timestamp":"2024-01-15T13:18:04Z","level":"WARNING","event":"UNENCRYPTED_PII","file":"userAnalytics.ts","line":88,"rule":"UK_GDPR_Art5_1f","hash":"#b7c3d4e5"},
+                {"timestamp":"2024-01-15T11:45:33Z","level":"AUTH","event":"ADMIN_LOGIN","user":"Compliance Lead","method":"Microsoft_SSO","mfa":true,"hash":"#c8d4e5f6"},
+                {"timestamp":"2024-01-15T09:12:07Z","level":"INFO","event":"SCAN_COMPLETE","repo":"ApnaGhar/backend","events_analysed":1842,"critical":9,"score":74,"hash":"#d9e5f6a7"}
+            ];
+            const jsonl = logs.map(l => JSON.stringify(l)).join('\n');
+            downloadBlob(jsonl, 'tara_audit_logs_export.jsonl', 'application/jsonl');
+            showToast('Audit logs exported as JSONL!', '📥');
+        }
+
+
+        function closeIDTAModal() {
+            const overlay = document.getElementById('idta-modal-overlay');
+            if (overlay) {
+                overlay.style.display = 'none';
+                overlay.classList.remove('active');
+            }
+        }
+        function openIDTAModal() {
+            const overlay = document.getElementById('idta-modal-overlay');
+            if (overlay) {
+                overlay.style.display = 'flex';
+                overlay.classList.add('active');
+            }
+        }
+
+
+// ==============================================================
         let selectedAITools = ['chatgpt_consumer', 'openai_api', 'cursor_copilot'];
         let selectedAIDataTypes = ['consultation_health', 'source_code'];
         let currentAIGovResult = null;
@@ -4539,6 +6938,7 @@ ${mermaidCode}
                 showToast('Copied GitHub Mermaid code! Paste directly into README.md', '🐙');
             });
         }
-    </script>
+    
+</script>
 </body>
 </html>
