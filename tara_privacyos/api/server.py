@@ -23,6 +23,7 @@ from tara_privacyos.core.github_extractor import GitHubRepoExtractor
 from tara_privacyos.legal_engines.use_based_gdpr_gen import UseBasedGDPRGenerator
 from tara_privacyos.legal_engines.ai_governance_engine import AIGovernanceEngine
 from tara_privacyos.legal_engines.data_flow_engine import DataFlowEngine
+from tara_privacyos.legal_engines.family_law_engine import FamilyLawEngine
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 
@@ -47,6 +48,7 @@ github_extractor = GitHubRepoExtractor()
 use_based_gdpr_gen = UseBasedGDPRGenerator()
 ai_gov_engine = AIGovernanceEngine()
 data_flow_engine = DataFlowEngine()
+family_law_engine = FamilyLawEngine()
 latest_report: Optional[Dict[str, Any]] = None
 
 class GitHubScanRequest(BaseModel):
@@ -519,4 +521,28 @@ def generate_idta_schedule(req: IDTAGenerateRequest):
     }
 
 
+# ==============================================================
+# PHASE 2: FAMILY LAW AI — FORM E FORENSIC AUDIT & SECTION 25 MODELER
+# ==============================================================
+
+class FamilyLawAuditRequest(BaseModel):
+    case_id: Optional[str] = "harrison-matrimonial"
+
+@app.get("/api/family-law/cases")
+def get_family_law_cases():
+    """Returns list of pre-configured matrimonial finance cases."""
+    return family_law_engine.list_presets()
+
+@app.get("/api/family-law/case/{case_id}")
+def get_family_law_case_detail(case_id: str):
+    """Returns full case details including Form E disclosures and bank audit flags."""
+    case = family_law_engine.get_case(case_id)
+    if not case:
+        raise HTTPException(status_code=404, detail="Matrimonial case not found")
+    return case
+
+@app.post("/api/family-law/audit")
+def run_family_law_audit(req: FamilyLawAuditRequest):
+    """Runs forensic Form E balance sheet and Section 25 MCA 1973 settlement modeling."""
+    return family_law_engine.run_full_audit(req.case_id or "harrison-matrimonial")
 
