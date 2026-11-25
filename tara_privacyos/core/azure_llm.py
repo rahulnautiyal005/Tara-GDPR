@@ -118,9 +118,9 @@ Return ONLY a valid JSON object matching this exact schema:
     {{
       "severity": "critical" | "warning",
       "title": "<Concise issue title>",
-      "law": "<Statutory citation, e.g. UK GDPR Article 9 or India DPDPA Sec 6>",
+      "law": "<Statutory citation, e.g. UK GDPR Article 6, Article 9, or India DPDP Act 2023 Section 6/8/12/13>",
       "description": "<Detailed explanation of the compliance flaw>",
-      "fix": "<Exact statutory remediation applied>"
+      "fixed_text": "<Exact statutory remediation applied>"
     }}
   ],
   "fixed_document_html": "<Complete, professional HTML markup of the rewritten compliant document with <div class='clause-added'><span class='clause-label'>ADDED COMPLIANT CLAUSE:</span>...</div> highlighting where statutory clauses were injected>"
@@ -148,6 +148,11 @@ Return ONLY a valid JSON object matching this exact schema:
             res_json = response.json()
             content = res_json["choices"][0]["message"]["content"]
             parsed = json.loads(content)
+            for iss in parsed.get("issues", []):
+                if "fixed_text" not in iss and "fix" in iss:
+                    iss["fixed_text"] = iss["fix"]
+                if "fix" not in iss and "fixed_text" in iss:
+                    iss["fix"] = iss["fixed_text"]
             parsed["success"] = True
             parsed["engine"] = "Tara PrivacyOS Legal Engine v2.4"
             return parsed

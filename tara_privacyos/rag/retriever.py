@@ -139,15 +139,27 @@ class LegalRetriever:
 
             # Direct match on citation (e.g. "article 9", "section 6", "idta", "ropa", "dpia")
             if "article 9" in query_lower and ("art-09" in doc_id or "article 9" in cit):
-                boost += 0.8
+                boost += 0.85
             if "article 6" in query_lower and ("art-06" in doc_id or "article 6" in cit):
-                boost += 0.7
-            if "article 17" in query_lower or "erasure" in query_lower or "forgotten" in query_lower:
-                if "art-17" in doc_id or "erasure" in title:
-                    boost += 0.75
-            if "article 28" in query_lower or "dpa" in query_lower or "processor" in query_lower:
+                boost += 0.75
+            if "6(4)" in query_lower or "article 6(4)" in query_lower or "compatibility" in query_lower or "further processing" in query_lower:
+                if "art-06-4" in doc_id or "compatibility" in title:
+                    boost += 0.95
+            if "article 21" in query_lower or "object" in query_lower or "opt-out" in query_lower or "unsubscribe" in query_lower:
+                if "art-21" in doc_id or "right to object" in title:
+                    boost += 0.9
+            if "article 22" in query_lower or "profiling" in query_lower or "automated decision" in query_lower:
+                if "art-22" in doc_id or "profiling" in title:
+                    boost += 0.9
+            if "article 17" in query_lower or "erasure" in query_lower or "forgotten" in query_lower or "retention" in query_lower:
+                if "art-17" in doc_id or "erasure" in title or "retention" in doc_id:
+                    boost += 0.8
+            if "article 4" in query_lower or "controller" in query_lower or "processor" in query_lower:
+                if "controller-processor" in doc_id or "art-04" in doc_id or "art-28" in doc_id:
+                    boost += 0.85
+            if "article 28" in query_lower or "dpa" in query_lower or "processor obligation" in query_lower:
                 if "art-28" in doc_id or "dpa" in title:
-                    boost += 0.65
+                    boost += 0.8
             if "article 30" in query_lower or "ropa" in query_lower:
                 if "art-30" in doc_id or "ropa" in doc_id or "ropa" in title:
                     boost += 0.8
@@ -160,21 +172,49 @@ class LegalRetriever:
             if "pecr" in query_lower or "cookie" in query_lower or "cookies" in query_lower:
                 if "pecr" in doc_id or "cookie" in title:
                     boost += 0.85
-            if "section 6" in query_lower and "dpdpa" in query_lower:
+            if "unified" in query_lower or "multi-jurisdiction" in query_lower or "global privacy policy" in query_lower:
+                if "unified" in doc_id or "cross_border" in doc.get("jurisdiction", "").lower():
+                    boost += 0.95
+            # DPDP Act specific section boosts
+            if "section 4" in query_lower or "section 5" in query_lower or "notice" in query_lower:
+                if "sec-04-05" in doc_id:
+                    boost += 0.85
+            if "section 6" in query_lower or "consent withdrawal" in query_lower or "consent manager" in query_lower:
                 if "sec-06" in doc_id:
-                    boost += 0.8
-            if "section 8" in query_lower or "250 crore" in query_lower:
+                    boost += 0.85
+            if "section 7" in query_lower or "legitimate uses" in query_lower:
+                if "sec-07" in doc_id:
+                    boost += 0.95
+            if "section 8" in query_lower or "security safeguards" in query_lower:
                 if "sec-08" in doc_id:
-                    boost += 0.8
-            if "section 9" in query_lower or "children" in query_lower or "minor" in query_lower:
+                    boost += 0.85
+            if "section 9" in query_lower or "children" in query_lower or "minor" in query_lower or "parental consent" in query_lower:
                 if "sec-09" in doc_id:
-                    boost += 0.8
+                    boost += 0.9
+            if "section 10" in query_lower or "significant data fiduciary" in query_lower or "sdf" in query_lower:
+                if "sec-10" in doc_id:
+                    boost += 0.85
+            if "section 11" in query_lower or "access information" in query_lower or "right to access" in query_lower:
+                if "sec-11" in doc_id:
+                    boost += 0.95
+            if "section 12" in query_lower or "correction" in query_lower or "completion" in query_lower or "updating" in query_lower or ("erasure" in query_lower and "dpdp" in query_lower):
+                if "sec-12" in doc_id:
+                    boost += 0.95
             if "grievance" in query_lower or "section 13" in query_lower:
                 if "sec-13" in doc_id:
-                    boost += 0.8
+                    boost += 0.9
+            if "section 14" in query_lower or "nominate" in query_lower or "nomination" in query_lower:
+                if "sec-14" in doc_id:
+                    boost += 0.95
+            if "section 15" in query_lower or "duties of data principal" in query_lower or "10,000" in query_lower or "10000" in query_lower:
+                if "sec-15" in doc_id:
+                    boost += 0.95
+            if "penalty" in query_lower or "penalties" in query_lower or "fine" in query_lower or "fines" in query_lower or "schedule" in query_lower or "250 crore" in query_lower:
+                if "schedule" in doc_id or "penalties" in doc_id:
+                    boost += 0.95
             if "openai" in query_lower or "llm" in query_lower or "chatgpt" in query_lower or "ai" in query_lower:
                 if "ai" in doc_id or "openai" in doc_id:
-                    boost += 0.5
+                    boost += 0.6
 
             if boost > 0:
                 citation_boosts[doc_idx] = boost

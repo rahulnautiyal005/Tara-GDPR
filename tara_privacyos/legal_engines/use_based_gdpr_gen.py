@@ -136,9 +136,9 @@ Under UK GDPR Article 9(1), processing of data concerning health, genetic/biomet
 | Processing Purpose / Service Route | Personal Data Categories | Lawful Basis (UK GDPR) | Statutory Basis (India DPDPA) |
 | :--- | :--- | :--- | :--- |
 | **User Authentication & Account Management** | Name, Email, Password Hash, IP Address | Article 6(1)(b) (Performance of Contract) | Section 4 & 6 (Notice & Consent) |
-| **Service Fulfillment & Consultations** | Consultation queries, birth details, session notes | Article 6(1)(b) (Contract) & Art 9(2)(a) (Explicit Consent) | Section 4 & 8 (Enhanced Data Protection) |
-| **Payment Invoicing & Checkout** | Tokenized Card Tokens, Billing Postal Code | Article 6(1)(b) & Article 6(1)(c) (Legal Obligation) | Section 4 & RBI Tokenisation Norms |
-| **AI Summarization & Session Transcripts** | De-identified prompts, query transcripts | Article 6(1)(b) (Contract) & Art 9(2)(a) (Consent) | Section 6 (Specific Purpose Limitation) |
+| **Core Application Service Delivery & Operations** | User inputs, operational telemetry, transactional logs | Article 6(1)(b) (Contractual Necessity) | Section 4 & 6 (Notice & Consent) |
+| **Payment Invoicing & Statutory Accounting** | Billing Address, Transaction Identifiers, Card Token | Article 6(1)(b) & Article 6(1)(c) (Legal Obligation) | Section 4 & RBI Payment Localisation |
+| **Automated AI Intelligence & Analytics** | Application prompts, contextual telemetry | Article 6(1)(b) (Contract) / Consent Art 6(1)(a) | Section 6 (Specific Purpose Limitation) |
 | **Security Auditing & Fraud Prevention** | IP address, timestamp, device telemetry | Article 6(1)(f) (Legitimate Interests) | Section 8(5) (Security Safeguards) |
 
 ---
@@ -171,7 +171,7 @@ In compliance with the Principle of Storage Limitation (UK GDPR Article 5(1)(e))
 | Data Type / Model | Retention Period | Post-Retention Action |
 | :--- | :--- | :--- |
 | **Account Profile & Identifiers** | Duration of active account + 30 days grace | Cryptographic purge from production DB |
-| **Sensitive Consultation Notes & Transcripts** | 30 to 90 days post-session completion | Irreversible anonymisation / deletion |
+| **Operational Application Data & Session Logs** | 30 to 90 days post-session fulfillment | Irreversible anonymisation / deletion |
 | **Payment Transactions & Invoices** | 6 Statutory Years (UK HMRC & Financial Laws) | Archived in restricted financial ledger |
 | **Server Access Logs & IP Telemetry** | Rolling 14 to 30 days | Automated log rotation & overwriting |
 
@@ -223,11 +223,11 @@ If you believe our data processing violates statutory standards:
             {
                 "activity_id": "ROPA-002",
                 "purpose": f"{use_case.get('primary_domain', 'Consultation')} Core Service Fulfillment",
-                "data_subjects": "Service Clients & Assigned Practitioners",
-                "categories_of_data": "Service records, consultation queries, demographic metadata" + (", Article 9 Health/Belief Data" if has_art9 else ""),
+                "data_subjects": ", ".join(use_case.get('data_subjects', ['Registered Application Users'])),
+                "categories_of_data": "Application data, transactional inputs, operational metadata" + (", Special Category Data" if has_art9 else ""),
                 "lawful_basis": "UK GDPR Art 6(1)(b) (Contract)" + (" & Art 9(2)(a) (Explicit Consent)" if has_art9 else ""),
-                "recipients_processors": "Assigned Vetted Practitioners, Primary Database (PostgreSQL/MongoDB)",
-                "transfer_safeguards": "Cross-Border UK-India IDTA with Practitioner Shielding",
+                "recipients_processors": "Authorized Cloud Infrastructure, Application Databases",
+                "transfer_safeguards": "Cross-Border UK-India IDTA / Standard Contractual Clauses",
                 "retention_period": "30 to 90 days after service fulfillment, then purged",
                 "security_measures": "Field-Level AES-256 encryption, Practitioner phone/email masking"
             },
@@ -275,10 +275,10 @@ If you believe our data processing violates statutory standards:
 
         risks = [
             {
-                "risk_title": "Unauthorized Cross-Border Practitioner Data Exfiltration",
+                "risk_title": "Unauthorized Cross-Border Administrative Data Exfiltration",
                 "likelihood": "Medium",
                 "severity": "High",
-                "mitigation": "Enforce practitioner interface contact masking (strip email and phone numbers from API responses). Route communications via in-app relay."
+                "mitigation": "Enforce strict Role-Based Access Control (RBAC), API tokenization, and end-to-end audit logging across all remote access sessions."
             },
             {
                 "risk_title": "Subprocessor LLM Training on Confidential Client Prompts",

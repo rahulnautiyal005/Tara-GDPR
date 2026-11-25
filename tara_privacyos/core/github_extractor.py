@@ -55,6 +55,22 @@ class GitHubRepoExtractor:
             "student", "course", "lesson", "quiz", "instructor", "grade",
             "school", "curriculum", "assignment", "education"
         ],
+        "Maritime, Shipping & Port Operations": [
+            "port", "vessel", "berth", "ship", "cargo", "container", "terminal",
+            "marine", "logistics", "voyage", "quay", "anchorage", "portops", "stevedoring", "dock"
+        ],
+        "Logistics, Supply Chain & Freight": [
+            "fleet", "truck", "warehouse", "freight", "delivery", "dispatch",
+            "route", "consignment", "tracking", "driver", "transport", "shipment"
+        ],
+        "Developer Tools, DevOps & Cloud Infrastructure": [
+            "cli", "sdk", "api", "cloud", "docker", "kubernetes", "infra",
+            "deploy", "pipeline", "ci", "cd", "monitoring", "git", "cluster", "observability"
+        ],
+        "Cybersecurity, IAM & Identity Governance": [
+            "auth", "token", "iam", "saml", "sso", "security", "vulnerability",
+            "audit", "vault", "encrypt", "firewall", "identity", "zero_trust"
+        ],
         "SaaS & Enterprise Collaboration": [
             "tenant", "workspace", "organization", "project", "task",
             "team", "role", "subscription", "member", "collaboration"
@@ -134,16 +150,12 @@ class GitHubRepoExtractor:
                 target_dir = temp_dir
                 clone_success = True
             except Exception as clone_err:
-                # If git clone fails (e.g., mock/offline or private repo), use built-in sample repo if matching
-                shutil.rmtree(temp_dir, ignore_errors=True)
-                temp_dir = None
-                sample_path = os.path.abspath(
-                    os.path.join(os.path.dirname(__file__), "..", "benchmarks", "sample_consultation_app")
+                if temp_dir and os.path.exists(temp_dir):
+                    shutil.rmtree(temp_dir, ignore_errors=True)
+                raise RuntimeError(
+                    f"Could not clone repository '{repo_url_or_path}'. "
+                    f"Please verify that the repository URL is public and valid, or that the specified branch exists. Error details: {str(clone_err)}"
                 )
-                if os.path.exists(sample_path):
-                    target_dir = sample_path
-                else:
-                    raise RuntimeError(f"Could not clone repository: {clone_err}")
 
         try:
             extraction_result = self._scan_directory(target_dir, info)

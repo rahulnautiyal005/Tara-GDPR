@@ -5061,31 +5061,31 @@ ZenAuraa uses cookies and mobile SDKs to provide and enhance our services.
                 console.warn("Backend audit offline, using comprehensive statutory fallback:", err);
             }
 
-            // Fallback statutory audit simulation
+            // Fallback statutory audit simulation (universal enterprise SaaS / application)
             setTimeout(() => {
                 const fallbackData = {
-                    stats: { critical: 2, warnings: 1, fixes: 3, score: 78 },
+                    stats: { critical: 2, warnings: 1, fixes: 3, score: 82 },
                     issues: [
                         {
                             severity: "critical",
-                            title: "Missing Article 9 Explicit Consent for Sensitive Data",
-                            description: "Your document references processing birth charts, spiritual queries, or personal health records. Under UK GDPR Article 9 & India DPDP Act Section 6, explicit separate consent is mandatory.",
-                            law: "UK GDPR Article 9(2)(a) & DPDPA 2023 Sec 6",
-                            fixed_text: "Explicit Special Category Consent: By ticking the consultation consent box, you explicitly agree to our processing of sensitive personal data (including birth details and health-related advisory queries) strictly for providing this session."
+                            title: "Missing Statutory Consent Withdrawal Mechanism",
+                            description: "The document collects user personal data without specifying an immediate, easily accessible mechanism to withdraw consent as mandated under UK GDPR Article 7(3) and India DPDP Act 2023 Section 6(4).",
+                            law: "UK GDPR Article 7(3) & India DPDP Act 2023 Section 6(4)",
+                            fixed_text: "Right to Withdraw Consent: You may withdraw your consent at any time via your account privacy settings or by contacting privacy@taraprivacy.io. Withdrawal takes effect immediately and halts future processing without affecting prior lawful processing."
                         },
                         {
                             severity: "critical",
-                            title: "Undefined International Data Transfer Mechanism",
-                            description: "Your application transfers data between UK and overseas service providers/practitioners in India without citing UK International Data Transfer Agreements (IDTA) or SCCs.",
-                            law: "UK GDPR Article 46 & ICO International Transfer Guidance",
-                            fixed_text: "International Data Transfers: Cross-border transfers between our UK entity and practitioners or technical personnel located in India are governed by UK ICO-approved International Data Transfer Agreements (IDTA) ensuring equivalent data safeguards."
+                            title: "Undefined International Data Transfer Safeguards",
+                            description: "Your platform transfers data across borders (UK/EU to India/overseas cloud regions) without explicitly citing UK ICO-approved International Data Transfer Agreements (IDTA) or Standard Contractual Clauses (SCCs).",
+                            law: "UK GDPR Chapter V (Article 46) & DPA 2018 Section 119A",
+                            fixed_text: "International Data Transfers: All cross-border data access and cloud transfers between our UK/EU operations and overseas technical facilities in India are governed by official UK ICO International Data Transfer Agreements (IDTA) ensuring strict encryption and third-party beneficiary rights."
                         },
                         {
                             severity: "warning",
-                            title: "Statutory Data Erasure (Right to be Forgotten) Window Unspecified",
-                            description: "The document mentions 90-day retention but does not explain how users can exercise their Article 17 right to immediate erasure.",
-                            law: "UK GDPR Article 17 & India DPDPA Section 12",
-                            fixed_text: "Right to Erasure (DSAR): Users may request immediate deletion of their consultation records at any time by emailing privacy@tarainfotech.com. Requests are executed across all active databases and cloud backups within 30 days."
+                            title: "Missing India Grievance Redressal Officer Contact",
+                            description: "Under Section 13 of the India DPDP Act 2023, every Data Fiduciary must publish the name and direct contact details of an accessible Grievance Redressal Officer.",
+                            law: "India DPDP Act 2023 Section 13",
+                            fixed_text: "Grievance Redressal Mechanism: Contact our Data Protection & Grievance Officer at grievance@taraprivacy.io (Phone: +91-11-23456789). Grievances are acknowledged within 24 hours and resolved within 30 statutory days."
                         }
                     ]
                 };
@@ -5121,7 +5121,7 @@ ZenAuraa uses cookies and mobile SDKs to provide and enhance our services.
                     <div class="issue-statute">📖 <strong>Governing Law:</strong> ${iss.law}</div>
                     <div class="issue-fix-box">
                         <strong>✓ Tara Auto-Fix Clause Injected:</strong><br>
-                        ${iss.fixed_text}
+                        ${iss.fixed_text || iss.fix || ''}
                     </div>
                 </div>
             `).join('');
@@ -5138,7 +5138,7 @@ ZenAuraa uses cookies and mobile SDKs to provide and enhance our services.
 <div style="font-weight:700; color:var(--text-primary); margin-top:16px;">${idx + 1}. Remediated Clause: ${iss.title}</div>
 <div class="clause-added">
     <span class="clause-label">✓ Injected Statutory Clause (${iss.law})</span>
-    <p>${iss.fixed_text}</p>
+    <p>${iss.fixed_text || iss.fix || ''}</p>
 </div>`;
             });
 
