@@ -21,9 +21,6 @@ from tara_privacyos.rag.rag_engine import TaraRAGEngine
 from tara_privacyos.rag.corpus_data import get_corpus, get_corpus_stats
 from tara_privacyos.core.github_extractor import GitHubRepoExtractor
 from tara_privacyos.legal_engines.use_based_gdpr_gen import UseBasedGDPRGenerator
-from tara_privacyos.legal_engines.ai_governance_engine import AIGovernanceEngine
-from tara_privacyos.legal_engines.data_flow_engine import DataFlowEngine
-from tara_privacyos.legal_engines.family_law_engine import FamilyLawEngine
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 
@@ -46,9 +43,6 @@ engine = PrivacyOSEngine()
 rag_engine = TaraRAGEngine()
 github_extractor = GitHubRepoExtractor()
 use_based_gdpr_gen = UseBasedGDPRGenerator()
-ai_gov_engine = AIGovernanceEngine()
-data_flow_engine = DataFlowEngine()
-family_law_engine = FamilyLawEngine()
 latest_report: Optional[Dict[str, Any]] = None
 
 class GitHubScanRequest(BaseModel):
@@ -91,23 +85,6 @@ class RAGAuditRequest(BaseModel):
     document_text: str
     doc_type: Optional[str] = "privacy_policy"
 
-class AIAuditRequest(BaseModel):
-    selected_tools: List[str] = ["chatgpt_consumer"]
-    selected_data_types: List[str] = ["customer_pii"]
-    company_name: Optional[str] = "Tara Infotech Ltd"
-
-class AIDPIAGenerateRequest(BaseModel):
-    audit_result: Dict[str, Any]
-
-class AIAUPGenerateRequest(BaseModel):
-    audit_result: Dict[str, Any]
-
-class DataFlowRequest(BaseModel):
-    preset_id: Optional[str] = "tara-consultation"
-
-class IDTAGenerateRequest(BaseModel):
-    company_name: Optional[str] = "Tara Infotech Ltd"
-    overseas_entity: Optional[str] = "Tara Infotech India Pvt Ltd"
 
 @app.get("/")
 def home():
@@ -390,18 +367,10 @@ def extract_and_generate_gdpr(req: GitHubScanRequest):
             company_name=req.company_name
         )
 
-        # Step 3: Automatically construct tailored Visual Data-Flow Topology for scanned repo
-        data_flow_topo = data_flow_engine.build_topology_from_extraction(
-            extraction_data=extraction_data,
-            company_name=req.company_name or "Client App",
-            repo_url=req.repo_url
-        )
-
         return {
             "status": "SUCCESS",
             "extraction": extraction_data,
-            "compliance_package": compliance_package,
-            "data_flow_topology": data_flow_topo
+            "compliance_package": compliance_package
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Pipeline error: {str(e)}")
@@ -461,88 +430,3 @@ def export_gdpr_document(req: GitHubExportRequest):
 # ==============================================================
 # PHASE 4: AI & LLM GOVERNANCE COPILOT ENDPOINTS
 # ==============================================================
-
-@app.get("/api/ai-governance/tools-catalog")
-def get_ai_tools_catalog():
-    """Returns catalog of commercial/consumer AI tools and sensitive data categories."""
-    return ai_gov_engine.get_catalog()
-
-@app.post("/api/ai-governance/audit")
-def audit_ai_governance(req: AIAuditRequest):
-    """Audits company AI usage footprint against UK GDPR & India DPDPA statutory rules."""
-    return ai_gov_engine.audit_ai_footprint(
-        selected_tool_ids=req.selected_tools,
-        selected_data_ids=req.selected_data_types,
-        company_name=req.company_name or "Tara Infotech Ltd"
-    )
-
-@app.post("/api/ai-governance/generate-dpia")
-def generate_ai_dpia(req: AIDPIAGenerateRequest):
-    """Generates statutory AI DPIA document (UK GDPR Article 35)."""
-    return {
-        "format": "markdown",
-        "title": "Statutory_AI_DPIA_Assessment",
-        "content": ai_gov_engine.generate_ai_dpia(req.audit_result)
-    }
-
-@app.post("/api/ai-governance/generate-aup")
-def generate_ai_aup(req: AIAUPGenerateRequest):
-    """Generates Employee AI Acceptable Use Policy (AUP)."""
-    return {
-        "format": "markdown",
-        "title": "Employee_AI_Acceptable_Use_Policy",
-        "content": ai_gov_engine.generate_employee_aup(req.audit_result)
-    }
-
-# ==============================================================
-# PHASE 5: INTERACTIVE VISUAL DATA-FLOW & CROSS-BORDER TRANSFER MAP
-# ==============================================================
-
-@app.get("/api/data-flow/presets")
-def get_data_flow_presets():
-    """Returns available architectural topology presets."""
-    return data_flow_engine.get_presets_list()
-
-@app.post("/api/data-flow/topology")
-def get_data_flow_topology(req: DataFlowRequest):
-    """Returns node-link topology with statutory compliance flags and fine exposures."""
-    return data_flow_engine.get_topology(req.preset_id or "tara-consultation")
-
-@app.post("/api/data-flow/generate-idta")
-def generate_idta_schedule(req: IDTAGenerateRequest):
-    """Generates statutory UK International Data Transfer Agreement (IDTA) contract."""
-    return {
-        "format": "markdown",
-        "title": "Statutory_UK_IDTA_Transfer_Schedule",
-        "content": data_flow_engine.generate_idta_schedule(
-            company_name=req.company_name or "Tara Infotech Ltd",
-            overseas_entity=req.overseas_entity or "Tara Infotech India Pvt Ltd"
-        )
-    }
-
-
-# ==============================================================
-# PHASE 2: FAMILY LAW AI — FORM E FORENSIC AUDIT & SECTION 25 MODELER
-# ==============================================================
-
-class FamilyLawAuditRequest(BaseModel):
-    case_id: Optional[str] = "harrison-matrimonial"
-
-@app.get("/api/family-law/cases")
-def get_family_law_cases():
-    """Returns list of pre-configured matrimonial finance cases."""
-    return family_law_engine.list_presets()
-
-@app.get("/api/family-law/case/{case_id}")
-def get_family_law_case_detail(case_id: str):
-    """Returns full case details including Form E disclosures and bank audit flags."""
-    case = family_law_engine.get_case(case_id)
-    if not case:
-        raise HTTPException(status_code=404, detail="Matrimonial case not found")
-    return case
-
-@app.post("/api/family-law/audit")
-def run_family_law_audit(req: FamilyLawAuditRequest):
-    """Runs forensic Form E balance sheet and Section 25 MCA 1973 settlement modeling."""
-    return family_law_engine.run_full_audit(req.case_id or "harrison-matrimonial")
-
