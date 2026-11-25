@@ -7,7 +7,7 @@ import uvicorn
 if __name__ == "__main__":
     host = os.getenv("HOST", "0.0.0.0")
     port = int(os.getenv("PORT", "8000"))
-    reload_mode = os.getenv("ENV", "production").lower() != "production"
+    reload_mode = False
 
     print("=" * 60)
     print("Starting Tara PrivacyOS Enterprise Server...")

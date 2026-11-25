@@ -39,6 +39,21 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+NO_CACHE_HEADERS = {
+    "Cache-Control": "no-cache, no-store, must-revalidate, max-age=0",
+    "Pragma": "no-cache",
+    "Expires": "0"
+}
+
+@app.middleware("http")
+async def add_no_cache_middleware(request, call_next):
+    response = await call_next(request)
+    content_type = response.headers.get("content-type", "")
+    if "text/html" in content_type or "application/json" in content_type:
+        for k, v in NO_CACHE_HEADERS.items():
+            response.headers[k] = v
+    return response
+
 engine = PrivacyOSEngine()
 rag_engine = TaraRAGEngine()
 github_extractor = GitHubRepoExtractor()
@@ -90,10 +105,10 @@ class RAGAuditRequest(BaseModel):
 def home():
     login_path = os.path.join(BASE_DIR, "login.html")
     if os.path.exists(login_path):
-        return FileResponse(login_path)
+        return FileResponse(login_path, headers=NO_CACHE_HEADERS)
     copilot_path = os.path.join(BASE_DIR, "Tara-GDPR-AI-Copilot.html")
     if os.path.exists(copilot_path):
-        return FileResponse(copilot_path)
+        return FileResponse(copilot_path, headers=NO_CACHE_HEADERS)
     return {
         "status": "online",
         "service": "Tara PrivacyOS Phase 1 Engine",
@@ -108,14 +123,14 @@ def get_copilot():
 def get_login():
     login_path = os.path.join(BASE_DIR, "login.html")
     if os.path.exists(login_path):
-        return FileResponse(login_path)
+        return FileResponse(login_path, headers=NO_CACHE_HEADERS)
     raise HTTPException(status_code=404, detail="Login file not found")
 
 @app.get("/dashboard")
 def get_dashboard():
     demo_path = os.path.join(BASE_DIR, "AI-PrivacyOS-Production-Demo.html")
     if os.path.exists(demo_path):
-        return FileResponse(demo_path)
+        return FileResponse(demo_path, headers=NO_CACHE_HEADERS)
     raise HTTPException(status_code=404, detail="Demo file not found")
 
 @app.get("/scan-details")
