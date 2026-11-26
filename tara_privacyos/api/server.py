@@ -165,6 +165,13 @@ def get_rag_guide():
         return FileResponse(rag_path)
     raise HTTPException(status_code=404, detail="RAG client guide not found")
 
+@app.get("/features-guide")
+def get_features_guide():
+    guide_path = os.path.join(BASE_DIR, "Tara-PrivacyOS-3-Features-Architecture-Guide.html")
+    if os.path.exists(guide_path):
+        return FileResponse(guide_path)
+    raise HTTPException(status_code=404, detail="Features architecture guide not found")
+
 @app.get("/api/health")
 def health_check():
     return {
