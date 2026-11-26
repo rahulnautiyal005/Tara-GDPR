@@ -194,19 +194,19 @@ def _generate_fallback_answer(query: str, error_msg: str) -> Dict[str, Any]:
     if "article 9" in q or "special category" in q or "health" in q:
         ans = (
             "### UK GDPR Article 9: Special Category Data Compliance\n\n"
-            "Under **UK GDPR Article 9(1)**, processing special category data (health data, biometrics, philosophical beliefs) "
+            "Under **UK GDPR Article 9(1)**, processing special category data (health data, biometrics, religious or philosophical beliefs) "
             "is strictly prohibited unless you have both a **lawful basis under Article 6** AND a **specific condition under Article 9(2)**.\n\n"
-            "**Key Requirements for Tara & SMEs:**\n"
+            "**Key Requirements for Organizations:**\n"
             "1. **Explicit Consent (Art. 9(2)(a)):** Must be an affirmative opt-in separate from standard Terms of Service.\n"
-            "2. **Granular Notice:** State exactly why consultation audio/chat records are held.\n"
-            "3. **Zero-Retention for AI:** Transcripts sent to LLM APIs must have zero-data retention clauses with sub-processors."
+            "2. **Granular Notice:** State clearly what special category data is collected and why.\n"
+            "3. **Zero-Retention for AI:** Prompts sent to third-party LLM APIs must have zero-data retention clauses with sub-processors."
         )
     elif "retention" in q or "delete" in q or "erasure" in q:
         ans = (
             "### Data Retention & Right to Erasure (Article 17)\n\n"
             "Under **ICO Statutory Guidance**:\n"
-            "- Stating *'We keep data as long as necessary'* is **unlawful**.\n"
-            "- You must specify definitive timeframes (e.g., *Consultation chat logs: deleted after 90 days; Financial invoices: 6 years for HMRC*).\n"
+            "- Stating *'We keep data as long as necessary'* is **unlawful** under Article 5(1)(e).\n"
+            "- You must specify definitive timeframes (e.g., *Application logs: 90 days; Invoices & financial transactions: 6 years for HMRC*).\n"
             "- You must offer an automated or documented DSAR erasure endpoint (`/api/v1/user/dsar-delete`)."
         )
     elif "india" in q or "dpdp" in q or "cross border" in q or "transfer" in q:
@@ -219,10 +219,10 @@ def _generate_fallback_answer(query: str, error_msg: str) -> Dict[str, Any]:
         )
     else:
         ans = (
-            f"### Tara PrivacyOS Legal Guidance\n\n"
+            f"### Statutory Privacy & Data Protection Guidance\n\n"
             f"Under UK GDPR (ICO guidelines) and India DPDP Act 2023, data processing must strictly adhere to Purpose Limitation, "
-            f"Data Minimization (Art 5(1)(c)), and Lawful Consent (Art 6/Sec 6).\n\n"
-            f"*Note: Operating in Tara local legal knowledge cache mode.*"
+            f"Data Minimization (Art 5(1)(c)), and Lawful Consent (Art 6 / Sec 6).\n\n"
+            f"*Note: Operating in local legal knowledge cache mode.*"
         )
 
     return {

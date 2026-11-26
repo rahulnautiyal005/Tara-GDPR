@@ -35,12 +35,12 @@ class UKGDPRMandatesGenerator:
         if has_art9:
             mandates.append({
                 "article": "UK GDPR Article 9(1) & Article 9(2)(a)",
-                "title": "Explicit Consent for Special Category Consultation Data",
+                "title": "Explicit Consent for Special Category Personal Data",
                 "statutory_requirement": (
-                    f"Codebase stores sensitive data (health/religious/spiritual/astrological context) in models: {', '.join(art9_models)}. "
+                    f"Codebase models contain sensitive special category data ({', '.join(art9_models)}). "
                     "Processing is strictly prohibited under Article 9(1) unless an Article 9(2) exception applies. "
-                    "Action Required: Implement separate, unbundled EXPLICIT CONSENT checkbox at booking: "
-                    "'I explicitly consent to the processing of my personal health/spiritual consultation data in accordance with the Privacy Notice.'"
+                    "Action Required: Implement separate, unbundled EXPLICIT CONSENT checkbox before data collection: "
+                    "'I explicitly consent to the processing of my special category personal data in accordance with the Privacy Notice.'"
                 ),
                 "status": "CRITICAL_VIOLATION_IF_MISSING",
                 "risk_if_unaddressed": "Severe enforcement priority for UK ICO. Fines up to £17.5M and mandatory processing suspension orders."
@@ -55,7 +55,7 @@ class UKGDPRMandatesGenerator:
                 "title": "Mandatory Data Processing Agreements (DPAs)",
                 "statutory_requirement": (
                     f"Third-party subprocessors detected in code ({', '.join(vendor_names)}). "
-                    "Under Article 28, Tara must maintain written, legally binding DPAs binding each processor to process "
+                    "Under Article 28, the organization must maintain written, legally binding DPAs binding each processor to process "
                     "data only on documented instructions, ensure confidentiality, and delete data on termination."
                 ),
                 "status": "MANDATORY_CONTRACTUAL_AUDIT",
@@ -67,8 +67,8 @@ class UKGDPRMandatesGenerator:
             "article": "UK GDPR Chapter V (Articles 44–46)",
             "title": "UK International Data Transfer Agreement (IDTA) / SCCs",
             "statutory_requirement": (
-                "UK customer consultation and profile data accessed by development, support, or practitioner teams in India, "
-                "or US cloud subprocessors (OpenAI, AWS, Twilio), constitutes a restricted international transfer. "
+                "UK customer personal data accessed by overseas technical, development, support teams, "
+                "or cloud subprocessors constitutes a restricted international transfer. "
                 "Statutory Mandate: Execute the UK ICO International Data Transfer Agreement (IDTA) or the UK Addendum to EU SCCs "
                 "along with a Transfer Risk Assessment (TRA)."
             ),
@@ -79,11 +79,11 @@ class UKGDPRMandatesGenerator:
         # Article 32 Security & Access Controls
         mandates.append({
             "article": "UK GDPR Article 32 & Article 5(1)(c)",
-            "title": "Practitioner Data Minimisation & At-Rest Encryption",
+            "title": "Data Minimisation & At-Rest Encryption",
             "statutory_requirement": (
-                "Ensure database fields storing special category and consultation transcripts use AES-256 encryption. "
-                "Furthermore, practitioners must NEVER have access to customer personal contact phone numbers or raw email addresses. "
-                "Implement in-app calling / masked messaging to prevent practitioner client poaching and off-platform data leakage."
+                "Ensure database fields storing sensitive personal data and application logs use AES-256 encryption. "
+                "Furthermore, internal operational personnel must NEVER have access to customer plaintext credentials or raw contact identifiers without audit logging. "
+                "Implement field-level masking and role-based access control (RBAC)."
             ),
             "status": "TECHNICAL_CONTROL_MANDATE",
             "risk_if_unaddressed": "Major data breach vulnerability; unauthorized external data leak requiring 72-hour ICO notification."
@@ -101,7 +101,7 @@ class UKGDPRMandatesGenerator:
             "dpia_required": has_art9,
             "dpia_justification": (
                 "A formal Data Protection Impact Assessment (DPIA) is statutory mandatory because the application involves "
-                "large-scale processing of special category data (Article 9) and automated AI/LLM consultation workflows."
+                "large-scale processing of special category data (Article 9) and automated AI/LLM workflows."
                 if has_art9 else "DPIA recommended as best practice."
             ),
             "mandates": mandates,
@@ -110,69 +110,71 @@ class UKGDPRMandatesGenerator:
         }
 
     def _build_ropa_table(self, pii_summary: Dict[str, Any], subproc_summary: Dict[str, Any]) -> List[Dict[str, Any]]:
+        has_art9 = pii_summary.get("special_category_fields_detected", 0) > 0
         ropa = [
             {
                 "activity_id": "ROPA-01",
                 "processing_purpose": "User Account Registration & Identity Authentication",
-                "data_subjects": "Platform Customers & Consultation Seekers",
+                "data_subjects": "Platform Customers & Registered Users",
                 "data_categories": "Full Name, Email Address, Password Hash, IP Address",
                 "lawful_basis": "UK GDPR Article 6(1)(b) (Performance of Contract)",
-                "recipients_processors": "AWS (Hosting), Twilio (SMS Auth)",
+                "recipients_processors": "Cloud Hosting & Authentication Providers",
                 "transfer_safeguards": "UK IDTA / UK Addendum to EU SCCs",
                 "retention_period": "Duration of user account + 30 days after deletion request",
                 "security_measures": "TLS 1.3 in transit, Bcrypt/Argon2 password hashing, RBAC"
             },
             {
                 "activity_id": "ROPA-02",
-                "processing_purpose": "Consultation Booking, Horoscope/Kundli & Spiritual Sessions",
-                "data_subjects": "Consultation Clients",
-                "data_categories": "Date of Birth, Birth Time, Birth Location, Consultation Queries, Relationship/Health Context",
-                "lawful_basis": "UK GDPR Art 6(1)(b) (Contract) + Art 9(2)(a) (Explicit Consent)",
-                "recipients_processors": "Assigned Vetted Practitioner (India/UK), AWS RDS",
-                "transfer_safeguards": "UK IDTA Agreement between Tara UK and Tara India / Practitioners",
-                "retention_period": "Consultation query purged after 60 days; birth demographics kept until account closed",
-                "security_measures": "Field-level AES-256 encryption, Practitioner phone/email masking"
+                "processing_purpose": "Core Application Service Delivery & User Data Management",
+                "data_subjects": "Platform Users & Customers",
+                "data_categories": "Account Profiles, Transaction Logs, User Submitted Inputs, Service Records",
+                "lawful_basis": "UK GDPR Article 6(1)(b) (Performance of Contract)" + (" + Art 9(2)(a) (Explicit Consent)" if has_art9 else ""),
+                "recipients_processors": "Cloud Database & Production Infrastructure",
+                "transfer_safeguards": "UK IDTA Agreement between UK entity and overseas technical teams",
+                "retention_period": "Active service lifecycle; automated purge 90 days post-termination",
+                "security_measures": "Field-level AES-256 encryption, access tokenization, RBAC"
             },
             {
                 "activity_id": "ROPA-03",
-                "processing_purpose": "AI/LLM Consultation Insights & Summarization",
-                "data_subjects": "Consultation Clients",
-                "data_categories": "De-identified Consultation Transcripts & Question Prompts",
-                "lawful_basis": "UK GDPR Article 6(1)(b) + Explicit Consent Art 9(2)(a)",
-                "recipients_processors": "OpenAI LLC (API Processor)",
-                "transfer_safeguards": "Standard Contractual Clauses + Zero-Data Retention Commercial Agreement",
+                "processing_purpose": "AI / Automated Data Processing & Synthesized Workflows",
+                "data_subjects": "Platform Users",
+                "data_categories": "De-identified prompts, operational telemetry, and task parameters",
+                "lawful_basis": "UK GDPR Article 6(1)(b) (Contract) / Article 6(1)(f) (Legitimate Interests)",
+                "recipients_processors": "Enterprise AI / LLM API Processors (OpenAI / Azure)",
+                "transfer_safeguards": "Standard Contractual Clauses + Zero-Data Retention Commercial Addendum",
                 "retention_period": "Zero retention on processor side; local ephemeral cache for session duration",
-                "security_measures": "PII scrubbing before API egress, TLS 1.3"
+                "security_measures": "PII scrubbing before API egress, TLS 1.3 encryption"
             },
             {
                 "activity_id": "ROPA-04",
                 "processing_purpose": "Payment Processing & Financial Invoicing",
-                "data_subjects": "Paying Customers & Practitioners",
-                "data_categories": "Billing Address, Payment Token, Transaction Amount, Payout Account",
+                "data_subjects": "Paying Customers & Corporate Clients",
+                "data_categories": "Billing Address, Payment Token, Transaction Amount, Invoicing References",
                 "lawful_basis": "UK GDPR Article 6(1)(b) & Article 6(1)(c) (Statutory Tax Accounting)",
-                "recipients_processors": "Stripe Payments UK Ltd. / Razorpay",
-                "transfer_safeguards": "Stripe Global DPA",
-                "retention_period": "Statutory 6 years for UK HMRC and financial compliance",
-                "security_measures": "PCI-DSS Level 1 tokenisation (No card CVVs on Tara servers)"
+                "recipients_processors": "Payment Processors (Stripe / Razorpay)",
+                "transfer_safeguards": "Global Data Processing Addendum (DPA)",
+                "retention_period": "Statutory 6 years for UK HMRC and accounting compliance",
+                "security_measures": "PCI-DSS Level 1 tokenisation (No raw card data stored locally)"
             }
         ]
         return ropa
 
     def _build_dev_checklist(self, pii_summary: Dict[str, Any], route_summary: Dict[str, Any], subproc_summary: Dict[str, Any]) -> List[Dict[str, Any]]:
+        has_art9 = pii_summary.get("special_category_fields_detected", 0) > 0
         checklist = [
             {
                 "task_id": "DEV-UK-01",
-                "priority": "CRITICAL",
-                "component": "Frontend Registration & Booking UI",
-                "requirement": "Add unbundled explicit consent checkbox for Article 9 consultation data before booking.",
+                "priority": "CRITICAL" if has_art9 else "HIGH",
+                "component": "Frontend Registration & Consent Gates",
+                "requirement": "Add unbundled explicit consent checkbox for sensitive data before processing." if has_art9 else "Verify affirmative notice & consent checkbox at signup.",
                 "code_action": "Ensure consent checkbox is unticked by default and logs consent_timestamp, policy_version, user_id."
             },
             {
                 "task_id": "DEV-UK-02",
                 "priority": "CRITICAL",
-                "component": "Practitioner Portal / API Layer",
-                "requirement": "Implement data masking on practitioner API views to prevent customer contact theft.",
-                "code_action": "Strip customer phone number and email from practitioner response payloads. Route communications via in-app relay."
+                "component": "API & Administrative Views",
+                "requirement": "Implement data masking on internal administrative API endpoints to prevent customer contact harvesting.",
+                "code_action": "Strip customer phone numbers and raw email addresses from public response payloads. Implement RBAC."
             },
             {
                 "task_id": "DEV-UK-03",
@@ -184,16 +186,16 @@ class UKGDPRMandatesGenerator:
             {
                 "task_id": "DEV-UK-04",
                 "priority": "HIGH",
-                "component": "AI / OpenAI API Integration",
-                "requirement": "Configure OpenAI zero-data retention headers and sanitize prompt payloads.",
-                "code_action": "Scrub direct names, phone numbers, and addresses from prompt text before dispatching to external LLMs."
+                "component": "Subprocessor & AI API Integrations",
+                "requirement": "Configure subprocessor zero-data retention headers and sanitize prompt payloads.",
+                "code_action": "Scrub direct names, phone numbers, and addresses from prompt text before dispatching to external APIs."
             },
             {
                 "task_id": "DEV-UK-05",
                 "priority": "HIGH",
                 "component": "Database / ORM Models",
-                "requirement": "Implement field-level encryption for sensitive consultation notes.",
-                "code_action": "Use SQLAlchemy TypeDecorator or database pgcrypto / KMS envelope for sensitive columns."
+                "requirement": "Implement field-level encryption for sensitive user data columns.",
+                "code_action": "Use ORM encryption decorators or database pgcrypto / KMS envelope encryption for sensitive columns."
             }
         ]
         return checklist

@@ -33,7 +33,15 @@ AZURE_OPENAI_KEY = os.getenv(
 
 RAG_GROUNDED_SYSTEM_PROMPT = """You are Tara AI — Lead Data Protection Officer (DPO) and Senior Privacy Legal Counsel specialising in the UK GDPR, EU GDPR (2016/679), and India's Digital Personal Data Protection Act, 2023 (DPDP Act 2023).
 
-### MANDATORY LEGAL REASONING DIRECTIVES:
+### CORE PERSONA & CONVERSATIONAL DELIVERY:
+1. Act as an intelligent, conversational, and highly experienced Lead DPO and Legal Counsel speaking directly with the user.
+2. NEVER sound like a broken robotic template or form generator. DO NOT output rigid repetitive numbered section headers (such as '### 1. Applicable Legal Provisions', '### 2. Legal Interpretation & Analysis', etc.) on every single turn.
+3. Answer the user's specific question or scenario directly in the opening sentence. If the user mentions their company (e.g. "Law AI"), address that company by name immediately.
+4. Integrate statutory citations smoothly and naturally into your prose and bullet points (e.g., "Under UK GDPR Article 3(2)...", "Under Section 11 of the DPDP Act 2023...").
+5. Seamlessly support multi-turn conversations: Remember facts established earlier (such as company name, target audience, business model, jurisdictions, previous consent questions), and build upon them fluidly.
+6. If the user asks in Hindi or Hinglish, understand fully and reply with natural, clear, professional language.
+
+### MANDATORY STATUTORY REASONING DIRECTIVES:
 
 1. STATUTORY PRECISION & JURISDICTION SEPARATION:
    - Never conflate GDPR and DPDP Act provisions. They are distinct legal frameworks with different thresholds, lawful bases, and statutory mechanics.
@@ -41,7 +49,7 @@ RAG_GROUNDED_SYSTEM_PROMPT = """You are Tara AI — Lead Data Protection Officer
      * India DPDP Act 2023:
        - Section 4 & 5: Grounds for processing and mandatory itemised multilingual notice.
        - Section 6: Consent conditions, unconditional mandate (Sec 6(2)), and withdrawal (Sec 6(4)-(6)).
-       - Section 7: CERTAIN LEGITIMATE USES (Strict exhaustive statutory list). CRITICAL: The DPDP Act does NOT have a general commercial 'legitimate interests' ground like GDPR Art. 6(1)(f)! Commercial profiling and targeted ads CANNOT rely on Section 7; they require valid Section 6 consent.
+       - Section 7: CERTAIN LEGITIMATE USES (Strict exhaustive statutory list: employment, state subsidies, court orders, medical emergencies). CRITICAL: The DPDP Act does NOT have a general commercial 'legitimate interests' ground like GDPR Art. 6(1)(f)! Commercial profiling and targeted ads CANNOT rely on Section 7; they require valid Section 6 consent.
        - Section 8: Fiduciary obligations — Sec 8(5) reasonable security safeguards; Sec 8(6) mandatory breach notification to Board and affected principals; Sec 8(7) mandatory erasure upon purpose fulfillment or consent withdrawal.
        - Section 9: Children's data (under 18) — verifiable parental consent, absolute ban on tracking/behavioural monitoring/targeted ads directed at children.
        - Section 10: Significant Data Fiduciaries (resident DPO in India, independent auditor, DPIA).
@@ -57,7 +65,7 @@ RAG_GROUNDED_SYSTEM_PROMPT = """You are Tara AI — Lead Data Protection Officer
        - Breach of Sec 10 SDF obligations: Up to ₹150 Crore.
        - Breach of Sec 15 Data Principal duties: Up to ₹10,000.
        - Any other general breach: Up to ₹50 Crore.
-       - Never invent penalty numbers (e.g. do not invent ₹100 Crore for Section 6).
+       - Never invent penalty numbers.
 
 2. BALANCED, NUANCED LEGAL INTERPRETATION (NO OVERSIMPLIFICATIONS):
    - PROFILING & TARGETED ADVERTISING UNDER GDPR:
@@ -77,42 +85,59 @@ RAG_GROUNDED_SYSTEM_PROMPT = """You are Tara AI — Lead Data Protection Officer
 3. MULTI-TURN SCENARIO CONTINUITY:
    - When answering follow-up questions, PRESERVE and EXPLICITLY BUILD UPON previously established facts (e.g. company collecting customer emails for marketing, subsequent profiling, withdrawal of consent, multi-jurisdiction operations).
    - Address specific entities and scenarios established in prior turns rather than regressing into generic abstract lectures.
-
-4. STRUCTURED ANSWER FORMAT:
-   When analyzing legal scenarios, structure answers clearly:
-   - **1. Direct Statutory Conclusion:** Clear executive summary of the position.
-   - **2. Applicable Statutory Provisions:** Exact Articles/Sections cited correctly.
-   - **3. Legal Analysis & Application:** Fact-specific application to the scenario.
-   - **4. Exceptions & Statutory Retention:** Permissible retentions (tax, legal claims, suppression).
-   - **5. Practical Engineering & Governance Recommendations:** Concrete action items.
 """
 
 def classify_user_intent(query: str) -> str:
-    """Classifies user input into greeting, feedback/complaint, gratitude, or compliance query."""
+    """Classifies user input into greeting, feedback/complaint, gratitude, out-of-scope trivia, or compliance query."""
     q = query.strip().lower()
     q_clean = re.sub(r'[^\w\s]', '', q).strip()
     words = q_clean.split()
+    first_word = words[0] if words else ""
 
-    greetings = {
+    # Common greetings (English, Hindi, Hinglish, informal slang, typos)
+    greeting_exact = {
         "hi", "hello", "hey", "heya", "hiya", "howdy", "hola", "namaste", "namaskar",
-        "good morning", "good evening", "good afternoon", "good day", "greetings",
-        "sup", "yo", "test", "ping"
+        "namashkar", "pranam", "pranaam", "good morning", "good evening", "good afternoon",
+        "good day", "greetings", "sup", "yo", "test", "ping", "hlo", "hlw", "hii", "hiii",
+        "heyy", "heyyy", "kaise ho", "kya haal hai", "kya hal hai", "kya chal raha hai",
+        "suno", "sun rhe ho", "listen", "bhai", "bro", "oye", "ram ram", "salaam", "adaab",
+        "wassup", "what's up", "whats up"
     }
-    if q_clean in greetings:
-        return "greeting"
-    if len(words) <= 2 and words and words[0] in {"hi", "hello", "hey", "hola", "namaste", "yo"}:
+
+    # Regex check for variations like hloooo, heyyyy, hiiiii, etc.
+    if re.match(r'^(?:h+[li]+[ow]+|h+e+y+|h+i+|h+e+l+o+|y+o+|s+u+p+|w+a+s+u+p+)\b', q_clean):
+        if len(words) <= 3:
+            return "greeting"
+
+    if q_clean in greeting_exact:
         return "greeting"
 
+    if len(words) <= 3 and first_word in {
+        "hi", "hello", "hey", "hola", "namaste", "yo", "hlo", "hlw", "hii", "heyy", "bhai", "bro", "oye", "suno"
+    } and not any(w in q for w in ["gdpr", "dpdp", "privacy", "data", "law", "act", "section", "article"]):
+        return "greeting"
+
+    # Out of scope / General Knowledge Trivia check (e.g. "pm of india ?", "who is president", "capital of")
+    trivia_patterns = [
+        r'\bpm of india\b', r'\bprime minister\b', r'\bpresident of\b', r'\bchief minister\b',
+        r'\bwho is the pm\b', r'\bcapital of\b', r'\bweather in\b', r'\bwho won\b',
+        r'\bcricket score\b', r'\btell me a joke\b', r'\bwrite a poem\b'
+    ]
+    if any(re.search(pat, q) for pat in trivia_patterns) and not any(w in q for w in ["gdpr", "dpdp", "privacy", "data", "consent", "audit"]):
+        return "out_of_scope_trivia"
+
+    # Meta-Feedback / Frustration patterns
     feedback_patterns = [
         "not correct", "wrong answer", "galat", "kya puchra", "kya pooch", "chi",
         "bekar", "ye kya hai", "what are you saying", "that is wrong", "incorrect",
         "didn't answer", "did not answer", "answer my question", "samajh nahi",
-        "kya bakwas", "nonsense", "useless", "stuck", "it's not correct", "its not correct"
+        "kya bakwas", "nonsense", "useless", "stuck", "it's not correct", "its not correct",
+        "kya mooh dikhaunga", "working very poor"
     ]
     if any(p in q for p in feedback_patterns):
         return "meta_feedback"
 
-    gratitude = {"thank you", "thanks", "thx", "dhanyawad", "shukriya", "bye", "goodbye", "ok", "okay", "got it"}
+    gratitude = {"thank you", "thanks", "thx", "dhanyawad", "shukriya", "bye", "goodbye", "ok", "okay", "got it", "fine"}
     if q_clean in gratitude or (len(words) <= 2 and words and words[0] in {"thanks", "thank", "bye", "ok"}):
         return "gratitude_or_closure"
 
@@ -181,18 +206,57 @@ class TaraRAGEngine:
 
         # 1. Pure Greeting Handler
         if intent == "greeting":
+            q_lower = query.lower()
+            if any(w in q_lower for w in ["kaise", "haal", "hal", "suno", "bhai", "namaste", "pranam", "kya", "oye"]):
+                ans = (
+                    "नमस्ते! 👋 Main hoon **Tara Legal AI Copilot**, aapka Data Protection Officer (DPO) & Privacy Legal Architect.\n\n"
+                    "Main **UK GDPR, EU GDPR (2016/679)**, aur **India ke Digital Personal Data Protection Act, 2023 (DPDP Act 2023)** "
+                    "ke statutory compliance me help karta hoon.\n\n"
+                    "Aap mujhse pooch sakte hain:\n"
+                    "• Kya aapki company/app par GDPR ya India DPDP Act apply hota hai?\n"
+                    "• Consent policies, email marketing aur profiling ke statutory rules\n"
+                    "• Data Principal ke Rights (Section 11 Access, Section 12 Erasure, Section 13 Grievance)\n"
+                    "• Cross-border data transfers aur IDTA agreements\n\n"
+                    "Bataiye, aapke project ya company ke baare me kya query hai?"
+                )
+            else:
+                ans = (
+                    "Hello! 👋 I'm **Tara Legal AI Copilot**, Lead Data Protection Officer (DPO) and Statutory Privacy Legal Architect.\n\n"
+                    "I provide authoritative, practical legal counsel on **UK GDPR, EU GDPR (2016/679)**, and **India's Digital Personal Data Protection Act, 2023 (DPDP Act 2023)**.\n\n"
+                    "How can I help you or your team today? You can ask me:\n"
+                    "• **Applicability Checks:** Does GDPR or India DPDP Act apply to your startup, SaaS, or app?\n"
+                    "• **Marketing & Profiling Rules:** Lawful grounds under GDPR Art 6/21 vs India DPDP Sec 6/7\n"
+                    "• **Statutory Rights in India:** Section 11 (Access), Section 12 (Erasure), Section 13 (Grievance Redressal)\n"
+                    "• **Data Retention & Exceptions:** Mandatory erasures vs statutory tax/limitation period retentions\n"
+                    "• **Cross-Border Transfers:** UK-to-India IDTA and EU SCC requirements\n\n"
+                    "Feel free to ask any question or tell me about your app!"
+                )
+            return {
+                "success": True,
+                "answer": ans,
+                "retrieved_citations": [],
+                "model_clauses": [],
+                "rag_grounded": False,
+                "top_similarity": 0.0,
+                "provider": "Tara Conversational Intelligence"
+            }
+
+        # 2. Out of Scope / General Knowledge Trivia Handler
+        if intent == "out_of_scope_trivia":
+            q_lower = query.lower()
+            if "pm of india" in q_lower or "prime minister" in q_lower:
+                trivia_ans = "The Prime Minister of India is **Shri Narendra Modi**."
+            elif "president of" in q_lower and "india" in q_lower:
+                trivia_ans = "The President of India is **Smt. Droupadi Murmu**."
+            else:
+                trivia_ans = "I noted your question."
+
             return {
                 "success": True,
                 "answer": (
-                    "Hello! 👋 I'm **Tara Legal AI Copilot**, Lead Data Protection Officer (DPO) and Statutory Privacy Legal Architect.\n\n"
-                    "I provide authoritative, grounded legal guidance on **UK GDPR, EU GDPR (2016/679)**, and **India's Digital Personal Data Protection Act, 2023 (DPDP Act 2023)**.\n\n"
-                    "How can I help you today? You can ask about:\n"
-                    "• **Data Controller vs Data Processor Obligations** (GDPR Articles 4, 24, 28)\n"
-                    "• **Email Marketing, Profiling & Targeted Advertising** (GDPR Art 6(1), 6(4), 21, 22 vs DPDP Sec 6 & 7)\n"
-                    "• **Consent Withdrawal, Erasure & Statutory Retention Exceptions** (GDPR Art 7(3)/17 vs DPDP Sec 6(4)/8(7)/12)\n"
-                    "• **Data Principal Rights in India** (DPDP Act Sec 11 Access, Sec 12 Correction/Erasure, Sec 13 Grievance Redressal)\n"
-                    "• **Multi-Jurisdiction Unified Privacy Policy Architecture** (UK/EU + India Frameworks)\n"
-                    "• **Statutory Penalties Matrix** under the Schedule to the DPDP Act 2023"
+                    f"{trivia_ans}\n\n"
+                    "*(Note: As **Tara Legal AI**, my primary role and specialization is in **Data Protection, UK/EU GDPR, and India's DPDP Act 2023**. "
+                    "If you have any privacy compliance, legal policy, consent framework, or regulatory architecture questions for your company or application, I'm here to help!)*"
                 ),
                 "retrieved_citations": [],
                 "model_clauses": [],
@@ -201,7 +265,7 @@ class TaraRAGEngine:
                 "provider": "Tara Conversational Intelligence"
             }
 
-        # 2. Pure Gratitude / Closure Handler
+        # 3. Pure Gratitude / Closure Handler
         if intent == "gratitude_or_closure":
             return {
                 "success": True,
@@ -215,14 +279,14 @@ class TaraRAGEngine:
                 "provider": "Tara Conversational Intelligence"
             }
 
-        # 3. User Feedback / Complaint Handler
+        # 4. User Feedback / Complaint Handler
         if intent == "meta_feedback":
             return {
                 "success": True,
                 "answer": (
-                    "I acknowledge your concern, and I apologize if my previous answer was not sufficiently precise or on-target. "
-                    "I am calibrated to provide fact-specific legal analysis on UK GDPR, EU GDPR, and India's DPDP Act 2023 without generic boilerplates. "
-                    "Please state your specific scenario or question, and I will deliver a direct, legally verified analysis."
+                    "I hear you, and I apologize if my previous response felt too rigid, repetitive, or off-target. "
+                    "I am calibrated to give direct, conversational, and legally accurate counsel tailored to your specific application and business scenario without boilerplates. "
+                    "Please state your specific scenario or question, and I will address it directly!"
                 ),
                 "retrieved_citations": [],
                 "model_clauses": [],
@@ -231,7 +295,7 @@ class TaraRAGEngine:
                 "provider": "Tara Conversational Intelligence"
             }
 
-        # 4. Compliance / Legal Scenario Query with Multi-Turn Scenario Context Expansion
+        # 5. Compliance / Legal Scenario Query with Multi-Turn Scenario Context Expansion
         scenario_context = extract_scenario_keywords(history) if history else ""
         search_query = f"{query} {scenario_context}".strip()
 
@@ -279,21 +343,23 @@ class TaraRAGEngine:
 
         context_string = "\n\n".join(context_blocks)
 
-        user_content = f"""OFFICIAL STATUTORY CITATIONS & AUTHORITATIVE REFERENCE CONTEXT:
+        user_content = f"""USER QUESTION:
+{query}
+
+STATUTORY REFERENCE CONTEXT (UK/EU GDPR & INDIA DPDP ACT 2023):
 ======================================================================
 {context_string}
 ======================================================================
 
-USER QUERY:
-{query}
-
-INSTRUCTIONS FOR ANSWERING:
-- Answer with legal nuance, citing the exact Articles and Sections from the reference context above.
-- If this is a follow-up in an ongoing scenario, preserve established facts (e.g. email marketing, profiling, withdrawal of consent, multi-jurisdictional operations).
-- Distinguish GDPR (where legitimate interests under Art 6(1)(f) can apply with an absolute Art 21 right to object) from the DPDP Act 2023 (where Section 7 provides an exhaustive list of legitimate uses and does NOT allow general commercial legitimate interests).
-- Correctly cite DPDP Act Section 11 for Access, Section 12 for Correction/Erasure, and Section 13 for Grievance Redressal.
-- Accurately state DPDP Act Schedule penalties (Security safeguards failure: up to ₹250 Crore; Breach notification failure: up to ₹200 Crore; Children violations: up to ₹200 Crore; SDF violations: up to ₹150 Crore; Principal duties breach: up to ₹10,000; General violations: up to ₹50 Crore).
-- Separate your response into: (1) Applicable Legal Provisions, (2) Legal Interpretation & Analysis, (3) Application to the User's Scenario, (4) Statutory Retention & Exceptions, and (5) Practical Implementation Checklist."""
+RESPONSE GUIDELINES:
+- Conversational & Direct: Answer the user's specific inquiry directly in the opening sentence in an intelligent, conversational tone.
+- Scenario-Specific: If the user names their company (e.g. Law AI), address them directly by name.
+- Avoid Template Clutter: DO NOT format your response with repetitive rigid headers like '(1) Applicable Legal Provisions, (2) Legal Interpretation & Analysis'. Use natural prose with clean bullet points.
+- Multi-Turn Continuity: If this builds on earlier questions in the conversation, maintain context and refer back naturally.
+- Statutory Accuracy: Seamlessly embed exact statutory Articles (UK/EU GDPR) and Sections (India DPDP Act 2023) inline with explanations.
+- Clarify GDPR vs DPDP Act: Distinguish GDPR legitimate interests (Art 6(1)(f)) from India's DPDP Act (Section 7 has exhaustive legitimate uses; commercial profiling/marketing requires Section 6 consent).
+- Correct DPDP Sections: Section 11 (Access), Section 12 (Correction/Erasure), Section 13 (Grievance Redressal).
+- If the user writes in Hinglish, seamlessly understand and respond in clear, professional language."""
 
         messages = [{"role": "system", "content": RAG_GROUNDED_SYSTEM_PROMPT}]
 
@@ -409,6 +475,21 @@ INSTRUCTIONS FOR ANSWERING:
         # Infer company name or domain from document
         c_name_match = re.search(r'(?:company|organization|entity|we|us|platform|app|service)\s*(?:called|named|known as)?\s*([A-Z][A-Za-z0-9_\s]{2,30})', document_text)
         detected_cname = c_name_match.group(1).strip() if c_name_match else "Our Organization"
+
+        # 0. Special Category Data Check (Article 9)
+        if any(sc_term in doc_lower for sc_term in ["health", "spiritual", "biometric", "medical", "religious", "philosophical", "special category"]):
+            if "explicit consent" not in doc_lower and "article 9" not in doc_lower:
+                score -= 20
+                issues.append({
+                    "severity": "critical",
+                    "title": "Unlawful Processing of Special Category Data Without Explicit Consent (Article 9 Flaw)",
+                    "law": "UK GDPR Article 9(1) & 9(2)(a) & DPDP Act 2023 Section 6",
+                    "penalties": "Statutory fine up to £17.5M (GDPR) / ₹250 Crore (DPDPA)",
+                    "description": "Processing special category data (such as health, biometric, or religious/philosophical beliefs) is strictly prohibited under UK GDPR Article 9(1) unless explicit, unbundled opt-in consent is obtained under Article 9(2)(a).",
+                    "original_text": "We collect user sensitive concerns to deliver consultations.",
+                    "fixed_text": f"EXPLICIT CONSENT FOR SPECIAL CATEGORY DATA (UK GDPR Art 9(2)(a) & DPDP Act Sec 6):\n'By checking this box, you expressly and affirmatively consent to our collection and processing of special category personal data solely to provide the requested service. You may withdraw this explicit consent at any time through your account privacy settings.'",
+                    "explanation": "Injected mandatory unbundled explicit consent gate under Article 9(2)(a)."
+                })
 
         # 1. Unlawful Vague Retention Check
         if any(vague in doc_lower for vague in ["as long as necessary", "as long as needed", "for legitimate business purposes", "indefinitely"]):

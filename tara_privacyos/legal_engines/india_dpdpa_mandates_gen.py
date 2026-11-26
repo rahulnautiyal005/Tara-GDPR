@@ -58,7 +58,7 @@ class IndiaDPDPAMandatesGenerator:
             "section": "DPDP Act 2023 Section 9",
             "title": "Children's Data Verification & Prohibition of Behavioural Tracking",
             "statutory_requirement": (
-                "If the platform serves individuals under 18 years, Tara must obtain verifiable parental consent. "
+                "If the platform serves individuals under 18 years, the organization must obtain verifiable parental consent. "
                 "Strict statutory prohibition against behavioural monitoring, tracking, or targeted advertising directed at children."
             ),
             "status": "AGE_GATING_CHECK",
@@ -71,7 +71,7 @@ class IndiaDPDPAMandatesGenerator:
             "section": "DPDP Act 2023 Section 10",
             "title": "Significant Data Fiduciary (SDF) Readiness Check",
             "statutory_requirement": (
-                "Given the sensitive nature of consultation & astrological profiling data, the Central Government may notify Tara "
+                "Given the scale and categories of personal data processed, the Central Government may notify the organization "
                 "as a Significant Data Fiduciary (SDF). SDF obligations require: (1) Appointing a resident India Data Protection Officer (DPO), "
                 "(2) Appointing an Independent Data Auditor, and (3) Conducting periodic DPIAs."
             ),

@@ -483,3 +483,67 @@ def export_gdpr_document(req: GitHubExportRequest):
 # ==============================================================
 # PHASE 4: AI & LLM GOVERNANCE COPILOT ENDPOINTS
 # ==============================================================
+
+from tara_privacyos.legal_engines.ai_governance_engine import AIGovernanceEngine
+from tara_privacyos.legal_engines.data_flow_engine import DataFlowEngine
+
+ai_gov_engine = AIGovernanceEngine()
+data_flow_engine = DataFlowEngine()
+
+class AIAuditRequest(BaseModel):
+    selected_tools: List[str]
+    selected_data_types: List[str]
+    company_name: Optional[str] = "Tara Infotech Ltd"
+
+class AIDocGenRequest(BaseModel):
+    audit_result: Dict[str, Any]
+    company_name: Optional[str] = "Tara Infotech Ltd"
+
+class TopologyRequest(BaseModel):
+    preset_id: str
+
+class IDTARequest(BaseModel):
+    company_name: Optional[str] = "Tara Infotech Ltd"
+    overseas_entity: Optional[str] = "Tara Infotech India Pvt Ltd"
+
+@app.get("/api/ai-governance/tools-catalog")
+def get_ai_tools_catalog():
+    return ai_gov_engine.get_catalog()
+
+@app.post("/api/ai-governance/audit")
+def audit_ai_governance(req: AIAuditRequest):
+    return ai_gov_engine.audit_ai_footprint(
+        selected_tool_ids=req.selected_tools,
+        selected_data_ids=req.selected_data_types,
+        company_name=req.company_name or "Tara Infotech Ltd"
+    )
+
+@app.post("/api/ai-governance/generate-dpia")
+def generate_ai_dpia_endpoint(req: AIDocGenRequest):
+    content = ai_gov_engine.generate_ai_dpia(req.audit_result)
+    return {"content": content, "format": "markdown"}
+
+@app.post("/api/ai-governance/generate-aup")
+def generate_ai_aup_endpoint(req: AIDocGenRequest):
+    content = ai_gov_engine.generate_employee_aup(req.audit_result)
+    return {"content": content, "format": "markdown"}
+
+# ==============================================================
+# PHASE 5: DATA FLOW & CROSS-BORDER TRANSFER ENDPOINTS
+# ==============================================================
+
+@app.get("/api/data-flow/presets")
+def get_data_flow_presets():
+    return data_flow_engine.get_presets_list()
+
+@app.post("/api/data-flow/topology")
+def get_data_flow_topology(req: TopologyRequest):
+    return data_flow_engine.get_topology(req.preset_id)
+
+@app.post("/api/data-flow/generate-idta")
+def generate_idta_endpoint(req: IDTARequest):
+    content = data_flow_engine.generate_idta_schedule(
+        company_name=req.company_name or "Tara Infotech Ltd",
+        overseas_entity=req.overseas_entity or "Tara Infotech India Pvt Ltd"
+    )
+    return {"content": content, "format": "markdown"}

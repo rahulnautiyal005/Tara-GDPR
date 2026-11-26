@@ -498,6 +498,30 @@ STATUTORY_CORPUS: List[Dict[str, Any]] = [
     },
 
     # =========================================================================
+    # PART 2B: PECR (COOKIES & TELEMETRY REGULATIONS)
+    # =========================================================================
+    {
+        "id": "ICO-PECR-REG-06",
+        "jurisdiction": "PECR",
+        "statute": "Privacy and Electronic Communications Regulations 2003",
+        "citation": "PECR Regulation 6 & ICO Guidance on Cookies and Mobile App Tracking",
+        "category": "Cookies & Mobile Telemetry",
+        "title": "Consent for Storing or Accessing Information on User Devices",
+        "summary": "Storing information, or gaining access to information stored, in the terminal equipment of a subscriber or user is only permitted if the subscriber or user is provided with clear and comprehensive information about the purposes and has given consent, unless strictly necessary for the delivery of an explicitly requested service.",
+        "key_requirements": [
+            "Applies equally to website cookies AND mobile application SDK telemetry (e.g. Firebase, PostHog, AppsFlyer)",
+            "Strict opt-in consent: Analytics, advertising, and session replay trackers must remain OFF until user clicks Accept",
+            "No cookie walls or forced consent banners",
+            "Strictly Necessary exemption: ONLY applies to essential technical features (login session cookie, shopping basket, security)",
+            "Must provide granular choice to reject non-essential cookies and revoke consent at any time"
+        ],
+        "penalties": "UK ICO statutory enforcement notices and fines up to £500,000 under PECR, plus UK GDPR Article 6/7 fines up to £17.5M for unconsented personal data tracking.",
+        "statutory_text": "A person shall not store or gain access to information stored, in the terminal equipment of a subscriber or user, unless the subscriber or user of that terminal equipment: (a) is provided with clear and comprehensive information about the purposes of the storage of, or access to, that information; and (b) has given his or her consent. Paragraph (1) does not apply to the technical storage of, or access to, information: (a) for the sole purpose of carrying out the transmission of a communication; or (b) strictly necessary in order for the service provider to deliver a service explicitly requested by the subscriber.",
+        "practical_application": "Deploy an unticked cookie banner. Ensure Google Analytics, PostHog, or tracking SDKs are initialized ONLY after the user clicks 'Accept Non-Essential Cookies'.",
+        "keywords": ["pecr", "regulation 6", "cookies", "tracking", "sdk telemetry", "device storage", "opt-in consent", "cookie banner", "mobile tracking", "posthog", "analytics consent"]
+    },
+
+    # =========================================================================
     # PART 3: CROSS-JURISDICTIONAL POLICY ARCHITECTURE & MODEL CLAUSES
     # =========================================================================
     {

@@ -5,7 +5,7 @@ and auto-generates UK-to-India IDTA (International Data Transfer Agreement) sche
 Complies with UK GDPR (Articles 30, 44–49) & India DPDP Act 2023 (Section 16).
 """
 
-from typing import Dict, List, Any
+from typing import Dict, List, Any, Optional
 from datetime import datetime
 
 TOPOLOGY_PRESETS = {
@@ -455,9 +455,22 @@ class DataFlowEngine:
         self.presets["scanned-repo"] = preset_data
         return self.get_topology("scanned-repo")
 
-    def generate_idta_schedule(self, company_name: str = "Tara Infotech Ltd", overseas_entity: str = "Tara Infotech India Pvt Ltd") -> str:
+    def generate_idta_schedule(
+        self,
+        company_name: str = "Tara Infotech Ltd",
+        overseas_entity: str = "Tara Infotech India Pvt Ltd",
+        categories_transferred: Optional[List[str]] = None,
+        domain: Optional[str] = None
+    ) -> str:
         """Generates statutory UK International Data Transfer Agreement (IDTA) Schedule."""
         now_str = datetime.now().strftime("%B %d, %Y")
+        domain_label = domain or "Digital Platform & Cloud Software Application"
+        data_cats = categories_transferred or [
+            "User account identifiers (Full Name, Email Address, Contact Numbers)",
+            "Application interaction data, service transaction records, and operational logs",
+            "Technical session diagnostics and customer service communications"
+        ]
+        data_cats_str = "\n".join(f"   * {cat}" for cat in data_cats)
         
         return f"""# STATUTORY UK INTERNATIONAL DATA TRANSFER AGREEMENT (IDTA)
 ## MANDATORY ADDENDUM TO DATA PROCESSING AGREEMENT (DPA)
@@ -482,23 +495,21 @@ class DataFlowEngine:
 ### PART 2: TRANSFER DETAILS & ARTICLE 30 SPECIFICATION
 
 1. **Categories of Data Subjects:**
-   * UK and European clients utilizing astrological, spiritual, or health advisory consultation platforms.
-   * Registered users accessing mobile and web applications.
+   * UK and European clients and registered users of {company_name} ({domain_label}).
+   * Application subscribers and corporate account users.
 2. **Categories of Personal Data Transferred:**
-   * User account identifiers (Names, Email addresses, Telephonic contacts).
-   * Astrological consultation notes, birth charts (date, time, place of birth).
-   * Audio/chat transcripts and technical session diagnostics.
+{data_cats_str}
 3. **Special Category Data (Article 9 UK GDPR):**
-   * *Health & Philosophical/Spiritual Beliefs:* Processed solely under Article 9(2)(a) (Explicit Consent).
+   * Processed strictly where explicit consent is granted under Article 9(2)(a) with zero unauthorized local export.
 4. **Purpose of the Overseas Transfer:**
-   * Software development, backend maintenance, QA testing, production error resolution, and Tier-2 customer support.
+   * Software engineering, cloud infrastructure maintenance, automated testing, production support, and security monitoring.
 
 ---
 
 ### PART 3: MANDATORY TECHNICAL & ORGANISATIONAL SAFEGUARDS (TOMS)
 
 * **Mandate 1 (Access Control):** Importer personnel in India shall access UK personal data exclusively via encrypted Zero Trust Bastion hosts with Multi-Factor Authentication (MFA).
-* **Mandate 2 (No Local Downloads):** Absolute prohibition on exporting customer phone numbers or chat logs to local workstations or personal smartphones in India.
+* **Mandate 2 (No Local Downloads):** Absolute prohibition on exporting customer personal identifiers or communication logs to local workstations or personal devices in India.
 * **Mandate 3 (Security at Rest & Transit):** All data transfers utilize TLS 1.3 in-flight and AES-256 KMS encryption at rest.
 * **Mandate 4 (72-Hour Breach Escalation):** Importer must report any unauthorized access or potential compromise to Exporter within **24 hours** to facilitate Exporter's 72-hour ICO statutory reporting window.
 

@@ -3847,8 +3847,8 @@
             <div id="repo-results-container" class="repo-results-card" style="display:none;">
                 <div class="repo-results-header">
                     <div class="repo-domain-info">
-                        <h3 id="repo-domain-title">Astrology &amp; Spiritual Consultation Platform</h3>
-                        <p id="repo-domain-desc">FastAPI + PostgreSQL backend handling astrological birth charts and sensitive consultation transcripts.</p>
+                        <h3 id="repo-domain-title">Repository Codebase &amp; Architecture Scanner</h3>
+                        <p id="repo-domain-desc">Extracting AST data models, API endpoints, subprocessors, and telemetry across Python, TypeScript, Go, Java, C#, PHP &amp; more.</p>
                     </div>
                     <div>
                         <span id="repo-health-pill" class="pill-badge pill-progress" style="font-size: 13px; padding: 6px 14px;">Grade: B+ &bull; 82% Health</span>
@@ -3915,7 +3915,7 @@
                     <button class="chat-chip" onclick="askChatChip('Our tech team in India accesses UK customer data. Do we need an IDTA or SCC?')">
                         <span>🇮🇳</span> India dev team UK access (IDTA)
                     </button>
-                    <button class="chat-chip" onclick="askChatChip('What is required for Article 9 Explicit Consent for astrology and health data?')">
+                    <button class="chat-chip" onclick="askChatChip('What is required for Article 9 Explicit Consent for sensitive personal data?')">
                         <span>🛡️</span> Article 9 Explicit Consent
                     </button>
                     <button class="chat-chip" onclick="askChatChip('How should we implement Article 17 Right to Erasure in our MongoDB database?')">
@@ -4345,7 +4345,7 @@
                     {
                         severity: 'CRITICAL',
                         statute: 'UK GDPR Art. 5(1)(f) / DPDP Act §8',
-                        title: 'Unencrypted Astrological Audio & Transcripts',
+                        title: 'Unencrypted Customer Telemetry & Consultation Logs',
                         file: 'storage/s3AudioSync.py:112',
                         phase: 'github'
                     },
@@ -5370,30 +5370,42 @@ ZenAuraa uses cookies and mobile SDKs to provide and enhance our services.
                     </div>
                 `;
             } else if (activeRepoSubtab === 'summary') {
+                const piiList = (currentExtraction && currentExtraction.pii_findings && currentExtraction.pii_findings.length > 0) ? 
+                    currentExtraction.pii_findings.slice(0, 6).map(f => f.field_name).join(', ') : 
+                    'user account identifiers, contact credentials, and operational logs';
+                const subpList = (currentExtraction && currentExtraction.detected_subprocessors && currentExtraction.detected_subprocessors.length > 0) ? 
+                    currentExtraction.detected_subprocessors.map(s => s.name).join(', ') : 
+                    'cloud hosting and infrastructure APIs';
+                const appDomain = (currentExtraction && currentExtraction.use_case_profile && currentExtraction.use_case_profile.primary_domain) ? 
+                    currentExtraction.use_case_profile.primary_domain : 'Digital Platform';
+                const hasArt9 = currentCompliancePackage && currentCompliancePackage.summary && currentCompliancePackage.summary.special_category_detected;
+
                 container.innerHTML = `
                     <div style="margin-bottom:16px;">
-                        <h3 style="color:var(--text-primary); font-size:16px; font-family:'Space Grotesk',sans-serif;">💡 Plain-English Summary for ${summary.organization_name}</h3>
-                        <p style="color:var(--text-secondary); font-size:13px;">Here is what the legal audit means in non-technical terms:</p>
+                        <h3 style="color:var(--text-primary); font-size:16px; font-family:'Space Grotesk',sans-serif;">💡 Plain-English Summary for ${escapeHtml(summary.organization_name)}</h3>
+                        <p style="color:var(--text-secondary); font-size:13px;">Here is what the legal audit means in clear, non-technical terms for your ${escapeHtml(appDomain)}:</p>
                     </div>
 
                     <div class="plain-card">
-                        <h4>1. What Personal Information Does This App Collect?</h4>
-                        <p>Your codebase collects user identifiers (name, email, phone) plus consultation details and payment references.</p>
+                        <h4>1. What Personal Information Does This Application Collect?</h4>
+                        <p>Your codebase models process personal data fields including: <strong>${escapeHtml(piiList)}</strong>.</p>
                     </div>
 
-                    <div class="plain-card danger">
-                        <h4>2. Special Category Data Detected (Article 9 Red Flag)</h4>
-                        <p>Because users discuss personal beliefs, birth charts, or health questions, UK GDPR and India DPDPA strictly mandate <strong>explicit separate consent</strong> before processing.</p>
+                    <div class="plain-card ${hasArt9 ? 'danger' : 'warning'}">
+                        <h4>2. Special Category Data &amp; Lawful Grounds</h4>
+                        <p>${hasArt9 ? 
+                            'Special category or sensitive data was detected in your codebase. Under UK GDPR Article 9 and India DPDP Act Section 6, you must obtain <strong>explicit, unbundled consent</strong> before processing.' : 
+                            'Standard personal identifiers detected. Processing requires a valid lawful basis (e.g. UK GDPR Article 6(1)(b) Contract / Article 6(1)(a) Consent, and India DPDP Act Section 6 Notice & Consent).'}</p>
                     </div>
 
                     <div class="plain-card warning">
                         <h4>3. Subprocessors &amp; Cloud Routing</h4>
-                        <p>User queries are processed via external APIs (OpenAI for summaries, Stripe for payments). You must maintain signed Data Processing Agreements with each provider.</p>
+                        <p>Your application integrates external services (<strong>${escapeHtml(subpList)}</strong>). You must maintain signed Data Processing Agreements (DPAs) or IDTAs with each vendor.</p>
                     </div>
 
                     <div class="plain-card success">
                         <h4>4. Immediate Action Checklist for Your Team</h4>
-                        <p>&bull; Add a mandatory consent checkbox on checkout.<br>&bull; Mask practitioner direct phone numbers.<br>&bull; Publish the generated Privacy Policy on your website footer!</p>
+                        <p>&bull; Publish the generated statutory Privacy Policy on your application or website.<br>&bull; Ensure cookie banners and consent checkboxes are active.<br>&bull; Designate a Grievance Redressal Officer under DPDP Act Section 13.</p>
                     </div>
                 `;
             } else if (activeRepoSubtab === 'ropa') {
@@ -5617,7 +5629,7 @@ ZenAuraa uses cookies and mobile SDKs to provide and enhance our services.
                 const low = msg.toLowerCase();
                 if (low.includes('openai') || low.includes('transcript')) {
                     reply = `<strong>Sending consultation transcripts to OpenAI under UK GDPR:</strong><br><br>
-1. <strong>Article 9 Restriction:</strong> Because astrological and consultation transcripts contain sensitive emotional and belief details, you <em>cannot</em> transmit them to third-party LLMs without explicit user opt-in consent.<br>
+1. <strong>Article 9 Restriction:</strong> If customer transcripts contain sensitive personal or special category data, you <em>cannot</em> transmit them to third-party LLMs without explicit user opt-in consent.<br>
 2. <strong>Zero-Retention Mandate:</strong> You must configure OpenAI's API with zero-data retention (ZDR) so user prompts are not stored for model training.<br>
 3. <strong>Article 28 DPA:</strong> Ensure OpenAI's standard Data Processing Addendum is referenced in your privacy disclosures.`;
                     citation = "UK GDPR Article 9 & Article 28 (ICO Guidance)";
