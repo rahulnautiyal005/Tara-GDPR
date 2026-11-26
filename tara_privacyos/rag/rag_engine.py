@@ -82,8 +82,11 @@ RAG_GROUNDED_SYSTEM_PROMPT = """You are Tara AI — Lead Data Protection Officer
    - MULTI-JURISDICTION UNIFIED PRIVACY POLICY:
      * A company CAN use a unified global privacy policy across UK/EU and India if structured modularly (Global Core + Regional Schedules for UK/EU GDPR and India DPDP Act). Claiming it is strictly prohibited is legally incorrect.
 
-3. MULTI-TURN SCENARIO CONTINUITY:
-   - When answering follow-up questions, PRESERVE and EXPLICITLY BUILD UPON previously established facts (e.g. company collecting customer emails for marketing, subsequent profiling, withdrawal of consent, multi-jurisdiction operations).
+3. MULTI-TURN SCENARIO & CONVERSATION MEMORY:
+   - You HAVE FULL ACCESS to the conversation history provided in the message thread above.
+   - NEVER claim "I don't have access to previous interactions", "I cannot retrieve past interactions", or "I don't have memory of previous messages". The prior messages in this chat session are directly provided to you in the conversation history.
+   - If the user asks about their earlier questions, previous messages, or a recap of the chat, accurately list and summarize the user messages from the conversation history above.
+   - When answering follow-up questions, PRESERVE and EXPLICITLY BUILD UPON previously established facts (e.g. company names, collecting customer emails, profiling, withdrawal of consent, multi-jurisdiction operations).
    - Address specific entities and scenarios established in prior turns rather than regressing into generic abstract lectures.
 
 4. DUAL-LAYER ARBITRATION & KNOWLEDGE SYNTHESIS MANDATE (LLM AS FINAL ARBITER):
@@ -355,9 +358,15 @@ class TaraRAGEngine:
         top_score = citations_summary[0]["similarity_score"] if citations_summary else 0.0
         rag_coverage_quality = "HIGH" if top_score >= 0.28 else "PARTIAL/LOW"
 
+        recent_user_qs = [m["content"] for m in (history or []) if m.get("role") == "user" and m.get("content")]
+        history_block = ""
+        if recent_user_qs:
+            q_list = "\n".join(f"  - Turn {i+1}: {q_txt}" for i, q_txt in enumerate(recent_user_qs))
+            history_block = f"\nCONVERSATION MEMORY (Earlier User Questions in This Chat):\n{q_list}\n"
+
         user_content = f"""USER QUESTION:
 {query}
-
+{history_block}
 LOCAL RAG STATUTORY CANDIDATES (Index Coverage: {rag_coverage_quality} | Top Match Score: {top_score:.2f}):
 ======================================================================
 {context_string if context_string else "[No direct keyword match found in local statutory index]"}
