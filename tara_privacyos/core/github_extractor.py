@@ -1,9 +1,9 @@
 """
 Tara PrivacyOS — Code-to-GDPR Engine
-Module: GitHub Repository Extractor & Use-Case Classifier
-Clones and analyzes any GitHub repository or local codebase, extracts
-data models, API routes, third-party dependencies, and infers the application's
-real-world business use case to drive tailored statutory GDPR generation.
+Module: Universal Polyglot GitHub Repository Extractor & Use-Case Classifier
+Analyzes codebases across Python, JavaScript, TypeScript, Go, Java, C#, PHP, Rust, Ruby,
+and SQL to extract data models, API endpoints, third-party cloud subprocessors,
+and infers accurate business domains to generate tailored statutory GDPR & DPDPA compliance.
 """
 
 import os
@@ -28,66 +28,97 @@ class PrivateRepoError(Exception):
 class GitHubRepoExtractor:
     """
     Extracts architectural metadata, data models, routes, dependencies,
-    and business use case from any GitHub repository.
+    and business use case from any GitHub repository across all major languages.
     """
 
     DOMAIN_KEYWORDS = {
-        "Legal Tech, Privacy & Regulatory Compliance": [
-            "legal", "gdpr", "dpdp", "dpdpa", "privacy", "statutory", "compliance",
-            "law", "ropa", "dpia", "audit", "governance", "fiduciary", "regulatory", "dpo", "privacypolicy"
-        ],
         "Real Estate, Property Rental & Hospitality": [
             "rental", "rent", "property", "listing", "listings", "apartment",
             "ghar", "house", "room", "accommodation", "booking", "tenant",
-            "landlord", "host", "stay", "guest", "real_estate", "lease", "pg", "apnaghar"
-        ],
-        "Astrology & Spiritual Consultation": [
-            "kundli", "horoscope", "astrology", "spiritual", "zodiac", "tarot",
-            "birth_chart", "consultation", "practitioner", "vedic"
-        ],
-        "Telehealth & Medical Diagnostics": [
-            "patient", "doctor", "health", "medical", "clinic", "symptom",
-            "prescription", "treatment", "diagnosis", "telehealth", "ehr"
+            "landlord", "host", "stay", "guest", "real_estate", "lease", "pg", "apnaghar", "villa", "hotel"
         ],
         "E-Commerce & Retail Marketplace": [
             "product", "order", "cart", "checkout", "shipping", "inventory",
-            "merchant", "catalog", "store", "stripe", "payment"
+            "merchant", "catalog", "store", "ecommerce", "sku", "basket", "vendor", "shop"
         ],
-        "FinTech & Payment Services": [
-            "wallet", "ledger", "transaction", "invoice", "bank", "credit",
-            "payout", "transfer", "kyc", "crypto", "exchange"
+        "FinTech, Banking & Payment Services": [
+            "wallet", "ledger", "transaction", "invoice", "bank", "credit", "debit",
+            "payout", "transfer", "kyc", "crypto", "exchange", "fintech", "loan", "portfolio", "stock"
         ],
-        "AI Platform & LLM Copilot": [
-            "openai", "llm", "chat", "prompt", "completion", "agent",
-            "embedding", "rag", "vector", "langchain", "anthropic"
+        "Telehealth, Medicine & Healthcare EHR": [
+            "patient", "doctor", "health", "medical", "clinic", "symptom",
+            "prescription", "treatment", "diagnosis", "telehealth", "ehr", "emr", "hospital", "pharma"
         ],
-        "HR & Recruitment Management": [
-            "employee", "candidate", "resume", "applicant", "job", "payroll",
-            "interview", "attendance", "recruitment", "cv"
+        "Astrology, Horoscope & Spiritual Consultation": [
+            "kundli", "horoscope", "astrology", "spiritual", "zodiac", "tarot",
+            "birth_chart", "consultation", "practitioner", "vedic", "numerology"
         ],
-        "EdTech & Student Learning": [
+        "EdTech, Learning Management & Student Portals": [
             "student", "course", "lesson", "quiz", "instructor", "grade",
-            "school", "curriculum", "assignment", "education"
+            "school", "curriculum", "assignment", "education", "edtech", "tutor", "lecture", "exam"
+        ],
+        "Social Media, Community & Dating Platforms": [
+            "post", "feed", "like", "follow", "follower", "friend", "social", "dating",
+            "match", "timeline", "comment", "community", "dm", "story"
+        ],
+        "Food Delivery, Restaurant & Quick Commerce": [
+            "restaurant", "food", "menu", "dish", "cuisine", "delivery", "kitchen",
+            "recipe", "order_food", "dining", "meal", "swiggy", "zomato", "grocery"
+        ],
+        "Travel, Tourism & Flight Booking": [
+            "flight", "hotel", "travel", "tourism", "vacation", "trip", "itinerary",
+            "airline", "ticket", "passenger", "destination", "booking_travel", "tour"
+        ],
+        "Fitness, Sports & Wellness Coaching": [
+            "workout", "exercise", "fitness", "gym", "trainer", "calories", "nutrition",
+            "diet", "steps", "cardio", "wellness", "reps", "routine"
+        ],
+        "Media Streaming, Audio & Video Content": [
+            "stream", "video", "audio", "music", "podcast", "playlist", "track",
+            "album", "channel", "playback", "broadcast", "media", "episode"
+        ],
+        "Automotive, Mobility & Ride Hailing": [
+            "ride", "driver", "vehicle", "car", "taxi", "cab", "fare", "commute",
+            "passenger", "mobility", "uber", "ola", "scooter"
+        ],
+        "Customer Support, CRM & Helpdesk": [
+            "ticket", "agent", "support", "helpdesk", "issue", "resolution",
+            "customer", "lead", "deal", "pipeline", "sla", "zendesk", "freshdesk"
+        ],
+        "Logistics, Supply Chain & Fleet Management": [
+            "fleet", "truck", "warehouse", "freight", "consignment", "tracking", "courier"
         ],
         "Maritime, Shipping & Port Operations": [
             "port", "vessel", "berth", "ship", "cargo", "container", "terminal",
             "marine", "logistics", "voyage", "quay", "anchorage", "portops", "stevedoring", "dock"
         ],
-        "Logistics, Supply Chain & Freight": [
-            "fleet", "truck", "warehouse", "freight", "delivery", "dispatch",
-            "route", "consignment", "tracking", "driver", "transport", "shipment"
+        "HR, Payroll & Recruitment Management": [
+            "employee", "candidate", "resume", "applicant", "job", "payroll",
+            "interview", "attendance", "recruitment", "cv", "hr", "hiring", "timesheet"
         ],
-        "Developer Tools, DevOps & Cloud Infrastructure": [
-            "cli", "sdk", "api", "cloud", "docker", "kubernetes", "infra",
-            "deploy", "pipeline", "ci", "cd", "monitoring", "git", "cluster", "observability"
+        "Legal Tech, Privacy & Regulatory Compliance": [
+            "legal", "gdpr", "dpdp", "dpdpa", "privacy", "statutory", "compliance",
+            "law", "ropa", "dpia", "audit", "governance", "fiduciary", "regulatory", "dpo", "privacypolicy"
+        ],
+        "Gaming, Esports & Virtual Worlds": [
+            "game", "player", "score", "leaderboard", "quest", "level", "guild",
+            "matchmaking", "esports", "unity", "unreal"
+        ],
+        "IoT, Smart Hardware & Home Automation": [
+            "sensor", "iot", "device", "telemetry", "hardware", "firmware",
+            "mqtt", "zigbee", "actuator", "smart_home", "gateway"
         ],
         "Cybersecurity, IAM & Identity Governance": [
-            "auth", "token", "iam", "saml", "sso", "security", "vulnerability",
-            "audit", "vault", "encrypt", "firewall", "identity", "zero_trust"
+            "iam", "saml", "sso", "security", "vulnerability",
+            "audit", "vault", "firewall", "identity", "zero_trust", "oauth"
         ],
-        "SaaS & Enterprise Collaboration": [
-            "tenant", "workspace", "organization", "project", "task",
-            "team", "role", "subscription", "member", "collaboration"
+        "AI Platform, Machine Learning & LLM Copilot": [
+            "llm", "prompt", "completion", "agent", "embedding", "rag",
+            "vector", "langchain", "anthropic", "gpt", "model_training", "copilot"
+        ],
+        "Developer Tools, DevOps & Cloud Infrastructure": [
+            "devops", "kubernetes", "k8s", "terraform", "ansible", "helm",
+            "ci_cd", "github_actions", "dockerfile", "cluster", "prometheus", "grafana"
         ]
     }
 
@@ -108,15 +139,23 @@ class GitHubRepoExtractor:
                 "clone_url": s
             }
 
-        # Handle 'owner/repo' shorthand
-        if re.match(r"^[\w\-]+/[\w\-]+$", s):
-            s = f"https://github.com/{s}"
+        # GitHub URL regexes
+        m1 = re.match(r"https?://github\.com/([^/]+)/([^/]+?)(?:\.git)?(?:/.*)?$", s)
+        if m1:
+            owner, repo = m1.group(1), m1.group(2)
+            return {
+                "type": "github",
+                "owner": owner,
+                "repo": repo,
+                "repo_name": f"{owner}/{repo}",
+                "clone_url": f"https://github.com/{owner}/{repo}.git",
+                "api_url": f"https://api.github.com/repos/{owner}/{repo}",
+                "zip_url": f"https://github.com/{owner}/{repo}/archive/refs/heads/main.zip"
+            }
 
-        # Standard GitHub URL
-        match = re.match(r"https?://github\.com/([\w\-]+)/([\w\-]+)(?:\.git)?", s)
-        if match:
-            owner, repo = match.group(1), match.group(2)
-            clean_repo = repo.removesuffix(".git")
+        m2 = re.match(r"^([^/]+)/([^/]+)$", s)
+        if m2:
+            owner, clean_repo = m2.group(1), m2.group(2).replace(".git", "")
             return {
                 "type": "github",
                 "owner": owner,
@@ -146,15 +185,12 @@ class GitHubRepoExtractor:
             try:
                 return self._extract_via_github_api(info, branch)
             except PrivateRepoError:
-                # Strictly re-raise private repo errors — do NOT fall back to dummy data or hanging git clone
                 raise
-            except Exception as api_err:
-                # If API rate-limited or unexpected network glitch, fall back to shallow git clone
+            except Exception:
                 pass
 
         temp_dir = None
         target_dir = None
-        clone_success = False
 
         if info["type"] == "local":
             target_dir = info["path"]
@@ -172,7 +208,7 @@ class GitHubRepoExtractor:
             clone_cmd.extend([info["clone_url"], temp_dir])
 
             try:
-                proc = subprocess.run(
+                subprocess.run(
                     clone_cmd,
                     check=True,
                     capture_output=True,
@@ -180,14 +216,12 @@ class GitHubRepoExtractor:
                     timeout=90
                 )
                 target_dir = temp_dir
-                clone_success = True
             except Exception as clone_err:
                 if temp_dir and os.path.exists(temp_dir):
                     shutil.rmtree(temp_dir, ignore_errors=True)
                 err_str = str(clone_err)
                 if hasattr(clone_err, "stderr") and clone_err.stderr:
                     err_str += " " + clone_err.stderr
-                # Check for private repository indicators
                 if any(w in err_str.lower() for w in ["terminal prompts disabled", "could not read username", "authentication failed", "not found", "access denied", "exit status 128"]):
                     raise PrivateRepoError(
                         f"Repository '{info.get('repo_name', repo_url_or_path)}' is Private or does not exist. "
@@ -195,7 +229,7 @@ class GitHubRepoExtractor:
                     )
                 raise RuntimeError(
                     f"Could not clone repository '{repo_url_or_path}'. "
-                    f"Please verify that the repository URL is public and valid, or that the specified branch exists. Error details: {err_str}"
+                    f"Please verify that the repository URL is public and valid. Error details: {err_str}"
                 )
 
         try:
@@ -206,57 +240,46 @@ class GitHubRepoExtractor:
                 shutil.rmtree(temp_dir, ignore_errors=True)
 
     def _extract_via_github_api(self, info: Dict[str, Any], branch: Optional[str] = None) -> Dict[str, Any]:
-        """
-        Fast lightweight GitHub scanner using GitHub REST API and raw file fetching.
-        Bypasses huge multi-hundred-megabyte repo downloads while accurately parsing
-        models, routes, and schemas in sub-3 seconds.
-        """
+        """Fast lightweight polyglot GitHub scanner using GitHub REST API and raw file fetching."""
         owner = info["owner"]
         repo = info["repo"]
         headers = {
-            "User-Agent": "TaraPrivacyOS/2.4 (Data Protection & Legal Governance Platform)",
+            "User-Agent": "TaraPrivacyOS/3.0 (Polyglot Statutory Governance Engine)",
             "Accept": "application/vnd.github.v3+json"
         }
 
-        # Step 1: Check repository metadata and visibility
-        meta_url = f"https://api.github.com/repos/{owner}/{repo}"
-        req = urllib.request.Request(meta_url, headers=headers)
+        # 1. Fetch default branch and verify access
+        repo_api_url = f"https://api.github.com/repos/{owner}/{repo}"
         try:
+            req = urllib.request.Request(repo_api_url, headers=headers)
             with urllib.request.urlopen(req, timeout=6) as resp:
-                meta = json.loads(resp.read().decode("utf-8"))
-                if meta.get("private") is True:
-                    raise PrivateRepoError(
-                        f"Repository '{owner}/{repo}' is Private. Tara PrivacyOS requires the repository "
-                        "to be Public on GitHub to scan data models and routes. Please set repository visibility to Public in GitHub Settings."
-                    )
-                default_branch = branch or meta.get("default_branch", "main")
-        except urllib.error.HTTPError as http_err:
-            body = ""
-            try:
-                body = http_err.read().decode("utf-8")
-            except Exception:
-                pass
-            if http_err.code == 403 and "rate limit" in body.lower():
-                # Hit GitHub unauthenticated API rate limit (60 req/hr)
-                # Fall back to shallow git clone, do not report as private repo!
-                raise RuntimeError(f"GitHub API rate limit: {body}")
-            if http_err.code in [404, 403]:
-                # GitHub returns 404 for private repos to unauthenticated clients
+                repo_data = json.loads(resp.read().decode("utf-8"))
+                default_branch = branch or repo_data.get("default_branch", "main")
+        except urllib.error.HTTPError as he:
+            if he.code in (401, 403, 404):
+                try:
+                    resp_body = he.read().decode("utf-8", errors="ignore").lower()
+                except Exception:
+                    resp_body = ""
+                if "rate limit" in resp_body or "api rate limit exceeded" in resp_body:
+                    raise Exception("GitHub API rate limit reached, falling back to git clone.")
                 raise PrivateRepoError(
-                    f"Repository '{owner}/{repo}' is Private or does not exist. "
+                    f"Repository '{owner}/{repo}' is Private or does not exist (GitHub API HTTP {he.code}). "
                     "Tara PrivacyOS requires the repository to be Public on GitHub to scan data models and routes."
                 )
             raise
+        except Exception:
+            default_branch = branch or "main"
 
-        # Step 2: Fetch recursive file tree
+        # 2. Fetch recursive git tree
         tree_url = f"https://api.github.com/repos/{owner}/{repo}/git/trees/{default_branch}?recursive=1"
         try:
-            with urllib.request.urlopen(urllib.request.Request(tree_url, headers=headers), timeout=10) as tr:
+            t_req = urllib.request.Request(tree_url, headers=headers)
+            with urllib.request.urlopen(t_req, timeout=10) as tr:
                 tree_data = json.loads(tr.read().decode("utf-8"))
                 tree = tree_data.get("tree", [])
-        except Exception:
-            # Fallback branch attempt if 'main' fails, try 'master'
-            if default_branch == "main":
+        except urllib.error.HTTPError as the_err:
+            if the_err.code == 404 and default_branch == "main":
                 default_branch = "master"
                 tree_url = f"https://api.github.com/repos/{owner}/{repo}/git/trees/{default_branch}?recursive=1"
                 with urllib.request.urlopen(urllib.request.Request(tree_url, headers=headers), timeout=10) as tr:
@@ -265,27 +288,44 @@ class GitHubRepoExtractor:
             else:
                 raise
 
-        # Exclude mock, test, and benchmark fixture directories from model extraction
-        ignore_path_patterns = {"benchmark", "benchmarks", "sample_consultation_app", "test", "tests", "__tests__", "mock", "mocks", "fixtures"}
+        # Exclude mock, test, and benchmark fixture directories
+        ignore_path_patterns = {
+            "benchmark", "benchmarks", "sample_consultation_app", "test", "tests",
+            "__tests__", "mock", "mocks", "fixtures", "node_modules", ".git", "dist", "build", "vendor"
+        }
         blobs = [item["path"] for item in tree if item.get("type") == "blob" and not any(p in item["path"].lower().split("/") for p in ignore_path_patterns)]
         total_files = len(blobs)
         file_tree = blobs[:30]
 
-        # Filter schema, route, and dependency files
+        # Polyglot file detection
+        schema_exts = (".prisma", ".sql", ".proto", ".graphql")
+        code_exts = (".py", ".ts", ".js", ".tsx", ".jsx", ".go", ".java", ".kt", ".cs", ".rs", ".php", ".rb")
+        model_keywords = ["model", "schema", "entity", "entities", "types", "dto", "domain", "struct", "table", "db/"]
+        route_keywords = ["route", "router", "endpoint", "controller", "api", "handler", "view", "service"]
+
         schema_files = [
             p for p in blobs
-            if p.endswith(".prisma") or p.endswith(".sql") or
-            ("models" in p.lower() and p.endswith((".py", ".ts", ".js"))) or
-            ("server.py" in p.lower() or "schema" in p.lower())
+            if p.endswith(schema_exts) or
+            (any(k in p.lower() for k in model_keywords) and p.endswith(code_exts))
         ]
-        route_files = [p for p in blobs if any(k in p.lower() for k in ["route", "router", "endpoint", "controller", "api"]) and p.endswith((".py", ".ts", ".js"))]
-        dep_files = [p for p in blobs if os.path.basename(p) in ["package.json", "requirements.txt", "Pipfile", "pyproject.toml"]]
-        readme_files = [p for p in blobs if os.path.basename(p).lower() in ["readme.md", "readme.txt", "readme"]]
+        route_files = [
+            p for p in blobs
+            if any(k in p.lower() for k in route_keywords) and p.endswith(code_exts)
+        ]
+        dep_files = [
+            p for p in blobs
+            if os.path.basename(p).lower() in [
+                "package.json", "requirements.txt", "pipfile", "pyproject.toml", "setup.py",
+                "go.mod", "pom.xml", "build.gradle", "build.gradle.kts", "cargo.toml",
+                "composer.json", "gemfile", "docker-compose.yml", "docker-compose.yaml", ".env.example"
+            ] or p.endswith(".csproj")
+        ]
+        readme_files = [p for p in blobs if os.path.basename(p).lower().startswith("readme")]
 
-        # Prioritize top 30 most relevant files for instant scan
+        # Prioritize top 35 most relevant files for instant concurrent scan
         files_to_fetch = []
         seen = set()
-        for f in (schema_files[:12] + route_files[:10] + dep_files[:5] + readme_files[:2]):
+        for f in (schema_files[:15] + route_files[:10] + dep_files[:8] + readme_files[:2]):
             if f not in seen:
                 seen.add(f)
                 files_to_fetch.append(f)
@@ -304,7 +344,6 @@ class GitHubRepoExtractor:
             except Exception:
                 return (fpath, "")
 
-        # Fetch candidate files concurrently for sub-3-second scan
         with ThreadPoolExecutor(max_workers=8) as executor:
             fetched_results = list(executor.map(_fetch_single_file, files_to_fetch))
 
@@ -319,10 +358,7 @@ class GitHubRepoExtractor:
             if fname_lower.startswith("readme") and not readme_content:
                 readme_content = content[:8000]
 
-            if ext == ".prisma":
-                schema_data = self._parse_schema_content(content, fpath)
-                raw_models.extend(schema_data.get("models", []))
-            elif ext == ".sql":
+            if ext in schema_exts:
                 schema_data = self._parse_schema_content(content, fpath)
                 raw_models.extend(schema_data.get("models", []))
             elif ext == ".py":
@@ -335,7 +371,37 @@ class GitHubRepoExtractor:
                 raw_models.extend(js_data.get("models", []))
                 raw_routes.extend(js_data.get("routes", []))
                 imports_and_sdks.extend(js_data.get("imports", []))
-            elif fname in ["package.json", "requirements.txt", "Pipfile", "pyproject.toml"]:
+            elif ext == ".go":
+                go_data = self._parse_go_content(content, fpath)
+                raw_models.extend(go_data.get("models", []))
+                raw_routes.extend(go_data.get("routes", []))
+                imports_and_sdks.extend(go_data.get("imports", []))
+            elif ext in [".java", ".kt"]:
+                java_data = self._parse_java_content(content, fpath)
+                raw_models.extend(java_data.get("models", []))
+                raw_routes.extend(java_data.get("routes", []))
+                imports_and_sdks.extend(java_data.get("imports", []))
+            elif ext == ".cs":
+                cs_data = self._parse_csharp_content(content, fpath)
+                raw_models.extend(cs_data.get("models", []))
+                raw_routes.extend(cs_data.get("routes", []))
+                imports_and_sdks.extend(cs_data.get("imports", []))
+            elif ext == ".php":
+                php_data = self._parse_php_content(content, fpath)
+                raw_models.extend(php_data.get("models", []))
+                raw_routes.extend(php_data.get("routes", []))
+                imports_and_sdks.extend(php_data.get("imports", []))
+            elif ext in [".rs", ".rb"]:
+                gen_data = self._parse_generic_content(content, fpath)
+                raw_models.extend(gen_data.get("models", []))
+                raw_routes.extend(gen_data.get("routes", []))
+                imports_and_sdks.extend(gen_data.get("imports", []))
+
+            if fname_lower in [
+                "package.json", "requirements.txt", "pipfile", "pyproject.toml", "setup.py",
+                "go.mod", "pom.xml", "build.gradle", "build.gradle.kts", "cargo.toml",
+                "composer.json", "gemfile", "docker-compose.yml", "docker-compose.yaml", ".env.example"
+            ] or ext == ".csproj":
                 dep_items = self._parse_dependency_content(content, fname, fpath)
                 imports_and_sdks.extend(dep_items)
 
@@ -377,7 +443,6 @@ class GitHubRepoExtractor:
     def _scan_directory(self, root_dir: str, repo_info: Dict[str, Any]) -> Dict[str, Any]:
         """Scans code files, schemas, dependencies, and README in the cloned directory."""
         readme_content = ""
-        package_files = []
         raw_models = []
         raw_routes = []
         imports_and_sdks = []
@@ -386,7 +451,7 @@ class GitHubRepoExtractor:
 
         ignore_dirs = {
             ".git", "node_modules", "venv", ".venv", "__pycache__", "dist", "build",
-            ".next", ".cache", "target", "benchmarks", "tests", "test", "fixtures", "mocks"
+            ".next", ".cache", "target", "benchmarks", "tests", "test", "fixtures", "mocks", "vendor"
         }
 
         for dirpath, dirnames, filenames in os.walk(root_dir):
@@ -403,44 +468,65 @@ class GitHubRepoExtractor:
                 ext = os.path.splitext(fname)[1].lower()
 
                 # README extraction
-                if fname_lower in ["readme.md", "readme.txt", "readme"]:
+                if fname_lower.startswith("readme"):
                     try:
                         with open(fpath, "r", encoding="utf-8", errors="ignore") as rf:
                             readme_content = rf.read(8000)
                     except Exception:
                         pass
 
-                # Python AST Scan
+                # Language Dispatch
                 if ext == ".py":
                     py_data = self._parse_python(fpath, rel_path)
                     raw_models.extend(py_data.get("models", []))
                     raw_routes.extend(py_data.get("routes", []))
                     imports_and_sdks.extend(py_data.get("imports", []))
-
-                # JS/TS Scan
                 elif ext in [".js", ".ts", ".jsx", ".tsx"]:
                     js_data = self._parse_javascript(fpath, rel_path)
                     raw_models.extend(js_data.get("models", []))
                     raw_routes.extend(js_data.get("routes", []))
                     imports_and_sdks.extend(js_data.get("imports", []))
-
-                # Database & Schema files
-                elif ext in [".prisma", ".sql"]:
+                elif ext == ".go":
+                    go_data = self._parse_go(fpath, rel_path)
+                    raw_models.extend(go_data.get("models", []))
+                    raw_routes.extend(go_data.get("routes", []))
+                    imports_and_sdks.extend(go_data.get("imports", []))
+                elif ext in [".java", ".kt"]:
+                    java_data = self._parse_java(fpath, rel_path)
+                    raw_models.extend(java_data.get("models", []))
+                    raw_routes.extend(java_data.get("routes", []))
+                    imports_and_sdks.extend(java_data.get("imports", []))
+                elif ext == ".cs":
+                    cs_data = self._parse_csharp(fpath, rel_path)
+                    raw_models.extend(cs_data.get("models", []))
+                    raw_routes.extend(cs_data.get("routes", []))
+                    imports_and_sdks.extend(cs_data.get("imports", []))
+                elif ext == ".php":
+                    php_data = self._parse_php(fpath, rel_path)
+                    raw_models.extend(php_data.get("models", []))
+                    raw_routes.extend(php_data.get("routes", []))
+                    imports_and_sdks.extend(php_data.get("imports", []))
+                elif ext in [".rs", ".rb"]:
+                    gen_data = self._parse_generic(fpath, rel_path)
+                    raw_models.extend(gen_data.get("models", []))
+                    raw_routes.extend(gen_data.get("routes", []))
+                    imports_and_sdks.extend(gen_data.get("imports", []))
+                elif ext in [".prisma", ".sql", ".proto", ".graphql"]:
                     schema_data = self._parse_schema(fpath, rel_path)
                     raw_models.extend(schema_data.get("models", []))
 
-                # Dependency declarations
-                elif fname in ["requirements.txt", "package.json", "Pipfile", "pyproject.toml"]:
+                # Dependency manifests
+                if fname_lower in [
+                    "requirements.txt", "package.json", "pipfile", "pyproject.toml", "setup.py",
+                    "go.mod", "pom.xml", "build.gradle", "build.gradle.kts", "cargo.toml",
+                    "composer.json", "gemfile", "docker-compose.yml", "docker-compose.yaml", ".env.example"
+                ] or ext == ".csproj":
                     dep_items = self._parse_dependency_file(fpath, rel_path)
                     imports_and_sdks.extend(dep_items)
 
-        # Step 2: Classify PII & Article 9 data fields
+        # Classify PII, subprocessors, and use-case
         pii_summary = self.pii_detector.inspect_models(raw_models)
-
-        # Step 3: Classify Subprocessors & International Transfers
         subproc_summary = self.subproc_detector.detect_subprocessors(imports_and_sdks)
-
-        # Step 4: Infer Business Domain & Primary Use-Case
         use_case_profile = self._infer_use_case(
             repo_info=repo_info,
             readme_text=readme_content,
@@ -476,10 +562,7 @@ class GitHubRepoExtractor:
         routes: List[Dict[str, Any]],
         subprocessors: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """
-        Analyzes the combined text signals (README, model names, fields, route paths)
-        to identify the specific business domain, data subjects, and processing purposes.
-        """
+        """Analyzes combined text signals to identify business domain, data subjects, and processing purposes."""
         repo_name_str = (repo_info.get("repo_name", "") + " " + repo_info.get("source_url", "")).lower()
         combined_text = (
             repo_name_str + " " +
@@ -541,7 +624,6 @@ class GitHubRepoExtractor:
         if any(re.search(r"\b" + re.escape(w) + r"\b", combined_text) for w in ["health_symptoms", "diagnosis", "biometric"]):
             processing_purposes.append("Processing of Sensitive Profile Context (Explicit Consent Art 9)")
 
-        # Target jurisdictions
         jurisdictions = ["United Kingdom (UK GDPR & DPA 2018)", "Republic of India (DPDP Act 2023)"]
 
         return {
@@ -559,8 +641,11 @@ class GitHubRepoExtractor:
             )
         }
 
+    # ==============================================================
+    # POLYGLOT CODE & SCHEMA PARSERS
+    # ==============================================================
+
     def _parse_python(self, fpath: str, rel_path: str) -> Dict[str, Any]:
-        """Extracts models, routes, and imports from a Python file using AST."""
         try:
             with open(fpath, "r", encoding="utf-8", errors="ignore") as f:
                 content = f.read()
@@ -569,7 +654,7 @@ class GitHubRepoExtractor:
             return {"models": [], "routes": [], "imports": []}
 
     def _parse_python_content(self, content: str, rel_path: str) -> Dict[str, Any]:
-        """Extracts models, routes, and imports from Python source text."""
+        """Extracts models, routes, and imports from Python source text (Pydantic, SQLAlchemy, Django)."""
         res = {"models": [], "routes": [], "imports": []}
         try:
             tree = ast.parse(content, filename=rel_path)
@@ -592,6 +677,7 @@ class GitHubRepoExtractor:
                     elif isinstance(item, ast.Assign):
                         for target in item.targets:
                             if isinstance(target, ast.Name):
+                                # Captures SQLAlchemy Column or Django models.Field assignments
                                 fields.append({"field_name": target.id, "line_number": target.lineno})
                 if fields:
                     res["models"].append({
@@ -612,7 +698,7 @@ class GitHubRepoExtractor:
                     elif isinstance(dec, ast.Attribute):
                         decorators.append(f"{getattr(dec.func.value, 'id', '')}.{dec.attr}")
                     elif isinstance(dec, ast.Name):
-                        decorators.append(dec.id)
+                        decorators.append(dec.func.id)
 
                 route_decs = [d for d in decorators if any(r in d.lower() for r in ["get", "post", "put", "delete", "patch", "route", "api"])]
                 if route_decs or "endpoint" in node.name.lower() or "api" in node.name.lower():
@@ -627,7 +713,6 @@ class GitHubRepoExtractor:
         return res
 
     def _parse_javascript(self, fpath: str, rel_path: str) -> Dict[str, Any]:
-        """Extracts models, routes, and imports from JS/TS file."""
         try:
             with open(fpath, "r", encoding="utf-8", errors="ignore") as f:
                 content = f.read()
@@ -636,17 +721,17 @@ class GitHubRepoExtractor:
             return {"models": [], "routes": [], "imports": []}
 
     def _parse_javascript_content(self, content: str, rel_path: str) -> Dict[str, Any]:
-        """Extracts models, routes, and imports from JS/TS source text."""
+        """Extracts models (Mongoose, Prisma, TypeORM, Zod, TS Interfaces), routes, and npm packages."""
         res = {"models": [], "routes": [], "imports": []}
 
-        # Imports
+        # Imports & requires
         imports = re.findall(r'''(?:import\s+.*?from\s+['"]([^'"]+)['"]|require\s*\(\s*['"]([^'"]+)['"]\s*\))''', content)
         for imp in imports:
             pkg = imp[0] or imp[1]
             if pkg and not pkg.startswith("."):
                 res["imports"].append({"source_file": rel_path, "package": pkg, "type": "npm_package"})
 
-        # Routes
+        # Express / Fastify / Next.js routes
         route_matches = re.finditer(r'''(?:app|router|api)\.(get|post|put|delete|patch)\s*\(\s*['"]([^'"]+)['"]''', content, re.IGNORECASE)
         for m in route_matches:
             method, path = m.group(1).upper(), m.group(2)
@@ -658,13 +743,13 @@ class GitHubRepoExtractor:
                 "decorators": [method]
             })
 
-        # Mongoose / Prisma models with balanced-brace parsing
+        found_model_names = set()
+
+        # 1. Mongoose Schemas (Balanced-brace parser)
         schema_patterns = [
             r'(?:const|let|var)\s+(\w+)\s*=\s*new\s+(?:mongoose\.)?Schema\s*\(',
             r'mongoose\.model\s*\(\s*[\'"](\w+)[\'"]\s*,\s*new\s+(?:mongoose\.)?Schema\s*\('
         ]
-
-        found_model_names = set()
         for pat in schema_patterns:
             for sm in re.finditer(pat, content):
                 name = sm.group(1)
@@ -675,7 +760,6 @@ class GitHubRepoExtractor:
                 if brace_start == -1 or brace_start - start_pos > 25:
                     continue
 
-                # Count balanced braces to extract the entire top-level schema definition
                 depth = 0
                 end_pos = -1
                 in_str = None
@@ -719,41 +803,244 @@ class GitHubRepoExtractor:
                             if fm:
                                 fn = fm.group(1)
                                 if fn not in ('type', 'required', 'default', 'enum', 'ref', 'min', 'max', 'select'):
-                                    line_no = content[:brace_start + idx].count('\n') + 1
-                                    fields.append({"field_name": fn, "line_number": line_no})
+                                    fields.append({"field_name": fn, "line_number": 1})
                                 idx += fm.end() - 1
                         idx += 1
 
-                    # If passport-local-mongoose is used, it injects username automatically
                     if "passportlocalmongoose" in content.lower().replace("-", ""):
                         if not any(f["field_name"] == "username" for f in fields):
-                            fields.append({"field_name": "username", "line_number": content[:sm.start()].count('\n') + 1})
+                            fields.append({"field_name": "username", "line_number": 1})
 
                     if fields:
                         found_model_names.add(name)
                         res["models"].append({
                             "model_name": name,
                             "source_file": rel_path,
-                            "line_number": content[:sm.start()].count('\n') + 1,
+                            "line_number": content[:sm.start()].count("\n") + 1,
                             "fields": fields
                         })
 
-        # Fallback to class / interface definitions if no Mongoose schemas found
-        if not res["models"]:
-            for cm in re.finditer(r'(?:class|interface|type)\s+(\w+)', content):
-                cname = cm.group(1)
-                if any(k in cname.lower() for k in ["schema", "model", "user", "listing", "review", "order", "item", "booking"]):
-                    res["models"].append({
-                        "model_name": cname,
-                        "source_file": rel_path,
-                        "line_number": content[:cm.start()].count('\n') + 1,
-                        "fields": []
-                    })
+        # 2. TypeScript Interfaces & Types
+        for im in re.finditer(r'(?:export\s+)?(?:interface|type)\s+(\w+)(?:\s*=\s*|\s+extends[^{]+|\s*)\{([^}]+)\}', content):
+            name = im.group(1)
+            if name in found_model_names:
+                continue
+            body = im.group(2)
+            fields = []
+            for line in body.splitlines():
+                line = line.strip()
+                if not line or line.startswith("//"):
+                    continue
+                km = re.match(r'([a-zA-Z_$][a-zA-Z0-9_$]*)\s*\??\s*:', line)
+                if km:
+                    fn = km.group(1)
+                    if fn not in ("type", "readonly"):
+                        fields.append({"field_name": fn, "line_number": 1})
+            if fields:
+                found_model_names.add(name)
+                res["models"].append({"model_name": name, "source_file": rel_path, "line_number": 1, "fields": fields})
+
+        # 3. TypeORM / ES6 Classes with columns
+        for cm in re.finditer(r'(?:@Entity[^{]*\s+)?(?:export\s+)?class\s+(\w+)[^{]*\{([^}]+)\}', content):
+            name = cm.group(1)
+            if name in found_model_names:
+                continue
+            body = cm.group(2)
+            fields = []
+            for line in body.splitlines():
+                line = line.strip()
+                fm = re.match(r'([a-zA-Z_$][a-zA-Z0-9_$]*)\s*\??\s*:\s*[\w<>\[\]]+', line)
+                if fm:
+                    fields.append({"field_name": fm.group(1), "line_number": 1})
+            if fields:
+                found_model_names.add(name)
+                res["models"].append({"model_name": name, "source_file": rel_path, "line_number": 1, "fields": fields})
+
+        return res
+
+    def _parse_go(self, fpath: str, rel_path: str) -> Dict[str, Any]:
+        try:
+            with open(fpath, "r", encoding="utf-8", errors="ignore") as f:
+                content = f.read()
+            return self._parse_go_content(content, rel_path)
+        except Exception:
+            return {"models": [], "routes": [], "imports": []}
+
+    def _parse_go_content(self, content: str, rel_path: str) -> Dict[str, Any]:
+        """Extracts models (structs with json tags), routes (Gin, Fiber, Chi), and imports from Go."""
+        res = {"models": [], "routes": [], "imports": []}
+
+        # Imports
+        for m in re.finditer(r'import\s*\(([^)]+)\)', content):
+            for line in m.group(1).splitlines():
+                line = line.strip().strip('"')
+                if line and not line.startswith("//"):
+                    res["imports"].append({"source_file": rel_path, "package": line, "type": "go_package"})
+        for m in re.finditer(r'import\s+"([^"]+)"', content):
+            res["imports"].append({"source_file": rel_path, "package": m.group(1), "type": "go_package"})
+
+        # Routes: r.GET("/api/v1/user", ...)
+        for m in re.finditer(r'\.(GET|POST|PUT|DELETE|PATCH)\s*\(\s*["\']([^"\']+)["\']', content, re.IGNORECASE):
+            method, path = m.group(1).upper(), m.group(2)
+            res["routes"].append({"endpoint": f"{method} {path}", "path": path, "source_file": rel_path, "line_number": 1, "decorators": [method]})
+
+        # Structs
+        for m in re.finditer(r'type\s+(\w+)\s+struct\s*\{([^}]+)\}', content):
+            name = m.group(1)
+            body = m.group(2)
+            fields = []
+            for line in body.splitlines():
+                line = line.strip()
+                if not line or line.startswith("//"):
+                    continue
+                tag_match = re.search(r'json:"([^",]+)', line)
+                if tag_match:
+                    fn = tag_match.group(1)
+                else:
+                    parts = line.split()
+                    fn = parts[0] if parts else None
+                if fn and fn != "-":
+                    fields.append({"field_name": fn, "line_number": 1})
+            if fields:
+                res["models"].append({"model_name": name, "source_file": rel_path, "line_number": 1, "fields": fields})
+
+        return res
+
+    def _parse_java(self, fpath: str, rel_path: str) -> Dict[str, Any]:
+        try:
+            with open(fpath, "r", encoding="utf-8", errors="ignore") as f:
+                content = f.read()
+            return self._parse_java_content(content, rel_path)
+        except Exception:
+            return {"models": [], "routes": [], "imports": []}
+
+    def _parse_java_content(self, content: str, rel_path: str) -> Dict[str, Any]:
+        """Extracts models (Spring JPA entities), endpoints, and imports from Java/Kotlin."""
+        res = {"models": [], "routes": [], "imports": []}
+
+        # Imports
+        for m in re.finditer(r'import\s+([\w.]+);', content):
+            res["imports"].append({"source_file": rel_path, "package": m.group(1), "type": "java_import"})
+
+        # Routes (@GetMapping, @PostMapping)
+        for m in re.finditer(r'@(GetMapping|PostMapping|PutMapping|DeleteMapping|PatchMapping|RequestMapping)\s*\(\s*(?:value\s*=\s*)?["\']([^"\']+)["\']', content):
+            method = m.group(1).replace("Mapping", "").upper()
+            path = m.group(2)
+            res["routes"].append({"endpoint": f"{method} {path}", "path": path, "source_file": rel_path, "line_number": 1, "decorators": [method]})
+
+        # Classes
+        for m in re.finditer(r'(?:public\s+)?class\s+(\w+)[^{]*\{([^}]+)\}', content):
+            name = m.group(1)
+            body = m.group(2)
+            fields = []
+            for line in body.splitlines():
+                fm = re.search(r'(?:private|protected|public)\s+[\w<>,.?\[\]]+\s+(\w+)\s*;', line)
+                if fm:
+                    fn = fm.group(1)
+                    if fn not in ("serialVersionUID",):
+                        fields.append({"field_name": fn, "line_number": 1})
+            if fields:
+                res["models"].append({"model_name": name, "source_file": rel_path, "line_number": 1, "fields": fields})
+
+        return res
+
+    def _parse_csharp(self, fpath: str, rel_path: str) -> Dict[str, Any]:
+        try:
+            with open(fpath, "r", encoding="utf-8", errors="ignore") as f:
+                content = f.read()
+            return self._parse_csharp_content(content, rel_path)
+        except Exception:
+            return {"models": [], "routes": [], "imports": []}
+
+    def _parse_csharp_content(self, content: str, rel_path: str) -> Dict[str, Any]:
+        """Extracts models (EF Core classes), ASP.NET routes, and namespaces from C#."""
+        res = {"models": [], "routes": [], "imports": []}
+
+        for m in re.finditer(r'using\s+([\w.]+);', content):
+            res["imports"].append({"source_file": rel_path, "package": m.group(1), "type": "csharp_namespace"})
+
+        for m in re.finditer(r'\[(HttpGet|HttpPost|HttpPut|HttpDelete|Route)\s*\(\s*["\']([^"\']+)["\']\s*\)\]', content):
+            method = m.group(1).replace("Http", "").upper()
+            path = m.group(2)
+            res["routes"].append({"endpoint": f"{method} {path}", "path": path, "source_file": rel_path, "line_number": 1, "decorators": [method]})
+
+        for m in re.finditer(r'(?:public\s+)?class\s+(\w+)[^{]*\{([^}]+)\}', content):
+            name = m.group(1)
+            body = m.group(2)
+            fields = []
+            for line in body.splitlines():
+                fm = re.search(r'public\s+[\w<>,.?\[\]]+\s+(\w+)\s*\{\s*get;', line)
+                if fm:
+                    fields.append({"field_name": fm.group(1), "line_number": 1})
+            if fields:
+                res["models"].append({"model_name": name, "source_file": rel_path, "line_number": 1, "fields": fields})
+
+        return res
+
+    def _parse_php(self, fpath: str, rel_path: str) -> Dict[str, Any]:
+        try:
+            with open(fpath, "r", encoding="utf-8", errors="ignore") as f:
+                content = f.read()
+            return self._parse_php_content(content, rel_path)
+        except Exception:
+            return {"models": [], "routes": [], "imports": []}
+
+    def _parse_php_content(self, content: str, rel_path: str) -> Dict[str, Any]:
+        """Extracts models (Laravel Eloquent), routes, and composer packages from PHP."""
+        res = {"models": [], "routes": [], "imports": []}
+
+        for m in re.finditer(r'use\s+([\w\\]+);', content):
+            res["imports"].append({"source_file": rel_path, "package": m.group(1), "type": "php_use"})
+
+        for m in re.finditer(r'Route::(get|post|put|delete|patch)\s*\(\s*["\']([^"\']+)["\']', content):
+            method, path = m.group(1).upper(), m.group(2)
+            res["routes"].append({"endpoint": f"{method} {path}", "path": path, "source_file": rel_path, "line_number": 1, "decorators": [method]})
+
+        for m in re.finditer(r'class\s+(\w+)\s+extends\s+Model[^{]*\{([^}]+)\}', content):
+            name = m.group(1)
+            body = m.group(2)
+            fields = []
+            fillable_match = re.search(r'protected\s+\$fillable\s*=\s*\[([^\]]+)\];', body)
+            if fillable_match:
+                for fn in re.findall(r'["\'](\w+)["\']', fillable_match.group(1)):
+                    fields.append({"field_name": fn, "line_number": 1})
+            if fields:
+                res["models"].append({"model_name": name, "source_file": rel_path, "line_number": 1, "fields": fields})
+
+        return res
+
+    def _parse_generic(self, fpath: str, rel_path: str) -> Dict[str, Any]:
+        try:
+            with open(fpath, "r", encoding="utf-8", errors="ignore") as f:
+                content = f.read()
+            return self._parse_generic_content(content, rel_path)
+        except Exception:
+            return {"models": [], "routes": [], "imports": []}
+
+    def _parse_generic_content(self, content: str, rel_path: str) -> Dict[str, Any]:
+        """Generic fallback parser for Rust structs, Ruby models, or unknown typed languages."""
+        res = {"models": [], "routes": [], "imports": []}
+
+        # Rust pub struct Name { field: type }
+        for m in re.finditer(r'(?:pub\s+)?struct\s+(\w+)[^{]*\{([^}]+)\}', content):
+            name = m.group(1)
+            body = m.group(2)
+            fields = []
+            for line in body.splitlines():
+                line = line.strip()
+                fm = re.match(r'(?:pub\s+)?([a-zA-Z_$][a-zA-Z0-9_$]*)\s*:\s*[\w<>\[\]]+', line)
+                if fm:
+                    fields.append({"field_name": fm.group(1), "line_number": 1})
+            if fields:
+                res["models"].append({"model_name": name, "source_file": rel_path, "line_number": 1, "fields": fields})
+
+        # Ruby class Name < ApplicationRecord
+        for m in re.finditer(r'class\s+(\w+)\s*<\s*ApplicationRecord', content):
+            res["models"].append({"model_name": m.group(1), "source_file": rel_path, "line_number": 1, "fields": []})
 
         return res
 
     def _parse_schema(self, fpath: str, rel_path: str) -> Dict[str, Any]:
-        """Parses Prisma or SQL schema definitions from file."""
         try:
             with open(fpath, "r", encoding="utf-8", errors="ignore") as f:
                 content = f.read()
@@ -762,12 +1049,11 @@ class GitHubRepoExtractor:
             return {"models": []}
 
     def _parse_schema_content(self, content: str, rel_path: str) -> Dict[str, Any]:
-        """Parses Prisma or SQL schema definitions from text content."""
+        """Parses Prisma, SQL DDL, Protobuf, or GraphQL schemas."""
         res = {"models": []}
 
         # Prisma models
-        prisma_matches = re.finditer(r'''model\s+(\w+)\s*\{([^}]+)\}''', content)
-        for pm in prisma_matches:
+        for pm in re.finditer(r'model\s+(\w+)\s*\{([^}]+)\}', content):
             model_name, body = pm.group(1), pm.group(2)
             fields = []
             for line in body.splitlines():
@@ -775,34 +1061,35 @@ class GitHubRepoExtractor:
                 if parts and not parts[0].startswith("//") and not parts[0].startswith("@@"):
                     fields.append({"field_name": parts[0], "line_number": 1})
             if fields:
-                res["models"].append({
-                    "model_name": model_name,
-                    "source_file": rel_path,
-                    "line_number": 1,
-                    "fields": fields
-                })
+                res["models"].append({"model_name": model_name, "source_file": rel_path, "line_number": 1, "fields": fields})
 
         # SQL CREATE TABLE
-        sql_matches = re.finditer(r'''CREATE\s+TABLE\s+(?:IF\s+NOT\s+EXISTS\s+)?(\w+)\s*\(([^;]+)\)''', content, re.IGNORECASE)
-        for sm in sql_matches:
+        for sm in re.finditer(r'CREATE\s+TABLE\s+(?:IF\s+NOT\s+EXISTS\s+)?(?:["`]?\w+["`]?\.)?["`]?(\w+)["`]?\s*\(([^;]+)\)', content, re.IGNORECASE):
             table_name, body = sm.group(1), sm.group(2)
             fields = []
             for line in body.splitlines():
-                parts = line.strip().replace(",", "").split()
-                if parts and parts[0].upper() not in ["PRIMARY", "FOREIGN", "KEY", "CONSTRAINT", "UNIQUE"]:
+                parts = line.strip().replace(",", "").replace('"', '').replace('`', '').split()
+                if parts and parts[0].upper() not in ["PRIMARY", "FOREIGN", "KEY", "CONSTRAINT", "UNIQUE", "CHECK", "INDEX"]:
                     fields.append({"field_name": parts[0], "line_number": 1})
             if fields:
-                res["models"].append({
-                    "model_name": table_name,
-                    "source_file": rel_path,
-                    "line_number": 1,
-                    "fields": fields
-                })
+                res["models"].append({"model_name": table_name, "source_file": rel_path, "line_number": 1, "fields": fields})
+
+        # Protobuf messages
+        for m in re.finditer(r'message\s+(\w+)\s*\{([^}]+)\}', content):
+            msg_name, body = m.group(1), m.group(2)
+            fields = []
+            for line in body.splitlines():
+                parts = line.strip().replace(";", "").split()
+                if len(parts) >= 3 and "=" in parts:
+                    eq_idx = parts.index("=")
+                    fn = parts[eq_idx - 1]
+                    fields.append({"field_name": fn, "line_number": 1})
+            if fields:
+                res["models"].append({"model_name": msg_name, "source_file": rel_path, "line_number": 1, "fields": fields})
 
         return res
 
     def _parse_dependency_file(self, fpath: str, rel_path: str) -> List[Dict[str, Any]]:
-        """Parses dependency lists from file."""
         try:
             with open(fpath, "r", encoding="utf-8", errors="ignore") as f:
                 content = f.read()
@@ -812,9 +1099,11 @@ class GitHubRepoExtractor:
             return []
 
     def _parse_dependency_content(self, content: str, fname: str, rel_path: str) -> List[Dict[str, Any]]:
-        """Parses dependency lists from file text."""
+        """Parses dependency lists across npm, pip, go, maven, gradle, cargo, composer, gemfile, docker-compose, and .env."""
         deps = []
-        if fname.endswith("package.json"):
+        fname_lower = fname.lower()
+
+        if fname_lower == "package.json":
             try:
                 pkg_data = json.loads(content)
                 all_deps = {**pkg_data.get("dependencies", {}), **pkg_data.get("devDependencies", {})}
@@ -822,7 +1111,53 @@ class GitHubRepoExtractor:
                     deps.append({"source_file": rel_path, "package": pkg, "type": "npm_dependency"})
             except Exception:
                 pass
-        else: # requirements.txt / Pipfile
+        elif fname_lower in ["go.mod"]:
+            for line in content.splitlines():
+                line = line.strip()
+                if line.startswith("require") or (not line.startswith("module") and "/" in line):
+                    parts = line.replace("require", "").replace("(", "").replace(")", "").strip().split()
+                    if parts:
+                        deps.append({"source_file": rel_path, "package": parts[0], "type": "go_module"})
+        elif fname_lower == "pom.xml":
+            for m in re.finditer(r'<artifactId>([^<]+)</artifactId>', content):
+                deps.append({"source_file": rel_path, "package": m.group(1).strip(), "type": "maven_dependency"})
+        elif fname_lower in ["build.gradle", "build.gradle.kts"]:
+            for m in re.finditer(r'(?:implementation|api|compileOnly)\s*[\'"]([^:\'"]+):([^:\'"]+)', content):
+                pkg = f"{m.group(1)}:{m.group(2)}"
+                deps.append({"source_file": rel_path, "package": pkg, "type": "gradle_dependency"})
+        elif fname_lower == "cargo.toml":
+            in_deps = False
+            for line in content.splitlines():
+                line = line.strip()
+                if line.startswith("[dependencies]"):
+                    in_deps = True
+                elif line.startswith("["):
+                    in_deps = False
+                elif in_deps and "=" in line:
+                    crate = line.split("=")[0].strip()
+                    deps.append({"source_file": rel_path, "package": crate, "type": "cargo_crate"})
+        elif fname_lower == "composer.json":
+            try:
+                cdata = json.loads(content)
+                all_deps = {**cdata.get("require", {}), **cdata.get("require-dev", {})}
+                for pkg in all_deps.keys():
+                    deps.append({"source_file": rel_path, "package": pkg, "type": "composer_package"})
+            except Exception:
+                pass
+        elif fname_lower == "gemfile":
+            for m in re.finditer(r'gem\s+[\'"]([^\'"]+)[\'"]', content):
+                deps.append({"source_file": rel_path, "package": m.group(1), "type": "ruby_gem"})
+        elif fname_lower in [".env.example", ".env.sample", ".env.template"]:
+            for line in content.splitlines():
+                line = line.strip()
+                if line and not line.startswith("#"):
+                    eq = line.find("=")
+                    key = line[:eq].strip() if eq != -1 else line
+                    deps.append({"source_file": rel_path, "package": key, "type": "env_credential"})
+        elif fname_lower in ["docker-compose.yml", "docker-compose.yaml"]:
+            for m in re.finditer(r'image:\s*([^\s:]+)', content):
+                deps.append({"source_file": rel_path, "package": m.group(1), "type": "docker_image"})
+        else: # requirements.txt / Pipfile / setup.py
             for line in content.splitlines():
                 line = line.strip()
                 if line and not line.startswith("#"):

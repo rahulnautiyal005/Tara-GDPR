@@ -1,8 +1,8 @@
 """
 Tara PrivacyOS — Code-to-GDPR Engine
-Module: CODE-102 PII & Special Category Schema Identifier
-Classifies database models & ORM fields under UK GDPR (Article 6 / Article 9)
-and India DPDP Act 2023 statutory obligations.
+Module: CODE-102 Universal PII & Special Category Schema Identifier
+Classifies database models, ORM fields, structs, and interfaces under UK GDPR (Article 6 / Article 9)
+and India DPDP Act 2023 statutory obligations across any programming language.
 """
 
 import re
@@ -12,7 +12,11 @@ class PIISchemaDetector:
     # High-Risk / Special Category (UK GDPR Article 9 & Sensitive DPDP Data)
     SPECIAL_CATEGORY_PATTERNS = {
         "HEALTH_MEDICAL": {
-            "patterns": [r"health", r"medical", r"disease", r"diagnosis", r"symptom", r"prescription", r"doctor", r"treatment", r"nhs", r"blood", r"disability"],
+            "patterns": [
+                r"health", r"medical", r"disease", r"diagnosis", r"symptom",
+                r"prescription", r"doctor", r"treatment", r"nhs", r"blood",
+                r"disability", r"allergy", r"clinical", r"patient_record"
+            ],
             "category": "Health & Medical Data (UK GDPR Art 9(1))",
             "statutory_basis": "UK GDPR Article 9(2)(a) Explicit Consent / DPA 2018 Sch 1",
             "dpdp_section": "DPDPA 2023 Sec 4 & Sec 8 (Enhanced Data Protection)",
@@ -22,7 +26,10 @@ class PIISchemaDetector:
             "default_retention": "30-90 Days after consultation, then cryptographic erasure"
         },
         "RELIGIOUS_PHILOSOPHICAL": {
-            "patterns": [r"religion", r"belief", r"caste", r"kundli", r"horoscope", r"astrology", r"spiritual", r"faith", r"tarot", r"ritual", r"puja"],
+            "patterns": [
+                r"religion", r"belief", r"caste", r"kundli", r"horoscope",
+                r"astrology", r"spiritual", r"faith", r"tarot", r"ritual", r"puja", r"zodiac"
+            ],
             "category": "Religious / Philosophical Beliefs (UK GDPR Art 9(1))",
             "statutory_basis": "UK GDPR Article 9(2)(a) Explicit Consent",
             "dpdp_section": "DPDPA 2023 Sec 4 (Personal Data Processing)",
@@ -32,7 +39,10 @@ class PIISchemaDetector:
             "default_retention": "Purge raw questions 30 days post-session"
         },
         "SEXUAL_RELATIONSHIP": {
-            "patterns": [r"sex_life", r"sexual_orientation", r"marital_dispute", r"affair", r"divorce_case", r"relationship_problem"],
+            "patterns": [
+                r"sex_life", r"sexual_orientation", r"marital_dispute", r"affair",
+                r"divorce_case", r"relationship_problem", r"sexual_health"
+            ],
             "category": "Sex Life / Sexual Orientation (UK GDPR Art 9(1))",
             "statutory_basis": "UK GDPR Article 9(2)(a) Explicit Consent",
             "dpdp_section": "DPDPA 2023 Sec 4 (Sensitive Personal Data)",
@@ -42,7 +52,10 @@ class PIISchemaDetector:
             "default_retention": "Immediate pseudonymisation upon resolution"
         },
         "BIOMETRIC_GENETIC": {
-            "patterns": [r"biometric", r"fingerprint", r"face_id", r"voice_rec", r"genetic", r"dna", r"palm_scan"],
+            "patterns": [
+                r"biometric", r"fingerprint", r"face_id", r"voice_rec",
+                r"genetic", r"dna", r"palm_scan", r"facial_rec"
+            ],
             "category": "Biometric / Genetic Data (UK GDPR Art 9(1))",
             "statutory_basis": "UK GDPR Article 9(2)(a) Explicit Consent",
             "dpdp_section": "DPDPA 2023 Sec 3 & Sec 8",
@@ -52,7 +65,11 @@ class PIISchemaDetector:
             "default_retention": "Never retain raw biometrics"
         },
         "STATUTORY_GOV_IDENTIFIERS": {
-            "patterns": [r"aadhaar", r"pan_number", r"pan_card", r"passport", r"voter_id", r"ni_number", r"national_insurance", r"ssn", r"driving_licence"],
+            "patterns": [
+                r"aadhaar", r"aadhar", r"pan_number", r"pan_card", r"passport",
+                r"voter_id", r"ni_number", r"national_insurance", r"ssn",
+                r"driving_licen[sc]e", r"national_id", r"tax_id"
+            ],
             "category": "Government National Identifiers (UK/India Statutory IDs)",
             "statutory_basis": "UK GDPR Article 6(1)(c) Legal Obligation / DPDPA 2023 Sec 6",
             "dpdp_section": "Aadhaar Act 2016 & DPDPA Sec 8 (Strict Redaction/Masking)",
@@ -62,7 +79,12 @@ class PIISchemaDetector:
             "default_retention": "Statutory audit requirement (typically 6-7 years)"
         },
         "FINANCIAL_PAYMENT": {
-            "patterns": [r"card_num", r"cvv", r"expiry", r"bank_acc", r"iban", r"stripe_customer", r"upi_id", r"salary", r"income"],
+            "patterns": [
+                r"card_num", r"card_number", r"cvv", r"cvc", r"expiry",
+                r"bank_acc", r"account_number", r"iban", r"swift",
+                r"stripe_customer", r"upi_id", r"salary", r"income",
+                r"price", r"rent", r"fare", r"fee", r"wallet_balance"
+            ],
             "category": "Financial & Payment Credentials",
             "statutory_basis": "UK GDPR Art 6(1)(b) Contract Performance & PCI-DSS",
             "dpdp_section": "DPDPA 2023 Sec 4 & RBI Tokenisation Guidelines",
@@ -76,7 +98,13 @@ class PIISchemaDetector:
     # Standard Personal Data (UK GDPR Article 6 & India DPDP Act)
     STANDARD_PII_PATTERNS = {
         "DIRECT_IDENTIFIERS": {
-            "patterns": [r"first_name", r"last_name", r"full_name", r"^name$", r"username", r"display_name", r"email", r"phone", r"mobile", r"contact_no"],
+            "patterns": [
+                r"first_name", r"last_name", r"full_name", r"\bname\b",
+                r"\bfname\b", r"\blname\b", r"username", r"\buname\b",
+                r"display_name", r"email", r"user_email", r"phone",
+                r"mobile", r"contact_no", r"contact_number", r"telephone",
+                r"password", r"passwd", r"pass_hash", r"hashed_password"
+            ],
             "category": "Direct Personal Identifiers (UK GDPR Art 6(1))",
             "statutory_basis": "UK GDPR Article 6(1)(b) Contract / 6(1)(a) Consent",
             "dpdp_section": "DPDPA 2023 Sec 4 & Sec 6 (Notice & Lawful Consent)",
@@ -86,7 +114,13 @@ class PIISchemaDetector:
             "default_retention": "Account lifetime + 30 days grace period"
         },
         "LOCATION_TELEMETRY": {
-            "patterns": [r"location", r"coordinates", r"geometry", r"latitude", r"longitude", r"geo_loc", r"postal_code", r"zipcode", r"device_id", r"ip_address", r"client_ip", r"user_agent"],
+            "patterns": [
+                r"location", r"coordinates", r"geometry", r"latitude", r"\blat\b",
+                r"longitude", r"\blng\b", r"\blon\b", r"geo_loc", r"address",
+                r"street", r"city", r"state", r"country", r"postal_code",
+                r"zipcode", r"\bzip\b", r"pincode", r"device_id",
+                r"ip_address", r"\bip\b", r"client_ip", r"user_agent"
+            ],
             "category": "Online Identifiers, Location & Telemetry (PECR / UK GDPR)",
             "statutory_basis": "PECR Reg 6 / UK GDPR Art 6(1)(f) Legitimate Interests",
             "dpdp_section": "DPDPA 2023 Sec 6",
@@ -96,7 +130,10 @@ class PIISchemaDetector:
             "default_retention": "Rolling 14-30 day access log rotation"
         },
         "BIRTH_DEMOGRAPHICS": {
-            "patterns": [r"\bdob\b", r"date_of_birth", r"birth_date", r"birth_time", r"birth_place", r"\bgender\b", r"\bage\b"],
+            "patterns": [
+                r"\bdob\b", r"date_of_birth", r"birth_date", r"birth_time",
+                r"birth_place", r"\bgender\b", r"\bage\b"
+            ],
             "category": "Demographic & Age Information (UK GDPR Art 6(1))",
             "statutory_basis": "UK GDPR Article 6(1)(b) Contract Performance",
             "dpdp_section": "DPDPA 2023 Sec 6 & Sec 9 (Children's data guardrails if age < 18)",
@@ -106,7 +143,11 @@ class PIISchemaDetector:
             "default_retention": "Account lifetime or user deletion request"
         },
         "USER_COMMUNICATIONS": {
-            "patterns": [r"\bmessage\b", r"\bquery\b", r"\bprompt\b", r"\bcontent\b", r"\bfeedback\b", r"\bcomment\b", r"\breview\b", r"\brating\b", r"\bchat_history\b", r"\bconversation\b"],
+            "patterns": [
+                r"\bmessage\b", r"\bquery\b", r"\bprompt\b", r"\bcontent\b",
+                r"\bfeedback\b", r"\bcomment\b", r"\breview\b", r"\brating\b",
+                r"\bchat_history\b", r"\bconversation\b", r"\bnotes\b", r"\bbio\b"
+            ],
             "category": "User Communications, Reviews & Feedback (UK GDPR Art 6(1))",
             "statutory_basis": "UK GDPR Article 6(1)(b) Contract Performance",
             "dpdp_section": "DPDPA 2023 Sec 4 & Sec 6 (Notice & Lawful Consent)",
@@ -119,6 +160,14 @@ class PIISchemaDetector:
 
     def __init__(self):
         pass
+
+    @staticmethod
+    def _normalize_field_name(name: str) -> str:
+        """Converts camelCase, PascalCase, or kebab-case to snake_case for universal matching."""
+        s = re.sub(r'([A-Z]+)([A-Z][a-z])', r'\1_\2', name)
+        s = re.sub(r'([a-z0-9])([A-Z])', r'\1_\2', s)
+        s = s.replace("-", "_").lower()
+        return s
 
     def inspect_models(self, parsed_models: List[Dict[str, Any]]) -> Dict[str, Any]:
         """Analyzes all models and their fields to identify PII, Article 9 risks, and compliance duties."""
@@ -135,8 +184,9 @@ class PIISchemaDetector:
             detected_in_model = []
 
             for f in fields:
-                field_name = f.get("field_name", "").lower()
-                matched_classification = self._classify_field(field_name)
+                raw_name = f.get("field_name", "")
+                norm_name = self._normalize_field_name(raw_name)
+                matched_classification = self._classify_field(norm_name)
 
                 if matched_classification:
                     if matched_classification["severity"] == "CRITICAL":
@@ -146,8 +196,8 @@ class PIISchemaDetector:
                         standard_pii_count += 1
 
                     detected_in_model.append({
-                        "field_name": f.get("field_name"),
-                        "line_number": f.get("line_number"),
+                        "field_name": raw_name,
+                        "line_number": f.get("line_number", 1),
                         **matched_classification
                     })
 
