@@ -109,6 +109,46 @@ class SubprocessorDetector:
             "article_28_dpa_status": "Mandatory DPA",
             "risk_level": "MEDIUM",
             "recommendation": "Ensure marketing unsubscription headers and transactional-only filters are enforced."
+        },
+        "cloudinary": {
+            "name": "Cloudinary Ltd.",
+            "category": "Media Storage & Image CDN",
+            "jurisdiction": "United States / Israel (Adequacy Decision)",
+            "data_types_processed": ["Property Photos", "Listing Media", "User Uploads"],
+            "transfer_mechanism_required": "UK Addendum / EU Standard Contractual Clauses (SCCs)",
+            "article_28_dpa_status": "Mandatory Media DPA",
+            "risk_level": "MEDIUM",
+            "recommendation": "Execute Cloudinary Data Processing Addendum and enforce secure signed upload URLs."
+        },
+        "mapbox": {
+            "name": "Mapbox Inc.",
+            "category": "Interactive Maps & Geolocation Telemetry",
+            "jurisdiction": "United States",
+            "data_types_processed": ["User IP Addresses", "Geocoordinates", "Map Telemetry"],
+            "transfer_mechanism_required": "UK-US Data Bridge / EU Standard Contractual Clauses",
+            "article_28_dpa_status": "Mandatory Geolocation DPA",
+            "risk_level": "HIGH",
+            "recommendation": "Execute Mapbox Data Processing Addendum and configure privacy-preserving coordinate fuzzing."
+        },
+        "mongo": {
+            "name": "MongoDB Inc. (MongoDB Atlas)",
+            "category": "Cloud Database Infrastructure",
+            "jurisdiction": "United States / Ireland / AWS Cloud",
+            "data_types_processed": ["User Profiles", "Listing Records", "Authentication Credentials"],
+            "transfer_mechanism_required": "MongoDB Atlas GDPR Data Processing Agreement",
+            "article_28_dpa_status": "Mandatory Cloud Database DPA",
+            "risk_level": "HIGH",
+            "recommendation": "Pin MongoDB Atlas cluster to AWS London (eu-west-2) or Mumbai (ap-south-1) for statutory data residency."
+        },
+        "render": {
+            "name": "Render Services Inc.",
+            "category": "Cloud Compute & Web Hosting",
+            "jurisdiction": "United States / Germany (Frankfurt)",
+            "data_types_processed": ["Application Compute Logs", "HTTP Headers", "IP Telemetry"],
+            "transfer_mechanism_required": "Render DPA + Standard Contractual Clauses",
+            "article_28_dpa_status": "Mandatory Hosting DPA",
+            "risk_level": "MEDIUM",
+            "recommendation": "Execute Render Data Processing Agreement and configure encrypted environment secrets."
         }
     }
 

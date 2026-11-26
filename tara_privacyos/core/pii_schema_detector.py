@@ -86,13 +86,13 @@ class PIISchemaDetector:
             "default_retention": "Account lifetime + 30 days grace period"
         },
         "LOCATION_TELEMETRY": {
-            "patterns": [r"ip_address", r"client_ip", r"gps", r"latitude", r"longitude", r"geo_loc", r"postal_code", r"zipcode", r"device_id", r"user_agent"],
-            "category": "Online Identifiers & Telemetry (PECR / UK GDPR)",
+            "patterns": [r"location", r"coordinates", r"geometry", r"latitude", r"longitude", r"geo_loc", r"postal_code", r"zipcode", r"device_id", r"ip_address", r"client_ip", r"user_agent"],
+            "category": "Online Identifiers, Location & Telemetry (PECR / UK GDPR)",
             "statutory_basis": "PECR Reg 6 / UK GDPR Art 6(1)(f) Legitimate Interests",
             "dpdp_section": "DPDPA 2023 Sec 6",
             "severity": "MEDIUM",
             "requires_explicit_consent": False,
-            "recommended_encryption": "Pseudonymised / Hashed IP strings",
+            "recommended_encryption": "Pseudonymised / Hashed IP strings & Coordinate Masking",
             "default_retention": "Rolling 14-30 day access log rotation"
         },
         "BIRTH_DEMOGRAPHICS": {
@@ -106,8 +106,8 @@ class PIISchemaDetector:
             "default_retention": "Account lifetime or user deletion request"
         },
         "USER_COMMUNICATIONS": {
-            "patterns": [r"\bmessage\b", r"\bquery\b", r"\bprompt\b", r"\bcontent\b", r"\bfeedback\b", r"\bchat_history\b", r"\bconversation\b"],
-            "category": "User Communications & Query Prompts (UK GDPR Art 6(1))",
+            "patterns": [r"\bmessage\b", r"\bquery\b", r"\bprompt\b", r"\bcontent\b", r"\bfeedback\b", r"\bcomment\b", r"\breview\b", r"\brating\b", r"\bchat_history\b", r"\bconversation\b"],
+            "category": "User Communications, Reviews & Feedback (UK GDPR Art 6(1))",
             "statutory_basis": "UK GDPR Article 6(1)(b) Contract Performance",
             "dpdp_section": "DPDPA 2023 Sec 4 & Sec 6 (Notice & Lawful Consent)",
             "severity": "LOW",

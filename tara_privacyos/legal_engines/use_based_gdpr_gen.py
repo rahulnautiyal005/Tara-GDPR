@@ -27,8 +27,14 @@ class UseBasedGDPRGenerator:
         use_case = extraction_data.get("use_case_profile", {})
         models = extraction_data.get("extracted_models", [])
         pii = extraction_data.get("pii_and_special_category", {})
-        routes = extraction_data.get("extracted_routes", [])
+        routes = extraction_data.get("extracted_routes", []) or extraction_data.get("routes_and_endpoints", [])
         subprocs = extraction_data.get("subprocessors_and_transfers", {})
+        if not subprocs.get("subprocessor_register") and extraction_data.get("subprocessor_register"):
+            subprocs = {
+                "subprocessor_register": extraction_data.get("subprocessor_register", []),
+                "total_subprocessors_detected": len(extraction_data.get("subprocessor_register", [])),
+                "us_transfers_detected": [v["name"] for v in extraction_data.get("subprocessor_register", []) if "United States" in v.get("jurisdiction", "")]
+            }
 
         c_name = company_name or repo_meta.get("name", "Tara Infotech Service").replace("-", " ").title()
 
@@ -137,13 +143,22 @@ Under UK GDPR Article 9(1), processing of data concerning health, genetic/biomet
 | :--- | :--- | :--- | :--- |
 | **User Authentication & Account Management** | Name, Email, Password Hash, IP Address | Article 6(1)(b) (Performance of Contract) | Section 4 & 6 (Notice & Consent) |
 | **Core Application Service Delivery & Operations** | User inputs, operational telemetry, transactional logs | Article 6(1)(b) (Contractual Necessity) | Section 4 & 6 (Notice & Consent) |
-| **Payment Invoicing & Statutory Accounting** | Billing Address, Transaction Identifiers, Card Token | Article 6(1)(b) & Article 6(1)(c) (Legal Obligation) | Section 4 & RBI Payment Localisation |
-| **Automated AI Intelligence & Analytics** | Application prompts, contextual telemetry | Article 6(1)(b) (Contract) / Consent Art 6(1)(a) | Section 6 (Specific Purpose Limitation) |
-| **Security Auditing & Fraud Prevention** | IP address, timestamp, device telemetry | Article 6(1)(f) (Legitimate Interests) | Section 8(5) (Security Safeguards) |
+"""
+        if "Real Estate" in domain or "Rental" in domain or "Hospitality" in domain:
+            md += """| **Property Listings & Rental Reservations** | Property location, photos, rent amounts, owner contact | Article 6(1)(b) (Contractual Necessity) | Section 4 & 6 (Notice & Consent) |
+| **Public Reviews & Verified Host Ratings** | Review comments, star ratings, submission timestamp | Article 6(1)(f) (Legitimate Interests) | Section 4 & 6 (Notice & Consent) |
+| **Interactive Geolocation & Property Mapping** | Map coordinates, property address, IP telemetry | Article 6(1)(f) (Legitimate Interests) | Section 4 & 6 (Notice & Consent) |
+"""
+        if any("payment" in r.get("endpoint", "").lower() or "billing" in r.get("endpoint", "").lower() for r in routes) or any(s.get("name") in ["Stripe Payments UK Ltd", "Razorpay Software Pvt Ltd"] for s in subproc_list):
+            md += "| **Payment Invoicing & Statutory Accounting** | Billing Address, Transaction Identifiers, Card Token | Article 6(1)(b) & Article 6(1)(c) (Legal Obligation) | Section 4 & RBI Payment Localisation |\n"
+        if any("openai" in s.get("name", "").lower() for s in subproc_list):
+            md += "| **Automated AI Intelligence & Analytics** | Application prompts, contextual telemetry | Article 6(1)(b) (Contract) / Consent Art 6(1)(a) | Section 6 (Specific Purpose Limitation) |\n"
+        md += """| **Security Auditing & Fraud Prevention** | IP address, timestamp, device telemetry | Article 6(1)(f) (Legitimate Interests) | Section 8(5) (Security Safeguards) |
 
 ---
 
-## 5. Third-Party Subprocessors & International Transfers (UK GDPR Chapter V & Article 28)
+"""
+        md += """## 5. Third-Party Subprocessors & International Transfers (UK GDPR Chapter V & Article 28)
 To operate our application, we engage verified third-party cloud service providers acting as Data Processors under written Article 28 Data Processing Agreements (DPAs):
 
 | Subprocessor / Service | Purpose in Codebase | Processing Country | Cross-Border Transfer Mechanism |

@@ -36,6 +36,11 @@ class GitHubRepoExtractor:
             "legal", "gdpr", "dpdp", "dpdpa", "privacy", "statutory", "compliance",
             "law", "ropa", "dpia", "audit", "governance", "fiduciary", "regulatory", "dpo", "privacypolicy"
         ],
+        "Real Estate, Property Rental & Hospitality": [
+            "rental", "rent", "property", "listing", "listings", "apartment",
+            "ghar", "house", "room", "accommodation", "booking", "tenant",
+            "landlord", "host", "stay", "guest", "real_estate", "lease", "pg", "apnaghar"
+        ],
         "Astrology & Spiritual Consultation": [
             "kundli", "horoscope", "astrology", "spiritual", "zodiac", "tarot",
             "birth_chart", "consultation", "practitioner", "vedic"
@@ -358,7 +363,9 @@ class GitHubRepoExtractor:
             "use_case_profile": use_case_profile,
             "extracted_models": raw_models,
             "pii_and_special_category": pii_summary,
+            "extracted_routes": raw_routes,
             "routes_and_endpoints": raw_routes,
+            "subprocessors_and_transfers": subproc_summary,
             "subprocessor_register": subproc_summary.get("subprocessor_register", []),
             "ast_metrics": {
                 "models": raw_models,
@@ -456,7 +463,9 @@ class GitHubRepoExtractor:
             "extracted_models": raw_models,
             "pii_and_special_category": pii_summary,
             "extracted_routes": raw_routes,
-            "subprocessors_and_transfers": subproc_summary
+            "routes_and_endpoints": raw_routes,
+            "subprocessors_and_transfers": subproc_summary,
+            "subprocessor_register": subproc_summary.get("subprocessor_register", [])
         }
 
     def _infer_use_case(
@@ -499,6 +508,10 @@ class GitHubRepoExtractor:
 
         # Determine Data Subjects with strict word boundaries
         data_subjects = ["Platform Users / Registered Customers"]
+        if any(re.search(r"\b" + re.escape(w) + r"\b", combined_text) for w in ["tenant", "renter", "student", "guest", "roommate"]):
+            data_subjects.append("Tenants, Renters & Prospective Guests")
+        if any(re.search(r"\b" + re.escape(w) + r"\b", combined_text) for w in ["landlord", "host", "property_owner", "owner"]):
+            data_subjects.append("Property Owners, Landlords & Hosts")
         if any(re.search(r"\b" + re.escape(w) + r"\b", combined_text) for w in ["practitioner", "doctor", "healer", "astrologer", "consultant"]):
             data_subjects.append("External Practitioners / Professional Consultants")
         if any(re.search(r"\b" + re.escape(w) + r"\b", combined_text) for w in ["employee", "staff", "candidate", "payroll"]):
@@ -515,8 +528,14 @@ class GitHubRepoExtractor:
         ]
         if any("payment" in r.get("endpoint", "").lower() or "billing" in r.get("endpoint", "").lower() for r in routes) or any(re.search(r"\b" + re.escape(w) + r"\b", combined_text) for w in ["stripe", "razorpay", "billing"]):
             processing_purposes.append("Payment Card Processing, Invoicing & Financial Accounting")
-        if any(re.search(r"\b(consult|booking|appointment)\b", r.get("endpoint", "").lower()) for r in routes):
-            processing_purposes.append("1-on-1 Consultation Booking, Scheduling & Session Fulfillment")
+        if any(re.search(r"\b(consult|booking|appointment)\b", r.get("endpoint", "").lower()) for r in routes) or bool(re.search(r"\b(booking|rental|listing|stay)\b", combined_text)):
+            processing_purposes.append("Rental Property Listing, Booking Reservation & Stay Management")
+        if bool(re.search(r"\b(review|rating|comment)\b", combined_text)):
+            processing_purposes.append("User Reviews, Property Ratings & Community Feedback")
+        if any("mapbox" in s.get("name", "").lower() for s in subprocessors) or bool(re.search(r"\b(map|mapbox|location|geometry)\b", combined_text)):
+            processing_purposes.append("Interactive Property Mapping & Geolocation Visualization (Mapbox)")
+        if any("cloudinary" in s.get("name", "").lower() for s in subprocessors) or bool(re.search(r"\b(cloudinary|photo|upload|image)\b", combined_text)):
+            processing_purposes.append("Media Storage, Listing Photo Uploads & CDN Delivery (Cloudinary)")
         if any("openai" in s.get("name", "").lower() for s in subprocessors) or any(re.search(r"\b" + re.escape(w) + r"\b", combined_text) for w in ["openai", "llm", "copilot", "prompt"]):
             processing_purposes.append("Automated AI Question Summarization & Context Analysis (OpenAI / LLM)")
         if any(re.search(r"\b" + re.escape(w) + r"\b", combined_text) for w in ["health_symptoms", "diagnosis", "biometric"]):
@@ -639,20 +658,97 @@ class GitHubRepoExtractor:
                 "decorators": [method]
             })
 
-        # Mongoose / Prisma models
-        schema_matches = re.finditer(r'''(?:const|let|var)\s+(\w+Schema|\w+Model)\s*=\s*new\s+Schema\(\s*\{([^}]+)\}''', content, re.DOTALL)
-        for sm in schema_matches:
-            name, body = sm.group(1), sm.group(2)
-            fields = []
-            for f_match in re.finditer(r'''(\w+)\s*:\s*\{''', body):
-                fields.append({"field_name": f_match.group(1), "line_number": content[:f_match.start()].count("\n") + 1})
-            if fields:
-                res["models"].append({
-                    "model_name": name,
-                    "source_file": rel_path,
-                    "line_number": content[:sm.start()].count("\n") + 1,
-                    "fields": fields
-                })
+        # Mongoose / Prisma models with balanced-brace parsing
+        schema_patterns = [
+            r'(?:const|let|var)\s+(\w+)\s*=\s*new\s+(?:mongoose\.)?Schema\s*\(',
+            r'mongoose\.model\s*\(\s*[\'"](\w+)[\'"]\s*,\s*new\s+(?:mongoose\.)?Schema\s*\('
+        ]
+
+        found_model_names = set()
+        for pat in schema_patterns:
+            for sm in re.finditer(pat, content):
+                name = sm.group(1)
+                if name in found_model_names:
+                    continue
+                start_pos = sm.end()
+                brace_start = content.find('{', start_pos)
+                if brace_start == -1 or brace_start - start_pos > 25:
+                    continue
+
+                # Count balanced braces to extract the entire top-level schema definition
+                depth = 0
+                end_pos = -1
+                in_str = None
+                i = brace_start
+                n = len(content)
+                while i < n:
+                    c = content[i]
+                    if in_str:
+                        if c == in_str and content[i-1] != '\\':
+                            in_str = None
+                    elif c in ('"', "'", '`'):
+                        in_str = c
+                    elif c == '{':
+                        depth += 1
+                    elif c == '}':
+                        depth -= 1
+                        if depth == 0:
+                            end_pos = i
+                            break
+                    i += 1
+
+                if end_pos != -1:
+                    body = content[brace_start+1:end_pos]
+                    fields = []
+                    d = 0
+                    idx = 0
+                    body_len = len(body)
+                    while idx < body_len:
+                        ch = body[idx]
+                        if ch in ('"', "'", '`'):
+                            q = ch
+                            idx += 1
+                            while idx < body_len and (body[idx] != q or body[idx-1] == '\\'):
+                                idx += 1
+                        elif ch in ('{', '['):
+                            d += 1
+                        elif ch in ('}', ']'):
+                            d -= 1
+                        elif d == 0:
+                            fm = re.match(r'([a-zA-Z_$][a-zA-Z0-9_$]*)\s*:', body[idx:])
+                            if fm:
+                                fn = fm.group(1)
+                                if fn not in ('type', 'required', 'default', 'enum', 'ref', 'min', 'max', 'select'):
+                                    line_no = content[:brace_start + idx].count('\n') + 1
+                                    fields.append({"field_name": fn, "line_number": line_no})
+                                idx += fm.end() - 1
+                        idx += 1
+
+                    # If passport-local-mongoose is used, it injects username automatically
+                    if "passportlocalmongoose" in content.lower().replace("-", ""):
+                        if not any(f["field_name"] == "username" for f in fields):
+                            fields.append({"field_name": "username", "line_number": content[:sm.start()].count('\n') + 1})
+
+                    if fields:
+                        found_model_names.add(name)
+                        res["models"].append({
+                            "model_name": name,
+                            "source_file": rel_path,
+                            "line_number": content[:sm.start()].count('\n') + 1,
+                            "fields": fields
+                        })
+
+        # Fallback to class / interface definitions if no Mongoose schemas found
+        if not res["models"]:
+            for cm in re.finditer(r'(?:class|interface|type)\s+(\w+)', content):
+                cname = cm.group(1)
+                if any(k in cname.lower() for k in ["schema", "model", "user", "listing", "review", "order", "item", "booking"]):
+                    res["models"].append({
+                        "model_name": cname,
+                        "source_file": rel_path,
+                        "line_number": content[:cm.start()].count('\n') + 1,
+                        "fields": []
+                    })
 
         return res
 
