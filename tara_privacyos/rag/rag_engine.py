@@ -85,6 +85,15 @@ RAG_GROUNDED_SYSTEM_PROMPT = """You are Tara AI — Lead Data Protection Officer
 3. MULTI-TURN SCENARIO CONTINUITY:
    - When answering follow-up questions, PRESERVE and EXPLICITLY BUILD UPON previously established facts (e.g. company collecting customer emails for marketing, subsequent profiling, withdrawal of consent, multi-jurisdiction operations).
    - Address specific entities and scenarios established in prior turns rather than regressing into generic abstract lectures.
+
+4. DUAL-LAYER ARBITRATION & KNOWLEDGE SYNTHESIS MANDATE (LLM AS FINAL ARBITER):
+   - You are the Lead Privacy Counsel with ultimate authority to arbitrate, evaluate, and refine the response.
+   - Grounding vs. Broader Legal Reasoning:
+     * When retrieved statutory context is provided, critically review each chunk. If a chunk is directly applicable, ground your answer firmly in its statutory citation and mechanics.
+     * If a chunk is only tangentially related or irrelevant to the user's specific scenario, filter it out.
+     * Out-of-the-Box & Cross-Jurisdictional Questions: If the user's question involves foreign privacy laws (such as US state privacy laws/CCPA, Singapore PDPA, UAE, GDPR Recitals, judicial precedents like Schrems II, or employment/contractual privacy questions) or edge cases where local RAG context is limited or partial, seamlessly draw upon your comprehensive pre-trained legal knowledge.
+     * NEVER deflect or say "I do not have enough statutory excerpts in my local repository." Instead, deliver a complete, legally sound, and nuanced response citing the authoritative statutory provisions accurately.
+   - The final decision on truth, legal accuracy, tone, and practical advice rests entirely with you.
 """
 
 def classify_user_intent(query: str) -> str:
@@ -313,9 +322,10 @@ class TaraRAGEngine:
             penalties = chunk.get("penalties")
             statutory_text = chunk.get("statutory_text")
             practical = chunk.get("practical_application")
+            sim_score = chunk.get("similarity_score", 0.0)
 
             context_blocks.append(
-                f"### [STATUTORY SOURCE {idx}] {citation}: {title}\n"
+                f"### [STATUTORY CANDIDATE {idx}] (Relevance Score: {sim_score:.2f}) {citation}: {title}\n"
                 f"- Jurisdiction: {chunk.get('jurisdiction')}\n"
                 f"- Statutory Text: \"{statutory_text}\"\n"
                 f"- Statutory Penalties: {penalties}\n"
@@ -329,7 +339,7 @@ class TaraRAGEngine:
                 "jurisdiction": chunk.get("jurisdiction"),
                 "category": chunk.get("category"),
                 "penalties": penalties,
-                "similarity_score": chunk.get("similarity_score"),
+                "similarity_score": sim_score,
                 "statutory_text": statutory_text,
                 "practical_application": practical
             })
@@ -342,24 +352,28 @@ class TaraRAGEngine:
                 })
 
         context_string = "\n\n".join(context_blocks)
+        top_score = citations_summary[0]["similarity_score"] if citations_summary else 0.0
+        rag_coverage_quality = "HIGH" if top_score >= 0.28 else "PARTIAL/LOW"
 
         user_content = f"""USER QUESTION:
 {query}
 
-STATUTORY REFERENCE CONTEXT (UK/EU GDPR & INDIA DPDP ACT 2023):
+LOCAL RAG STATUTORY CANDIDATES (Index Coverage: {rag_coverage_quality} | Top Match Score: {top_score:.2f}):
 ======================================================================
-{context_string}
+{context_string if context_string else "[No direct keyword match found in local statutory index]"}
 ======================================================================
 
-RESPONSE GUIDELINES:
-- Conversational & Direct: Answer the user's specific inquiry directly in the opening sentence in an intelligent, conversational tone.
-- Scenario-Specific: If the user names their company (e.g. Law AI), address them directly by name.
-- Avoid Template Clutter: DO NOT format your response with repetitive rigid headers like '(1) Applicable Legal Provisions, (2) Legal Interpretation & Analysis'. Use natural prose with clean bullet points.
-- Multi-Turn Continuity: If this builds on earlier questions in the conversation, maintain context and refer back naturally.
-- Statutory Accuracy: Seamlessly embed exact statutory Articles (UK/EU GDPR) and Sections (India DPDP Act 2023) inline with explanations.
-- Clarify GDPR vs DPDP Act: Distinguish GDPR legitimate interests (Art 6(1)(f)) from India's DPDP Act (Section 7 has exhaustive legitimate uses; commercial profiling/marketing requires Section 6 consent).
-- Correct DPDP Sections: Section 11 (Access), Section 12 (Correction/Erasure), Section 13 (Grievance Redressal).
-- If the user writes in Hinglish, seamlessly understand and respond in clear, professional language."""
+CRITICAL LLM ARBITRATION & SYNTHESIS DIRECTIVES:
+1. FINAL DECISION: As the Senior Privacy Counsel, you have the ultimate authority on what is legally accurate, relevant, and helpful. Do not rely blindly on candidate excerpts.
+2. CRITICAL EVALUATION:
+   - If candidate excerpts directly match and resolve the user's inquiry, synthesize and cite them.
+   - If candidate excerpts are insufficient, only tangentially related, or if the question is an out-of-the-box edge case (e.g. cross-jurisdictional, CCPA/US law, Singapore PDPA, judicial precedents like Schrems II, employment privacy, technical encryption details), seamlessly expand using your deep pre-trained legal intelligence.
+   - NEVER say "I don't have enough data" or force irrelevant articles. Always provide an authoritative, nuanced legal answer.
+3. DELIVERY:
+   - Conversational & direct: Address the company/scenario directly in the opening sentence.
+   - No rigid template headers: Write in natural, authoritative prose with bullet points.
+   - Multi-Turn Continuity: Fluidly maintain scenario context from previous turns.
+   - Statutory Precision: Always cite exact Articles and Sections accurately."""
 
         messages = [{"role": "system", "content": RAG_GROUNDED_SYSTEM_PROMPT}]
 
@@ -393,8 +407,9 @@ RESPONSE GUIDELINES:
                     "retrieved_citations": citations_summary,
                     "model_clauses": model_clauses,
                     "rag_grounded": len(citations_summary) > 0,
-                    "top_similarity": citations_summary[0]["similarity_score"] if citations_summary else 0.0,
-                    "provider": "Tara Grounded Legal Intelligence Engine (Azure OpenAI gpt-4o-mini + Authoritative Statutory Corpus)"
+                    "arbitration_mode": "grounded_statutory_synthesis" if top_score >= 0.28 else "autonomous_llm_legal_synthesis",
+                    "top_similarity": top_score,
+                    "provider": "Tara Dual-Layer Legal Intelligence (Grounded RAG + LLM Arbiter)"
                 }
             else:
                 logger.error(f"Azure OpenAI Error {response.status_code}: {response.text}")
