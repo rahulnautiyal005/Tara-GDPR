@@ -226,6 +226,15 @@ class GitHubRepoExtractor:
                     )
                 default_branch = branch or meta.get("default_branch", "main")
         except urllib.error.HTTPError as http_err:
+            body = ""
+            try:
+                body = http_err.read().decode("utf-8")
+            except Exception:
+                pass
+            if http_err.code == 403 and "rate limit" in body.lower():
+                # Hit GitHub unauthenticated API rate limit (60 req/hr)
+                # Fall back to shallow git clone, do not report as private repo!
+                raise RuntimeError(f"GitHub API rate limit: {body}")
             if http_err.code in [404, 403]:
                 # GitHub returns 404 for private repos to unauthenticated clients
                 raise PrivateRepoError(
@@ -488,15 +497,15 @@ class GitHubRepoExtractor:
         if top_score == 0:
             top_domain = "B2C / B2B Web & Mobile Application"
 
-        # Determine Data Subjects
+        # Determine Data Subjects with strict word boundaries
         data_subjects = ["Platform Users / Registered Customers"]
-        if "practitioner" in combined_text or "doctor" in combined_text or "expert" in combined_text:
+        if any(re.search(r"\b" + re.escape(w) + r"\b", combined_text) for w in ["practitioner", "doctor", "healer", "astrologer", "consultant"]):
             data_subjects.append("External Practitioners / Professional Consultants")
-        if "employee" in combined_text or "staff" in combined_text:
+        if any(re.search(r"\b" + re.escape(w) + r"\b", combined_text) for w in ["employee", "staff", "candidate", "payroll"]):
             data_subjects.append("Employees / Internal Contractors")
-        if "patient" in combined_text:
+        if any(re.search(r"\b" + re.escape(w) + r"\b", combined_text) for w in ["patient", "ehr", "medical_record"]):
             data_subjects.append("Patients / Healthcare Clients")
-        if "child" in combined_text or "age" in combined_text or "birth" in combined_text:
+        if any(re.search(r"\b" + re.escape(w) + r"\b", combined_text) for w in ["child", "minor", "parental_consent", "underage"]):
             data_subjects.append("Minors / Family Members (Parental Consent Required)")
 
         # Determine Primary Processing Purposes
@@ -504,13 +513,13 @@ class GitHubRepoExtractor:
             "User Identity Authentication & Account Management",
             "Core Application Service Delivery & User Experience"
         ]
-        if any("payment" in r.get("endpoint", "").lower() or "stripe" in combined_text for r in routes):
+        if any("payment" in r.get("endpoint", "").lower() or "billing" in r.get("endpoint", "").lower() for r in routes) or any(re.search(r"\b" + re.escape(w) + r"\b", combined_text) for w in ["stripe", "razorpay", "billing"]):
             processing_purposes.append("Payment Card Processing, Invoicing & Financial Accounting")
-        if any("consult" in r.get("endpoint", "").lower() or "booking" in r.get("endpoint", "").lower() for r in routes):
+        if any(re.search(r"\b(consult|booking|appointment)\b", r.get("endpoint", "").lower()) for r in routes):
             processing_purposes.append("1-on-1 Consultation Booking, Scheduling & Session Fulfillment")
-        if any("openai" in s.get("name", "").lower() for s in subprocessors) or "ai" in combined_text:
+        if any("openai" in s.get("name", "").lower() for s in subprocessors) or any(re.search(r"\b" + re.escape(w) + r"\b", combined_text) for w in ["openai", "llm", "copilot", "prompt"]):
             processing_purposes.append("Automated AI Question Summarization & Context Analysis (OpenAI / LLM)")
-        if "health" in combined_text or "kundli" in combined_text:
+        if any(re.search(r"\b" + re.escape(w) + r"\b", combined_text) for w in ["health_symptoms", "diagnosis", "biometric"]):
             processing_purposes.append("Processing of Sensitive Profile Context (Explicit Consent Art 9)")
 
         # Target jurisdictions

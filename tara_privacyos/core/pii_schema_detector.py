@@ -96,13 +96,23 @@ class PIISchemaDetector:
             "default_retention": "Rolling 14-30 day access log rotation"
         },
         "BIRTH_DEMOGRAPHICS": {
-            "patterns": [r"dob", r"date_of_birth", r"birth_date", r"birth_time", r"birth_place", r"gender", r"age"],
-            "category": "Demographic & Birth Data (Consultation Prerequisite)",
+            "patterns": [r"\bdob\b", r"date_of_birth", r"birth_date", r"birth_time", r"birth_place", r"\bgender\b", r"\bage\b"],
+            "category": "Demographic & Age Information (UK GDPR Art 6(1))",
             "statutory_basis": "UK GDPR Article 6(1)(b) Contract Performance",
             "dpdp_section": "DPDPA 2023 Sec 6 & Sec 9 (Children's data guardrails if age < 18)",
             "severity": "MEDIUM",
             "requires_explicit_consent": False,
-            "recommended_encryption": "Restricted Access to Assigned Practitioner Only",
+            "recommended_encryption": "Role-Based Access Control + Encryption At Rest",
+            "default_retention": "Account lifetime or user deletion request"
+        },
+        "USER_COMMUNICATIONS": {
+            "patterns": [r"\bmessage\b", r"\bquery\b", r"\bprompt\b", r"\bcontent\b", r"\bfeedback\b", r"\bchat_history\b", r"\bconversation\b"],
+            "category": "User Communications & Query Prompts (UK GDPR Art 6(1))",
+            "statutory_basis": "UK GDPR Article 6(1)(b) Contract Performance",
+            "dpdp_section": "DPDPA 2023 Sec 4 & Sec 6 (Notice & Lawful Consent)",
+            "severity": "LOW",
+            "requires_explicit_consent": False,
+            "recommended_encryption": "TLS 1.3 in transit, AES-256 at rest",
             "default_retention": "Account lifetime or user deletion request"
         }
     }
