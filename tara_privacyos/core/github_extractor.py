@@ -32,6 +32,10 @@ class GitHubRepoExtractor:
     """
 
     DOMAIN_KEYWORDS = {
+        "Legal Tech, Privacy & Regulatory Compliance": [
+            "legal", "gdpr", "dpdp", "dpdpa", "privacy", "statutory", "compliance",
+            "law", "ropa", "dpia", "audit", "governance", "fiduciary", "regulatory", "dpo", "privacypolicy"
+        ],
         "Astrology & Spiritual Consultation": [
             "kundli", "horoscope", "astrology", "spiritual", "zodiac", "tarot",
             "birth_chart", "consultation", "practitioner", "vedic"
@@ -247,12 +251,19 @@ class GitHubRepoExtractor:
             else:
                 raise
 
-        blobs = [item["path"] for item in tree if item.get("type") == "blob"]
+        # Exclude mock, test, and benchmark fixture directories from model extraction
+        ignore_path_patterns = {"benchmark", "benchmarks", "sample_consultation_app", "test", "tests", "__tests__", "mock", "mocks", "fixtures"}
+        blobs = [item["path"] for item in tree if item.get("type") == "blob" and not any(p in item["path"].lower().split("/") for p in ignore_path_patterns)]
         total_files = len(blobs)
         file_tree = blobs[:30]
 
         # Filter schema, route, and dependency files
-        schema_files = [p for p in blobs if p.endswith(".prisma") or p.endswith(".sql") or ("models" in p.lower() and p.endswith((".py", ".ts", ".js")))]
+        schema_files = [
+            p for p in blobs
+            if p.endswith(".prisma") or p.endswith(".sql") or
+            ("models" in p.lower() and p.endswith((".py", ".ts", ".js"))) or
+            ("server.py" in p.lower() or "schema" in p.lower())
+        ]
         route_files = [p for p in blobs if any(k in p.lower() for k in ["route", "router", "endpoint", "controller", "api"]) and p.endswith((".py", ".ts", ".js"))]
         dep_files = [p for p in blobs if os.path.basename(p) in ["package.json", "requirements.txt", "Pipfile", "pyproject.toml"]]
         readme_files = [p for p in blobs if os.path.basename(p).lower() in ["readme.md", "readme.txt", "readme"]]
@@ -357,7 +368,10 @@ class GitHubRepoExtractor:
         total_files = 0
         file_tree = []
 
-        ignore_dirs = {".git", "node_modules", "venv", ".venv", "__pycache__", "dist", "build", ".next", ".cache", "target"}
+        ignore_dirs = {
+            ".git", "node_modules", "venv", ".venv", "__pycache__", "dist", "build",
+            ".next", ".cache", "target", "benchmarks", "tests", "test", "fixtures", "mocks"
+        }
 
         for dirpath, dirnames, filenames in os.walk(root_dir):
             dirnames[:] = [d for d in dirnames if d not in ignore_dirs]
@@ -448,7 +462,9 @@ class GitHubRepoExtractor:
         Analyzes the combined text signals (README, model names, fields, route paths)
         to identify the specific business domain, data subjects, and processing purposes.
         """
+        repo_name_str = (repo_info.get("repo_name", "") + " " + repo_info.get("source_url", "")).lower()
         combined_text = (
+            repo_name_str + " " +
             readme_text.lower() + " " +
             " ".join(m.get("model_name", "").lower() for m in models) + " " +
             " ".join(
@@ -456,7 +472,7 @@ class GitHubRepoExtractor:
                 for m in models
                 for f in m.get("fields", [])
             ) + " " +
-            " ".join(r.get("endpoint", r.get("endpoint_name", "")).lower() for r in routes)
+            " ".join(r.get("endpoint", r.get("path", "")).lower() for r in routes)
         )
 
         domain_scores = {}
