@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tara PrivacyOS — Plain-Language Guide for Legal Counsel</title>
+    <meta name="description" content="A jargon-free, lawyer-friendly guide explaining how Tara PrivacyOS helps legal counsel deliver GDPR and India DPDP Act 2023 compliance in minutes.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <style>
+        :root {
+            --navy: #14213D;
+            --navy-soft: #1E3A5F;
+            --gold: #B45309;
+            --gold-bg: #FEF3C7;
+            --emerald: #047857;
+            --emerald-bg: #ECFDF5;
+            --blue-ink: #1D4ED8;
+            --blue-bg: #EFF6FF;
+            --bg-ivory: #FAF9F6;
+            --bg-card: #FFFFFF;
+            --border: #E5E7EB;
+            --text-dark: #111827;
+            --text-body: #374151;
+            --text-muted: #6B7280;
+            --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-serif: 'Playfair Display', Georgia, serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg-ivory);
+            color: var(--text-dark);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Top Bar */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.94);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 24px;
+        }
+
+        .topbar-inner {
+            max-width: 980px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font-serif);
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--navy);
+        }
+
+        .brand-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--navy);
+            color: #FDE68A;
+            display: grid;
+            place-items: center;
+            font-size: 17px;
+        }
+
+        .btn-pdf {
+            background: var(--navy);
+            color: #fff;
+            border: none;
+            padding: 9px 18px;
+            border-radius: 8px;
+            font-size: 13.5px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            font-family: inherit;
+            transition: background 0.2s ease;
+        }
+
+        .btn-pdf:hover {
+            background: var(--navy-soft);
+        }
+
+        .container {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 36px 24px 72px;
+        }
+
+        /* Welcome Hero */
+        .hero {
+            background: linear-gradient(135deg, #14213D 0%, #1E3A5F 100%);
+            color: #fff;
+            border-radius: 20px;
+            padding: 44px 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 12px 32px rgba(20, 33, 61, 0.14);
+        }
+
+        .hero-kicker {
+            display: inline-block;
+            background: rgba(253, 230, 138, 0.16);
+            border: 1px solid rgba(253, 230, 138, 0.4);
+            color: #FDE68A;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            padding: 5px 14px;
+            border-radius: 999px;
+            margin-bottom: 16px;
+        }
+
+        .hero h1 {
+            font-family: var(--font-serif);
+            font-size: clamp(28px, 4vw, 38px);
+            line-height: 1.22;
+            margin-bottom: 14px;
+        }
+
+        .hero p {
+            font-size: 16.5px;
+            color: #E2E8F0;
+            max-width: 780px;
+        }
+
+        .quick-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 24px;
+        }
+
+        .quick-nav a {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            text-decoration: none;
+            padding: 9px 15px;
+            border-radius: 10px;
+            font-size: 13.5px;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .quick-nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Reassurance Box */
+        .welcome-note {
+            background: #FFFBEB;
+            border: 1px solid #FDE68A;
+            border-left: 5px solid var(--gold);
+            border-radius: 14px;
+            padding: 22px 26px;
+            margin-bottom: 34px;
+        }
+
+        .welcome-note h2 {
+            font-family: var(--font-serif);
+            font-size: 20px;
+            color: var(--navy);
+            margin-bottom: 8px;
+        }
+
+        .welcome-note p {
+            font-size: 14.8px;
+            color: var(--text-body);
+        }
+
+        /* Feature Cards */
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 34px;
+            margin-bottom: 30px;
+            box-shadow: 0 6px 22px rgba(0, 0, 0, 0.04);
+        }
+
+        .feature-badge {
+            display: inline-block;
+            font-size: 11.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.7px;
+            padding: 4px 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        .badge-1 { background: var(--blue-bg); color: var(--blue-ink); }
+        .badge-2 { background: var(--gold-bg); color: var(--gold); }
+        .badge-3 { background: var(--emerald-bg); color: var(--emerald); }
+
+        .feature-card h2 {
+            font-family: var(--font-serif);
+            font-size: 26px;
+            color: var(--navy);
+            margin-bottom: 10px;
+        }
+
+        .feature-lead {
+            font-size: 15.5px;
+            color: var(--text-body);
+            margin-bottom: 22px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .analogy-box {
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 18px 22px;
+            margin-bottom: 24px;
+        }
+
+        .analogy-box strong {
+            display: block;
+            color: var(--navy);
+            font-size: 14.5px;
+            margin-bottom: 5px;
+        }
+
+        .analogy-box p {
+            font-size: 14.2px;
+            color: var(--text-body);
+        }
+
+        .steps-heading {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 14px;
+        }
+
+        .step-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+
+        .step-item {
+            background: #FAFAFA;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 18px;
+        }
+
+        .step-circle {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--navy);
+            color: #fff;
+            font-size: 13px;
+            font-weight: 700;
+            display: grid;
+            place-items: center;
+            margin-bottom: 10px;
+        }
+
+        .step-item h4 {
+            font-size: 15px;
+            color: var(--navy);
+            margin-bottom: 6px;
+        }
+
+        .step-item p {
+            font-size: 13.5px;
+            color: var(--text-muted);
+            line-height: 1.55;
+        }
+
+        /* Deliverables Grid for Feature 1 */
+        .deliverables-box {
+            background: var(--blue-bg);
+            border: 1px solid #BFDBFE;
+            border-radius: 14px;
+            padding: 20px 22px;
+        }
+
+        .deliverables-box h4 {
+            color: var(--navy);
+            font-size: 15.5px;
+            margin-bottom: 12px;
+        }
+
+        .deliverables-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+            gap: 10px;
+        }
+
+        .deliv-pill {
+            background: #fff;
+            border: 1px solid #DBEAFE;
+            border-radius: 9px;
+            padding: 10px 12px;
+        }
+
+        .deliv-pill strong {
+            display: block;
+            font-size: 13px;
+            color: var(--blue-ink);
+            margin-bottom: 3px;
+        }
+
+        .deliv-pill span {
+            font-size: 12px;
+            color: var(--text-muted);
+            display: block;
+            line-height: 1.4;
+        }
+
+        /* Example Box */
+        .example-box {
+            background: var(--emerald-bg);
+            border: 1px solid #A7F3D0;
+            border-radius: 12px;
+            padding: 18px 22px;
+            margin-top: 16px;
+        }
+
+        .example-box h4 {
+            font-size: 14.5px;
+            color: var(--emerald);
+            margin-bottom: 8px;
+        }
+
+        .example-box ul {
+            padding-left: 18px;
+            font-size: 14px;
+            color: var(--text-body);
+        }
+
+        .example-box li {
+            margin-bottom: 6px;
+        }
+
+        /* Before & After Table */
+        .comparison-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 32px;
+            box-shadow: 0 6px 22px rgba(0, 0, 0, 0.04);
+        }
+
+        .comparison-card h2 {
+            font-family: var(--font-serif);
+            font-size: 24px;
+            color: var(--navy);
+            margin-bottom: 8px;
+        }
+
+        .comparison-card > p {
+            color: var(--text-muted);
+            font-size: 14.5px;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        th, td {
+            padding: 14px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: #F8FAFC;
+            color: var(--navy);
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        .old-way { color: #991B1B; }
+        .new-way { color: #065F46; font-weight: 600; }
+
+        @media print {
+            .topbar { display: none; }
+            body { background: #fff; }
+            .feature-card, .comparison-card { box-shadow: none; break-inside: avoid; }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="topbar">
+        <div class="topbar-inner">
+            <div class="brand">
+                <div class="brand-icon">⚖️</div>
+                <span>Tara PrivacyOS &bull; Guide for Legal Counsel</span>
+            </div>
+            <button class="btn-pdf" onclick="downloadPDF()">📥 Save / Print as PDF</button>
+        </div>
+    </header>
+
+    <main class="container" id="lawyer-guide-content">
+        <!-- Hero -->
+        <section class="hero">
+            <span class="hero-kicker">Prepared Especially for Legal Professionals</span>
+            <h1>Your Plain-Language Guide to Tara PrivacyOS</h1>
+            <p>
+                You don't need any software or coding background to use this platform.
+                Think of Tara PrivacyOS as your <strong>automated privacy paralegal and compliance drafting assistant</strong>
+                for <strong>UK GDPR, EU GDPR, and India's DPDP Act 2023</strong>.
+            </p>
+            <div class="quick-nav">
+                <a href="#feature-1">1. App Review &rarr; Full GDPR Package</a>
+                <a href="#feature-2">2. Fix Existing Legal Drafts</a>
+                <a href="#feature-3">3. Legal Research Assistant</a>
+                <a href="#comparison">4. How It Saves You Hours</a>
+            </div>
+        </section>
+
+        <!-- Welcome Note -->
+        <section class="welcome-note">
+            <h2>👋 A Quick Note Before You Begin</h2>
+            <p>
+                Advising technology or online businesses on data protection usually takes weeks of back-and-forth emails —
+                just to find out what customer information their app collects, where it is stored, and which third-party services receive it.
+                <strong>Tara PrivacyOS does all of that fact-finding and first-draft preparation for you in seconds</strong>,
+                so you can focus on legal judgment and client strategy.
+            </p>
+        </section>
+
+        <!-- FEATURE 1 -->
+        <section class="feature-card" id="feature-1">
+            <span class="feature-badge badge-1">Feature 1 &bull; Automated Client Fact-Finding &amp; Drafting</span>
+            <h2>From Client App Link to a Complete 5-Document GDPR Package</h2>
+            <p class="feature-lead">
+                Instead of asking your client's founders or engineers endless questions about what personal data their software handles,
+                you simply paste their project link and company name — and receive a complete, custom-tailored legal compliance dossier.
+            </p>
+
+            <div class="analogy-box">
+                <strong>🏛️ Simple Legal Analogy:</strong>
+                <p>
+                    Imagine being able to read a restaurant's complete ingredient list straight from the kitchen before writing their food-safety disclosure — instead of guessing what's inside.
+                    That is what this feature does for a client's website or mobile app. It checks the client's actual software files to see what customer data is collected (like names, emails, birth dates, or health notes) and which outside companies they use (like payment processors or AI tools).
+                </p>
+            </div>
+
+            <div class="steps-heading">How You Use It (3 Simple Steps):</div>
+            <div class="step-list">
+                <div class="step-item">
+                    <div class="step-circle">1</div>
+                    <h4>Enter Client Details</h4>
+                    <p>Paste the link to your client's software project (their GitHub link) and type their official company name.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-circle">2</div>
+                    <h4>Click "Scan &amp; Generate"</h4>
+                    <p>In a few seconds, the tool inspects what customer data the app collects and what outside vendors it uses.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-circle">3</div>
+                    <h4>Review &amp; Download</h4>
+                    <p>Receive 5 organized legal documents tailored specifically to that client's business — not a generic template.</p>
+                </div>
+            </div>
+
+            <div class="deliverables-box">
+                <h4>📂 Important: It Creates ALL 5 Statutory Documents (Not Just a Privacy Policy!)</h4>
+                <div class="deliverables-grid">
+                    <div class="deliv-pill">
+                        <strong>1. Privacy Notice</strong>
+                        <span>Tailored UK GDPR (Art 13/14) &amp; India DPDP Act (Sec 5) notice listing exact data fields.</span>
+                    </div>
+                    <div class="deliv-pill">
+                        <strong>2. Plain-English Brief</strong>
+                        <span>A simple, non-legal summary you can share directly with your client's CEO or founder.</span>
+                    </div>
+                    <div class="deliv-pill">
+                        <strong>3. Article 30 RoPA</strong>
+                        <span>Mandatory Record of Processing Activities ledger required by UK &amp; EU regulators.</span>
+                    </div>
+                    <div class="deliv-pill">
+                        <strong>4. Risk Audit (DPIA)</strong>
+                        <span>Article 35 Data Protection Impact Assessment flagging sensitive or high-risk data.</span>
+                    </div>
+                    <div class="deliv-pill">
+                        <strong>5. Action Checklist</strong>
+                        <span>Clear instructions for the client's team (e.g., adding consent checkboxes or delete buttons).</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FEATURE 2 -->
+        <section class="feature-card" id="feature-2">
+            <span class="feature-badge badge-2">Feature 2 &bull; Automated Redlining &amp; Clause Repair</span>
+            <h2>Turn Any Rough Legal Draft into a Compliant Document</h2>
+            <p class="feature-lead">
+                When a client hands you an outdated or copy-pasted Privacy Policy, Terms of Service, or Vendor Agreement,
+                this tool reviews every paragraph against UK GDPR and India's DPDP Act 2023 and writes the missing legal clauses for you.
+            </p>
+
+            <div class="analogy-box">
+                <strong>✍️ Simple Legal Analogy:</strong>
+                <p>
+                    Think of this as a senior privacy associate doing a first-pass <strong>redline review</strong>.
+                    It highlights dangerous or unlawful wording (like <em>"we keep your data for as long as necessary"</em>), explains which exact section of the law it breaks, and automatically inserts the legally compliant replacement wording.
+                </p>
+            </div>
+
+            <div class="steps-heading">How You Use It (3 Simple Steps):</div>
+            <div class="step-list">
+                <div class="step-item">
+                    <div class="step-circle">1</div>
+                    <h4>Paste or Upload Draft</h4>
+                    <p>Choose the document type (Privacy Policy, Terms of Service, DPA, or Cookie Policy) and paste or upload the client's existing draft.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-circle">2</div>
+                    <h4>View Legal Gaps &amp; Score</h4>
+                    <p>See an instant compliance score (0–100%) along with a clear list of Critical Violations and Warnings citing exact Articles and Sections.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-circle">3</div>
+                    <h4>Export Upgraded Draft</h4>
+                    <p>Review the newly inserted statutory clauses side-by-side and download the corrected document as a Word file (<code>.docx</code>) or text.</p>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>✅ Examples of Legal Gaps It Automatically Catches &amp; Fixes:</h4>
+                <ul>
+                    <li><strong>Vague Data Retention:</strong> Replaces illegal wording like <em>"as long as necessary"</em> with clear timeframes under UK GDPR Article 5(1)(e) and DPDP Act Section 8(7).</li>
+                    <li><strong>Missing India Grievance Officer:</strong> Automatically adds the mandatory Grievance Redressal Officer notice and 30-day resolution timeline under DPDP Act Section 13.</li>
+                    <li><strong>Cross-Border Transfers:</strong> Inserts UK ICO International Data Transfer Agreement (IDTA) safeguards when data is accessed by overseas teams.</li>
+                    <li><strong>Sensitive Data Consent:</strong> Flags missing unbundled explicit consent checkboxes under UK GDPR Article 9(2)(a).</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- FEATURE 3 -->
+        <section class="feature-card" id="feature-3">
+            <span class="feature-badge badge-3">Feature 3 &bull; 24/7 Privacy Law Research &amp; Advisory</span>
+            <h2>Conversational Legal AI Assistant (With Case Memory)</h2>
+            <p class="feature-lead">
+                Ask any privacy law question in plain everyday English. Unlike generic search tools, this assistant is specifically trained
+                to separate UK/EU GDPR rules from India's DPDP Act 2023 and remembers the client scenario you are discussing.
+            </p>
+
+            <div class="analogy-box">
+                <strong>💬 Simple Legal Analogy:</strong>
+                <p>
+                    Imagine having a specialist Privacy Law Research Associate sitting across from you.
+                    You can tell them about a client once (for example, <em>"My client's company is Law AI, do they need GDPR?"</em>),
+                    and then ask follow-up questions like <em>"What about in India?"</em> or <em>"Can they send marketing emails?"</em> — and they remember the whole conversation naturally.
+                </p>
+            </div>
+
+            <div class="steps-heading">What Makes It Reliable for Legal Work:</div>
+            <div class="step-list">
+                <div class="step-item">
+                    <div class="step-circle">1</div>
+                    <h4>Accurate Statutory Citations</h4>
+                    <p>Correctly maps India DPDP Act rights: <strong>Section 11</strong> (Access), <strong>Section 12</strong> (Correction &amp; Erasure), and <strong>Section 13</strong> (Grievance Redressal).</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-circle">2</div>
+                    <h4>Never Mixes Up Jurisdictions</h4>
+                    <p>Knows that GDPR allows <em>Legitimate Interests</em> (Art 6(1)(f)) for direct marketing, whereas India's DPDP Act Section 7 does not allow commercial legitimate interests.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-circle">3</div>
+                    <h4>Remembers Conversation History</h4>
+                    <p>Maintains context across your entire chat session — you can even ask <em>"What were my earlier questions?"</em> and it recalls them immediately.</p>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>💡 Sample Questions You Can Try Right Away:</h4>
+                <ul>
+                    <li><em>"My client's company is an online health clinic in London with developers in India. Do they need an IDTA?"</em></li>
+                    <li><em>"Under India's DPDP Act 2023, what is the maximum penalty for failing to protect personal data?"</em></li>
+                    <li><em>"If a customer withdraws consent for marketing emails, what data must we delete and what can we legally keep for tax records?"</em></li>
+                    <li><em>"Does California's CCPA apply if my client only has a few US users?"</em></li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- BEFORE & AFTER -->
+        <section class="comparison-card" id="comparison">
+            <h2>⏱️ How This Transforms Your Legal Workflow</h2>
+            <p>A practical comparison between traditional manual privacy compliance work and using Tara PrivacyOS.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Task for Your Client</th>
+                        <th>Traditional Manual Process</th>
+                        <th>With Tara PrivacyOS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Discovering what data an app collects</strong></td>
+                        <td class="old-way">2–3 weeks of questionnaires &amp; calls with client engineers</td>
+                        <td class="new-way">~10 seconds (paste client's project link)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Preparing Privacy Notice, RoPA &amp; DPIA</strong></td>
+                        <td class="old-way">Days of manual drafting from generic templates</td>
+                        <td class="new-way">All 5 tailored statutory documents generated together</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Reviewing a client's old Privacy Policy</strong></td>
+                        <td class="old-way">Hours of manual line-by-line checking &amp; redlining</td>
+                        <td class="new-way">Instant gap score + ready-to-insert compliant clauses</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Checking UK GDPR vs India DPDP Act rules</strong></td>
+                        <td class="old-way">Searching through multiple PDFs, Acts, and ICO guides</td>
+                        <td class="new-way">Instant, conversational answers with exact Section/Article citations</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script>
+        function downloadPDF() {
+            const element = document.getElementById('lawyer-guide-content');
+            const opt = {
+                margin: [0.4, 0.4, 0.4, 0.4],
+                filename: 'Tara-PrivacyOS-Lawyer-Client-Guide.pdf',
+                image: { type: 'jpeg', quality: 0.96 },
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+            };
+            html2pdf().set(opt).from(element).save();
+        }
+    </script>
+</body>
+
+</html>

@@ -172,6 +172,13 @@ def get_features_guide():
         return FileResponse(guide_path)
     raise HTTPException(status_code=404, detail="Features architecture guide not found")
 
+@app.get("/lawyer-guide")
+def get_lawyer_guide():
+    lawyer_path = os.path.join(BASE_DIR, "Tara-PrivacyOS-Lawyer-Client-Guide.html")
+    if os.path.exists(lawyer_path):
+        return FileResponse(lawyer_path)
+    raise HTTPException(status_code=404, detail="Lawyer client guide not found")
+
 @app.get("/api/health")
 def health_check():
     return {
