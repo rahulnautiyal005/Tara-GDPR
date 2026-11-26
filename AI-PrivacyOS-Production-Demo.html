@@ -3791,10 +3791,10 @@
 
             <!-- Quick Presets -->
             <div class="preset-grid">
-                <div class="preset-card active" onclick="selectRepoPreset('tara-consultation', this)">
+                <div class="preset-card active" onclick="selectRepoPreset('zenauraa-live', this)">
                     <span class="preset-icon">🔮</span>
-                    <h4>Tara Spiritual &amp; Consultation</h4>
-                    <p>FastAPI, PostgreSQL, OpenAI prompt logs, sensitive consultation data.</p>
+                    <h4>ZenAuraa Consultation Platform</h4>
+                    <p>Prisma, Node.js, PostgreSQL, user profiles, astrologers, session logs.</p>
                 </div>
                 <div class="preset-card" onclick="selectRepoPreset('medconnect-telehealth', this)">
                     <span class="preset-icon">🏥</span>
@@ -3822,11 +3822,11 @@
                     <div class="repo-form-row">
                         <div class="form-control" style="flex: 2;">
                             <label for="repo-url-input">GitHub Repository URL</label>
-                            <input type="text" id="repo-url-input" class="input-text" value="https://github.com/tara-infotech/consultation-platform-backend">
+                            <input type="text" id="repo-url-input" class="input-text" value="https://github.com/rahulnautiyal005/Zenauracl">
                         </div>
                         <div class="form-control">
                             <label for="company-name-input">Company / App Legal Name</label>
-                            <input type="text" id="company-name-input" class="input-text" value="Tara Infotech Ltd">
+                            <input type="text" id="company-name-input" class="input-text" value="ZenAuraa Technologies Ltd">
                         </div>
                         <div class="form-control" style="max-width: 140px;">
                             <label for="repo-branch-input">Branch</label>
@@ -5180,10 +5180,10 @@ ZenAuraa uses cookies and mobile SDKs to provide and enhance our services.
         let activeRepoSubtab = 'policy';
 
         const repoPresets = {
-            'tara-consultation': {
-                name: "Tara Spiritual & Consultation App (Backend)",
-                url: "https://github.com/tara-infotech/consultation-platform-backend",
-                company: "Tara Infotech Ltd",
+            'zenauraa-live': {
+                name: "ZenAuraa Consultation App & Backend (Live Public Repo)",
+                url: "https://github.com/rahulnautiyal005/Zenauracl",
+                company: "ZenAuraa Technologies Ltd",
                 branch: "main"
             },
             'medconnect-telehealth': {
@@ -5278,44 +5278,64 @@ ZenAuraa uses cookies and mobile SDKs to provide and enhance our services.
                     }
                     showToast(`Scanned ${repoUrl.split('/').pop()} & generated live compliance package!`, '🚀');
                     return;
+                } else {
+                    const errData = await response.json().catch(() => ({}));
+                    const isPrivate = errData.error_type === 'PRIVATE_REPOSITORY' || response.status === 403 || (errData.message && errData.message.toLowerCase().includes('private'));
+                    
+                    document.getElementById('repo-domain-title').textContent = isPrivate ? "Repository Inaccessible (Private)" : "Scan Failed";
+                    document.getElementById('repo-domain-desc').textContent = isPrivate ? "Authentication required for private repositories. Repository must be public." : (errData.detail || errData.message || "Failed to inspect repository.");
+                    document.getElementById('repo-health-pill').textContent = isPrivate ? "Access Restricted" : "Error";
+
+                    const cleanRepoName = repoUrl.replace(/^https?:\/\/github\.com\//, '').replace(/\.git$/, '');
+
+                    if (isPrivate) {
+                        document.getElementById('repo-tab-content').innerHTML = `
+                            <div style="background: rgba(239, 68, 68, 0.06); border: 1.5px solid var(--danger); border-radius: 14px; padding: 40px 24px; text-align: center; margin: 20px 0;">
+                                <div style="font-size: 44px; margin-bottom: 12px;">🔒</div>
+                                <h3 style="color: var(--danger); font-family: 'Space Grotesk', sans-serif; font-size: 20px; margin-bottom: 8px;">Cannot Access Private Repository</h3>
+                                <p style="color: var(--text-primary); font-size: 14.5px; max-width: 620px; margin: 0 auto 18px; line-height: 1.6;">
+                                    <strong>${escapeHtml(repoUrl)}</strong> is configured as a <strong>Private repository</strong> on GitHub (or does not exist).
+                                    Tara PrivacyOS requires the repository to be <strong>Public</strong> to inspect AST data models, routes, and dependencies.
+                                </p>
+                                <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 18px 22px; max-width: 580px; margin: 0 auto; text-align: left; font-size: 13px; color: var(--text-secondary); line-height: 1.6;">
+                                    <strong style="color: var(--text-primary);">💡 How to fix this:</strong><br>
+                                    1. Open your repository on GitHub: <strong>${escapeHtml(cleanRepoName)}</strong><br>
+                                    2. Go to <strong>Settings</strong> &rarr; scroll to <strong>Danger Zone</strong> &rarr; click <strong>Change repository visibility</strong> &rarr; select <strong>Make public</strong>.<br>
+                                    3. Or enter a public repository (e.g. <code>https://github.com/rahulnautiyal005/Zenauracl</code>) to run the live scan immediately.
+                                </div>
+                            </div>
+                        `;
+                        showToast('Repository is Private. Please make it Public on GitHub.', '🔒');
+                    } else {
+                        document.getElementById('repo-tab-content').innerHTML = `
+                            <div style="background: rgba(239, 68, 68, 0.06); border: 1.5px solid var(--danger); border-radius: 14px; padding: 40px 24px; text-align: center; margin: 20px 0;">
+                                <div style="font-size: 44px; margin-bottom: 12px;">⚠️</div>
+                                <h3 style="color: var(--danger); font-family: 'Space Grotesk', sans-serif; font-size: 20px; margin-bottom: 8px;">Failed to Scan Repository</h3>
+                                <p style="color: var(--text-primary); font-size: 14.5px; max-width: 620px; margin: 0 auto 16px;">
+                                    ${escapeHtml(errData.detail || errData.message || 'Unable to scan repository. Please verify the URL and branch.')}
+                                </p>
+                            </div>
+                        `;
+                        showToast('Scan failed. Please check repository URL.', '⚠️');
+                    }
+                    return;
                 }
             } catch (err) {
-                console.warn('Backend GitHub API offline, using statutory preset simulation:', err);
+                console.error('Scan API network error:', err);
+                document.getElementById('repo-tab-content').innerHTML = `
+                    <div style="background: rgba(239, 68, 68, 0.06); border: 1.5px solid var(--danger); border-radius: 14px; padding: 40px 24px; text-align: center; margin: 20px 0;">
+                        <div style="font-size: 44px; margin-bottom: 12px;">⚠️</div>
+                        <h3 style="color: var(--danger); font-family: 'Space Grotesk', sans-serif; font-size: 20px; margin-bottom: 8px;">Connection Error</h3>
+                        <p style="color: var(--text-primary); font-size: 14.5px; max-width: 620px; margin: 0 auto 16px;">
+                            Could not communicate with the Tara PrivacyOS backend server. Please verify the server is running on port 8000.
+                        </p>
+                    </div>
+                `;
+                showToast('Backend connection error.', '⚠️');
             } finally {
                 btn.classList.remove('loading');
                 btn.disabled = false;
             }
-
-            // Fallback simulated GitHub scan package
-            setTimeout(() => {
-                currentCompliancePackage = {
-                    summary: {
-                        organization_name: companyName,
-                        health_grade: "B+ (82% Health)",
-                        risk_score: 82
-                    },
-                    statutory_privacy_policy_markdown: `# STATUTORY PRIVACY POLICY FOR ${companyName.toUpperCase()}
-**Effective Date:** October 2026 | **Governing Law:** UK GDPR & India DPDP Act 2023`,
-                    article_30_ropa: [
-                        { activity_id: "ROPA-01", purpose: "User Registration & Authentication", lawful_basis: "Contract (Art 6(1)(b))", categories_of_data: "Name, Email, Password Hash", retention_period: "Duration of account + 12 months" }
-                    ]
-                };
-
-                document.getElementById('repo-domain-title').textContent = "Production Web Architecture";
-                document.getElementById('repo-domain-desc').textContent = "Detected backend models and API routes for " + companyName;
-                document.getElementById('repo-health-pill').textContent = "Grade: B+ (82% Health)";
-
-                renderActiveRepoSubtab();
-                if (typeof updateWorkspaceFromScan === 'function') {
-                    updateWorkspaceFromScan({
-                        repoUrl: repoUrl,
-                        companyName: companyName,
-                        healthGrade: "B+ (82% Health)",
-                        riskScore: 82
-                    });
-                }
-                showToast(`Scanned ${repoUrl.split('/').pop()} & generated live compliance package!`, '🚀');
-            }, 600);
         }
 
         function switchRepoSubtab(tabName) {

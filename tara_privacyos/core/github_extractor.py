@@ -14,11 +14,16 @@ import shutil
 import tempfile
 import subprocess
 import urllib.request
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from typing import Dict, List, Any, Optional
 
 from tara_privacyos.core.pii_schema_detector import PIISchemaDetector
 from tara_privacyos.core.subprocessor_detector import SubprocessorDetector
+
+class PrivateRepoError(Exception):
+    """Raised when a GitHub repository is private or cannot be accessed without authentication."""
+    pass
 
 class GitHubRepoExtractor:
     """
@@ -126,6 +131,18 @@ class GitHubRepoExtractor:
         routes, dependencies, and infers use case.
         """
         info = self.normalize_repo_url(repo_url_or_path)
+
+        # For GitHub repositories: Prioritize ultra-fast GitHub API & Raw Fetch
+        if info["type"] == "github":
+            try:
+                return self._extract_via_github_api(info, branch)
+            except PrivateRepoError:
+                # Strictly re-raise private repo errors — do NOT fall back to dummy data or hanging git clone
+                raise
+            except Exception as api_err:
+                # If API rate-limited or unexpected network glitch, fall back to shallow git clone
+                pass
+
         temp_dir = None
         target_dir = None
         clone_success = False
@@ -134,7 +151,13 @@ class GitHubRepoExtractor:
             target_dir = info["path"]
         else:
             temp_dir = tempfile.mkdtemp(prefix="tara_gh_")
-            clone_cmd = ["git", "clone", "--depth", "1"]
+            clone_cmd = [
+                "git",
+                "-c", "credential.helper=",
+                "-c", "core.askPass=",
+                "-c", "credential.interactive=false",
+                "clone", "--depth", "1"
+            ]
             if branch:
                 clone_cmd.extend(["-b", branch])
             clone_cmd.extend([info["clone_url"], temp_dir])
@@ -145,16 +168,25 @@ class GitHubRepoExtractor:
                     check=True,
                     capture_output=True,
                     text=True,
-                    timeout=45
+                    timeout=90
                 )
                 target_dir = temp_dir
                 clone_success = True
             except Exception as clone_err:
                 if temp_dir and os.path.exists(temp_dir):
                     shutil.rmtree(temp_dir, ignore_errors=True)
+                err_str = str(clone_err)
+                if hasattr(clone_err, "stderr") and clone_err.stderr:
+                    err_str += " " + clone_err.stderr
+                # Check for private repository indicators
+                if any(w in err_str.lower() for w in ["terminal prompts disabled", "could not read username", "authentication failed", "not found", "access denied", "exit status 128"]):
+                    raise PrivateRepoError(
+                        f"Repository '{info.get('repo_name', repo_url_or_path)}' is Private or does not exist. "
+                        "Tara PrivacyOS requires the repository to be Public on GitHub to scan data models and routes."
+                    )
                 raise RuntimeError(
                     f"Could not clone repository '{repo_url_or_path}'. "
-                    f"Please verify that the repository URL is public and valid, or that the specified branch exists. Error details: {str(clone_err)}"
+                    f"Please verify that the repository URL is public and valid, or that the specified branch exists. Error details: {err_str}"
                 )
 
         try:
@@ -163,6 +195,157 @@ class GitHubRepoExtractor:
         finally:
             if temp_dir and os.path.exists(temp_dir):
                 shutil.rmtree(temp_dir, ignore_errors=True)
+
+    def _extract_via_github_api(self, info: Dict[str, Any], branch: Optional[str] = None) -> Dict[str, Any]:
+        """
+        Fast lightweight GitHub scanner using GitHub REST API and raw file fetching.
+        Bypasses huge multi-hundred-megabyte repo downloads while accurately parsing
+        models, routes, and schemas in sub-3 seconds.
+        """
+        owner = info["owner"]
+        repo = info["repo"]
+        headers = {
+            "User-Agent": "TaraPrivacyOS/2.4 (Data Protection & Legal Governance Platform)",
+            "Accept": "application/vnd.github.v3+json"
+        }
+
+        # Step 1: Check repository metadata and visibility
+        meta_url = f"https://api.github.com/repos/{owner}/{repo}"
+        req = urllib.request.Request(meta_url, headers=headers)
+        try:
+            with urllib.request.urlopen(req, timeout=6) as resp:
+                meta = json.loads(resp.read().decode("utf-8"))
+                if meta.get("private") is True:
+                    raise PrivateRepoError(
+                        f"Repository '{owner}/{repo}' is Private. Tara PrivacyOS requires the repository "
+                        "to be Public on GitHub to scan data models and routes. Please set repository visibility to Public in GitHub Settings."
+                    )
+                default_branch = branch or meta.get("default_branch", "main")
+        except urllib.error.HTTPError as http_err:
+            if http_err.code in [404, 403]:
+                # GitHub returns 404 for private repos to unauthenticated clients
+                raise PrivateRepoError(
+                    f"Repository '{owner}/{repo}' is Private or does not exist. "
+                    "Tara PrivacyOS requires the repository to be Public on GitHub to scan data models and routes."
+                )
+            raise
+
+        # Step 2: Fetch recursive file tree
+        tree_url = f"https://api.github.com/repos/{owner}/{repo}/git/trees/{default_branch}?recursive=1"
+        try:
+            with urllib.request.urlopen(urllib.request.Request(tree_url, headers=headers), timeout=10) as tr:
+                tree_data = json.loads(tr.read().decode("utf-8"))
+                tree = tree_data.get("tree", [])
+        except Exception:
+            # Fallback branch attempt if 'main' fails, try 'master'
+            if default_branch == "main":
+                default_branch = "master"
+                tree_url = f"https://api.github.com/repos/{owner}/{repo}/git/trees/{default_branch}?recursive=1"
+                with urllib.request.urlopen(urllib.request.Request(tree_url, headers=headers), timeout=10) as tr:
+                    tree_data = json.loads(tr.read().decode("utf-8"))
+                    tree = tree_data.get("tree", [])
+            else:
+                raise
+
+        blobs = [item["path"] for item in tree if item.get("type") == "blob"]
+        total_files = len(blobs)
+        file_tree = blobs[:30]
+
+        # Filter schema, route, and dependency files
+        schema_files = [p for p in blobs if p.endswith(".prisma") or p.endswith(".sql") or ("models" in p.lower() and p.endswith((".py", ".ts", ".js")))]
+        route_files = [p for p in blobs if any(k in p.lower() for k in ["route", "router", "endpoint", "controller", "api"]) and p.endswith((".py", ".ts", ".js"))]
+        dep_files = [p for p in blobs if os.path.basename(p) in ["package.json", "requirements.txt", "Pipfile", "pyproject.toml"]]
+        readme_files = [p for p in blobs if os.path.basename(p).lower() in ["readme.md", "readme.txt", "readme"]]
+
+        # Prioritize top 30 most relevant files for instant scan
+        files_to_fetch = []
+        seen = set()
+        for f in (schema_files[:12] + route_files[:10] + dep_files[:5] + readme_files[:2]):
+            if f not in seen:
+                seen.add(f)
+                files_to_fetch.append(f)
+
+        raw_models = []
+        raw_routes = []
+        imports_and_sdks = []
+        readme_content = ""
+
+        def _fetch_single_file(fpath: str):
+            raw_url = f"https://raw.githubusercontent.com/{owner}/{repo}/{default_branch}/{fpath}"
+            try:
+                r_req = urllib.request.Request(raw_url, headers=headers)
+                with urllib.request.urlopen(r_req, timeout=8) as rf:
+                    return (fpath, rf.read().decode("utf-8", errors="ignore"))
+            except Exception:
+                return (fpath, "")
+
+        # Fetch candidate files concurrently for sub-3-second scan
+        with ThreadPoolExecutor(max_workers=8) as executor:
+            fetched_results = list(executor.map(_fetch_single_file, files_to_fetch))
+
+        for fpath, content in fetched_results:
+            if not content:
+                continue
+
+            fname = os.path.basename(fpath)
+            fname_lower = fname.lower()
+            ext = os.path.splitext(fname)[1].lower()
+
+            if fname_lower.startswith("readme") and not readme_content:
+                readme_content = content[:8000]
+
+            if ext == ".prisma":
+                schema_data = self._parse_schema_content(content, fpath)
+                raw_models.extend(schema_data.get("models", []))
+            elif ext == ".sql":
+                schema_data = self._parse_schema_content(content, fpath)
+                raw_models.extend(schema_data.get("models", []))
+            elif ext == ".py":
+                py_data = self._parse_python_content(content, fpath)
+                raw_models.extend(py_data.get("models", []))
+                raw_routes.extend(py_data.get("routes", []))
+                imports_and_sdks.extend(py_data.get("imports", []))
+            elif ext in [".ts", ".js", ".tsx", ".jsx"]:
+                js_data = self._parse_javascript_content(content, fpath)
+                raw_models.extend(js_data.get("models", []))
+                raw_routes.extend(js_data.get("routes", []))
+                imports_and_sdks.extend(js_data.get("imports", []))
+            elif fname in ["package.json", "requirements.txt", "Pipfile", "pyproject.toml"]:
+                dep_items = self._parse_dependency_content(content, fname, fpath)
+                imports_and_sdks.extend(dep_items)
+
+        # Classify PII, subprocessors, and use-case
+        pii_summary = self.pii_detector.inspect_models(raw_models)
+        subproc_summary = self.subproc_detector.detect_subprocessors(imports_and_sdks)
+        use_case_profile = self._infer_use_case(
+            repo_info=info,
+            readme_text=readme_content,
+            models=raw_models,
+            routes=raw_routes,
+            subprocessors=subproc_summary.get("subprocessor_register", [])
+        )
+
+        return {
+            "repository_metadata": {
+                "name": info.get("repo_name", f"{owner}/{repo}"),
+                "source_url": info.get("clone_url", f"https://github.com/{owner}/{repo}"),
+                "type": "github",
+                "total_files_scanned": total_files,
+                "file_samples": file_tree[:25],
+                "has_readme": bool(readme_content),
+                "readme_snippet": readme_content[:400] if readme_content else "No README file detected."
+            },
+            "use_case_profile": use_case_profile,
+            "extracted_models": raw_models,
+            "pii_and_special_category": pii_summary,
+            "routes_and_endpoints": raw_routes,
+            "subprocessor_register": subproc_summary.get("subprocessor_register", []),
+            "ast_metrics": {
+                "models": raw_models,
+                "routes": raw_routes,
+                "dependencies": imports_and_sdks
+            }
+        }
 
     def _scan_directory(self, root_dir: str, repo_info: Dict[str, Any]) -> Dict[str, Any]:
         """Scans code files, schemas, dependencies, and README in the cloned directory."""
@@ -334,10 +517,17 @@ class GitHubRepoExtractor:
 
     def _parse_python(self, fpath: str, rel_path: str) -> Dict[str, Any]:
         """Extracts models, routes, and imports from a Python file using AST."""
-        res = {"models": [], "routes": [], "imports": []}
         try:
             with open(fpath, "r", encoding="utf-8", errors="ignore") as f:
                 content = f.read()
+            return self._parse_python_content(content, rel_path)
+        except Exception:
+            return {"models": [], "routes": [], "imports": []}
+
+    def _parse_python_content(self, content: str, rel_path: str) -> Dict[str, Any]:
+        """Extracts models, routes, and imports from Python source text."""
+        res = {"models": [], "routes": [], "imports": []}
+        try:
             tree = ast.parse(content, filename=rel_path)
         except Exception:
             return res
@@ -393,13 +583,17 @@ class GitHubRepoExtractor:
         return res
 
     def _parse_javascript(self, fpath: str, rel_path: str) -> Dict[str, Any]:
-        """Extracts models, routes, and imports from JS/TS using regex."""
-        res = {"models": [], "routes": [], "imports": []}
+        """Extracts models, routes, and imports from JS/TS file."""
         try:
             with open(fpath, "r", encoding="utf-8", errors="ignore") as f:
                 content = f.read()
+            return self._parse_javascript_content(content, rel_path)
         except Exception:
-            return res
+            return {"models": [], "routes": [], "imports": []}
+
+    def _parse_javascript_content(self, content: str, rel_path: str) -> Dict[str, Any]:
+        """Extracts models, routes, and imports from JS/TS source text."""
+        res = {"models": [], "routes": [], "imports": []}
 
         # Imports
         imports = re.findall(r'''(?:import\s+.*?from\s+['"]([^'"]+)['"]|require\s*\(\s*['"]([^'"]+)['"]\s*\))''', content)
@@ -438,13 +632,17 @@ class GitHubRepoExtractor:
         return res
 
     def _parse_schema(self, fpath: str, rel_path: str) -> Dict[str, Any]:
-        """Parses Prisma or SQL schema definitions."""
-        res = {"models": []}
+        """Parses Prisma or SQL schema definitions from file."""
         try:
             with open(fpath, "r", encoding="utf-8", errors="ignore") as f:
                 content = f.read()
+            return self._parse_schema_content(content, rel_path)
         except Exception:
-            return res
+            return {"models": []}
+
+    def _parse_schema_content(self, content: str, rel_path: str) -> Dict[str, Any]:
+        """Parses Prisma or SQL schema definitions from text content."""
+        res = {"models": []}
 
         # Prisma models
         prisma_matches = re.finditer(r'''model\s+(\w+)\s*\{([^}]+)\}''', content)
@@ -483,15 +681,19 @@ class GitHubRepoExtractor:
         return res
 
     def _parse_dependency_file(self, fpath: str, rel_path: str) -> List[Dict[str, Any]]:
-        """Parses dependency lists (package.json, requirements.txt)."""
-        deps = []
+        """Parses dependency lists from file."""
         try:
             with open(fpath, "r", encoding="utf-8", errors="ignore") as f:
                 content = f.read()
+            fname = os.path.basename(fpath)
+            return self._parse_dependency_content(content, fname, rel_path)
         except Exception:
-            return deps
+            return []
 
-        if fpath.endswith("package.json"):
+    def _parse_dependency_content(self, content: str, fname: str, rel_path: str) -> List[Dict[str, Any]]:
+        """Parses dependency lists from file text."""
+        deps = []
+        if fname.endswith("package.json"):
             try:
                 pkg_data = json.loads(content)
                 all_deps = {**pkg_data.get("dependencies", {}), **pkg_data.get("devDependencies", {})}

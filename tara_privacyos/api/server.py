@@ -10,7 +10,7 @@ Provides HTTP endpoints for:
 import os
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse
+from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from typing import Optional, Dict, Any, List
@@ -19,7 +19,7 @@ from tara_privacyos.privacyos_engine import PrivacyOSEngine
 from tara_privacyos.core.azure_llm import ask_gdpr_copilot, audit_document_with_ai, test_azure_connection
 from tara_privacyos.rag.rag_engine import TaraRAGEngine
 from tara_privacyos.rag.corpus_data import get_corpus, get_corpus_stats
-from tara_privacyos.core.github_extractor import GitHubRepoExtractor
+from tara_privacyos.core.github_extractor import GitHubRepoExtractor, PrivateRepoError
 from tara_privacyos.legal_engines.use_based_gdpr_gen import UseBasedGDPRGenerator
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
@@ -295,13 +295,13 @@ def get_github_presets():
     """Returns curated repository presets representing diverse industry use cases."""
     return [
         {
-            "id": "tara-consultation",
-            "name": "Tara Spiritual & Consultation App (Backend)",
-            "repo_url": "https://github.com/tara-infotech/consultation-platform-backend",
+            "id": "zenauraa-live",
+            "name": "ZenAuraa Consultation App & Backend (Live Public Repo)",
+            "repo_url": "https://github.com/rahulnautiyal005/Zenauracl",
             "domain": "Astrology & Spiritual Consultation",
-            "description": "FastAPI + PostgreSQL backend handling astrological birth charts, sensitive consultation queries, and OpenAI transcripts.",
-            "tech_stack": ["FastAPI", "SQLAlchemy", "PostgreSQL", "OpenAI GPT-4", "Stripe", "Twilio"],
-            "statutory_risk": "CRITICAL (UK GDPR Article 9 Special Category Data & Cross-Border Transfers)"
+            "description": "Prisma + Node.js backend handling consultation bookings, astrologer profiles, chat messages, and Razorpay/Stripe payments.",
+            "tech_stack": ["Node.js", "Prisma ORM", "PostgreSQL", "Stripe", "Razorpay"],
+            "statutory_risk": "CRITICAL (UK GDPR Article 9 Special Category Data & DPDPA Mandatory Consent)"
         },
         {
             "id": "medconnect-telehealth",
@@ -343,8 +343,27 @@ def scan_github_repository(req: GitHubScanRequest):
     try:
         extraction_result = github_extractor.extract_from_repo(req.repo_url, branch=req.branch)
         return extraction_result
+    except PrivateRepoError as pre:
+        return JSONResponse(
+            status_code=403,
+            content={
+                "status": "ERROR",
+                "error_type": "PRIVATE_REPOSITORY",
+                "message": str(pre)
+            }
+        )
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to extract from repository: {str(e)}")
+        err_str = str(e)
+        if any(w in err_str.lower() for w in ["private", "authentication", "not found", "terminal prompts disabled"]):
+            return JSONResponse(
+                status_code=403,
+                content={
+                    "status": "ERROR",
+                    "error_type": "PRIVATE_REPOSITORY",
+                    "message": f"Repository '{req.repo_url}' is Private or inaccessible. Tara PrivacyOS requires the repository to be Public on GitHub to scan data models and routes."
+                }
+            )
+        raise HTTPException(status_code=500, detail=f"Failed to extract from repository: {err_str}")
 
 @app.post("/api/github/generate-gdpr")
 def generate_use_based_gdpr(req: GitHubGenerateGDPRRequest):
@@ -387,8 +406,27 @@ def extract_and_generate_gdpr(req: GitHubScanRequest):
             "extraction": extraction_data,
             "compliance_package": compliance_package
         }
+    except PrivateRepoError as pre:
+        return JSONResponse(
+            status_code=403,
+            content={
+                "status": "ERROR",
+                "error_type": "PRIVATE_REPOSITORY",
+                "message": str(pre)
+            }
+        )
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Pipeline error: {str(e)}")
+        err_str = str(e)
+        if any(w in err_str.lower() for w in ["private", "authentication", "not found", "terminal prompts disabled"]):
+            return JSONResponse(
+                status_code=403,
+                content={
+                    "status": "ERROR",
+                    "error_type": "PRIVATE_REPOSITORY",
+                    "message": f"Repository '{req.repo_url}' is Private or inaccessible. Tara PrivacyOS requires the repository to be Public on GitHub to scan data models and routes."
+                }
+            )
+        raise HTTPException(status_code=500, detail=f"Pipeline error: {err_str}")
 
 @app.post("/api/github/export")
 def export_gdpr_document(req: GitHubExportRequest):
