@@ -179,6 +179,13 @@ def get_lawyer_guide():
         return FileResponse(lawyer_path)
     raise HTTPException(status_code=404, detail="Lawyer client guide not found")
 
+@app.get("/client-presentation")
+def get_client_presentation():
+    pres_path = os.path.join(BASE_DIR, "Tara-PrivacyOS-Client-Presentation.html")
+    if os.path.exists(pres_path):
+        return FileResponse(pres_path)
+    raise HTTPException(status_code=404, detail="Client presentation not found")
+
 @app.get("/api/health")
 def health_check():
     return {

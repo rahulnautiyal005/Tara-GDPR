@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tara PrivacyOS — Client Presentation &amp; Simple Project Walkthrough</title>
+    <meta name="description" content="A simple, zero-jargon presentation explaining Tara PrivacyOS and its 3 core features for legal professionals and clients.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <style>
+        :root {
+            --navy: #14213D;
+            --navy-soft: #1E3A5F;
+            --gold: #B45309;
+            --gold-bg: #FEF3C7;
+            --emerald: #047857;
+            --emerald-bg: #ECFDF5;
+            --blue: #1D4ED8;
+            --blue-bg: #EFF6FF;
+            --purple: #6D28D9;
+            --purple-bg: #F5F3FF;
+            --bg-page: #FAF9F6;
+            --bg-card: #FFFFFF;
+            --border: #E5E7EB;
+            --text-dark: #111827;
+            --text-body: #374151;
+            --text-muted: #6B7280;
+            --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-serif: 'Playfair Display', Georgia, serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg-page);
+            color: var(--text-dark);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Sticky Top Presentation Bar */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 24px;
+        }
+
+        .topbar-inner {
+            max-width: 1020px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font-serif);
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--navy);
+        }
+
+        .brand-mark {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--navy);
+            color: #FDE68A;
+            display: grid;
+            place-items: center;
+            font-size: 17px;
+        }
+
+        .top-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .nav-pill {
+            text-decoration: none;
+            color: var(--text-body);
+            font-size: 13px;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 8px;
+            background: #F3F4F6;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .nav-pill:hover {
+            background: #E5E7EB;
+            color: var(--navy);
+        }
+
+        .btn-pdf {
+            background: var(--navy);
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-pdf:hover {
+            background: var(--navy-soft);
+        }
+
+        /* Main Presentation Container */
+        .container {
+            max-width: 1020px;
+            margin: 0 auto;
+            padding: 34px 24px 72px;
+        }
+
+        /* Slide Cards */
+        .slide {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 38px 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 26px rgba(15, 23, 42, 0.045);
+        }
+
+        @media (max-width: 680px) {
+            .slide {
+                padding: 26px 22px;
+            }
+        }
+
+        /* Slide 1: Cover / Big Picture */
+        .cover-slide {
+            background: linear-gradient(135deg, #14213D 0%, #1E3A5F 100%);
+            color: #fff;
+            border: none;
+        }
+
+        .cover-kicker {
+            display: inline-block;
+            background: rgba(253, 230, 138, 0.16);
+            border: 1px solid rgba(253, 230, 138, 0.4);
+            color: #FDE68A;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.7px;
+            text-transform: uppercase;
+            padding: 5px 14px;
+            border-radius: 999px;
+            margin-bottom: 16px;
+        }
+
+        .cover-slide h1 {
+            font-family: var(--font-serif);
+            font-size: clamp(28px, 4vw, 40px);
+            line-height: 1.22;
+            margin-bottom: 14px;
+        }
+
+        .cover-slide .lead {
+            font-size: 17px;
+            color: #E2E8F0;
+            max-width: 820px;
+            margin-bottom: 26px;
+        }
+
+        .pillars-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 14px;
+        }
+
+        .pillar-box {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 14px;
+            padding: 18px;
+        }
+
+        .pillar-box strong {
+            display: block;
+            font-size: 15.5px;
+            color: #FDE68A;
+            margin-bottom: 6px;
+        }
+
+        .pillar-box span {
+            font-size: 13.8px;
+            color: #E2E8F0;
+            line-height: 1.5;
+            display: block;
+        }
+
+        /* Section Labels & Headings */
+        .slide-tag {
+            display: inline-block;
+            font-size: 11.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.7px;
+            padding: 4px 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        .tag-gold { background: var(--gold-bg); color: var(--gold); }
+        .tag-blue { background: var(--blue-bg); color: var(--blue); }
+        .tag-purple { background: var(--purple-bg); color: var(--purple); }
+        .tag-emerald { background: var(--emerald-bg); color: var(--emerald); }
+
+        .slide h2 {
+            font-family: var(--font-serif);
+            font-size: 27px;
+            color: var(--navy);
+            margin-bottom: 10px;
+        }
+
+        .slide-intro {
+            font-size: 15.5px;
+            color: var(--text-body);
+            margin-bottom: 24px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* Plain-English Explainer Callout (e.g., What is GitHub?) */
+        .explainer-box {
+            background: #FFFBEB;
+            border: 1px solid #FDE68A;
+            border-left: 5px solid var(--gold);
+            border-radius: 12px;
+            padding: 18px 22px;
+            margin-bottom: 22px;
+        }
+
+        .explainer-box h4 {
+            font-size: 15.5px;
+            color: var(--navy);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .explainer-box p {
+            font-size: 14.3px;
+            color: var(--text-body);
+        }
+
+        /* Step Flow */
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 14px;
+            margin-bottom: 22px;
+        }
+
+        .step-card {
+            background: #F8FAFC;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 18px;
+        }
+
+        .step-num {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--navy);
+            color: #fff;
+            font-size: 13px;
+            font-weight: 700;
+            display: grid;
+            place-items: center;
+            margin-bottom: 10px;
+        }
+
+        .step-card h4 {
+            font-size: 15px;
+            color: var(--navy);
+            margin-bottom: 6px;
+        }
+
+        .step-card p {
+            font-size: 13.8px;
+            color: var(--text-muted);
+            line-height: 1.55;
+        }
+
+        /* 5 Documents Box */
+        .docs-box {
+            background: var(--blue-bg);
+            border: 1px solid #BFDBFE;
+            border-radius: 14px;
+            padding: 20px 22px;
+            margin-top: 8px;
+        }
+
+        .docs-box h4 {
+            font-size: 15.5px;
+            color: var(--navy);
+            margin-bottom: 12px;
+        }
+
+        .docs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+            gap: 10px;
+        }
+
+        .doc-item {
+            background: #fff;
+            border: 1px solid #DBEAFE;
+            border-radius: 10px;
+            padding: 12px;
+        }
+
+        .doc-item strong {
+            display: block;
+            font-size: 13.2px;
+            color: var(--blue);
+            margin-bottom: 4px;
+        }
+
+        .doc-item span {
+            font-size: 12.2px;
+            color: var(--text-muted);
+            display: block;
+            line-height: 1.45;
+        }
+
+        /* Highlights / Examples Box */
+        .highlight-box {
+            background: var(--emerald-bg);
+            border: 1px solid #A7F3D0;
+            border-radius: 12px;
+            padding: 18px 22px;
+        }
+
+        .highlight-box h4 {
+            font-size: 15px;
+            color: var(--emerald);
+            margin-bottom: 10px;
+        }
+
+        .highlight-box ul {
+            padding-left: 18px;
+            font-size: 14.2px;
+            color: var(--text-body);
+        }
+
+        .highlight-box li {
+            margin-bottom: 7px;
+        }
+
+        /* Glossary Grid */
+        .glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 14px;
+        }
+
+        .glossary-item {
+            background: #F8FAFC;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 18px;
+        }
+
+        .glossary-item strong {
+            display: block;
+            font-size: 15px;
+            color: var(--navy);
+            margin-bottom: 5px;
+        }
+
+        .glossary-item p {
+            font-size: 13.8px;
+            color: var(--text-body);
+            line-height: 1.55;
+        }
+
+        /* Comparison Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        th, td {
+            padding: 14px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: #F8FAFC;
+            color: var(--navy);
+            font-weight: 700;
+            font-size: 12.5px;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        .old-way { color: #991B1B; }
+        .new-way { color: #065F46; font-weight: 600; }
+
+        @media print {
+            .topbar { display: none; }
+            body { background: #fff; }
+            .slide { box-shadow: none; break-inside: avoid; }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="topbar">
+        <div class="topbar-inner">
+            <div class="brand">
+                <div class="brand-mark">⚖️</div>
+                <span>Tara PrivacyOS &bull; Client Walkthrough</span>
+            </div>
+            <div class="top-links">
+                <a href="#glossary" class="nav-pill">Simple Terms</a>
+                <a href="#feature-1" class="nav-pill">1. App to GDPR</a>
+                <a href="#feature-2" class="nav-pill">2. Fix Existing Docs</a>
+                <a href="#feature-3" class="nav-pill">3. Legal Assistant</a>
+                <button class="btn-pdf" onclick="downloadPDF()">📥 Download PDF</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container" id="presentation-root">
+        <!-- SLIDE 1: BIG PICTURE -->
+        <section class="slide cover-slide">
+            <span class="cover-kicker">Project Overview &bull; Built for Legal Practice</span>
+            <h1>What is Tara PrivacyOS?</h1>
+            <p class="lead">
+                Tara PrivacyOS is an intelligent legal compliance assistant designed specifically for
+                <strong>UK GDPR, EU GDPR, and India's DPDP Act 2023</strong>.
+                It automates the slowest, most repetitive parts of privacy law — so you can review a client's app,
+                fix their old legal drafts, and research statutory rules in minutes instead of weeks.
+            </p>
+            <div class="pillars-row">
+                <div class="pillar-box">
+                    <strong>1. App Link &rarr; Full GDPR Package</strong>
+                    <span>Reads a client's app folder on GitHub and prepares 5 customized legal compliance documents automatically.</span>
+                </div>
+                <div class="pillar-box">
+                    <strong>2. Old Draft &rarr; Compliant Document</strong>
+                    <span>Checks any rough Privacy Policy or contract, spots legal flaws, and inserts compliant statutory clauses.</span>
+                </div>
+                <div class="pillar-box">
+                    <strong>3. 24/7 Legal AI Assistant</strong>
+                    <span>Answers privacy law questions in plain English, cites exact sections, and remembers your client's case.</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 2: PLAIN-LANGUAGE GLOSSARY (SO NOTHING SOUNDS CONFUSING) -->
+        <section class="slide" id="glossary">
+            <span class="slide-tag tag-gold">Before We Start &bull; Plain-English Meanings</span>
+            <h2>4 Words You Will Hear (Explained Simply)</h2>
+            <p class="slide-intro">
+                You do not need any technical background to use this platform. Here is what four common words mean in everyday legal terms:
+            </p>
+            <div class="glossary-grid">
+                <div class="glossary-item">
+                    <strong>📁 What is "GitHub"?</strong>
+                    <p>
+                        Think of <strong>GitHub</strong> like <em>Google Drive or a locked digital filing cabinet</em> where software teams store the written instructions (source code) of their website or mobile app. Instead of asking engineers 50 questions, you just share that folder's web link.
+                    </p>
+                </div>
+                <div class="glossary-item">
+                    <strong>📐 What is "Source Code"?</strong>
+                    <p>
+                        Just like an <em>architect's blueprint for a building</em>, source code is the written instruction manual that tells an app what customer details to ask for (name, phone, date of birth) and where to store them.
+                    </p>
+                </div>
+                <div class="glossary-item">
+                    <strong>🤝 What is a "Subprocessor"?</strong>
+                    <p>
+                        Simply an <em>outside vendor or service provider</em> that the client's app relies on — for example, a payment company (like Stripe or Razorpay), a cloud storage provider, or an AI tool. Under GDPR, you must list these vendors and sign data agreements with them.
+                    </p>
+                </div>
+                <div class="glossary-item">
+                    <strong>📒 What are "RoPA" and "DPIA"?</strong>
+                    <p>
+                        <strong>RoPA</strong> (GDPR Article 30) is the official <em>Record of Processing Activities</em> logbook regulators ask to see. <strong>DPIA</strong> (GDPR Article 35) is a <em>Data Protection Impact Assessment</em> — a formal risk report required when handling sensitive data like health or children's info.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 3: FEATURE 1 -->
+        <section class="slide" id="feature-1">
+            <span class="slide-tag tag-blue">Feature 1 &bull; Automated Client Fact-Finding</span>
+            <h2>From a Client's GitHub Link to a Full 5-Document GDPR Package</h2>
+            <p class="slide-intro">
+                Normally, before you can draft a client's privacy documents, you have to spend weeks interviewing their team to learn what personal data their app collects. Feature 1 does that discovery in seconds.
+            </p>
+
+            <div class="explainer-box">
+                <h4>💡 How to Think About It (Restaurant Menu Analogy):</h4>
+                <p>
+                    Imagine having to write a food-allergy disclosure for a restaurant. Instead of guessing what the chef put in each dish, this tool walks straight into the kitchen, reads the exact recipe book (the client's GitHub folder), and lists every ingredient and outside supplier automatically.
+                </p>
+            </div>
+
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-num">1</div>
+                    <h4>Paste the Client's Link</h4>
+                    <p>Paste the client's GitHub web link (where their app files live) and type their legal company name.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">2</div>
+                    <h4>Automatic Blueprint Check</h4>
+                    <p>In a few seconds, the platform checks what customer details are collected (e.g., emails, dates of birth, health notes) and which outside vendors are used.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">3</div>
+                    <h4>5 Legal Outputs Ready</h4>
+                    <p>Instead of one generic template, it creates a complete 5-part compliance dossier tailored to that client's exact business.</p>
+                </div>
+            </div>
+
+            <div class="docs-box">
+                <h4>📂 What You Receive (All 5 Documents Generated Together):</h4>
+                <div class="docs-grid">
+                    <div class="doc-item">
+                        <strong>1. Privacy Policy</strong>
+                        <span>Official UK GDPR (Art 13/14) &amp; India DPDP (Sec 5) notice customized to the app.</span>
+                    </div>
+                    <div class="doc-item">
+                        <strong>2. Plain Summary</strong>
+                        <span>A simple, non-legal brief you can hand directly to the client's founder or CEO.</span>
+                    </div>
+                    <div class="doc-item">
+                        <strong>3. Article 30 RoPA</strong>
+                        <span>Mandatory statutory register of all data processing activities for regulators.</span>
+                    </div>
+                    <div class="doc-item">
+                        <strong>4. Risk Audit (DPIA)</strong>
+                        <span>Article 35 risk report highlighting sensitive data (health, minors, AI) and safeguards.</span>
+                    </div>
+                    <div class="doc-item">
+                        <strong>5. Team Action List</strong>
+                        <span>Clear instructions for the client's team (e.g., add consent tick-boxes or delete buttons).</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 4: FEATURE 2 -->
+        <section class="slide" id="feature-2">
+            <span class="slide-tag tag-purple">Feature 2 &bull; Automated Legal Redlining</span>
+            <h2>Turn Any Existing Draft into a Law-Compliant Document</h2>
+            <p class="slide-intro">
+                Clients often come to a lawyer with an old, copy-pasted Privacy Policy or Terms of Service full of legal gaps. Feature 2 acts like a senior associate doing a fast, thorough redline review.
+            </p>
+
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-num">1</div>
+                    <h4>Paste or Upload the Draft</h4>
+                    <p>Select the document type (Privacy Policy, Terms of Service, Vendor Agreement, or Cookie Policy) and paste or upload the client's text.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">2</div>
+                    <h4>Instant Risk Score &amp; Gaps</h4>
+                    <p>Within seconds, it gives a 0–100% health score and flags Critical Violations and Warnings alongside exact statutory citations.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">3</div>
+                    <h4>Auto-Injected Legal Fixes</h4>
+                    <p>It writes the missing compliant clauses for you and lets you download the upgraded document as a Word file or copy it.</p>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h4>✅ Examples of Illegal Wording It Automatically Catches &amp; Repairs:</h4>
+                <ul>
+                    <li><strong>Vague Storage Promises:</strong> Flags illegal lines like <em>"we keep your data for as long as necessary"</em> and inserts exact retention timelines (UK GDPR Art 5(1)(e) &amp; DPDP Act Sec 8(7)).</li>
+                    <li><strong>Missing India Grievance Officer:</strong> Automatically writes and inserts the mandatory Grievance Redressal Officer contact block and 30-day resolution timeline (DPDP Act Sec 13).</li>
+                    <li><strong>Overseas Data Access:</strong> Adds UK ICO International Data Transfer Agreement (IDTA) protections whenever UK/EU data is accessed by teams in India or abroad.</li>
+                    <li><strong>Sensitive Data Consent:</strong> Inserts separate, unticked explicit consent wording whenever health or personal belief data is handled (UK GDPR Art 9).</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- SLIDE 5: FEATURE 3 -->
+        <section class="slide" id="feature-3">
+            <span class="slide-tag tag-emerald">Feature 3 &bull; 24/7 Privacy Research Associate</span>
+            <h2>Conversational Legal AI Assistant (With Case Memory)</h2>
+            <p class="slide-intro">
+                Ask any data protection question in everyday English — just like speaking to a specialist Privacy Research Associate who never confuses UK GDPR with India's DPDP Act 2023.
+            </p>
+
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-num">1</div>
+                    <h4>Natural Everyday Language</h4>
+                    <p>No special keywords needed. Ask questions naturally, and get clear, direct answers tailored to your client's company name and scenario.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">2</div>
+                    <h4>Strict Statutory Accuracy</h4>
+                    <p>Correctly separates UK/EU GDPR from India's DPDP Act (e.g., Sec 11 Access, Sec 12 Correction/Erasure, Sec 13 Grievance, and exact fine caps up to ₹250 Cr).</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">3</div>
+                    <h4>Remembers the Entire Chat</h4>
+                    <p>Discuss a client in turn 1 (e.g., <em>"My client is Law AI, do they need GDPR?"</em>) and follow up with <em>"What about in India?"</em> — it remembers seamlessly.</p>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h4>💬 Example Questions You Can Ask During a Client Meeting:</h4>
+                <ul>
+                    <li><em>"My client runs an online clinic in London with support staff in India. What transfer agreement do they need?"</em></li>
+                    <li><em>"Under India's DPDP Act, can a business rely on 'Legitimate Interests' to send marketing emails like under UK GDPR?"</em></li>
+                    <li><em>"If a customer asks us to delete their data, what records are we still legally required to keep for tax authorities?"</em></li>
+                    <li><em>"What were my earlier questions in this chat?"</em> (Instant session recall!)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- SLIDE 6: VALUE SUMMARY -->
+        <section class="slide">
+            <span class="slide-tag tag-gold">Summary &bull; Value for Legal Practice</span>
+            <h2>How This Helps You Deliver Faster, Higher-Value Advice</h2>
+            <p class="slide-intro">
+                Tara PrivacyOS does not replace the lawyer — it eliminates weeks of manual paperwork so you can advise more clients with complete confidence.
+            </p>
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Client Engagement Step</th>
+                            <th>Without Tara PrivacyOS</th>
+                            <th>With Tara PrivacyOS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Understanding what a client's app collects</strong></td>
+                            <td class="old-way">2–3 weeks of emails &amp; calls with their team</td>
+                            <td class="new-way">~10 seconds (using their GitHub folder link)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Drafting Privacy Notice, RoPA &amp; DPIA</strong></td>
+                            <td class="old-way">Days of manual drafting from generic templates</td>
+                            <td class="new-way">All 5 tailored statutory documents generated together</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Auditing a client's existing draft policy</strong></td>
+                            <td class="old-way">Hours of manual line-by-line checking</td>
+                            <td class="new-way">Instant score + missing statutory clauses inserted</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Checking UK GDPR vs India DPDP Act rules</strong></td>
+                            <td class="old-way">Cross-checking multiple Acts &amp; ICO PDFs</td>
+                            <td class="new-way">Instant conversational answers with exact citations</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function downloadPDF() {
+            const element = document.getElementById('presentation-root');
+            const opt = {
+                margin: [0.35, 0.35, 0.35, 0.35],
+                filename: 'Tara-PrivacyOS-Client-Presentation.pdf',
+                image: { type: 'jpeg', quality: 0.96 },
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+            };
+            html2pdf().set(opt).from(element).save();
+        }
+    </script>
+</body>
+
+</html>
